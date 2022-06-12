@@ -12,6 +12,16 @@ namespace Sim.Domain.Service
             _repositoryEmpregos = repositoryBase;
         }
 
+        public async Task<Empregos> GetIdAsync(Guid id)
+        {
+            return await _repositoryEmpregos.GetIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Empregos>> ListAllAsync()
+        {
+            return await _repositoryEmpregos.ListAllAsync();
+        }
+
         public async Task<IEnumerable<Empregos>> ListEmpregosAsync()
         {
             return await _repositoryEmpregos.ListEmpregosAsync();

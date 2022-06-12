@@ -12,14 +12,14 @@ namespace Sim.Domain.Service
             _dia = repositoryDIA;
         }
 
-        public Task<DIA> GetIdAsync(Guid id)
+        public async Task<DIA> GetIdAsync(Guid id)
         {
-            return _dia.GetIdAsync(id);
+            return await _dia.GetIdAsync(id);
         }
 
-        public Task<IEnumerable<DIA>> ListAllAsync()
+        public async Task<IEnumerable<DIA>> ListAllAsync()
         {
-            return _dia.ListAllAsync();
+            return await _dia.ListAllAsync();
         }
 
         public async Task<IEnumerable<DIA>> ListAtividadeAsync(string atividade)

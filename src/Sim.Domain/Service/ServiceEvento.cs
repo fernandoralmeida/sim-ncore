@@ -100,5 +100,15 @@ namespace Sim.Domain.Service
                 return null;
             }
         }
+
+        public async Task<Evento> GetIdAsync(Guid id)
+        {
+            return await _evento.GetIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Evento>> ListAllAsync()
+        {
+            return await _evento.ListAllAsync();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Sim.Data.Context;
 using Sim.Domain.Entity;
 using Sim.Domain.Interface.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sim.Data.Repository
 {
@@ -10,6 +11,16 @@ namespace Sim.Data.Repository
             :base(dbContext)
         {
 
+        }
+
+        public async Task<DIA> GetIdAsync(Guid id)
+        {
+            return await _db.DIA.Include(a => a.Ambulante).Where(o => o.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<DIA>> ListAllAsync()
+        {
+            return await _db.DIA.Include(a => a.Ambulante).ToListAsync();
         }
 
         public async Task<IEnumerable<DIA>> ListAtividadeAsync(string atividade)

@@ -15,10 +15,21 @@ namespace Sim.Domain.Service
             _repositoryTipo = repositoryTipo;
         }
 
+        public async Task<Tipo> GetIdAsync(Guid id)
+        {
+            return await _repositoryTipo.GetIdAsync(id);
+        }
+
         public int LastCodigo()
         {
             return 0;
         }
+
+        public async Task<IEnumerable<Tipo>> ListAllAsync()
+        {
+            return await _repositoryTipo.ListAllAsync();
+        }
+
         public async Task<IEnumerable<Tipo>> ListTipoOwnerAsync(string owner)
         {
             return await _repositoryTipo.ListTipoOwnerAsync(owner);

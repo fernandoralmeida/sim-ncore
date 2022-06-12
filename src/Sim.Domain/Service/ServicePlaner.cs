@@ -12,6 +12,16 @@ namespace Sim.Domain.Service
             :base(repositoryPlaner)
         { _planer = repositoryPlaner; }
 
+        public async Task<Planner> GetIdAsync(Guid id)
+        {
+            return await _planer.GetIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Planner>> ListAllAsync()
+        {
+            return await _planer.ListAllAsync();
+        }
+
         public async Task<IEnumerable<Planner>> ListDataAsync(DateTime? data)
         {
             return await _planer.ListDataAsync(data);

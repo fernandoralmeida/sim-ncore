@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
     public class RepositoryEvento : RepositoryBase<Evento>, IRepositoryEvento
     {
         public RepositoryEvento(ApplicationContext dbContext)
@@ -18,56 +13,25 @@ namespace Sim.Cross.Data.Repository.Shared
 
         }
 
-        public Evento GetByCodigo(int codigo)
+        public async Task<Evento> GetCodigoAsync(int codigo)
         {
-            var eve = _db.Evento
+            return await _db.Evento
+                .Include(e => e.Inscritos)
+                .Where(p => p.Codigo == codigo).FirstOrDefaultAsync();
+        }
+
+        public async Task<Evento> GetCodigoParticipanteAsync(int codigo)
+        {
+            return await _db.Evento
+                .Include(e => e.Inscritos)
+                .Where(p => p.Codigo == codigo).FirstOrDefaultAsync();
+        }
+
+        public async Task<Evento> GetIdAsync(Guid id)
+        {
+            return await _db.Evento
                 .Include(i => i.Inscritos)
-                .Where(c => c.Codigo == codigo)
-                .FirstOrDefault();
-
-            if (eve == null)
-                return null;
-
-            var insc = _db.Inscricao
-                .Include(p => p.Participante)
-                .Include(e => e.Empresa)
-                .Include(e=>e.Evento)
-                .Where(s => s.Evento.Codigo == eve.Codigo).OrderBy(s=>s.Data_Inscricao);
-
-            eve.Inscritos = insc.ToList();
-
-            return eve;
-        }
-
-        public Evento GetByCodigo_Participantes(int codigo)
-        {
-            var eve = _db.Evento
-                .Include(i => i.Inscritos)
-                .Where(c => c.Codigo == codigo)
-                .FirstOrDefault();
-
-            if (eve == null)
-                return null;
-
-            var insc = _db.Inscricao
-                .Include(p => p.Participante)
-                .Include(e => e.Empresa)
-                .Include(e => e.Evento)
-                .Where(s => s.Evento.Codigo == eve.Codigo).OrderBy(s => s.Participante.Nome);
-
-            eve.Inscritos = insc.ToList();
-
-            return eve;
-        }
-
-        public IEnumerable<Evento> GetByNome(string nome)
-        {
-            return _db.Evento.Where(u => u.Nome.Contains(nome)).OrderBy(d => d.Data).ThenByDescending(d => d.Data);
-        }
-
-        public IEnumerable<Evento> GetByOwner(string setor)
-        {
-            return _db.Evento.Where(u => u.Owner.Contains(setor));
+                .Where(u => u.Id == id).OrderBy(d => d.Data).ThenByDescending(d => d.Data).FirstOrDefaultAsync();
         }
 
         public int LastCodigo()
@@ -83,11 +47,28 @@ namespace Sim.Cross.Data.Repository.Shared
                 return (int)cod;
         }
 
-        public IEnumerable<Evento> ListAll()
+        public async Task<IEnumerable<Evento>> ListAllAsync()
         {
-            return _db.Evento
-                .Include(i => i.Inscritos)                
-                .ToList();
+            return await _db.Evento
+                .AsNoTracking()
+                .Include(i => i.Inscritos)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Evento>> ListNomeAsync(string nome)
+        {
+            return await _db.Evento
+                .AsNoTracking()
+                .Include(i=>i.Inscritos)
+                .Where(u => u.Nome.Contains(nome)).OrderBy(d => d.Data).ThenByDescending(d => d.Data).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Evento>> ListOwnerAsync(string setor)
+        {
+            return await _db.Evento
+                .AsNoTracking()
+                .Include(i => i.Inscritos)
+                .Where(u => u.Owner.Contains(setor)).OrderBy(d => d.Data).ThenByDescending(d => d.Data).ToListAsync();
         }
     }
 }

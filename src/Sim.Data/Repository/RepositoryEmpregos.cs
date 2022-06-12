@@ -10,35 +10,24 @@ namespace Sim.Data.Repository
     {
         public RepositoryEmpregos(ApplicationContext applicationContext) : base(applicationContext) { }
 
-        public async Task<IEnumerable<Empregos>> GetAllEmpregosAsync()
+        public async Task<Empregos> GetIdAsync(Guid id)
         {
-            var t = _db.Emprego.Include(e => e.Empresa).ToListAsync();
-            await t;
-            return t.Result;
+            return await _db.Emprego.Include(e => e.Empresa).Where(o=>o.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Empregos>> GetAllEmpregosAsync(string cnpj)
+        public async Task<IEnumerable<Empregos>> ListAllAsync()
         {
-            var t = Task.Run(() => _db.Emprego.Include(e => e.Empresa).Where(s => s.Empresa.CNPJ == cnpj));
-            await t;
-            return t.Result;
+            return await _db.Emprego.Include(e => e.Empresa).ToListAsync();
         }
 
-        public async Task<IEnumerable<Empregos>> GetByIdAsync(Guid id)
+        public async Task<IEnumerable<Empregos>> ListEmpregosAsync()
         {
-            var t = Task.Run(() => _db.Emprego.Include(e => e.Empresa).Where(s => s.Id == id));
-            await t;
-            return t.Result;
+           return await _db.Emprego.Include(e => e.Empresa).ToListAsync();
         }
 
-        public Task<IEnumerable<Empregos>> ListEmpregosAsync()
+        public async Task<IEnumerable<Empregos>> ListEmpregosAsync(string cnpj)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Empregos>> ListEmpregosAsync(string cnpj)
-        {
-            throw new NotImplementedException();
+            return await _db.Emprego.Include(e => e.Empresa).Where(s => s.Empresa.CNPJ == cnpj).ToListAsync();
         }
     }
 }

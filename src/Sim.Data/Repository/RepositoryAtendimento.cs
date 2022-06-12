@@ -22,6 +22,24 @@ namespace Sim.Data.Repository
             return await ativo;
         }
 
+        public Task<Atendimento> GetIdAsync(Guid id)
+        {
+            return Task.Run(() => _db.Atendimento
+                .Include(p => p.Pessoa)
+                .Include(e => e.Empresa)
+                .Include(s => s.Sebrae)
+                .Where(i => i.Id == id).FirstOrDefault());
+        }
+
+        public async Task<IEnumerable<Atendimento>> ListAllAsync()
+        {
+            return await _db.Atendimento
+                .Include(p => p.Pessoa)
+                .Include(e => e.Empresa)
+                .Include(s => s.Sebrae)
+                .OrderByDescending(o => o.Data.Value.Date).ToListAsync();
+        }
+
         public async Task<IEnumerable<Atendimento>> ListAtendimentoAtivoAsync(string userid)
         {
             var ativo = Task.Run(()=> _db.Atendimento

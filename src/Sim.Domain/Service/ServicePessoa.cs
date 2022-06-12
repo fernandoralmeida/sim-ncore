@@ -23,6 +23,16 @@ namespace Sim.Domain.Service
             return await _repositoryPessoa.ConsultaNomeAsync(nome);
         }
 
+        public async Task<Pessoa> GetIdAsync(Guid id)
+        {
+            return await _repositoryPessoa.GetIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Pessoa>> ListAllAsync()
+        {
+            return await _repositoryPessoa.ListAllAsync();
+        }
+
         public async Task<IEnumerable<Pessoa>> ListTop10Async()
         {
             return await _repositoryPessoa.ListTop10Async();

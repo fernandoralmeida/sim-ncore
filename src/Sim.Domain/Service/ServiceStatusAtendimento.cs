@@ -13,6 +13,16 @@ namespace Sim.Domain.Service
             _statusatendimento = repositoryStatusAtendimento;
         }
 
+        public async Task<StatusAtendimento> GetIdAsync(Guid id)
+        {
+            return await _statusatendimento.GetIdAsync(id);
+        }
+
+        public async Task<IEnumerable<StatusAtendimento>> ListAllAsync()
+        {
+            return await _statusatendimento.ListAllAsync();
+        }
+
         public async Task<IEnumerable<StatusAtendimento>> ListUserAsync(string username)
         {
             return await _statusatendimento.ListUserAsync(username);

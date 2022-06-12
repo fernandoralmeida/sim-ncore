@@ -12,14 +12,14 @@ namespace Sim.Domain.Service
             :base(repositoryCanal)
         { _canal = repositoryCanal; }
 
-        public Task<Canal> GetIdAsync(Guid id)
+        public async Task<Canal> GetIdAsync(Guid id)
         {
-            return _canal.GetIdAsync(id);
+            return await _canal.GetIdAsync(id);
         }
 
-        public Task<IEnumerable<Canal>> ListAllAsync()
+        public async Task<IEnumerable<Canal>> ListAllAsync()
         {
-            return _canal.ListAllAsync();
+            return await _canal.ListAllAsync();
         }
 
         public async Task<IEnumerable<Canal>> ListCanalOwner(string setor)

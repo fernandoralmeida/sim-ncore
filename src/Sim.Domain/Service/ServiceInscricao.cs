@@ -14,6 +14,11 @@ namespace Sim.Domain.Service
             _inscricao = repositoryInscricao;
         }
 
+        public async Task<Inscricao> GetIdAsync(Guid id)
+        {
+            return await _inscricao.GetIdAsync(id);
+        }
+
         public async Task<Inscricao> GetInscritoAsync(Guid id)
         {
             return await _inscricao.GetInscritoAsync(id);
@@ -27,6 +32,11 @@ namespace Sim.Domain.Service
         public int LastCodigo()
         {
             return _inscricao.LastCodigo();
+        }
+
+        public async Task<IEnumerable<Inscricao>> ListAllAsync()
+        {
+            return await _inscricao.ListAllAsync();
         }
 
         public async Task<IEnumerable<Inscricao>> ListEventoAsync(string evento)
