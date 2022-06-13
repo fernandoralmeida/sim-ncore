@@ -8,8 +8,15 @@ namespace Sim.Data.Context
 
     public class ApplicationContext : DbContext
     {
+        private readonly string _sqlconnection;
+
         public ApplicationContext()
-        {  }
+        { }
+
+        public ApplicationContext(string sqlconnection)
+        {
+            _sqlconnection = sqlconnection;
+        }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {  }
@@ -37,23 +44,8 @@ namespace Sim.Data.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(SqlServerConnect());
+                optionsBuilder.UseSqlServer(_sqlconnection);
             }
-        }
-
-        private static string _sqlserverconnect = string.Empty;
-        private static string SqlServerConnect()
-        {
-            return _sqlserverconnect;
-        }
-
-        public void RegisterDataContext(IServiceCollection services, IConfiguration config, string connection)
-        {
-            _sqlserverconnect = config.GetConnectionString(connection);
-            
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));
-
-            services.AddScoped<DbContext, ApplicationContext>();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
