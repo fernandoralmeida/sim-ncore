@@ -1,26 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
     public class RepositoryStatusAtendimento : RepositoryBase<StatusAtendimento>, IRepositoryStatusAtendimento
     {
         public RepositoryStatusAtendimento(ApplicationContext dbContext)
             : base(dbContext)
         { }
 
-        public async Task<IEnumerable<StatusAtendimento>> ListByUser(string username)
+        public async Task<StatusAtendimento> GetIdAsync(Guid id)
         {
-            var t = Task.Run(() => _db.StatusAtendimento.Where(s => s.UnserName == username));
-            await t;
-            return t.Result;
+            return await _db.StatusAtendimento.FirstOrDefaultAsync(s => s.Id == id);
+        }
+
+        public async Task<IEnumerable<StatusAtendimento>> ListAllAsync()
+        {
+            return await _db.StatusAtendimento.ToListAsync();
+        }
+
+        public async Task<IEnumerable<StatusAtendimento>> ListUserAsync(string username)
+        {
+            return await _db.StatusAtendimento.Where(s => s.UnserName == username).ToListAsync();
         }
     }
 }

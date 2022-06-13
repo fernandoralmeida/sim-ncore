@@ -1,25 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
     public class RepositorySetor : RepositoryBase<Setor>, IRepositorySetor
     {
         public RepositorySetor(ApplicationContext dbContext)
             :base(dbContext)
+        {        }
+
+        public async Task<Setor> GetIdAsync(Guid id)
         {
-                
+            return await _db.Setor.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public IEnumerable<Setor> GetByOwner(string secretaria)
+        public async Task<IEnumerable<Setor>> ListAllAsync()
         {
-            return _db.Setor.Where(u => u.Secretaria.Nome.Contains(secretaria));
+            return await _db.Setor.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Setor>> ListSetorOwnerAsync(string secretaria)
+        {
+            return await _db.Setor
+                .Include(s=>s.Canais)
+                .Include(s=>s.Servicos)
+                .Where(u => u.Secretaria.Nome.Contains(secretaria)).ToListAsync();
         }
     }
 }

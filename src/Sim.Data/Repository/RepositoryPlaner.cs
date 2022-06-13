@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
     public class RepositoryPlaner : RepositoryBase<Planner>, IRepositoryPlaner
     {
         public RepositoryPlaner(ApplicationContext dbContext)
@@ -17,16 +13,28 @@ namespace Sim.Cross.Data.Repository.Shared
 
         }
 
-        public IEnumerable<Planner> GetByData(DateTime? data)
+        public Task<Planner> GetIdAsync(Guid id)
         {
-            return _db.Planner.Where(u => u.DataInicial == data);
+            return _db.Planner.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Planner>> GetMyPlanner(DateTime? datai, DateTime? dataf, string username)
+        public async Task<IEnumerable<Planner>> ListAllAsync()
         {
-            var t = Task.Run(() => _db.Planner.Where(s => s.DataInicial.Value.Date == datai && s.DataFinal.Value.Date == dataf && s.Owner_AppUser_Id == username).OrderBy(o => o.DataInicial));
-            await t;
-            return t.Result;
+            return await _db.Planner.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Planner>> ListDataAsync(DateTime? data)
+        {
+            return await _db.Planner.Where(u => u.DataInicial == data).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Planner>> ListPlannerAsync(DateTime? datai, DateTime? dataf, string username)
+        {
+            return await _db.Planner
+                .Where(s => s.DataInicial.Value.Date == datai
+                && s.DataFinal.Value.Date == dataf
+                && s.Owner_AppUser_Id == username)
+                .OrderBy(o => o.DataInicial).ToListAsync();
         }
     }
 }

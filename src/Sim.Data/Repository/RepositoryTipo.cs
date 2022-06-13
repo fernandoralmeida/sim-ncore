@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
     public class RepositoryTipo : RepositoryBase<Tipo>, IRepositoryTipo
     {
         public RepositoryTipo(ApplicationContext dbContext)
@@ -17,10 +13,19 @@ namespace Sim.Cross.Data.Repository.Shared
                 
         }
 
-        public IEnumerable<Tipo> GetByOwner(string owner)
+        public async Task<Tipo> GetIdAsync(Guid id)
         {
-            return _db.Tipos.Where(u => u.Owner.Contains(owner));
+            return await _db.Tipos.FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async Task<IEnumerable<Tipo>> ListAllAsync()
+        {
+            return await _db.Tipos.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Tipo>> ListTipoOwnerAsync(string owner)
+        {
+            return await _db.Tipos.Where(u => u.Owner.Contains(owner)).ToListAsync();
+        }
     }
 }

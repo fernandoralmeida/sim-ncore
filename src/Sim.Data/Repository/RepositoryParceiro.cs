@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
-
 
     public class RepositoryParceiro : RepositoryBase<Parceiro>, IRepositoryParceiro
     {
@@ -20,11 +14,19 @@ namespace Sim.Cross.Data.Repository.Shared
 
         }
 
-        public async Task<IEnumerable<Parceiro>> ListParceiros(string owner)
+        public async Task<Parceiro> GetIdAsync(Guid id)
         {
-            var t = Task.Run(() => _db.Parceiro.Include(s=>s.Secretaria).Where(u => u.Secretaria.Nome.Contains(owner)));
-            await t;
-            return t.Result;
+            return await _db.Parceiro.Include(s => s.Secretaria).Where(u => u.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Parceiro>> ListAllAsync()
+        {
+            return await _db.Parceiro.Include(s => s.Secretaria).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Parceiro>> ListParceirosAsync(string owner)
+        {
+            return await _db.Parceiro.Include(s => s.Secretaria).Where(u => u.Secretaria.Nome.Contains(owner)).ToListAsync();
         }
     }
 }

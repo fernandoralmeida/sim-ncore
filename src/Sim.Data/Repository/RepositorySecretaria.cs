@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
     public class RepositorySecretaria : RepositoryBase<Secretaria>, IRepositorySecretaria
     {
         public RepositorySecretaria(ApplicationContext dbContext)
@@ -17,9 +13,19 @@ namespace Sim.Cross.Data.Repository.Shared
                 
         }
 
-        public IEnumerable<Secretaria> GetByOwner(string setor)
+        public async Task<Secretaria> GetIdAsync(Guid id)
         {
-            return _db.Secretaria.Where(u => u.Owner.Contains(setor));
+            return await _db.Secretaria.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<IEnumerable<Secretaria>> ListAllAsync()
+        {
+            return await _db.Secretaria.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Secretaria>> ListSecretariaOwnerAsync(string setor)
+        {
+            return await _db.Secretaria.Where(u => u.Owner.Contains(setor)).ToListAsync();
         }
     }
 }

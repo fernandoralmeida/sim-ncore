@@ -13,36 +13,22 @@ namespace Sim.Data.Repository
 
         }
 
-        public IEnumerable<Inscricao> GetByEvento(string evento)
+        public async Task<Inscricao> GetIdAsync(Guid id)
         {
-            return _db.Inscricao.Where(u => u.Numero.ToString() == evento);
-        }
-
-        public IEnumerable<Inscricao> GetByParticipante(string nome)
-        {
-            var query = _db.Inscricao
+            return await _db.Inscricao
                 .Include(p => p.Participante)
                 .Include(e => e.Empresa)
                 .Include(e => e.Evento)
-                .Where(s => s.Participante.CPF == nome).ToList();
-
-            return query; //_db.Inscricao.Select(r => r);
+                .Where(s => s.Id == id).FirstOrDefaultAsync();
         }
 
-        public IEnumerable<Inscricao> GetByTipo(string evento)
+        public async Task<Inscricao> GetInscritoAsync(Guid id)
         {
-            return _db.Inscricao.Select(r => r);
-        }
-
-        public async Task<IEnumerable<Inscricao>> GetInscrito(Guid id)
-        {
-            var query = await Task.Run(() => _db.Inscricao
+            return await _db.Inscricao
                 .Include(p => p.Participante)
                 .Include(e => e.Empresa)
                 .Include(e => e.Evento)
-                .Where(s => s.Id == id));
-
-            return query; //_db.Inscricao.Select(r => r);
+                .Where(s => s.Id == id).FirstOrDefaultAsync();
         }
 
         public bool JaInscrito(string cpf, int evento)
@@ -72,5 +58,33 @@ namespace Sim.Data.Repository
                 return (int)cod;
         }
 
+        public async Task<IEnumerable<Inscricao>> ListAllAsync()
+        {
+            return await _db.Inscricao.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Inscricao>> ListEventoAsync(string evento)
+        {
+            return await _db.Inscricao.Where(u => u.Numero.ToString() == evento).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Inscricao>> ListParticipanteAsync(string nome)
+        {
+            return await _db.Inscricao
+                .Include(p => p.Participante)
+                .Include(e => e.Empresa)
+                .Include(e => e.Evento)
+                .Where(s => s.Participante.CPF == nome).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Inscricao>> ListTipoAsync(string evento)
+        {
+            return await _db.Inscricao
+                .AsNoTracking()
+                .Include(e => e.Evento)
+                .Include(p => p.Participante)
+                .Include(t=>t.Empresa)
+                .Where(s=>s.Evento.Tipo.Contains(evento)).ToListAsync();
+        }
     }
 }

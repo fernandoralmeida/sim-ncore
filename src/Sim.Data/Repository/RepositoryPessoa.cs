@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.SDE
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.SDE.Entity;
-    using Sim.Domain.SDE.Interface;
-    using Context;
     public class RepositoryPessoa : RepositoryBase<Pessoa>, IRepositoryPessoa
     {
         public RepositoryPessoa(ApplicationContext dbContext)
@@ -17,23 +13,30 @@ namespace Sim.Cross.Data.Repository.SDE
 
         }
 
-        public IEnumerable<Pessoa> ConsultaByCPF(string cpf)
+        public async Task<IEnumerable<Pessoa>> ConsultaCPFAsync(string cpf)
         {
-            return _db.Pessoa.Where(c => c.CPF == cpf).OrderBy(c => c.Nome);
+            return await _db.Pessoa.Where(c => c.CPF == cpf).OrderBy(c => c.Nome).ToListAsync();
         }
 
-        public IEnumerable<Pessoa> ConsultaByNome(string nome)
+        public async Task<IEnumerable<Pessoa>> ConsultaNomeAsync(string nome)
         {
-            return _db.Pessoa.Where(c => c.Nome.Contains(nome) || c.Nome_Social.Contains(nome)).OrderBy(c => c.Nome);
+            return await _db.Pessoa.Where(c => c.Nome.Contains(nome) || c.Nome_Social.Contains(nome)).OrderBy(c => c.Nome).ToListAsync();
         }
 
-        public IEnumerable<Pessoa> Top10()
+        public async Task<Pessoa> GetIdAsync(Guid id)
         {
-            var top = (from q in _db.Pessoa
-                       orderby q.Ultima_Alteracao descending
-                       select q).Take(10);
-
-            return top;
+            return await _db.Pessoa.Where(c => c.Id == id).FirstOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<Pessoa>> ListAllAsync()
+        {
+            return await _db.Pessoa.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Pessoa>> ListTop10Async()
+        {
+            return await _db.Pessoa.Take(10).OrderByDescending(d => d.Ultima_Alteracao).ToListAsync();
+        }
+
     }
 }

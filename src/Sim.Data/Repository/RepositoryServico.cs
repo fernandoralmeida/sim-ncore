@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Sim.Data.Context;
+using Sim.Domain.Entity;
+using Sim.Domain.Interface.IRepository;
 
-namespace Sim.Cross.Data.Repository.Shared
+namespace Sim.Data.Repository
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Domain.Shared.Interface;
-    using Context;
     public class RepositoryServico : RepositoryBase<Servico>, IRepositoryServico
     {
         public RepositoryServico(ApplicationContext dbContext)
@@ -17,16 +13,22 @@ namespace Sim.Cross.Data.Repository.Shared
 
         }
 
-        public IEnumerable<Servico> GetByOwner(string setor)
+        public async Task<Servico> GetIdAsync(Guid id)
         {
-            if (setor != null)
-            {
-                return _db.Servico.Where(u => u.Setor.Nome.Contains(setor) || u.Setor.Nome.Contains("Geral")).OrderBy(o => o.Nome);                
-            }
-            else
-            {
-                return new List<Servico>();
-            }
+            return await _db.Servico.Where(u => u.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Servico>> ListAllAsync()
+        {
+            return await _db.Servico.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Servico>> ListServicoOwnerAsync(string setor)
+        {
+            return await _db.Servico
+                .Include(s => s.Setor)
+                .Include(s => s.Secretaria)
+                .Where(p => p.Setor.Nome.Contains(setor)).ToListAsync();
         }
     }
 
