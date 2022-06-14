@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Sim.Domain.WebService.RWS.Entity;
-using Sim.Domain.WebService.RWS.Functions;
+using Sim.Application.WebService.RWS.Entity;
+using Sim.Application.WebService.RWS.Functions;
 
-namespace Sim.Domain.WebService.RWS.Services
+namespace Sim.Application.WebService.RWS.Services
 {
     public class ReceitaWS : IReceitaWS
     {
@@ -12,11 +12,6 @@ namespace Sim.Domain.WebService.RWS.Services
         public ReceitaWS()
         {
             _httpClient = new HttpClient();
-        }
-
-        public CNPJ ConsultarCPNJ(string cnpj)
-        {
-            return ConsultarCPNJAsync(cnpj).Result;
         }
 
         public async Task<CNPJ> ConsultarCPNJAsync(string cnpj)
@@ -40,10 +35,9 @@ namespace Sim.Domain.WebService.RWS.Services
             }
             catch (Exception ex)
             {
-                string erro = ex.Message;
+                throw new ArgumentException(ex.Message);
             }
 
-            return null;
         }
     }
 }

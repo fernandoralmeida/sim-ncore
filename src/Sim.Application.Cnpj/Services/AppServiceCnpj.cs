@@ -1,13 +1,14 @@
 ﻿using Sim.Domain.Cnpj.Entity;
 using Sim.Domain.Cnpj.Interfaces;
+using Sim.Application.Cnpj.Interfaces;
 
-namespace Sim.Domain.Cnpj.Services
+namespace Sim.Application.Cnpj.Services
 {
-    public class ServiceCnpj : ServiceBase<BaseReceitaFederal>, IServiceCnpj
+    public class AppServiceCnpj : AppServiceBase<BaseReceitaFederal>, IAppServiceCnpj
     {
-        private readonly IRepositoryCnpj _cnpj;
+        private readonly IServiceCnpj  _cnpj;
 
-        public ServiceCnpj(IRepositoryCnpj cnpj):base(cnpj)
+        public AppServiceCnpj(IServiceCnpj cnpj):base(cnpj)
         {
             _cnpj = cnpj;   
         }

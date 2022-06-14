@@ -1,8 +1,8 @@
 ﻿using Sim.Domain.Cnpj.Entity;
 
-namespace Sim.Domain.Cnpj.Interfaces
+namespace Sim.Application.Cnpj.Interfaces
 {
-    public interface IRepositoryCnpj : IRepositoryBase<BaseReceitaFederal>
+    public interface IAppServiceCnpj : IAppServiceBase<BaseReceitaFederal>
     {
         Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string endereco, string cnae, string municipio, string situacaocadastral);
         Task<IEnumerable<BaseReceitaFederal>> ListEnderecoCnaeAsync(string endereco, string cnae, string municipio, string situacaocadastral);

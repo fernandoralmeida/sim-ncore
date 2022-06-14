@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Sim.Domain.WebService.RWS.Entity
+namespace Sim.Application.WebService.RWS.Entity
 {
     public class CNPJ
     {

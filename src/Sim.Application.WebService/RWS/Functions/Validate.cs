@@ -1,4 +1,4 @@
-﻿namespace Sim.Domain.WebService.RWS.Functions
+﻿namespace Sim.Application.WebService.RWS.Functions
 {
     internal class Validate
     {

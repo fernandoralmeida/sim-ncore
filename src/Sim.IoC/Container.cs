@@ -12,6 +12,8 @@ using Sim.Application;
 using Sim.Application.Interfaces;
 using Sim.Application.Services;
 
+using Sim.Application.WebService.RWS.Services;
+
 using Sim.Data;
 using Sim.Data.Context;
 using Sim.Data.Repository;
@@ -43,6 +45,8 @@ namespace Sim.IoC
             AddPlannerServices(services);
             AddParceiroServices(services);
             AddEmpregosServices(services);
+
+            services.AddScoped<IReceitaWS, ReceitaWS>();
         }
 
         private static void AddPessoaServices(IServiceCollection services)
