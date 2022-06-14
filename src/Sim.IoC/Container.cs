@@ -45,11 +45,6 @@ namespace Sim.IoC
             AddEmpregosServices(services);
         }
 
-        private static void AddCanalServices(IServiceCollection services)
-        {
-            throw new NotImplementedException();
-        }
-
         private static void AddPessoaServices(IServiceCollection services)
         {
             services.AddScoped<IAppServiceBase<Pessoa>, AppServiceBase<Pessoa>>();
@@ -151,7 +146,7 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryEvento, RepositoryEvento>();
         }
 
-        private static void RegisterCanal(IServiceCollection services)
+        private static void AddCanalServices(IServiceCollection services)
         {
             //
             services.AddScoped<IAppServiceBase<Canal>, AppServiceBase<Canal>>();
