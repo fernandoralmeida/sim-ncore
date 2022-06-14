@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Domain", "src\Sim.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Data", "src\Sim.Data\Sim.Data.csproj", "{B02F8000-4EAA-4D58-AA57-C58F4F3B3D4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.Identity", "src\Sim.Identity\Sim.Identity.csproj", "{4C83DA8C-D453-4C84-9795-75A0BBDAE734}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Identity", "src\Sim.Identity\Sim.Identity.csproj", "{4C83DA8C-D453-4C84-9795-75A0BBDAE734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.IoC", "src\Sim.IoC\Sim.IoC.csproj", "{1E8007C8-3E31-46CC-AC48-DD9BA9689445}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.IoC", "src\Sim.IoC\Sim.IoC.csproj", "{1E8007C8-3E31-46CC-AC48-DD9BA9689445}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.Application", "src\Sim.Application\Sim.Application.csproj", "{5C32CD2A-5C0E-44CD-A2FE-666D4E1FFA36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{1E8007C8-3E31-46CC-AC48-DD9BA9689445}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E8007C8-3E31-46CC-AC48-DD9BA9689445}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E8007C8-3E31-46CC-AC48-DD9BA9689445}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C32CD2A-5C0E-44CD-A2FE-666D4E1FFA36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C32CD2A-5C0E-44CD-A2FE-666D4E1FFA36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C32CD2A-5C0E-44CD-A2FE-666D4E1FFA36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C32CD2A-5C0E-44CD-A2FE-666D4E1FFA36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{B02F8000-4EAA-4D58-AA57-C58F4F3B3D4C} = {8BBE9BCF-7C53-41D6-9334-C7D2A695B785}
 		{4C83DA8C-D453-4C84-9795-75A0BBDAE734} = {8BBE9BCF-7C53-41D6-9334-C7D2A695B785}
 		{1E8007C8-3E31-46CC-AC48-DD9BA9689445} = {8BBE9BCF-7C53-41D6-9334-C7D2A695B785}
+		{5C32CD2A-5C0E-44CD-A2FE-666D4E1FFA36} = {2113FA22-DA95-4499-8507-A383AE486AEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFA1287D-4898-4A02-B904-6DE18B4E3926}

@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-
-namespace Sim.Domain
+﻿
+namespace Sim.Application
 {
-    public interface IServiceBase<TEntity> where TEntity : class
+    public interface IAppServiceBase<TEntity> where TEntity : class
     {
         Task AddAsync(TEntity obj);
         Task UpdateAsync(TEntity obj);
         Task RemoveAsync(TEntity obj);
+
     }
 }

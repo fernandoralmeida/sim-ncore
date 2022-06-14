@@ -8,15 +8,9 @@ namespace Sim.Data.Context
 
     public class ApplicationContext : DbContext
     {
-        private readonly string _sqlconnection;
 
         public ApplicationContext()
         { }
-
-        public ApplicationContext(string sqlconnection)
-        {
-            _sqlconnection = sqlconnection;
-        }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {  }
@@ -40,14 +34,6 @@ namespace Sim.Data.Context
         public DbSet<Contador> Contador { get; set; }
         public DbSet<StatusAtendimento> StatusAtendimento { get; set; }
        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(_sqlconnection);
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Ambulante>().ToTable("Ambulante");
