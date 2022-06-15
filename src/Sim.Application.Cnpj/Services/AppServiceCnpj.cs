@@ -23,6 +23,11 @@ namespace Sim.Application.Cnpj.Services
             return await _cnpj.ListAllAsync(endereco, cnae, municipio, situacaocadastral);
         }
 
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string situacaocadastral)
+        {
+            return await _cnpj.ListAllAsync(situacaocadastral);
+        }
+
         public async Task<IEnumerable<BaseReceitaFederal>> ListAllMatrizFilialAsync(string cnpjbase)
         {
             return await _cnpj.ListAllRazaoSocialAsync(cnpjbase);

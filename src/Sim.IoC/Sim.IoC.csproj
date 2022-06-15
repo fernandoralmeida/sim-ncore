@@ -11,8 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sim.Application.Cnpj\Sim.Application.Cnpj.csproj" />
     <ProjectReference Include="..\Sim.Application.WebService\Sim.Application.WebService.csproj" />
     <ProjectReference Include="..\Sim.Application\Sim.Application.csproj" />
+    <ProjectReference Include="..\Sim.Data.Cnpj\Sim.Data.Cnpj.csproj" />
     <ProjectReference Include="..\Sim.Data\Sim.Data.csproj" />
     <ProjectReference Include="..\Sim.Domain.Cnpj\Sim.Domain.Cnpj.csproj" />
     <ProjectReference Include="..\Sim.Domain\Sim.Domain.csproj" />

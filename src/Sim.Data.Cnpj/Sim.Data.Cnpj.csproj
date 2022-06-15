@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Sim.Domain.Cnpj\Sim.Domain.Cnpj.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
 </Project>

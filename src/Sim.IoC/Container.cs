@@ -28,6 +28,7 @@ namespace Sim.IoC
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));
             services.AddScoped<DbContext, ApplicationContext>();
+            services.AddScoped<IReceitaWS, ReceitaWS>();
         }
         public static void ApplicationContextServices(IServiceCollection services)
         {
@@ -44,9 +45,7 @@ namespace Sim.IoC
             AddTiposInscricaoEventosServices(services);
             AddPlannerServices(services);
             AddParceiroServices(services);
-            AddEmpregosServices(services);
-
-            services.AddScoped<IReceitaWS, ReceitaWS>();
+            AddEmpregosServices(services);            
         }
 
         private static void AddPessoaServices(IServiceCollection services)
