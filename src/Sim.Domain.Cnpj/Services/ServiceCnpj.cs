@@ -12,14 +12,14 @@ namespace Sim.Domain.Cnpj.Services
             _cnpj = cnpj;   
         }
 
-        public async Task<BaseReceitaFederal> GetCNPJAsync(string razaosocial)
+        public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj)
         {
-            return await _cnpj.GetCNPJAsync(razaosocial);
+            return await _cnpj.GetCNPJAsync(cnpj);
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string endereco, string cnae, string municipio, string situacaocadastral)
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string bairro, string endereco, string cnae, string municipio, string situacaocadastral)
         {
-            return await _cnpj.ListAllAsync(endereco, cnae, municipio, situacaocadastral);
+            return await _cnpj.ListAllAsync(bairro, endereco, cnae, municipio, situacaocadastral);
         }
 
         public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string situacaocadastral)
@@ -42,14 +42,9 @@ namespace Sim.Domain.Cnpj.Services
             return await _cnpj.ListAllSocioAsync(nomesocio);
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListEnderecoCnaeAsync(string endereco, string cnae, string municipio, string situacaocadastral)
+        public async Task<IEnumerable<BaseReceitaFederal>> ListOptantesSimplesNacionalAsync(string municipio, string situacaocadastral)
         {
-            return await _cnpj.ListEnderecoCnaeAsync(endereco, cnae, municipio, situacaocadastral); 
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListOptantesSimplesNacionalAsync()
-        {
-            return await _cnpj.ListOptantesSimplesNacionalAsync();
+            return await _cnpj.ListOptantesSimplesNacionalAsync(municipio, situacaocadastral);
         }
 
         public async Task<IEnumerable<BaseReceitaFederal>> ListOptantesSimplesNacionalAsync(string endereco, string cnae, string municipio, string situacaocadastral)
