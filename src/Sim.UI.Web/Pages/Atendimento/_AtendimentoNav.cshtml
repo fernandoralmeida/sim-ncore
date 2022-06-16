@@ -1,0 +1,42 @@
+﻿@using Sim.UI.Web.Pages.Atendimento
+
+<div class="navbar navbar-fixed">
+    <nav class="navbar">
+        <div class="nav-wrapper white">
+            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
+            <a class="navbar-page-name grey-text">Atendimentos</a>
+            <ul class="right">
+
+                <!--
+    <li>
+        <a class="@AtendimentoNavPages.InicioNavClass(ViewContext)" asp-page="./Index">Meus Atendimentos</a>
+    </li>
+
+                @{
+                    if (User.IsInRole("Administrador"))
+                    {
+                <li>
+                    <a class="@AtendimentoNavPages.InicioNavClass(ViewContext) grey-text" asp-page="/Atendimento/Consulta.User">Consultar Atendentes</a>
+                </li>
+            }
+        }
+        <li>
+            <a class="dropdown-trigger @AtendimentoNavPages.ConsultaNavClass(ViewContext) grey-text" data-target="dropdownat" href="#">Consultar<i class="material-icons right">arrow_drop_down</i></a>
+            <ul id="dropdownat" class="dropdown-content">
+                <li><a asp-page="/Atendimento/Consulta">Atendimentos por Data</a></li>
+                <li><a asp-page="/Atendimento/Consulta.ByPF">Atendimentos por CPF</a></li>
+                <li><a asp-page="/Atendimento/Consulta.ByPJ">Atendimentos por CNPJ</a></li>
+                <li><a asp-page="/Atendimento/Consulta.Pendencias">Meus Atendimentos Pendentes</a></li>
+                <li><a asp-page="/Atendimento/Consulta.Cancelados">Meus Atendimentos Cancelados</a></li>
+                <li><a asp-page="/Atendimento/Consultas/Ativos">Atendimentos Ativos</a></li>
+            </ul>
+        </li>-->
+                <li class="blue lighten-1 waves-effect waves-light">
+                    <form>
+                        <a asp-area="" asp-page="/Pessoa/Index">Novo Atendimento</a>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

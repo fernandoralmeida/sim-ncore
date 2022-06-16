@@ -1,0 +1,39 @@
+﻿@page
+@model Sim.UI.Web.Pages.Agenda.IndexModel
+@{
+    ViewData["Title"] = "Eventos";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<form method="post">
+    <div class="card row valign-wrapper">
+        <div class="input-field col s2 m2 l2 valign-wrapper">
+            <input asp-for="Input.Ano" />
+            <label asp-for="Input.Ano"></label>
+        </div>
+        <div class="input-field col s5 m6 l7 valign-wrapper">
+            <input asp-for="Input.Evento"/>
+            <label asp-for="Input.Evento"></label>
+            <button class="btn waves-effect waves-light" asp-page-handler="Event"><i class="material-icons">search</i></button>
+        </div>
+        <div class="col s5 m4 l3 right-align">
+            <button class="btn btn-floating waves-effect waves-light green" asp-page-handler="Available" title="Eventos Ativos"><i class="material-icons">event_available</i></button>
+            <button class="btn btn-floating waves-effect waves-light orange" asp-page-handler="Finalized" title="Eventos Finalizados"><i class="material-icons">event</i></button>
+            <button class="btn btn-floating waves-effect waves-light materialize-red" asp-page-handler="Canceled" title="Eventos Cancelados"><i class="material-icons">event_busy</i></button>
+        </div>
+    </div>
+</form>
+
+<!--
+<partial name="_AgendaList" model="Model.Input.ListaEventos" />
+-->
+<partial name="_AgendaList" model="Model.Input.ListaEventosMes" />
+
+@section scripts
+{
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script type="text/javascript">
+        $('#inputCPF').mask('000.000.000-00');        
+    </script>
+}

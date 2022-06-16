@@ -1,0 +1,82 @@
+﻿@page
+@model Sim.UI.Web.Pages.Empresa.Consultas.RazaoSocialModel
+@{
+    ViewData["Title"] = "Lista";
+}
+
+<!--<partial name="_StatusMessage" model="Model.StatusMessage" />-->
+
+<div class="card">
+    <div class="card-title">
+        <nav class="z-depth-0" style="border-bottom:solid 1px #efefef;">
+            <div class="nav-wrapper white">
+                <form method="post" class="row">
+                    <div class="input-field col s6 l6 m6">
+                        <input asp-for="Input.RazaoSocial" type="search" placeholder="Razão Social" required>
+                        <label class="label-icon" asp-for="Input.RazaoSocial"><i class="black-text material-icons">search</i></label>
+                    </div>
+                    <button class="input-field btn waves-effect waves-light right z-depth-0" type="submit" name="action">Pesquisar</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>
+                    CNPJ
+                </th>
+
+                <th>
+                    Nome Empresarial
+                </th>
+
+                <th>
+                    Contato
+                </th>
+
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont = 0;
+            }
+
+            @foreach (var item in Model.Input.ListaEmpresas)
+            {
+                <tr>
+                    <td>
+                        @{ cont++; }
+                        @cont
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNPJ)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome_Empresarial)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefone)
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                    <td>
+                        <a asp-page="./Update" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" title="Alterar informações"><i class="material-icons">edit</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputCNPJ').mask('00.000.000/0000-00', { placeholder: "Consultar Razão Social" });
+    </script>
+}

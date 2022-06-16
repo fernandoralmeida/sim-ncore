@@ -1,0 +1,23 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Pages/Shared/_Layout.cshtml";
+    }
+    ViewData["ActivePage"] = Web.Pages.Shared.LayoutNavPages.Inicio;
+    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.InicioPAT;
+}
+
+   <partial name="_PatNav" />
+
+
+<div style="margin:20px 20px 20px 20px;">
+    @RenderBody()
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

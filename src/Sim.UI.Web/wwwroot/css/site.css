@@ -1,0 +1,398 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+/* 
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+Provide sufficient contrast against white background
+a {
+    color: #0366d6;
+}
+ */
+
+/* Sticky footer styles
+-------------------------------------------------- 
+@import "../lib/bootstrap/dist/css/bootstrap-utilities.min.css";*/
+
+
+html {
+    /*font-size: 14px;*/
+}
+
+.mgn-t-4{
+    margin-top:4px;
+}
+.mgn-t-10 {
+    margin-top: 10px;
+}
+
+.mgn-b-4{
+    margin-bottom:4px;
+}
+
+.pdn-b-4{
+    padding-bottom:4px;
+}
+
+.pdn-h-4{
+    padding-left:4px;
+    padding-right:4px;
+}
+
+/* Navbar Page Name */
+.navbar-page-name {
+    margin-left: 10px;
+    font-size:large;
+}
+
+/* materialize */
+.sidenav {
+    width: 250px
+}
+
+.has-fixed-sidenav .fixed-chart {
+    left: 250px
+}
+
+.waves-effect.waves-blue .waves-ripple {
+    /* The alpha value allows the text and background color
+   of the button to still show through. */
+    background-color: rgba(33, 150, 243, 0.7);
+}
+
+.waves-effect.waves-blue-grey .waves-ripple {
+    /* The alpha value allows the text and background color
+   of the button to still show through. */
+    background-color: rgba(96, 125, 139, 0.7);
+}
+
+nav.navbar .brand-logo {
+    position: relative;
+    float: left;
+    font-size: 18px;
+    /*color: rgba(0,0,0,0.87)*/
+}
+
+    nav.navbar .brand-logo i {
+        line-height: inherit;
+        transition: color .2s
+    }
+
+/*  Sidenav  */
+.sidenav .logo-container {
+    padding: 0 16px;
+    height: 64px;
+    line-height: 64px;
+    font-size: 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    box-sizing: content-box
+}
+
+    .sidenav .logo-container i.material-icons {
+        line-height: inherit
+    }
+
+.sidenav .collapsible > .active .collapsible-header .chevron {
+    transform: rotate(-90deg)
+}
+
+.sidenav .collapsible .collapsible-header .chevron {
+    float: right;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    margin: 20px 0 0 0;
+    transition: transform .2s
+}
+
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+    margin: 0 10px 0 0;
+}
+
+/* End Sidenav  */
+
+@media only screen and (max-width: 992px) {
+    .has-fixed-sidenav .fixed-chart {
+        left: 0
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    body.has-fixed-sidenav {
+        padding-left: 250px
+    }
+
+    @media only screen and (min-width: 993px) {
+        body.has-fixed-sidenav {
+            padding-left: 250px
+        }
+
+        @media only screen and (min-width: 993px) {
+            .has-fixed-sidenav .navbar-fixed nav.navbar {
+                width: calc(100% - 250px);
+                left: 250px
+            }
+
+            body:not(.has-fixed-sidenav) nav a.sidenav-trigger {
+                display: block
+            }
+
+            body:not(.has-fixed-sidenav) nav.navbar .brand-logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%)
+            }
+        }
+
+        ul.collapsible-accordion {
+            background-color: #FFF
+        }
+
+        ul.sidenav.sidenav-fixed ul.collapsible-accordion a.collapsible-header {
+            padding: 0 30px
+        }
+
+        ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
+            font-weight: 400;
+            padding: 0 37.5px 0 45px
+        }
+
+        ul.sidenav.sidenav-fixed:hover {
+            overflow-y: auto
+        }
+
+        .search-wrapper {
+            color: #777;
+            margin-top: -1px;
+            border-top: 1px solid rgba(0,0,0,0.14);
+            -webkit-transition: margin .25s ease;
+            transition: margin .25s ease
+        }
+
+        #nav-mobile li.search .search-wrapper.focused .search-results:not(:empty) {
+            border-bottom: 1px solid rgba(0,0,0,0.14)
+        }
+
+        #nav-mobile li.search .search-wrapper input#search {
+            color: #777;
+            display: block;
+            font-size: 16px;
+            font-weight: 300;
+            width: 100%;
+            height: 62px;
+            margin: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0 45px 0 30px;
+            border: 0
+        }
+
+            #nav-mobile li.search .search-wrapper input#search:focus {
+                outline: none;
+                -webkit-box-shadow: none;
+                box-shadow: none
+            }
+
+        #nav-mobile li.search .search-wrapper i.material-icons {
+            position: absolute;
+            top: 21px;
+            right: 10px;
+            cursor: pointer
+        }
+    }
+}
+        /***/
+
+        @media (min-width: 768px) {
+            html {
+                /*font-size: 16px;*/
+            }
+        }
+
+        button.accept-policy {
+            font-size: 1rem;
+            line-height: inherit;
+        }
+
+        /* Sticky footer styles
+-------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            /* Margin bottom by footer height 
+        margin-bottom: 80px;*/
+            /* Margin top by fixed navbar height 
+    margin-top: 90px;*/
+            /* background: url(imgs/bgios.jpg) no-repeat fixed;
+    background-size: cover;*/
+            /**/
+            background-color: #f5f5f5;
+        }
+
+        .bg-teal {
+            background-color: #20c997 !important;
+        }
+
+        .bg-silver {
+            background-color: #f8f8f8 !important;
+        }
+
+        /**/
+        .table {
+            font-size: 10.5pt;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            white-space: nowrap;
+            line-height: 50px; /* Vertically center the text there */
+        }
+
+
+        /* Login style */
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+
+            .form-signin .checkbox {
+                font-weight: 400;
+            }
+
+            .form-signin .form-floating:focus-within {
+                z-index: 2;
+            }
+
+            .form-signin input[type="text"] {
+                margin-bottom: -1px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .form-signin input[type="password"] {
+                margin-bottom: 10px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+
+
+        .strip-bg {
+            margin: 0px 0px 0px 0px;
+            height: 20px;
+        }
+
+        /* faixa pontilhada */
+        .strip-dot {
+            margin: 0px 0px 0px 0px;
+            height: 20px;
+            background-image: url(imgs/dot.jpg);
+        }
+
+        .strip-dot-b4 {
+            margin: 0px 0px 0px 0px;
+            height: 6px;
+            background-image: url(imgs/dot.jpg);
+        }
+
+        /* Logo SIM */
+        .logo-sim-sm {
+            display: flex;
+            margin: 0px 0px 0px 0px;
+            background-image: url(imgs/sim-ico.ico);
+            background-size: 32px 32px;
+            height: 32px;
+            width: 32px;
+            image-rendering: optimizeQuality;
+        }
+
+        .logo-sim {
+            background-image: url(imgs/sim_logo_nb.png);
+            background-size: 40px 40px;
+            height: 40px;
+            width: 40px;
+        }
+
+        .logo-sim-lg {
+            margin: auto;
+            background-image: url(imgs/sim-ico.ico);
+            background-size: 64px 64px;
+            height: 64px;
+            width: 64px;
+            image-rendering: optimizeQuality;
+        }
+
+        .sedemp {
+            margin: 0px 0px 0px 0px;
+            background-image: url(imgs/n_logo_sedemp.jpeg);
+            image-rendering: optimizeQuality;
+        }
+
+        /**** Links ****/
+
+        /**** Modulos ****/
+
+        .l-btn /* estrutura principal */ {
+            display: inline-block;
+            margin: 5px;
+            height: 200px;
+            width: 200px;
+            color: #ffffff;
+            background-color: #20c997;
+            text-decoration: none;
+            border-radius: 0px;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+
+
+            .l-btn:hover /* ao mover o mouse */ {
+                background-color: #26dca6;
+                color: #ffffff;
+                text-decoration: none;
+            }
+
+            .l-btn:active {
+                background-color: #20c997;
+            }
+
+        .div-modulos /* div das seções free-hand, digital paint, comp grafica e web-dev */ {
+            text-align: center; /*
+       
+    background-image: url(imgs/dot.jpg);*/
+        }
+
+        .agenda {
+            display: inline-block;
+            margin: 10px;
+            width: 300px;
+            background-color: #ffffff;
+            text-decoration: none;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+            .agenda:hover /* ao mover o mouse */ {
+                background-color: #fafafa;
+            }
+
+            .agenda:active {
+                background-color: #fafafa;
+            }
+
+/* Card */
+.card-header{
+    padding:10px 10px 10px 10px;
+    vertical-align:middle;
+    font-weight:bold;
+}
+
+

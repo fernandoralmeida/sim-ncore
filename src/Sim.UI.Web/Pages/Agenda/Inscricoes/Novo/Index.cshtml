@@ -1,0 +1,186 @@
+﻿@page
+@model Sim.UI.Web.Pages.Agenda.Inscricoes.Novo.IndexModel
+@{
+    ViewData["Title"] = "Inscrição";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<form class="card" method="post">
+
+    <div class="section">
+
+        @if (Model.Input.Evento == null)
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="input-field">
+                        <input asp-for="GetNumeroEvento">
+                        <label>Numero Evento</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-field">
+                        <button asp-page-handler="IncluirEvento" class="btn btn-primary" type="submit">Incluir</button>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-2" hidden>
+                    <label asp-for="Input.Evento.Id"></label>
+                    <input asp-for="Input.Evento.Id" />
+                </div>
+                <div class="input-field col s12 m5 l2">                    
+                    <input class="form-control" asp-for="Input.Evento.Tipo" />
+                    <label class="form-label" asp-for="Input.Evento.Tipo"></label>
+                </div>
+                <div class="input-field col s12 m6 l3">                    
+                    <input class="form-control" asp-for="Input.Evento.Nome" />
+                    <label class="form-label" asp-for="Input.Evento.Nome"></label>
+                </div>
+                <div class="input-field col s12 m5 l2">                    
+                    <input class="form-control" asp-for="Input.Evento.Formato" />
+                    <label class="form-label" asp-for="Input.Evento.Formato"></label>
+                </div>
+                <div class="input-field col s12 m6 l3">                    
+                    <input class="form-control" asp-for="Input.Evento.Data" />
+                    <label class="form-label" asp-for="Input.Evento.Data"></label>
+                </div>
+                <div class="input-field col s12 m2 l2">
+                    <button class="btn waves-effect waves-light" type="submit" asp-page-handler="RemoverEvento">Remover</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="divider"></div>
+    <div class="section selects-container">
+
+        @if (Model.Input.Participante == null)
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="input-field">
+                        <input class="form-control" asp-for="GetCPF" id="inputCPF">
+                        <label class="form-label">CPF</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-field">
+                        <button asp-page-handler="IncluirPessoa" class="btn waves-effect waves-light" type="submit">Incluir</button>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-2" hidden>                   
+                    <input class="form-control" asp-for="Input.Participante.Id" />
+                     <label class="form-label" asp-for="Input.Participante.Id"></label>
+                </div>
+                <div class="input-field col s12 m5 l2">                    
+                    <input class="form-control" asp-for="Input.Participante.CPF" />
+                    <label class="form-label" asp-for="Input.Participante.CPF"></label>
+                </div>
+                <div class="input-field col s12 m6 l3">                    
+                    <input class="form-control" asp-for="Input.Participante.Nome" />
+                    <label class="form-label" asp-for="Input.Participante.Nome"></label>
+                </div>
+                <div class="input-field col s12 m6 l3">                    
+                    <input class="form-control" asp-for="Input.Participante.Email" />
+                    <label class="form-label" asp-for="Input.Participante.Email"></label>
+                </div>
+                <div class="input-field col s12 m5 l2">                    
+                    <input class="form-control" asp-for="Input.Participante.Tel_Movel" />
+                    <label class="form-label" asp-for="Input.Participante.Tel_Movel"></label>
+                </div>
+                <div class="input-field col s12 m2 l2">
+                    <button class="btn red lighten-1 waves-effect waves-light" type="submit" asp-page-handler="RemoverPessoa">Remover</button>
+                </div>
+            </div>
+
+        }
+
+    </div>
+    <div class="section selects-container">
+
+        @if (Model.Input.Empresa == null)
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="input-field">
+                        <input class="form-control" asp-for="GetCNPJ" id="inputCNPJ">
+                        <label class="form-label">CNPJ</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-field">
+                        <button asp-page-handler="IncluirEmpresa" class="btn waves-effect waves-light" type="submit">Incluir</button>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-2" hidden>
+                    <label class="form-label" asp-for="Input.Empresa.Id"></label>
+                    <input class="form-control" asp-for="Input.Empresa.Id" />
+                </div>
+                <div class="input-field col s12 m5 l2">
+                    <label class="form-label" asp-for="Input.Empresa.CNPJ"></label>
+                    <input class="form-control" asp-for="Input.Empresa.CNPJ" />
+                </div>
+                <div class="input-field col s12 m6 l3">
+                    <label class="form-label" asp-for="Input.Empresa.Nome_Empresarial"></label>
+                    <input class="form-control" asp-for="Input.Empresa.Nome_Empresarial" />
+                </div>
+                <div class="input-field col s12 m6 l3">
+                    <label class="form-label" asp-for="Input.Empresa.Email"></label>
+                    <input class="form-control" asp-for="Input.Empresa.Email" />
+                </div>
+                <div class="input-field col s12 m5 l2">
+                    <label class="form-label" asp-for="Input.Empresa.Telefone"></label>
+                    <input class="form-control" asp-for="Input.Empresa.Telefone" />
+                </div>
+                <div class="input-field col s12 m2 l2">
+                    <button class="btn red lighten-1 waves-effect waves-light" type="submit" asp-page-handler="RemoverEmpresa">Remover</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2" hidden>
+        <label class="form-label" asp-for="Input.Numero"></label>
+        <input asp-for="Input.Numero" class="form-control" />
+    </div>
+    <div class="col-md-4" hidden>
+        <label class="form-label" asp-for="Input.Data_Inscricao"></label>
+        <input asp-for="Input.Data_Inscricao" class="form-control" />
+        <span asp-validation-for="Input.Data_Inscricao" class="text-danger" />
+    </div>
+    <div class="card-action">
+        <button type="submit" asp-page-handler="Save" class="btn waves-effect waves-light">Realizar Inscrição</button> 
+        <a asp-page="/Agenda/Index" class="btn grey waves-effect waves-light">Voltar</a>
+    </div>
+
+</form>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.validation.js"></script>
+    <script src="~/js/jquery.cep.js"></script>
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputCPF').mask('000.000.000-00');
+        $('#txtphone').mask('(00) 0000-0000');
+        $('#txtmobile').mask('(00) 00000-0000');
+        $('#inputCNPJ').mask('00.000.000/0000-00');
+    </script>
+
+}

@@ -1,0 +1,65 @@
+﻿@using Sim.Domain.Entity;
+@model IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)>
+
+
+    @if (Model != null)
+    {
+        var cor = "blue-grey";
+
+        @foreach (var item in Model)
+        { 
+            <div class="row">                
+                <span class="new badge grey left z-depth-1" data-badge-caption="@item.Qtde eventos">@item.Mes</span>                
+            </div>
+            
+            <div class="row">
+            @foreach(var l in item.Item3)
+            {
+                @if(l.Situacao <= Evento.ESituacao.Ativo)
+                {
+                    @if((int)l.Data.Value.Subtract(DateTime.Today).TotalDays > 30)
+                {
+                    cor = "green";
+                }
+                else if((int)l.Data.Value.Subtract(DateTime.Today).TotalDays <= 30 && (int)l.Data.Value.Subtract(DateTime.Today).TotalDays > 15)
+                {
+                    cor = "orange";
+                }
+                else if((int)l.Data.Value.Subtract(DateTime.Today).TotalDays <= 15 && (int)l.Data.Value.Subtract(DateTime.Today).TotalDays > 1)
+                {
+                    cor = "materialize-red";
+                }
+                else if((int)l.Data.Value.Subtract(DateTime.Today).TotalDays <= 1 && (int)l.Data.Value.Subtract(DateTime.Today).TotalDays >= 0)
+                {
+                    cor = "purple";
+                }
+                else
+                {
+                    cor = "blue-grey";
+                }
+                }
+               
+                <div class="col s12 m6 l4 xl3">
+                <div class="card hoverable">
+                    <div class="card-image @cor lighten-2">
+                        <div style="height:100px;"><span style="font-size:12px; color:#fff; margin-left:10px;">@l.Tipo (@l.Situacao.ToString())</span></div>                        
+                        <span class="card-title truncate white-text">@l.Nome</span>
+                        <a class="btn-floating halfway-fab waves-effect waves-light blue" asp-page="/Agenda/Inscricoes/Novo/Index" asp-route-id="@l.Codigo" title="Inscrever"><i class="material-icons">add</i></a>
+                    </div>
+                    <div class="card-content truncate">
+                        Data: <span class="@cor-text">@l.Data</span>                        
+                        <br />Formato: @l.Formato
+                        <br />Setor: @l.Owner
+                        <br />Vagas: @l.Vagas()                        
+                    </div>
+                    <div class="card-action">
+                        <a class="blue-text" asp-page="/Agenda/Eventos/Edit/Index" asp-route-id="@l.Id">Gerenciar</a><a asp-page="/Agenda/Inscricoes/Index" asp-route-id="@l.Codigo"><span class="new badge" data-badge-caption="inscritos">@l.Inscricoes()</span></a>
+                    </div>
+                </div>
+                </div>
+            }
+            </div>
+        }
+    }
+
+

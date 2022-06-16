@@ -1,0 +1,202 @@
+﻿@page
+@model Sim.UI.Web.Pages.Triagem.IndexModel
+
+@using Microsoft.AspNetCore.Identity
+@using Sim.Cross.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Painel de Informações dos Atendentes";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row">
+    <div class="col s12 m12 l6">
+        <div class="card">
+            <div class="red lighten-2 white-text card-header">
+                <h6>PAT</h6>
+            </div>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nome
+                        </th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ListaPAT)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Atendente)
+                            </td>
+                            <td>
+                                @if (item.Status == "Em Atendimento")
+                                {
+                                    <span class="new badge blue" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else if (item.Status == "Disponível")
+                                {
+                                    <span class="new badge green" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else
+                                {
+                                    <span class="new badge red" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col s12 m12 l6">
+        <div class="card">
+            <div class="green lighten-2 white-text card-header">
+                <h6>Banco do Povo</h6>
+            </div>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nome
+                        </th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ListaBPP)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Atendente)
+                            </td>
+                            <td>
+                                @if (item.Status == "Em Atendimento")
+                                {
+                                    <span class="new badge blue" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else if (item.Status == "Disponível")
+                                {
+                                    <span class="new badge green" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else
+                                {
+                                    <span class="new badge red" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m12 l6">
+        <div class="card">
+            <div class="blue lighten-2 white-text card-header">
+                <h6>Sebrae Aqui</h6>
+            </div>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nome
+                        </th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ListaSA)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Atendente)
+                            </td>
+                            <td>
+                                @if (item.Status == "Em Atendimento")
+                                {
+                                    <span class="new badge blue" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else if (item.Status == "Disponível")
+                                {
+                                    <span class="new badge green" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else
+                                {
+                                    <span class="new badge red" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col s12 m12 l6">
+        <div class="card">
+            <div class="orange lighten-2 white-text card-header">
+                <h6>Sala do Empreendedor</h6>
+            </div>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nome
+                        </th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ListaSE)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Atendente)
+                            </td>
+                            <td>
+                                @if (item.Status == "Em Atendimento")
+                                {
+                                    <span class="new badge blue" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else if (item.Status == "Disponível")
+                                {
+                                    <span class="new badge green" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                                else
+                                {
+                                    <span class="new badge red" data-badge-caption="@item.Status.ToUpper()"></span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script language="javascript">
+        setInterval(function () {
+            window.location.reload(1);
+        }, 30000);
+    </script>
+}

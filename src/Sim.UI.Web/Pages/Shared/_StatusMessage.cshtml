@@ -1,0 +1,9 @@
+﻿@model string
+
+@if (!String.IsNullOrEmpty(Model))
+{
+    var statusMessageClass = Model.StartsWith("Erro") ? "red" : "green";
+<div class="card-panel  @statusMessageClass lighten-3 @statusMessageClass-text text-darken-4" role="alert">    
+    @Model
+</div>
+}

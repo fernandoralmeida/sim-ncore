@@ -1,0 +1,110 @@
+﻿@page
+@model Sim.UI.Web.Pages.Empresa.Consulta.IndexModel
+@{
+    ViewData["Title"] = "Empresa/Consulta";
+    ViewData["ActivePage"] = EmpresaNavPages.Inicio;
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<form method="post">
+
+    <div class="card">
+
+        <div class="row">
+            <div class="col s12">
+
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.CNAE" id="inputCNAE" />
+                    <label asp-for="Input.CNAE"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.Logradouro" />
+                    <label asp-for="Input.Logradouro"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.Bairro" />
+                    <label asp-for="Input.Bairro"></label>
+                </div>
+            </div>
+        </div>
+        <div class="card-action">
+            <button class="btn orange waves-effect waves-light" asp-page-handler="AtPendentes">Pendentes</button>
+            <button class="btn red waves-effect waves-light" asp-page-handler="AtCancelados">Cancelados</button>
+
+            @{
+                if (User.IsInRole("Administrador"))
+                {
+
+
+                    if (Model.Input.ListaEmpresas != null)
+                    {
+                        if (Model.Input.ListaEmpresas.Count > 0)
+                        {
+                            <a class="btn waves-effect waves-light blue right" asp-page="/Atendimento/Consultas/Lista" asp-route-p1="0" asp-route-p2="0" asp-route-p3="0" asp-route-p4="0" asp-route-p5="0" asp-route-p6="0" asp-route-p7="0" asp-route-p8="0" asp-route-p9="0" target="_blank">Ver Lista</a>
+                        }
+
+                    }
+                }
+            }
+            <button class="btn waves-effect waves-light right" asp-page-handler="ListByData">Pesquisar</button>
+        </div>
+
+    </div>
+
+
+</form>
+
+
+<div class="card">
+    <!--<partial name="_AtendimentoList" model="Model.Input.ListaEmpresas" />-->
+</div>
+
+
+@section scripts{
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputDataI').mask('00/00/0000', { placeholder: "data inicial" });
+        $('#inputDataF').mask('00/00/0000', { placeholder: "data final" });
+        $('#inputCPF').mask('000.000.000-00');
+        $('#inputCNPJ').mask('00.000.000/0000-00');
+        $('#inputCNAE').mask('00.00-0-00');
+    </script>
+    <script>
+        $(function () {
+            $(".modal-trigger").click(function () {
+                var customerId = $(this).data('id');
+                $(".modal-content").empty();
+                $.getJSON(`/Atendimento?id=${customerId}&handler=Preview`, (data) => {
+                    $.each(data, function (i, item) {
+                        $(".modal-content").append(`<div>Protocolo: ${item.protocolo}</div>`);
+                        $(".modal-content").append(`<div>Data: ${item.data}</div>`);
+                        $(".modal-content").append(`<div>Setor: ${item.setor}</div>`);
+                        $(".modal-content").append(`<div>Canal: ${item.canal}</div>`);
+                        $(".modal-content").append(`<div>Serviços: ${item.servicos}</div>`);
+                        $(".modal-content").append(`<div>Descricao: ${item.descricao}</div>`);
+                        $(".modal-content").append(`<div class="divider"></div>`);
+                        $(".modal-content").append(`<div>Nome: ${item.pessoa.nome}</div>`);
+                        $(".modal-content").append(`<div>CPF: ${item.pessoa.cpf}</div>`);
+                        $(".modal-content").append(`<div>Data Nascimento: ${item.pessoa.data_Nascimento}</div>`);
+                        $(".modal-content").append(`<div>CEP: ${item.pessoa.cep}</div>`);
+                        $(".modal-content").append(`<div>${item.pessoa.logradouro} ${item.pessoa.numero}</div>`);
+                        $(".modal-content").append(`<div>${item.pessoa.bairro}, ${item.pessoa.cidade} - ${item.pessoa.uf}</div>`);
+                        $(".modal-content").append(`<div>Telefone: ${item.pessoa.tel_Movel}, E-mail: ${item.pessoa.email}</div>`);
+                        $(".modal-content").append(`<div class="divider"></div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cnpj} ${item.empresa.situacao_Cadastral}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.nome_Empresarial}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.nome_Fantasia}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.data_Abertura}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cnaE_Principal} ${item.empresa.atividade_Principal}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.atividade_Secundarias}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cep} ${item.empresa.logradouro} ${item.empresa.numero}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.bairro} ${item.empresa.municipio} ${item.empresa.uf}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.telefone} ${item.empresa.email}</div>`);
+                    });
+                });
+
+            });
+        });
+    </script>
+}

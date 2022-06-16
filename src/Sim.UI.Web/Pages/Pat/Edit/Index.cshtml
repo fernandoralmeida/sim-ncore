@@ -1,0 +1,122 @@
+﻿@page
+@model Sim.UI.Web.Pages.Pat.Edit.IndexModel
+@{
+    ViewData["Title"] = "Nova Vaga de Emprego";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<form class="row" method="post">
+    <section>
+        <div class="card">
+            <div class="row">
+                <div class="col s12">
+                    <div class="col s12">
+                        <label asp-for="Input.Id"></label>
+                        <input asp-for="Input.Id" />
+                    </div>
+                    
+                        <div class="input-field col s12 m6 l4 valign-wrapper">
+                            <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ">
+                            <label asp-for="Input.Empresa.CNPJ" for="inputCNPJ"></label>
+                        </div>
+                                            
+                        <div class="input-field col s12 m6 l8">
+                            <input asp-for="Input.Empresa.Nome_Empresarial" />
+                            <label asp-for="Input.Empresa.Nome_Empresarial"></label>
+                        </div>
+                        
+                        <div class="input-field col s3 m3 l2">
+                            <input asp-for="Input.Empresa.CNAE_Principal" id="inputCNAE"/>
+                            <label asp-for="Input.Empresa.CNAE_Principal" for="inputCNAE"></label>
+                        </div>
+
+                        <div class="input-field col s9 m9 l10">
+                            <input asp-for="Input.Empresa.Atividade_Principal"/>
+                            <label asp-for="Input.Empresa.Atividade_Principal"></label>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="card">
+            <div class="row">
+                <div class="col s12">
+                    
+                        <div class="input-field col s12 m10 l10">
+                            <input asp-for="Input.Ocupacao" />
+                            <label asp-for="Input.Ocupacao"></label>
+                        </div>
+
+                        <div class="input-field col s6 m2 l2">                            
+                            <select asp-for="Input.Experiencia">
+                                <option value="True">Sim</option>
+                                <option value="False">Não</option>
+                            </select>  
+                            <label asp-for="Input.Experiencia"></label>  
+                        </div>
+                        
+                        <div class="input-field col s6 m2 l2">
+                            <input asp-for="Input.Vagas" />
+                            <label asp-for="Input.Vagas" ></label>
+                        </div>
+
+                        <div class="input-field col s6 m2 l2">
+                            <i class="prefix" style="font-size:20px;">R$</i>
+                            <input asp-for="Input.Salario" onkeypress="return(moeda(this,'.',',',event))" />
+                            <label asp-for="Input.Salario" ></label>
+                        </div>
+
+                        <div class="input-field col s6 m3 l3">
+                            <select asp-for="Input.Pagamento">
+                                <option>Mês</option>
+                                <option>Quinzena</option>
+                                <option>Semana</option>
+                                <option>Dia</option>
+                                <option>Hora</option>
+                            </select>  
+                            <label asp-for="Input.Pagamento" ></label>
+                        </div>
+
+                        <div class="input-field col s6 m3 l3">                            
+                            <select asp-for="Input.Status">
+                                <option>Ativo</option>
+                                <option>Finalizado</option>
+                                <option>Cancelado</option>
+                            </select>
+                            <label asp-for="Input.Status"></label> 
+                        </div>
+
+                        <div class="input-field col s6 m2 l2">
+                            <input asp-for="Input.Data" />
+                            <label asp-for="Input.Data" ></label>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="card">
+            <div class="card-action">
+                <button class="btn waves-effect waves-light">Alterar</button>
+                <a asp-page="/Pat/Index" class="btn grey waves-effect waves-light">Voltar</a>
+                <button class="btn waves-effect waves-light red right" asp-page-handler="Exclr">Excluir</button>                
+            </div>            
+        </div>
+    </section>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script src="~/js/fcurrency.js"></script>
+    <script>
+        $('#inputCPF').mask('000.000.000-00');
+        $('#inputCNPJ').mask('00.000.000/0000-00');
+        $('#inputCNAE').mask('00.00-0-00');
+    </script>
+}

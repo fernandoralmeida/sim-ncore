@@ -1,0 +1,103 @@
+﻿@page
+@model Sim.UI.Web.Pages.Agenda.Inscricoes.Consulta.IndexModel
+@{
+    ViewData["Title"] = "Lista Eventos";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="card">
+    <form method="post" class="row">
+        <div class="input-field col s12 l12 m12 valign-wrapper">
+            <input asp-for="Input.GetCPF" id="inputCPF" required>
+            <label asp-for="Input.GetCPF"></label>
+            <button class="btn waves-effect waves-light right"><i class="material-icons">search</i></button>
+        </div>        
+    </form>
+</div>
+
+<div class="card">
+        <table class="responsive-table striped">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Inscrição
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    Evento
+                </th>
+                <th>
+                    Formato
+                </th>
+                <th>
+                    Data
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont = 0;
+            }
+
+            @if (Model.Input.ListaInscricoes != null)
+            {
+
+                @foreach (var item in Model.Input.ListaInscricoes)
+                {
+                    <tr>
+                        <td>
+                            @{cont++;}
+                            @cont.ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Numero)
+                        </td>
+
+                        <td>
+                            <a href="#" data-id="@item.Participante.Id" >@Html.DisplayFor(modelItem => item.Participante.Nome)</a>
+                            @if (item.Empresa != null)
+                            {
+                                <a href="#" data-id="@item.Empresa.Id" >[@item.Empresa.CNPJ]</a>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Evento.Tipo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Evento.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Evento.Formato)
+                        </td>
+                        <td>
+                            @{
+                                var d1 = Convert.ToDateTime(item.Evento.Data);
+                                var datainicial = d1.ToShortDateString();
+                            }
+
+                            @Html.DisplayFor(modelItem => item.Evento.Data)
+                        </td>
+                    </tr>
+                }}
+        </tbody>
+    </table>
+</div>
+
+@section scripts
+{
+    <script src="~/js/jquery.cep.js"></script>
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputCPF').mask('000.000.000-00');
+        $('#inputCNPJ').mask('00.000.000/0000-00');
+    </script>
+}

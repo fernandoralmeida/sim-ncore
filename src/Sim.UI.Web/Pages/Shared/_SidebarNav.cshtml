@@ -1,0 +1,86 @@
+﻿@using Sim.UI.Web.Pages.Shared
+
+<ul id="sidenav-left" class="sidenav sidenav-fixed">
+    <li>
+        <a class="logo-container teal-text">SEDEMP<i class="material-icons teal-text left">widgets</i></a>
+    </li>
+    <li class="no-padding">
+        <ul class="collapsible collapsible-accordion transparent">
+            <li class="waves-block waves-effect waves-red @LayoutNavPages.InicioNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
+                <div class="collapsible-header">Setor</div>
+                <div class="collapsible-body transparent">
+                    <ul><!--
+                        <li class="@LayoutNavPages.InicioTriagemNavClass(ViewContext)"><a class="waves-effect" asp-area="" asp-page="/Triagem/Index" target="_blank">Triagem</a></li>
+                        -->
+                        <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)"><a class="waves-effect" asp-area="" asp-page="/Pat/Index">PAT</a></li>
+                        <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)"><a href="#" class="waves-effect">Banco do Povo</a></li>
+                        <li class="@LayoutNavPages.InicioSANavClass(ViewContext)"><a class="waves-effect" asp-area="" asp-page="/SebraeAqui/Index">Sebrae Aqui</a></li>
+                        <li class="@LayoutNavPages.InicioSENavClass(ViewContext)"><a href="#" class="waves-effect">Sala do Empreendedor</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="waves-block waves-effect waves-red @LayoutNavPages.AtendimentoNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
+                <div class="collapsible-header">Atendimentos</div>
+                <div class="collapsible-body transparent">
+                    <ul>
+                        <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Atendimento/Novo/Index" class="waves-effect"><i class="material-icons">access_alarm</i>Ativo</a></li>
+                        <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext)"><a asp-page="/Atendimento/Index" class="waves-effect">Diários<i class="material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta" class="waves-effect">Consultar<i class="material-icons">search</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoStatusNavClass(ViewContext)"><a asp-page="/Atendimento/Status" class="waves-effect">Status<i class="material-icons">notification_important</i></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="waves-block waves-effect waves-red @LayoutNavPages.ClientesNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
+                <div class="collapsible-header">Clientes</div>
+                <div class="collapsible-body transparent">
+                    <ul>
+                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext)"><a asp-page="/Pessoa/Index" class="waves-effect">Pessoas<i class="material-icons">group</i></a></li>
+                        <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext)"><a asp-page="/Empresa/Index" class="waves-effect">Empresas<i class="material-icons">domain</i></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="waves-block waves-effect waves-red @LayoutNavPages.AgendaNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
+                <div class="collapsible-header">Agenda</div>
+                <div class="collapsible-body transparent">
+                    <ul>
+                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext)"><a asp-page="/Agenda/Index" class="waves-effect">Eventos<i class="material-icons">event</i></a></li>
+                        <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext)"><a asp-page="/Planner/Index" class="waves-effect">e-Planner<i class="material-icons">description</i></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="waves-block waves-effect waves-red @LayoutNavPages.PowerBINavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
+                <div class="collapsible-header">Power BI</div>
+                <div class="collapsible-body transparent">
+                    <ul>
+                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Atendimentos/Index" class="waves-effect">Atendimentos<i class="material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empresas/Index" class="waves-effect">Empresas<i class="material-icons">domain</i></a></li>
+                        <!--
+                            <li class="@LayoutNavPages.PowerBIPessoasNavClass(ViewContext)"><a href="#" class="waves-effect">Pessoas<i class="material-icons">people</i></a></li>
+                            -->
+                    </ul>
+                </div>
+            </li>
+
+            @if (User.IsInRole("Administrador"))
+            {
+                <li class="waves-block waves-effect waves-red @LayoutNavPages.ConfiguracoesNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
+                    <div class="collapsible-header">Configurações</div>
+                    <div class="collapsible-body transparent">
+                        <ul>
+                            <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext)"><a class="waves-effect" asp-area="Settings" asp-page="/Common/Index">Sistema<i class="material-icons">settings</i></a></li>
+                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)"><a asp-area="Admin" asp-page="/Manager/Index" class="waves-effect">Contas<i class="material-icons">account_circle</i></a></li>
+                        </ul>
+                    </div>
+                </li>
+
+            }
+            <partial name="_LoginPartial" />
+        </ul>
+    </li>
+    <li>
+        <div class="center">
+            &copy; @DateTime.Now.Year - Sim.Web
+            <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </li>
+</ul>

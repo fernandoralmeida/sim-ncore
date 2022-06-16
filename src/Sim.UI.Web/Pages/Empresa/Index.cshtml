@@ -1,0 +1,115 @@
+﻿@page
+@model Sim.UI.Web.Pages.Empresa.IndexModel
+
+@{
+    ViewData["Title"] = "Empresa/Consulta";
+    ViewData["ActivePage"] = EmpresaNavPages.Inicio;
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<form method="post">
+
+    <div class="card">
+        <div class="row">
+            <div class="col s12">
+                <div class="input-field col s6 m4 xl3">
+                    <input asp-for="Input.CNPJ" id="inputCNPJ"/>
+                    <label asp-for="Input.CNPJ"></label>
+                </div>
+                <div class="input-field col s6 m4 xl3">
+                    <input asp-for="Input.RazaoSocial" />
+                    <label asp-for="Input.RazaoSocial"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.CNAE" id="inputCNAE" />
+                    <label asp-for="Input.CNAE"></label>
+                </div>
+                <div class="input-field col s6 m4 xl4">
+                    <input asp-for="Input.Logradouro" />
+                    <label asp-for="Input.Logradouro"></label>
+                </div>
+                <div class="input-field col s6 m4 xl3">
+                    <input asp-for="Input.Bairro" />
+                    <label asp-for="Input.Bairro"></label>
+                </div>
+            </div>
+        </div>
+        <div class="card-action right-align">
+            <button class="btn waves-effect waves-light" asp-page-handler="View">Pesquisar</button>
+            <button class="btn btn-floating waves-effect waves-light green" asp-page-handler="Export" title="Exportar"><i class="material-icons">description</i></button>
+        </div>
+    </div>
+</form>
+
+<div class="card" style="overflow-y:auto;">
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Ano</th>
+                <th>CNPJ</th>                
+                <th>Nome Empresarial</th>
+                <th>Tel</th>
+                <th>E-mail</th>
+                <th>Situação</th>
+                <th>Endereço</th>
+                <th>Município</th>
+                <th>Atividade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ var cont = 0;}
+            @if(Model.Input.ListaEmpresas != null)
+            {
+                @foreach (var item in Model.Input.ListaEmpresas)
+            {
+                    cont++;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => cont)
+                </td>
+                <td>
+                    @{ var ano = item.Data_Abertura.Value.Year; }
+                    @Html.DisplayFor(modelItem => ano)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CNPJ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome_Empresarial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
+                </td>
+                <td>
+                    @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
+                    @Html.DisplayFor(modelItem => end) 
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CNAE_Principal) @Html.DisplayFor(modelItem => item.Atividade_Principal)
+                </td>
+            </tr>
+            }
+            }
+            
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputCNPJ').mask('00.000.000/0000-00');
+        $('#inputCNAE').mask('00.00-0-00');
+    </script>
+}

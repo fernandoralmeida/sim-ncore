@@ -1,0 +1,108 @@
+﻿@page
+@using System.Text;
+@model Sim.UI.Web.Pages.Atendimento.Consultas.ListaModel
+@{
+    Layout = "/Pages/Shared/__LayoutModal.cshtml";
+    ViewData["Title"] = "Lista Atendimentos";
+}
+
+<div style="margin:10px;">
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+</div>
+
+<div class="row">
+    <div class="col s12">
+        <h6>Parametros da Lista de atendimento</h6>
+        <br />Perido: @Model.GetParam.param1 - @Model.GetParam.param2
+        <br />Cliente: @Model.GetParam.param3 @Model.GetParam.param4
+        <br />Empresa: @Model.GetParam.param5 @Model.GetParam.param6 CNAE: @Model.GetParam.param7
+        <br />Serviço: @Model.GetParam.param8
+        <br />Atendente: @Model.GetParam.param9
+    </div>
+</div>
+
+<div style="font-family:Arial; font-size:10px;">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Empresa
+                </th>
+                <th>
+                    Atividade
+                </th>
+                <th>
+                    Telefone
+                </th>
+                <th>
+                    Serviço
+                </th>
+                <th>Descrição</th>
+                <th>
+                    Setor
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont = 0;
+            }
+
+
+            @foreach (var item in Model.ListaAtendimento)
+            {
+            <tr>
+
+                <td>
+                    @{cont++;}
+                    @cont.ToString()
+                </td>
+                <td>
+                    @{
+                        var d1 = Convert.ToDateTime(item.Data);
+                        var datainicial = d1;
+                    }
+
+                    @Html.DisplayFor(modelItem => datainicial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pessoa.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empresa.Nome_Empresarial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empresa.Atividade_Principal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pessoa.Tel_Movel)
+                    @Html.DisplayFor(modelItem => item.Empresa.Telefone)
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Servicos)</td>
+                <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Setor)
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!---->
+<div>gerado por @User.Identity.Name</div>
+<div class="row">
+    <p class="center">
+        <button id="printpagebutton" class="btn waves-effect waves-light" onclick="printpage()">Imprimir</button>
+    </p>
+</div>
+

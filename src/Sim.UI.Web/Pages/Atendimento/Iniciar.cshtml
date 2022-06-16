@@ -1,0 +1,107 @@
+﻿@page
+@model Sim.UI.Web.Pages.Atendimento.IniciarModel
+@{
+    ViewData["Title"] = "Iniciar";
+    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.AtendimentoAtivo;
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<form method="post">
+
+    <div class="row">
+
+        @if(Model.Input.Pessoa != null)
+        {
+            <input asp-for="Input.Pessoa.Id" hidden />
+            <div class="row col s12 m6 l6">
+                <div class="card hoverable">
+                    <div class="card-header grey-text">
+                        <span>Cliente!</span>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="striped small">
+                            <tbody>
+                                <tr>
+                                    <td><i class="material-icons blue-text">assignment_ind</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Pessoa.CPF)</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons blue-text">person</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Pessoa.Nome)</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons blue-text">phone</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Pessoa.Tel_Movel)</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons blue-text">email</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Pessoa.Email)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>    
+                    @if(Model.Input.Empresa == null)
+                    {
+                        <div class="card-action right-align">
+                            <input asp-for="GetCNPJ" class="col s8 m8 l8 left-align" id="inputCNPJ" placeholder="Incluir CNPJ?" />
+                            <button asp-page-handler="IncluirEmpresa" class="btn-floating waves-effect waves-light blue" title="Incluir CNPJ"><i class="material-icons">add</i></button>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        @if(Model.Input.Empresa != null)
+        {
+            <input asp-for="Input.Empresa.Id" hidden />
+            <div class="row col s12 m6 l6">               
+                <div class="card hoverable">                    
+                    <div class="card-header grey-text">
+                        <button class="btn-floating halfway-fab waves-effect waves-light red" asp-page-handler="RemoverEmpresa" title="Remover"><i class="material-icons">remove</i></button>
+                        <span>Empresa!</span>                        
+                    </div>                    
+                    <div style="overflow-x:auto;">                         
+                        <table class="striped small">
+                            <tbody>
+                                <tr>
+                                    <td><i class="material-icons blue-text">description</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Empresa.CNPJ)</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons blue-text">domain</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Empresa.Nome_Empresarial)</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons blue-text">phone</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Empresa.Telefone)</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons blue-text">email</i></td>
+                                    <td>@Html.DisplayFor(modelitem => modelitem.Input.Empresa.Email)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+            
+        <div class="row col l12 m12 s12">
+            <button asp-page-handler="Save" type="submit" class="btn waves-effect waves-light" title="Iniciar Atendimento">Iniciar Atendimento</button>     
+            <a asp-page="/Atendimento/Index" class="grey btn waves-effect">Cancelar</a>
+        </div>
+    </div>
+
+
+</form>
+
+@section Scripts {
+    <script src="~/js/jquery.cep.js"></script>
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputCPF').mask('000.000.000-00');
+        $('#txtphone').mask('(00) 0000-0000', { placeholder: "(__) ____-____" });
+        $('#txtmobile').mask('(00) 00000-0000', { placeholder: "(__) _____-____" });
+        $('#inputCNPJ').mask('00.000.000/0000-00');
+    </script>
+}

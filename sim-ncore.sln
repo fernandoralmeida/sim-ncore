@@ -21,13 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.IoC", "src\Sim.IoC\Sim.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Application", "src\Sim.Application\Sim.Application.csproj", "{5C32CD2A-5C0E-44CD-A2FE-666D4E1FFA36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.Application.WebService", "src\Sim.Application.WebService\Sim.Application.WebService.csproj", "{D15AB692-D4DF-47EF-BE56-5DD2E1734400}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Application.WebService", "src\Sim.Application.WebService\Sim.Application.WebService.csproj", "{D15AB692-D4DF-47EF-BE56-5DD2E1734400}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.Domain.Cnpj", "src\Sim.Domain.Cnpj\Sim.Domain.Cnpj.csproj", "{BCE82B32-F2A0-4471-9D9B-A407FDBCC91A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Domain.Cnpj", "src\Sim.Domain.Cnpj\Sim.Domain.Cnpj.csproj", "{BCE82B32-F2A0-4471-9D9B-A407FDBCC91A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.Data.Cnpj", "src\Sim.Data.Cnpj\Sim.Data.Cnpj.csproj", "{A3083E45-E994-4E4A-A7C2-CE14BA19674D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Data.Cnpj", "src\Sim.Data.Cnpj\Sim.Data.Cnpj.csproj", "{A3083E45-E994-4E4A-A7C2-CE14BA19674D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.Application.Cnpj", "src\Sim.Application.Cnpj\Sim.Application.Cnpj.csproj", "{7D3CE81C-B877-4328-A95C-F5F4817AF0D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.Application.Cnpj", "src\Sim.Application.Cnpj\Sim.Application.Cnpj.csproj", "{7D3CE81C-B877-4328-A95C-F5F4817AF0D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sim.UI.Web", "src\Sim.UI.Web\Sim.UI.Web.csproj", "{52028954-F46E-4102-A396-C2F3E477ACCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{7D3CE81C-B877-4328-A95C-F5F4817AF0D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D3CE81C-B877-4328-A95C-F5F4817AF0D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D3CE81C-B877-4328-A95C-F5F4817AF0D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52028954-F46E-4102-A396-C2F3E477ACCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52028954-F46E-4102-A396-C2F3E477ACCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52028954-F46E-4102-A396-C2F3E477ACCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52028954-F46E-4102-A396-C2F3E477ACCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{BCE82B32-F2A0-4471-9D9B-A407FDBCC91A} = {52BC6B7C-4B76-4149-AE7A-2DA947A1DCC3}
 		{A3083E45-E994-4E4A-A7C2-CE14BA19674D} = {8BBE9BCF-7C53-41D6-9334-C7D2A695B785}
 		{7D3CE81C-B877-4328-A95C-F5F4817AF0D5} = {2113FA22-DA95-4499-8507-A383AE486AEF}
+		{52028954-F46E-4102-A396-C2F3E477ACCE} = {48439217-427F-463C-A4C3-0CAC735895F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFA1287D-4898-4A02-B904-6DE18B4E3926}

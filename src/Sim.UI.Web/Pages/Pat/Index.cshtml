@@ -1,0 +1,149 @@
+﻿@page
+@model Sim.UI.Web.Pages.Pat.IndexModel
+@{
+    ViewData["Title"] = "PAT";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+    <form class="card row" method="post">
+        <div class="input-field col s12 m12 l12 valign-wrapper">            
+            <input asp-for="CNPJ" id="inputCNPJ">
+            <label asp-for="CNPJ" for="inputCNPJ"></label>
+            <button class="btn waves-effect waves-light" type="submit"><i class="material-icons">search</i></button>
+        </div>
+    </form>
+
+    <section>
+        <div class="card">
+        <table class="responsive-table striped">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Empresa
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Ocupação
+                </th>
+                <th>
+                    Experiência
+                </th>
+                <th>
+                    Salário
+                </th>
+                <th>
+                    Vagas
+                </th>
+                <th>Status</th>
+                <th>
+                    Ação
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont = 0;
+            }
+
+            @if (Model.ListaEmpregos != null)
+            {
+
+
+                foreach (var item in Model.ListaEmpregos)
+                {
+                    <tr>
+
+                        <td>
+                            @{
+                                cont++;
+                            }
+                            @cont.ToString()
+                        </td>
+                        <td>
+                            <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Empresa.Nome_Empresarial)</a>
+                        </td>
+                        <td>
+                            @{
+                                var d1 = Convert.ToDateTime(item.Data);
+                                var datafinal = d1.ToShortDateString();
+                            }
+                            @Html.DisplayFor(modelItem => datafinal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ocupacao)
+                    </td>
+                    <td>
+                        @if(item.Experiencia)
+                            {
+                                <span>Sim</span>
+                            }
+                            else
+                            {
+                                <span>Não</span>
+                            }                        
+                    </td>
+                    <td>
+                        R$ @Html.DisplayFor(modelItem => item.Salario)/@Html.DisplayFor(modelItem => item.Pagamento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vagas)
+                    </td>
+                    <td>@Html.DisplayFor(modelitem => item.Status)</td>
+                    <td>
+                        <a class="btn btn-small waves-effect" asp-page="/Pat/Edit/Index" asp-route-id="@item.Id"><i class="material-icons">edit</i></a>
+                    </td>
+                </tr>
+            }
+            }
+
+        </tbody>
+    </table>
+        </div>
+    </section>
+
+    <section>
+        <div class="card">
+            <table class="responsive-table striped">
+                <thead>
+                    <tr>
+                        <th>Ação</th>
+                        <th>CNPJ</th>
+                        <th>Empresa</th>
+                        <th>Contato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.ListaEmpresas != null)
+                {
+                    foreach (var item in Model.ListaEmpresas)
+                    {
+                        <tr>
+                            <td><a class="btn btn-small waves-effect" asp-page="/Pat/Add/Index" asp-route-id="@item.Id" title="Nova vaga de emprego!"><i class="material-icons">add_circle</i></a></td>
+                            <td><a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.CNPJ)</a></td>
+                            <td>@Html.DisplayFor(modelItem => item.Nome_Empresarial)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputCNPJ').mask('00.000.000/0000-00');
+        $('#inputCNAE').mask('00.00-0-00');
+    </script>
+}

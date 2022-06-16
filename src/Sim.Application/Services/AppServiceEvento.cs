@@ -38,19 +38,19 @@ namespace Sim.Application.Services
             return await _evento.ListAllAsync();
         }
 
-        public async Task<IEnumerable<Evento>> ListEventosAtivosAsync(IEnumerable<Evento> eventos)
+        public async Task<IEnumerable<Evento>> ListEventosAtivosAsync(int ano)
         {
-            return await _evento.ListEventosAtivosAsync(eventos);
+            return await _evento.ListEventosAtivosAsync(ListAllAsync().Result.Where(s => s.Data.Value.Year == ano));
         }
 
-        public async Task<IEnumerable<Evento>> ListEventosCanceladosAsync(IEnumerable<Evento> eventos)
+        public async Task<IEnumerable<Evento>> ListEventosCanceladosAsync(int ano)
         {
-            return await _evento.ListEventosCanceladosAsync(eventos);
+            return await _evento.ListEventosCanceladosAsync(ListAllAsync().Result.Where(s => s.Data.Value.Year == ano));
         }
 
-        public async Task<IEnumerable<Evento>> ListEventosFinalizadosAsync(IEnumerable<Evento> eventos)
+        public async Task<IEnumerable<Evento>> ListEventosFinalizadosAsync(int ano)
         {
-            return await _evento.ListEventosFinalizadosAsync(eventos);
+            return await _evento.ListEventosFinalizadosAsync(ListAllAsync().Result.Where(s => s.Data.Value.Year == ano));
         }
 
         public async Task<IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)>> ListEventosPorMesAsync(IEnumerable<Evento> eventos)

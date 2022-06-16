@@ -9,9 +9,9 @@ namespace Sim.Application.Interfaces
         Task<Evento> GetCodigoAsync(int codigo);
         Task<Evento> GetCodigoParticipanteAsync(int codigo);
         int LastCodigo();
-        Task<IEnumerable<Evento>> ListEventosAtivosAsync(IEnumerable<Evento> eventos);
-        Task<IEnumerable<Evento>> ListEventosCanceladosAsync(IEnumerable<Evento> eventos);
-        Task<IEnumerable<Evento>> ListEventosFinalizadosAsync(IEnumerable<Evento> eventos);
+        Task<IEnumerable<Evento>> ListEventosAtivosAsync(int ano);
+        Task<IEnumerable<Evento>> ListEventosCanceladosAsync(int ano);
+        Task<IEnumerable<Evento>> ListEventosFinalizadosAsync(int ano);
         Task<IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)>> ListEventosPorMesAsync(IEnumerable<Evento> eventos);
         Task<Evento> GetIdAsync(Guid id);
         Task<IEnumerable<Evento>> ListAllAsync();

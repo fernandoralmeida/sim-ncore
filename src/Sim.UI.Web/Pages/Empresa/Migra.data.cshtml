@@ -1,0 +1,19 @@
+﻿@page
+@model Sim.UI.Web.Pages.Empresa.MigradataModel
+@{
+    ViewData["Title"] = "Migra-Data";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<partial name="_StatusMessage" model="Model.StatusMessage1" />
+
+<partial name="_StatusMessage" model="Model.StatusMigration" />
+
+<partial name="_StatusMessage" model="Model.StatusMessage2" />
+
+<div class="center">
+        <form method="post">
+            <button class="btn waves-effect">iniciar Migração</button>
+        </form>
+</div>

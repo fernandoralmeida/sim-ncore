@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Sim.Cross.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var DisplayName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).Name;
+    var DisplayLastName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).LastName;
+
+    <li class="waves-block waves-effect waves-red @LayoutNavPages.LoginNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
+        <div class="collapsible-header">Olá @DisplayName @DisplayLastName</div>
+        <div class="collapsible-body transparent">
+            <ul>
+                <li class="@LayoutNavPages.LoginPerfilNavClass(ViewContext)"><a asp-area="Identity" asp-page="/Account/Manage/Index" class="waves-effect">Meu Espaço<i class="material-icons">person</i></a></li>
+                <li class="@LayoutNavPages.LoginOutNavClass(ViewContext)"><a asp-area="Identity" asp-page="/Account/Logout" class="waves-effect">Sair<i class="material-icons">logout</i></a></li>
+
+            </ul>            
+        </div>        
+    </li>    
+}
+else
+{
+    <li>
+        <a asp-area="Identity" asp-page="/Account/Login">Entrar</a>
+    </li>
+}
+

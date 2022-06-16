@@ -1,0 +1,127 @@
+﻿@page
+@model Sim.UI.Web.Pages.Atendimento.Consultas.AtivosModel
+@{
+
+    ViewData["Title"] = "Consultas por Periodos";
+
+    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.AtendimentoConsulta;
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<pre>Atendimentos com pendências</pre>
+
+<div class="card">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Protocolo
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Atendente
+                </th>
+                <th>
+                    Ação
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont = 0;
+            }
+
+            @if (Model.Input.ListaAtendimento != null)
+            {
+
+                @foreach (var item in Model.Input.ListaAtendimento)
+                {
+                    <tr>
+                        <td>
+                            @{cont++;}
+                            @cont.ToString()
+                        </td>
+                        <td>
+                            <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Protocolo)</a>
+                        </td>
+                        <td>
+                            @{
+                                var d1 = Convert.ToDateTime(item.Data);
+                                var datainicial = d1.ToShortDateString();
+                            }
+
+                            @Html.DisplayFor(modelItem => datainicial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pessoa.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Owner_AppUser_Id)
+                        </td>
+                        <td>
+                            <a asp-page="/Atendimento/Atendimento.Cancelar" asp-route-id="@item.Id" class="btn btn-small red lighten-1 waves-effect" title="Cancelar Atendimento"><i class="material-icons">cancel</i></a>
+                        </td>
+                    </tr>
+                }}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Structure -->
+<div id="viewmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $(".modal-trigger").click(function () {
+                var customerId = $(this).data('id');
+                $(".modal-content").empty();
+                $.getJSON(`/Atendimento?id=${customerId}&handler=Preview`, (data) => {
+                    $.each(data, function (i, item) {
+                        $(".modal-content").append(`<div>Protocolo: ${item.protocolo}</div>`);
+                        $(".modal-content").append(`<div>Data: ${item.data}</div>`);
+                        $(".modal-content").append(`<div>Setor: ${item.setor}</div>`);
+                        $(".modal-content").append(`<div>Canal: ${item.canal}</div>`);
+                        $(".modal-content").append(`<div>Serviços: ${item.servicos}</div>`);
+                        $(".modal-content").append(`<div>Descricao: ${item.descricao}</div>`);
+                        $(".modal-content").append(`<div class="divider"></div>`);
+                        $(".modal-content").append(`<div>Nome: ${item.pessoa.nome}</div>`);
+                        $(".modal-content").append(`<div>CPF: ${item.pessoa.cpf}</div>`);
+                        $(".modal-content").append(`<div>Data Nascimento: ${item.pessoa.data_Nascimento}</div>`);
+                        $(".modal-content").append(`<div>CEP: ${item.pessoa.cep}</div>`);
+                        $(".modal-content").append(`<div>${item.pessoa.logradouro} ${item.pessoa.numero}</div>`);
+                        $(".modal-content").append(`<div>${item.pessoa.bairro}, ${item.pessoa.cidade} - ${item.pessoa.uf}</div>`);
+                        $(".modal-content").append(`<div>Telefone: ${item.pessoa.tel_Movel}, E-mail: ${item.pessoa.email}</div>`);
+                        $(".modal-content").append(`<div class="divider"></div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cnpj} ${item.empresa.situacao_Cadastral}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.nome_Empresarial}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.nome_Fantasia}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.data_Abertura}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cnaE_Principal} ${item.empresa.atividade_Principal}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.atividade_Secundarias}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cep} ${item.empresa.logradouro} ${item.empresa.numero}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.bairro} ${item.empresa.municipio} ${item.empresa.uf}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.telefone} ${item.empresa.email}</div>`);
+                    });
+                });
+
+            });
+        });
+    </script>
+}

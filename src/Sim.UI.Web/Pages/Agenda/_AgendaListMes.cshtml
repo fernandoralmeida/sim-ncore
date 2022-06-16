@@ -1,0 +1,56 @@
+﻿@using Sim.Domain.Entity;
+@model IEnumerable<InputModelEvento>
+
+
+<div class="row">
+    
+    @if (Model != null)
+    {
+        var cor = "blue-grey";
+
+        foreach (var item in Model)
+        { 
+
+            @if((int)item.Data.Value.Subtract(DateTime.Today).TotalDays > 20)
+            {
+                cor = "green";
+            }
+            else if((int)item.Data.Value.Subtract(DateTime.Today).TotalDays <= 20 && (int)item.Data.Value.Subtract(DateTime.Today).TotalDays > 7)
+            {
+                cor = "orange";
+            }
+            else if((int)item.Data.Value.Subtract(DateTime.Today).TotalDays <= 7 && (int)item.Data.Value.Subtract(DateTime.Today).TotalDays > 1)
+            {
+                cor = "materialize-red";
+            }
+            else if((int)item.Data.Value.Subtract(DateTime.Today).TotalDays <= 1 && (int)item.Data.Value.Subtract(DateTime.Today).TotalDays >= 0)
+            {
+                cor = "purple";
+            }
+            else
+            {
+                cor = "blue-grey";
+            }
+
+            <div class="col s12 m6 l4 xl3">
+                <div class="card hoverable">
+                    <div class="card-image @cor lighten-2">
+                        <div style="height:100px;"><span style="font-size:12px; color:#fff; margin-left:10px;">@item.Tipo</span></div>                        
+                        <span class="card-title truncate white-text">@item.Nome</span>
+                        <a class="btn-floating halfway-fab waves-effect waves-light blue" asp-page="/Agenda/Inscricoes/Novo/Index" asp-route-id="@item.Codigo" title="Inscrever"><i class="material-icons">add</i></a>
+                    </div>
+                    <div class="card-content truncate">
+                        <span class="@cor-text">Data: @item.Data</span>                        
+                        <br />Formato: @item.Formato
+                        <br />Setor: @item.Owner
+                        <br />Vagas: @item.Vagas
+                    </div>
+                    <div class="card-action">
+                        <a class="blue-text" asp-page="/Agenda/Eventos/Edit/Index" asp-route-id="@item.Id">Gerenciar</a><a asp-page="/Agenda/Inscricoes/Index" asp-route-id="@item.Codigo"><span class="new badge" data-badge-caption="inscritos">@item.NumeroInscritos</span></a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
