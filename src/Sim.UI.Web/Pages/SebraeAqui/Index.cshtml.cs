@@ -1,32 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+
+using Sim.Application.Interfaces;
 
 namespace Sim.UI.Web.Pages.SebraeAqui
 {
-    using Sim.Cross.Identity;
-    using Sim.Domain.Shared.Entity;
-    using Sim.Application.Shared.Interface;
-
     [Authorize(Roles = "Administrador,M_Sebrae")]
     public class IndexModel : PageModel
     {
-        //private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAppServiceAtendimento _appServiceAtendimento;
 
         public IndexModel(IAppServiceAtendimento appServiceAtendimento)
         {
             _appServiceAtendimento = appServiceAtendimento;
-            //_userManager = userManager;
-            Input = new();
-            Input.DataAtendimento = DateTime.Now.Date;
+            Input = new()
+            {
+                DataAtendimento = DateTime.Now.Date
+            };
         }
 
         [TempData]
@@ -40,15 +32,12 @@ namespace Sim.UI.Web.Pages.SebraeAqui
             [DataType(DataType.Date)]
             public DateTime? DataAtendimento { get; set; }
 
-            public ICollection<Atendimento> ListaAtendimento { get; set; }
+            public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
         }
 
         private async Task LoadAsync()
         {
-            //var user = await _userManager.GetUserAsync(User);
-            var t = Task.Run(() => _appServiceAtendimento.ListarRaeNaoLancados(User.Identity.Name));
-            await t;
-            Input.ListaAtendimento = t.Result.ToList();
+            Input.ListaAtendimento = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -61,24 +50,15 @@ namespace Sim.UI.Web.Pages.SebraeAqui
         public async Task<IActionResult> OnPostAsync()
         {
             await LoadAsync();
-            if (Input.ListaAtendimento.Count == 0)
+            if (!Input.ListaAtendimento.Any())
             {
-                StatusMessage = string.Format("Erro: Não há atendimentos para do {0}", Input.DataAtendimento.Value.Date);
+                StatusMessage = string.Format("Não há atendimentos para lançar");
             }
-
             return Page();
         }
         public JsonResult OnGetPreview(string id)
         {
-            var list = new List<Atendimento>();
-
-            var atendimemnto_ativo = Task.Run(() => _appServiceAtendimento.GetAtendimento(new Guid(id)));
-
-            atendimemnto_ativo.Wait();
-
-            list.Add(atendimemnto_ativo.Result);
-
-            return new JsonResult(list);
+            return new JsonResult(_appServiceAtendimento.GetAtendimentoAsync(new Guid(id)).Result);
         }
     }
 }

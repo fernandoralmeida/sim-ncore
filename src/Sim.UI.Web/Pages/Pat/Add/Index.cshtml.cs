@@ -1,16 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
 using Microsoft.AspNetCore.Authorization;
+using Sim.Application.Interfaces;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Pat.Add
 {
-    using Sim.Application.SDE.Interface;
-    using Sim.Domain.SDE.Entity;
-    using Functions;   
-
     [Authorize(Roles = "Administrador,M_Pat")]
     public class IndexModel : PageModel
     {
@@ -32,40 +27,33 @@ namespace Sim.UI.Web.Pages.Pat.Add
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            Input = new();
-            Input.Data = DateTime.Now;            
-            var t = Task.Run(() => _appServiceEmpresa.GetById(id));
-            await t;
-            Input.Empresa = t.Result;
-            Input.Salario = "0,00";
+            Input = new()
+            {
+                Data = DateTime.Now,
+                Empresa = await _appServiceEmpresa.GetIdAsync(id),
+                Salario = "0,00"
+            };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            { return Page(); }
+                return Page(); 
 
-            var t = Task.Run(() =>
+            var emprego = new Empregos()
             {
-                var empresa = _appServiceEmpresa.GetById(Input.Empresa.Id);
+                Empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id),
+                Data = Input.Data,
+                Experiencia = Input.Experiencia,
+                Vagas = Input.Vagas,
+                Ocupacao = Input.Ocupacao,
+                Pagamento = Input.Pagamento,
+                Salario = Convert.ToDecimal(Input.Salario),
+                Status = Input.Status
+            };
 
-                var emprego = new Empregos()
-                {
-                    Empresa = empresa,
-                    Data = Input.Data,
-                    Experiencia = Input.Experiencia,
-                    Vagas = Input.Vagas,
-                    Ocupacao = Input.Ocupacao,
-                    Pagamento = Input.Pagamento,
-                    Salario = Convert.ToDecimal(Input.Salario),
-                    Status = Input.Status
-                };
-
-                _appServiceEmpregos.Add(emprego);
-
-            } );
-            await t;
+            await _appServiceEmpregos.AddAsync(emprego);
 
             return RedirectToPage("/Pat/Index");
         }

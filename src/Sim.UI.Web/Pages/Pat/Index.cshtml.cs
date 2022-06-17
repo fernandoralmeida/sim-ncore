@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
+using Sim.Application.Interfaces;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Pat
 {
-    using Sim.Application.SDE.Interface;
-    using Sim.Domain.SDE.Entity;
-
-
     [Authorize(Roles = "Administrador,M_Pat")]
     public class IndexModel : PageModel
     {
@@ -30,15 +26,15 @@ namespace Sim.UI.Web.Pages.Pat
             appEmpregos = appServiceEmpregos;
             appEmpresa = appServiceEmpresa;
         }
-        public void OnGet()
+        public async Task OnGet()
         {
-            ListaEmpregos = (ICollection<Empregos>)appEmpregos.GetAllEmpregosAsync().Result;
+            ListaEmpregos = await appEmpregos.ListAllAsync();
         }
 
-        public void OnPost()
+        public async Task OnPost()
         {
-            ListaEmpregos = appEmpregos.GetAllEmpregosAsync(CNPJ).Result;
-            ListaEmpresas = Task.Run(() => appEmpresa.ConsultaByCNPJ(CNPJ)).Result;
+            ListaEmpregos = await appEmpregos.ListEmpregosAsync(CNPJ);
+            ListaEmpresas = await appEmpresa.ConsultaCNPJAsync(CNPJ);
         }
     }
 }

@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
+
+using Sim.Domain.Entity;
+using Sim.Application.Interfaces;
+using Sim.UI.Web.Functions;
 
 namespace Sim.UI.Web.Pages.Cliente
 {
-    using Sim.Domain.SDE.Entity;
-    using Sim.Application.SDE.Interface;
-    using Functions;
-
     [Authorize]
     public class IndexModel : PageModel
     {
@@ -39,23 +33,18 @@ namespace Sim.UI.Web.Pages.Cliente
             public IEnumerable<Pessoa> ListaPessoas { get; set; }
         }
 
-        private void Load()
+        private async Task Load()
         {
-            var pessoa = _pessoaApp.Top10();
-
-            Input = new InputModel
-            {
-                ListaPessoas = pessoa
-            };
+            Input.ListaPessoas = await _pessoaApp.ListTop10Async();
         }
 
-        public IActionResult OnGet()
+        public async Task< IActionResult> OnGetAsync()
         {
-            Load();
+            await Load();
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             try
             {
@@ -63,7 +52,7 @@ namespace Sim.UI.Web.Pages.Cliente
                 {
                     if (Input.CPF != null)
                     {
-                        if (Functions.Validate.IsCpf(Input.CPF))
+                        if (Validate.IsCpf(Input.CPF))
                         {
                             StatusMessage = "";
                             CpfValido = true;
@@ -74,24 +63,13 @@ namespace Sim.UI.Web.Pages.Cliente
                             CpfValido = false;
                         }
 
-                        var pessoa = _pessoaApp.ConsultaByCPF(Input.CPF);
+                        Input.ListaPessoas = await _pessoaApp.ConsultaCPFAsync(Input.CPF);
 
-                        Input = new InputModel
-                        {
-                            RouteCPF = Input.CPF.MaskRemove(),
-                            ListaPessoas = pessoa
-                        };
-
-                        if(CpfValido && !pessoa.Any())
+                        if(CpfValido && !Input.ListaPessoas.Any())
                             StatusMessage = "Pessoa não cadastrada!";
                     }
                     else
-                    {
-                        Input = new InputModel
-                        {
-                            ListaPessoas = _pessoaApp.ConsultaByNome(Input.Nome)
-                        };
-                    }
+                        Input.ListaPessoas = await _pessoaApp.ConsultaNomeAsync(Input.Nome);
 
                 }                
             }

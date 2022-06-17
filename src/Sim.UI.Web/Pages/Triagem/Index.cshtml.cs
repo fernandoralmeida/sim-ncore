@@ -1,20 +1,12 @@
-using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Sim.Identity.Entity;
+using Sim.Application.Interfaces;
 
 namespace Sim.UI.Web.Pages.Triagem
 {
-    
-    using Sim.Cross.Identity;
-    using Sim.Application.Shared.Interface;
 
-    //[Authorize]
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -62,13 +54,13 @@ namespace Sim.UI.Web.Pages.Triagem
             foreach (ApplicationUser s in pat)
             {
 
-                var t = await _appServiceStatusAtendimento.ListByUser(s.UserName);
+                var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
 
                 if (t.Any())
 
                     if (t.FirstOrDefault().Online)
                     {
-                        var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                        var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                         if (ativo.Any())
                             list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
@@ -80,7 +72,7 @@ namespace Sim.UI.Web.Pages.Triagem
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
                 else
                 {
-                    var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                     if (ativo.Any())
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
@@ -101,13 +93,13 @@ namespace Sim.UI.Web.Pages.Triagem
 
             foreach (ApplicationUser s in pat)
             {
-                var t = await _appServiceStatusAtendimento.ListByUser(s.UserName);
+                var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
 
                 if (t.Any())
 
                     if (t.FirstOrDefault().Online)
                     {
-                        var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                        var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                         if (ativo.Any())
                             list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
@@ -119,7 +111,7 @@ namespace Sim.UI.Web.Pages.Triagem
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
                 else
                 {
-                    var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                     if (ativo.Any())
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
@@ -139,13 +131,13 @@ namespace Sim.UI.Web.Pages.Triagem
 
             foreach (ApplicationUser s in pat)
             {
-                var t = await _appServiceStatusAtendimento.ListByUser(s.UserName);
+                var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
 
                 if (t.Any())
 
                     if (t.FirstOrDefault().Online)
                     {
-                        var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                        var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                         if (ativo.Any())
                             list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
@@ -157,7 +149,7 @@ namespace Sim.UI.Web.Pages.Triagem
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
                 else
                 {
-                    var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                     if (ativo.Any())
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
@@ -177,13 +169,13 @@ namespace Sim.UI.Web.Pages.Triagem
 
             foreach (ApplicationUser s in pat)
             {
-                var t = await _appServiceStatusAtendimento.ListByUser(s.UserName);
+                var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
 
                 if (t.Any())
 
                     if (t.FirstOrDefault().Online)
                     {
-                        var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                        var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                         if (ativo.Any())
                             list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
@@ -195,7 +187,7 @@ namespace Sim.UI.Web.Pages.Triagem
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
                 else
                 {
-                    var ativo = _appAtendimento.AtendimentoAtivo(s.UserName);
+                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                     if (ativo.Any())
                         list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });

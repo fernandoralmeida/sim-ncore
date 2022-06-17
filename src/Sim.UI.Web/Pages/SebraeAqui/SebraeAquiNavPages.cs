@@ -6,7 +6,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui
     public static class SebraeAquiNavPages
     {
         public static string Inicio => "Index";
-        public static string RaeLancados => "Rae.Lancados";
+        public static string RaeLancados => "Lancados";
         public static string InicioNavClass(ViewContext viewContext) => PageNavClass(viewContext, Inicio);
         public static string AtendiementoNavClass(ViewContext viewContext) => PageNavClass(viewContext, RaeLancados);
         private static string PageNavClass(ViewContext viewContext, string page)

@@ -1,0 +1,30 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Sair";
+    ViewData["ActivePage"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.Login;
+    ViewData["ActivePageLi"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.LoginOut;
+}
+
+
+<div class="center">
+    <h5>MSDE</h5>    
+
+    @{if (User.Identity.IsAuthenticated)
+        {
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+            <p class="center">
+                Módulo Desenvolvimento Econômico
+            </p>
+            <button type="submit" class="btn btn-large red lighten-1 waves-effect">Sair do Sim.Web</button>
+        </form>
+        }
+        else
+        {
+            <p>Você saiu do aplicativo com sucesso.</p>
+        }
+    }
+
+</div>
+
+

@@ -22,8 +22,6 @@ namespace Sim.IoC
 {
     public class Container
     {
-
-        //registra o dbcontext aos serviços
         public static void RegisterDataContext(IServiceCollection services, IConfiguration config, string connection)
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));

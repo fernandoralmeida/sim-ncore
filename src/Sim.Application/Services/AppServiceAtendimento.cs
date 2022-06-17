@@ -89,6 +89,16 @@ namespace Sim.Application.Services
             return await _atendimento.ListPessoaAsync(cpf);
         }
 
+        public async Task<IEnumerable<Atendimento>> ListRaeLancadosAsync(string username)
+        {
+            return await _atendimento.ListRaeLancadosAsync(await ListMeusAtendimentosRaeAsync(username));
+        }
+
+        public async Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(string username)
+        {
+            return await _atendimento.ListRaeNaoLancadosAsync(await ListMeusAtendimentosRaeAsync(username));
+        }
+
         public async Task<IEnumerable<Atendimento>> ListServicosAsync(string servicos)
         {
             return await _atendimento.ListServicosAsync(servicos);

@@ -8,7 +8,7 @@ namespace Sim.UI.Web.Pages.Cliente
     {
         [Key]
         [HiddenInput(DisplayValue = false)]
-        public Guid Pessoa_Id { get; set; }
+        public Guid Id { get; set; }
 
         // Pessoal
         [Required(ErrorMessage = "Preencha campo Nome")]

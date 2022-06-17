@@ -8,8 +8,6 @@ using Sim.UI.Web.Functions;
 
 namespace Sim.UI.Web.Pages.Atendimento
 {
-
-
     [Authorize]
     public class IniciarModel : PageModel
     {
@@ -61,8 +59,10 @@ namespace Sim.UI.Web.Pages.Atendimento
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             Input = new();
-             
-            foreach (var at in await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name))
+
+            var at = await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
+
+            if (at.Any())
             {
                 StatusMessage = "Um atendimento encontra-se ativo, finalize antes de iniciar outro atendimento.";
                 return RedirectToPage("/Atendimento/Novo/Index");
@@ -73,9 +73,14 @@ namespace Sim.UI.Web.Pages.Atendimento
                 Input.Pessoa = await GetPessoa((Guid)id);           
                 
                 foreach(var e in await _appServiceEmpresa
-                    .ConsultaRazaoSocialAsync(Input.Pessoa.CPF.MaskRemove())
-                    .Where(s => s.Situacao_Cadastral != "BAIXADA"))
+                    .ConsultaRazaoSocialAsync(Input.Pessoa.CPF.MaskRemove()))
                     Input.Empresa = e;
+                if (Input.Empresa != null)
+                    if (Input.Empresa.Situacao_Cadastral == "BAIXADA")
+                    {
+                        StatusMessage = "Erro: Empresa encontra-se BAIXADA!";
+                        Input.Empresa = null;
+                    }
             }
 
             return Page();
@@ -113,9 +118,9 @@ namespace Sim.UI.Web.Pages.Atendimento
 
             try
             {
-                atendimento.Pessoa = _appServicePessoa.GetIdAsync(Input.Pessoa.Id);
+                atendimento.Pessoa = await _appServicePessoa.GetIdAsync(Input.Pessoa.Id);
                 if (Input.Empresa != null)
-                    atendimento.Empresa = _appServiceEmpresa.GetIdAsync(Input.Empresa.Id);
+                    atendimento.Empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id);
                 await _appServiceAtendimento.AddAsync(atendimento);
 
             }

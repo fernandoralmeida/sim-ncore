@@ -1,24 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
+using Sim.Domain.Entity;
+using Sim.Application.Interfaces;
+using OfficeOpenXml;
 
 namespace Sim.UI.Web.Pages.Empresa
 {
-    using Sim.Domain.SDE.Entity;
-    using Sim.Application.SDE.Interface;
-    using Sim.Domain.Cnpj.Entity;
-    using Functions;
-    using OfficeOpenXml;
-
     [Authorize]
     public class IndexModel : PageModel
     {
@@ -54,12 +44,11 @@ namespace Sim.UI.Web.Pages.Empresa
         public void OnGet()
         {        }
 
-        public IActionResult OnPostExport()
+        public async Task<IActionResult> OnPostExport()
         {
             var stream = new MemoryStream();
-            var t = Task.Run(() =>
-            {
-                var param = new List<object>() {
+
+            var param = new List<object>() {
                     Input.CNPJ,
                     Input.RazaoSocial,
                     Input.CNAE,
@@ -67,33 +56,32 @@ namespace Sim.UI.Web.Pages.Empresa
                     Input.Bairro
                 };
 
-                var list = new List<InputExport>();
-                var cont = 1;
-                foreach (var e in _empresaApp.ListByParam(param).Result)
-                {
-                    list.Add(new InputExport
-                    {
-                        N = cont++,
-                        Ano = e.Data_Abertura.Value.Year,
-                        Cnpj = e.CNPJ,
-                        Empresa = e.Nome_Empresarial,
-                        Telefone = e.Telefone,
-                        Email = e.Email,
-                        Situacao = e.Situacao_Cadastral,
-                        Endereco = string.Format("{0}, {1}", e.Logradouro, e.Numero),
-                        Municipio = e.Municipio,
-                        Atividade = string.Format("{0} - {1}", e.CNAE_Principal, e.Atividade_Principal)
-                    });
-                }
-                return list;
-            });
+            var list = new List<InputExport>();
+            var cont = 1;
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            foreach (var e in await _empresaApp.ListEmpresasAsync(param))
+            {
+                list.Add(new InputExport
+                {
+                    N = cont++,
+                    Ano = e.Data_Abertura.Value.Year,
+                    Cnpj = e.CNPJ,
+                    Empresa = e.Nome_Empresarial,
+                    Telefone = e.Telefone,
+                    Email = e.Email,
+                    Situacao = e.Situacao_Cadastral,
+                    Endereco = string.Format("{0}, {1}", e.Logradouro, e.Numero),
+                    Municipio = e.Municipio,
+                    Atividade = string.Format("{0} - {1}", e.CNAE_Principal, e.Atividade_Principal)
+                });
+            }
+
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             using var epackage = new ExcelPackage(stream);
             var worksheet = epackage.Workbook.Worksheets.Add("Lista");
-            worksheet.Cells.LoadFromCollection(t.Result, true);
-            epackage.SaveAsync();
+            worksheet.Cells.LoadFromCollection(list, true);
+            await epackage.SaveAsync();
 
             stream.Position = 0;
             string excelname = $"lista-emp-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -114,7 +102,7 @@ namespace Sim.UI.Web.Pages.Empresa
                     Input.Logradouro,
                     Input.Bairro};
 
-                    Input.ListaEmpresas = await _empresaApp.ListByParam(param);
+                    Input.ListaEmpresas = await _empresaApp.ListEmpresasAsync(param);
                 }
             }
             catch (Exception ex)

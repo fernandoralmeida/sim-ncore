@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Pat
-{
-    using Sim.Domain.SDE.Entity;
+{    
     public class InputModel
     {
         [Key]

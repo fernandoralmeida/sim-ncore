@@ -89,6 +89,16 @@ namespace Sim.Domain.Service
             return await _atendimento.ListPessoaAsync(cpf);
         }
 
+        public async Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(IEnumerable<Atendimento> atendimentos)
+        {
+            return await Task.Run(() => atendimentos.Where(s => s.RaeNaoLancados(s)).ToList());
+        }
+
+        public async Task<IEnumerable<Atendimento>> ListRaeLancadosAsync(IEnumerable<Atendimento> atendimentos)
+        {
+            return await Task.Run(() => atendimentos.Where(s => s.RaeLancados(s)).ToList());
+        }
+
         public async Task<IEnumerable<Atendimento>> ListServicosAsync(string servicos)
         {
             return await _atendimento.ListServicosAsync(servicos);

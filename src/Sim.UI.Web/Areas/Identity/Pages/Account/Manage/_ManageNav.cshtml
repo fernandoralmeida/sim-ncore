@@ -1,0 +1,24 @@
+﻿@using Sim.Identity.Entity
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<div class="navbar navbar-fixed">
+    <nav class="navbar">
+        <div class="nav-wrapper white">
+            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
+            <span class="navbar-page-name grey-text">Minha Conta</span>
+            <ul class="right">
+                <li><a class="@ManageNavPages.IndexNavClass(ViewContext) grey-text" id="profile" asp-page="./Index">Perfil</a></li>
+                <li><a class="@ManageNavPages.EmailNavClass(ViewContext) grey-text" id="email" asp-page="./Email">Email</a></li>
+                <li><a class="@ManageNavPages.ChangePasswordNavClass(ViewContext) grey-text" id="change-password" asp-page="./ChangePassword">Senha</a></li>
+                @if (hasExternalLogins)
+                {
+                    <li id="external-logins"><a id="external-login" class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) grey-text" asp-page="./ExternalLogins">Logins externos</a></li>
+                }
+                <li hidden><a hidden class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) grey-text" id="two-factor" asp-page="./TwoFactorAuthentication">Autenticação de dois fatores</a></li>
+                <li><a class=" @ManageNavPages.PersonalDataNavClass(ViewContext) grey-text" id="personal-data" asp-page="./PersonalData">Dados pessoais</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>

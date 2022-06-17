@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
+using Sim.Domain.Entity;
+using Sim.Application.Interfaces;
+using Sim.UI.Web.Functions;
 
 namespace Sim.UI.Web.Pages.Atendimento.Consultas
 {
-    using Sim.Domain.Shared.Entity;
-    using Sim.Application.Shared.Interface;
-    using Functions;
+
 
     [Authorize(Roles = "Administrador")]
     public class ListaModel : PageModel
@@ -31,7 +26,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consultas
 
         public ParamModel GetParam { get; set; } 
 
-        public ICollection<Atendimento> ListaAtendimento { get; set; }
+        public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
 
         public async Task OnGet(string p1, string p2, string p3, string p4,string p5, string p6, string p7, string p8, string p9)
         {
@@ -61,16 +56,15 @@ namespace Sim.UI.Web.Pages.Atendimento.Consultas
                     GetParam.param6,
                     GetParam.param7,
                     GetParam.param8,
-                    GetParam.param9  };
+                    GetParam.param9
+                };
 
-                var lista = await _appServiceAtendimento.ListByParam(param);
-
-                ListaAtendimento = lista.ToList();
+                ListaAtendimento = await _appServiceAtendimento.ListParamAsync(param);
             }
             catch (Exception ex)
             {
                 StatusMessage = "Erro: " + ex.Message;
-                ListaAtendimento = new List<Atendimento>();
+                ListaAtendimento = new List<Domain.Entity.Atendimento>();
             }
 
 

@@ -13,25 +13,12 @@ namespace Sim.UI.Web.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<InputModelPessoa, Pessoa>();
             CreateMap<Pessoa, InputModelPessoa>().ReverseMap();
-
-            CreateMap<VMEmpresa, CNPJ>();
             CreateMap<CNPJ, VMEmpresa>().ReverseMap();
-
-            CreateMap<VMEmpresa, Empresas>();
             CreateMap<Empresas, VMEmpresa>().ReverseMap();
-
-            CreateMap<InputModelAtendimento, Atendimento>();
             CreateMap<Atendimento, InputModelAtendimento>().ReverseMap();
-
-            CreateMap<InputModelEvento, Evento>();
             CreateMap<Evento, InputModelEvento>().ReverseMap();
-
-            CreateMap<InputModelInscricao, Inscricao>();
             CreateMap<Inscricao, InputModelInscricao>().ReverseMap();
-
-            CreateMap<InputModelPlanner, Planner>();
             CreateMap<Planner, InputModelPlanner>().ReverseMap();
         }
     }

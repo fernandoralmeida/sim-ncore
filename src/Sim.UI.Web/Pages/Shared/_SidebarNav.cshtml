@@ -2,16 +2,14 @@
 
 <ul id="sidenav-left" class="sidenav sidenav-fixed">
     <li>
-        <a class="logo-container teal-text">SEDEMP<i class="material-icons teal-text left">widgets</i></a>
+        <a class="logo-container teal-text" asp-page="/Triagem/Index" target="_blank">SEDEMP<i class="material-icons teal-text left">widgets</i></a>
     </li>
     <li class="no-padding">
         <ul class="collapsible collapsible-accordion transparent">
             <li class="waves-block waves-effect waves-red @LayoutNavPages.InicioNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
                 <div class="collapsible-header">Setor</div>
                 <div class="collapsible-body transparent">
-                    <ul><!--
-                        <li class="@LayoutNavPages.InicioTriagemNavClass(ViewContext)"><a class="waves-effect" asp-area="" asp-page="/Triagem/Index" target="_blank">Triagem</a></li>
-                        -->
+                    <ul>
                         <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)"><a class="waves-effect" asp-area="" asp-page="/Pat/Index">PAT</a></li>
                         <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)"><a href="#" class="waves-effect">Banco do Povo</a></li>
                         <li class="@LayoutNavPages.InicioSANavClass(ViewContext)"><a class="waves-effect" asp-area="" asp-page="/SebraeAqui/Index">Sebrae Aqui</a></li>
@@ -25,7 +23,7 @@
                     <ul>
                         <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Atendimento/Novo/Index" class="waves-effect"><i class="material-icons">access_alarm</i>Ativo</a></li>
                         <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext)"><a asp-page="/Atendimento/Index" class="waves-effect">Diários<i class="material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta" class="waves-effect">Consultar<i class="material-icons">search</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta/Index" class="waves-effect">Consultar<i class="material-icons">search</i></a></li>
                         <li class="@LayoutNavPages.AtendimentoStatusNavClass(ViewContext)"><a asp-page="/Atendimento/Status" class="waves-effect">Status<i class="material-icons">notification_important</i></a></li>
                     </ul>
                 </div>
@@ -34,7 +32,7 @@
                 <div class="collapsible-header">Clientes</div>
                 <div class="collapsible-body transparent">
                     <ul>
-                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext)"><a asp-page="/Pessoa/Index" class="waves-effect">Pessoas<i class="material-icons">group</i></a></li>
+                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext)"><a asp-page="/Cliente/Index" class="waves-effect">Pessoas<i class="material-icons">group</i></a></li>
                         <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext)"><a asp-page="/Empresa/Index" class="waves-effect">Empresas<i class="material-icons">domain</i></a></li>
                     </ul>
                 </div>

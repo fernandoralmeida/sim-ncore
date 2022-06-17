@@ -1,20 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
+using Sim.Application.Interfaces;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Planner
 {
-    
-    using Sim.Application.Shared.Interface;
-    using Sim.Domain.Shared.Entity;
-
-
     [Authorize]
     public class IndexModel : PageModel
     {
@@ -52,17 +45,16 @@ namespace Sim.UI.Web.Pages.Planner
             MeuDia = DateTime.Now.Date;
             PlannerTimer(DateTime.Now);
             
-            var plnn = await _planner.GetMyPlanner(Input.DataInicial, Input.DataFinal, User.Identity.Name);
+            var plnn = await _planner.ListPlannerAsync(Input.DataInicial, Input.DataFinal, User.Identity.Name);
 
             if(!plnn.Any())
             {
                 Input.Owner_AppUser_Id = User.Identity.Name;
                 Input.Ativo = true;
-                var t = Task.Run(() => _planner.Add(_mapper.Map<Planner>(Input)));
-                await t;
+                await _planner.AddAsync(_mapper.Map<Domain.Entity.Planner>(Input));
             }
 
-            foreach(Planner p in plnn)
+            foreach(Domain.Entity.Planner p in plnn)
             {
                 Input = _mapper.Map<InputModelPlanner>(p);
             }   
@@ -72,12 +64,11 @@ namespace Sim.UI.Web.Pages.Planner
         {
             PlannerTimer(DateTime.Now.Date);
             
-            var t = Task.Run(() => _planner.Update(_mapper.Map<Planner>(Input)));
-            await t;
+            await _planner.UpdateAsync(_mapper.Map<Domain.Entity.Planner>(Input));
             
-            var plnn = await _planner.GetMyPlanner(Input.DataInicial, Input.DataFinal, User.Identity.Name);
+            var plnn = await _planner.ListPlannerAsync(Input.DataInicial, Input.DataFinal, User.Identity.Name);
 
-            foreach (Planner p in plnn)
+            foreach (Domain.Entity.Planner p in plnn)
             {
                 Input = _mapper.Map<InputModelPlanner>(p);
             }
@@ -87,18 +78,19 @@ namespace Sim.UI.Web.Pages.Planner
 
             PlannerTimer((DateTime)MeuDia);
 
-            var plnn = await _planner.GetMyPlanner(Input.DataInicial, Input.DataFinal, User.Identity.Name);
+            var plnn = await _planner.ListPlannerAsync(Input.DataInicial, Input.DataFinal, User.Identity.Name);
 
             if (!plnn.Any())
             {
-                Input = new();
-                Input.Owner_AppUser_Id = User.Identity.Name;
-                Input.Ativo = true;
-                var t = Task.Run(() => _planner.Add(_mapper.Map<Planner>(Input)));
-                await t;
+                Input = new()
+                {
+                    Owner_AppUser_Id = User.Identity.Name,
+                    Ativo = true
+                };
+                await _planner.AddAsync(_mapper.Map<Domain.Entity.Planner>(Input));
             }
 
-            foreach (Planner p in plnn)
+            foreach (Domain.Entity.Planner p in plnn)
             {
                 Input = _mapper.Map<InputModelPlanner>(p);
             }

@@ -20,6 +20,8 @@
         Task<IEnumerable<Atendimento>> ListUserNamePeriodoAsync(string username, DateTime? date);
         Task<IEnumerable<Atendimento>> ListAtendimentosAtivosAsync();
         Task<IEnumerable<Atendimento>> ListParamAsync(List<object> lparam);
+        Task<IEnumerable<Atendimento>> ListRaeLancadosAsync(IEnumerable<Atendimento> atendimentos);
+        Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(IEnumerable<Atendimento> atendimentos);
         Task<Atendimento> GetIdAsync(Guid id);
         Task<IEnumerable<Atendimento>> ListAllAsync();
     }

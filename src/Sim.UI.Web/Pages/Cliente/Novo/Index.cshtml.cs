@@ -5,12 +5,8 @@ using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
 using AutoMapper;
 
-
 namespace Sim.UI.Web.Pages.Cliente.Novo
 {
-
-    
-
     [Authorize]
     public class IndexModel : PageModel
     {

@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
+using Sim.Domain.Entity;
+using Sim.Application.Interfaces;
 
 namespace Sim.UI.Web.Pages.Empresa.Consultas
 {
-    using Sim.Domain.SDE.Entity;
-    using Sim.Application.SDE.Interface;
-    
-
     [Authorize]
     public class RazaoSocialModel : PageModel
     {
@@ -66,17 +60,8 @@ namespace Sim.UI.Web.Pages.Empresa.Consultas
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var emp = Task.Run(() => _empresaApp.ConsultaByRazaoSocial(Input.RazaoSocial));
-
-                    await emp;
-
-                    Input = new InputModel
-                    {
-                        ListaEmpresas = emp.Result
-                    };
-                }
+                
+              Input.ListaEmpresas = await _empresaApp.ConsultaRazaoSocialAsync(Input.RazaoSocial);
 
             }
             catch (Exception ex)
