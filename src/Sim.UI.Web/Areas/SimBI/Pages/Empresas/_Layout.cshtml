@@ -1,0 +1,29 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Pages/Shared/_Layout.cshtml";
+    }
+
+    ViewData["ActivePage"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.PowerBI;
+    ViewData["ActivePageLi"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.PowerBIEmpresas;
+}
+
+<partial name="./_NavBar" />
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+<div style="margin:20px 20px 20px 20px;">
+    @RenderBody()
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="~/js/chart.js"></script>
+
+}

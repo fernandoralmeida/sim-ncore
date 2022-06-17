@@ -118,5 +118,20 @@ namespace Sim.Application.Services
         {
             return await _atendimento.ListUserNamePeriodoAsync(username, date);
         }
+
+        public async Task<BIAtendimentos> ToListBIAtendimentos(DateTime periodo)
+        {
+            return await _atendimento.ToListBIAtendimentos(periodo);
+        }
+
+        public async Task<BIAtendimentos> ToListBIAtendimentosAppUser(DateTime periodo)
+        {
+            return await _atendimento.ToListBIAtendimentosAppUser(periodo);
+        }
+
+        public async Task<BIAtendimentos> ToListBIAtendimentosSetor(DateTime periodo, string setor)
+        {
+            return await _atendimento.ToListBIAtendimentosSetor(periodo, setor);
+        }
     }
 }

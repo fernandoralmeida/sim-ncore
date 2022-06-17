@@ -72,13 +72,13 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
             if(atendimemnto_ativio.Owner_AppUser_Id != User.Identity.Name)
             {
                 StatusMessage = "Erro : Atendimento pertence a outro atendente!";
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Atendimento/Index");
             }
 
             if (atendimemnto_ativio == null)
             {
                 StatusMessage = "Erro inesperado, tente novamente!";
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Atendimento/Index");
             }
 
             Input = new()
@@ -150,7 +150,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
                 atold.Ultima_Alteracao = DateTime.Now;
                 await _appServiceAtendimento.UpdateAsync(atold);
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Atendimento/Index");
 
             }
             catch (Exception ex)
@@ -169,7 +169,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
                 var atold = await _appServiceAtendimento.GetIdAsync(id);
                 await _appServiceAtendimento.RemoveAsync(atold);
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Atendimento/Index");
             }
             catch (Exception ex)
             {

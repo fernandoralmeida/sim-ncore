@@ -47,6 +47,9 @@ builder.Services.AddControllersWithViews()
 Container.RegisterDataContext(builder.Services, builder.Configuration, "App_____ContextConnection");
 Container.ApplicationContextServices(builder.Services);
 
+ContainerCnpj.RegisterDataContext(builder.Services, builder.Configuration, "RFB_____ContextConnection");
+ContainerCnpj.ApplicationContextServices(builder.Services);
+
 var _mapper = new AutoMapper.MapperConfiguration(config => config.AddProfile(new Sim.UI.Web.AutoMapper.AutoMapperProfile()));
 var mapper = _mapper.CreateMapper();
 builder.Services.AddSingleton(mapper);

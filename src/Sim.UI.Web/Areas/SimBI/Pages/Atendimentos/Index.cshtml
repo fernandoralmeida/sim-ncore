@@ -1,0 +1,249 @@
+﻿@page
+@model Sim.UI.Web.Areas.SimBI.Pages.Atendimentos.IndexModel
+
+@{
+    Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Index";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row">
+                
+        @if(Model.Atendimentos_List != null)
+        {
+            <div class="col s12">
+                <div class="card hoverable">
+                        <form method="post" class="center-align">
+                            <div class="input-field col s12 l5 m5" hidden>
+                                <select asp-for="Sec.Nome" asp-items="Model.Secretarias" class="browser-default"></select>
+                            </div>
+                            <div class="col s3 l4"></div>
+                            <div class="input-field col s6 l4 valign-wrapper">
+                                <input asp-for="Ano" />
+                                <button class="btn waves-effect waves-light" asp-page-handler="Month"><i class="material-icons">refresh</i></button>
+                            </div>
+                            <div class="col s3 l4"></div>
+                        </form>
+                    <table class="centered">
+                             <thead class="grey-text darken-3">
+                                 <tr>
+                                     <th>Atendimentos</th>
+                                     <th>Serviços</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="grey-text darken-3">
+                                 <tr>
+                                     <td><h5><a href="#" class="blue-text">@Model.Atendimentos_List.Cliente.Atendimentos</a></h5></td>
+                                     <td><h5><a href="#" class="teal-text">@Model.Atendimentos_List.Cliente.Servicos</a></h5></td>                                     
+                                 </tr>
+                                 <tr class="orange-text">
+                                     <td>PF( <span class="blue-text text-lighten-1">@Model.Atendimentos_List.ClientePF.Atendimentos</span> )</td>
+                                     <td>PF( <span class="teal-text text-lighten-1">@Model.Atendimentos_List.ClientePF.Servicos</span> )</td>
+                                 </tr>
+                                 <tr class="purple-text">
+                                     <td>PJ( <span class="blue-text text-lighten-2">@Model.Atendimentos_List.ClientePJ.Atendimentos</span> )</td>
+                                     <td>PJ( <span class="teal-text text-lighten-2">@Model.Atendimentos_List.ClientePJ.Servicos</span> )</td>
+                                 </tr>
+                             </tbody>
+                    </table>
+                    @if(Model.Atendimentos_List.ListaMensal != null)
+                    {
+                    <div style="overflow-x:auto;">
+                    <table class="centered striped">
+                        <thead>
+                            <tr>
+                                @foreach(var m in Model.Atendimentos_List.ListaMensal)
+                                    {
+                                      <th class="grey-text darken-3"><span>@m.Mes</span></th>  
+                                    }                                   
+
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach(var m in Model.Atendimentos_List.ListaMensal)
+                                    {
+                                      <td class="grey-text darken-3"><span class="blue-text">@m.Atendimentos</span> / <span class="teal-text">@m.Servicos</span></td>
+                                    }   
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    }
+                </div>
+            </div>
+        }   
+
+        @if(Model.Setores != null)
+        {
+            @foreach(var set in Model.Setores.Where(s => s.Cliente.Atendimentos > 0))
+            {                
+
+               <div class="col s12">
+                <div class="card hoverable">
+                    <table class="centered">
+                        <caption class="grey-text">@set.Cliente.Titulo</caption>
+                             <thead class="grey-text darken-3">                                 
+                                 <tr>
+                                     <th>Atendimentos</th>
+                                     <th>Serviços</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="grey-text darken-3">
+                                 <tr>
+                                     <td><h5><a href="#" class="blue-text">@set.Cliente.Atendimentos</a></h5></td>
+                                     <td><h5><a href="#" class="teal-text">@set.Cliente.Servicos</a></h5></td>                                     
+                                 </tr>
+                                 <tr class="orange-text">
+                                     <td >PF( <span class="blue-text text-lighten-1">@set.ClientePF.Atendimentos</span> )</td>
+                                     <td>PF( <span class="teal-text text-lighten-1">@set.ClientePF.Servicos</span> )</td>
+                                 </tr>
+                                 <tr class="purple-text">
+                                     <td>PJ( <span class="blue-text text-lighten-2">@set.ClientePJ.Atendimentos</span> )</td>
+                                     <td>PJ( <span class="teal-text text-lighten-2">@set.ClientePJ.Servicos</span> )</td>
+                                 </tr>
+                             </tbody>
+                    </table>
+                    @if(set.ListaMensal != null)
+                    {
+                    <div style="overflow-x:auto;">
+                    <table class="centered striped">
+                        <thead>
+                            <tr>
+                                @foreach(var m in set.ListaMensal)
+                                    {
+                                      <th class="grey-text darken-3"><span>@m.Mes</span></th>  
+                                    }                                  
+
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach(var m in set.ListaMensal)
+                                    {
+                                      <td class="grey-text darken-3"><span class="blue-text">@m.Atendimentos</span> / <span class="teal-text">@m.Servicos</span></td>
+                                    }   
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+        }
+    
+    @if (Model.AppUsers != null)
+    {
+        <div class="col s12">
+            <div class="card hoverable" style="overflow-x:auto;">
+                    @if(Model.AppUsers.ListaAppUser != null)
+                    {
+                    <table class="centered striped">
+                        <caption class="grey-text">Usuários</caption>
+                        <thead>
+                            <tr>
+                                @foreach(var m in Model.AppUsers.ListaAppUser)
+                                    {
+                                      <th class="grey-text darken-3"><span>@m.Nome</span></th>  
+                                    }                                   
+
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach(var m in Model.AppUsers.ListaAppUser)
+                                    {
+                                      <td class="grey-text darken-3"><span class="blue-text">@m.Atendimentos</span> / <span class="teal-text">@m.Servicos</span></td>
+                                    }   
+                            </tr>
+                        </tbody>
+                    </table>
+                    }
+            </div>
+        </div>
+    }
+
+</div>
+
+<!-- Modal Structure -->
+<div id="viewmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <ul class="collection showcollection"></ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>
+
+<!-- Modal Structure Canal-->
+<div id="viewmodalcanal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <ul class="collection showcollectionCanal"></ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>
+
+<!-- Modal Structure User-->
+<div id="viewmodaluser" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <ul class="collection showcollectionUser"></ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $(".modal-trigger").click(function () {
+                var param1 = $(this).data('id');
+                var param2 = $(this).data('mth');
+                var param3 = $(this).data('hdlr');
+                var param4 = $(this).data('y');
+                $(".showcollection").empty();
+                $.getJSON(`/SimBI/Atendimentos?id=${param1}&mth=${param2}&y=${param4}&handler=${param3}`, (data) => {
+                    var cor = "darken-1";
+                    $.each(data, function (i, item) {
+                        $(".showcollection").append(`<li class="collection-item"><span class="new badge green ${cor}" data-badge-caption="${item.value}"></span>${item.key}</li>`);
+                        cor = "lighten-1";
+                    });
+                });
+            });
+            $(".modal-trigger").click(function () {
+                var param1 = $(this).data('id');
+                var param2 = $(this).data('id2');
+                var param3 = $(this).data('mth');
+                var param4 = $(this).data('hdlr');
+                var param5 = $(this).data('y');
+                $(".showcollectionCanal").empty();
+                $.getJSON(`/SimBI/Atendimentos?id=${param1}&id2=${param2}&mth=${param3}&y=${param5}&handler=${param4}`, (data) => {
+                    var cor = "blue";
+                    $.each(data, function (i, item) {                        
+                        $(".showcollectionCanal").append(`<li class="collection-item"><span class="new badge ${cor} lighten-1" data-badge-caption="${item.value}"></span>${item.key}</li>`);
+                        cor = "green";
+                    });
+                });
+            });
+            $(".modal-trigger").click(function () {
+                var param1 = $(this).data('id');
+                var param2 = $(this).data('id2');
+                var param3 = $(this).data('mth');
+                var param4 = $(this).data('hdlr');
+                var param5 = $(this).data('y');
+                $(".showcollectionUser").empty();
+                $.getJSON(`/SimBI/Atendimentos?id=${param1}&id2=${param2}&mth=${param3}&y=${param5}&handler=${param4}`, (data) => {
+                    var cor = "blue";
+                    $.each(data, function (i, item) {
+                        $(".showcollectionUser").append(`<li class="collection-item"><span class="new badge ${cor} lighten-1" data-badge-caption="${item.value}"></span>${item.key}</li>`);
+                        cor = "green";
+                    });
+                });
+            });
+        });
+    </script>
+}

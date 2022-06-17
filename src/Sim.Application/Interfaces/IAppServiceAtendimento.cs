@@ -25,5 +25,8 @@ namespace Sim.Application.Interfaces
         Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(string username);
         Task<Atendimento> GetIdAsync(Guid id);
         Task<IEnumerable<Atendimento>> ListAllAsync();
+        Task<BIAtendimentos> ToListBIAtendimentos(DateTime periodo);
+        Task<BIAtendimentos> ToListBIAtendimentosSetor(DateTime periodo, string setor);
+        Task<BIAtendimentos> ToListBIAtendimentosAppUser(DateTime periodo);
     }
 }

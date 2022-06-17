@@ -24,5 +24,9 @@
         Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(IEnumerable<Atendimento> atendimentos);
         Task<Atendimento> GetIdAsync(Guid id);
         Task<IEnumerable<Atendimento>> ListAllAsync();
+
+        Task<BIAtendimentos> ToListBIAtendimentos(DateTime periodo);
+        Task<BIAtendimentos> ToListBIAtendimentosSetor(DateTime periodo, string setor);
+        Task<BIAtendimentos> ToListBIAtendimentosAppUser(DateTime periodo);
     }
 }

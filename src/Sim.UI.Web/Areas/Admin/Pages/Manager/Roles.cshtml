@@ -1,0 +1,77 @@
+﻿@page
+@model Sim.UI.Web.Areas.Admin.Pages.Manager.RolesModel
+@{
+    Layout = "_Layout.cshtml";
+
+    ViewData["Title"] = "Apolice";
+}
+
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div>
+    
+        <form method="post">
+            <div class="row">
+                <div class="col s12">
+                    <div class="col s4 m4 l4">
+                        <div class="input-field">
+                            <input asp-for="Input.Name" class="validate" />
+                            <label asp-for="Input.Name"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-field">
+                            <button class="btn waves-effect" type="submit">Adicionar</button>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </form>
+    
+    <div class="card">
+        
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Role Name
+                        </th>
+                        <th>
+                            Role Id
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Input.Roles != null)
+                    {
+                        foreach (var item in Model.Input.Roles)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                    <form method="post">
+                                        <button type="submit" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-small waves-effect" title="Excluir Role"><i class="material-icons">delete_outline</i></button>
+                                    </form>
+                                    
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        
+    </div>
+
+</div>

@@ -1,0 +1,111 @@
+﻿@page
+@model Sim.UI.Web.Areas.Admin.Pages.Manager.UserRolesModel
+@{
+    Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Perfil de Acesso";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="card">
+     
+    <form method="post">
+
+        <div class="card-content">
+            <dl class="row">
+                <dt class="col m2">
+                    @Html.DisplayNameFor(model => model.Input.Id)
+                </dt>
+                <dd class="col m10">
+                    @Html.DisplayFor(model => model.Input.Id)
+                </dd>
+                <dt class="col m2">
+                    Identificador
+                </dt>
+                <dd class="col m10">
+                    @Html.DisplayFor(model => model.Input.UserName)
+                </dd>
+                <dt class="col m2">
+                    Nome
+                </dt>
+                <dd class="col m10">
+                    @Html.DisplayFor(model => model.Input.Name)
+                    @Html.DisplayFor(model => model.Input.LastName)
+                </dd>
+                <dt class="col m2">
+                    Genero
+                </dt>
+                <dd class="col m10">
+                    @Html.DisplayFor(model => model.Input.Gender)
+                </dd>
+                <dt class="col m2">
+                    @Html.DisplayNameFor(model => model.Input.Email)
+                </dt>
+                <dd class="col m10">
+                    @Html.DisplayFor(model => model.Input.Email)
+                    @{
+                        if (!Model.Input.EmailConfirmed)
+                        {
+                            <button type="submit" asp-page-handler="ConfirmEmail" asp-route-id="@Model.Input.Id" class="btn btn-small waves-effect">Confirmar Email</button>                            
+                        }
+
+                    }
+                </dd>
+                <dt class="col m2">
+                    @Html.DisplayNameFor(model => model.Input.PasswordHash)
+                </dt>
+                <dd class="col m10">
+                    <a asp-area="Identity" asp-page="/Account/ResetPassword" asp-route-code="@Model.ResetCode" class="waves-effect waves-light btn">Resetar Senha</a>
+                </dd>
+            </dl>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="col s12 m4 l4">
+                    <div class="input-field">
+                        <select asp-for="Selecionado" asp-items="Model.RoleList" class="browser-default">
+                            <option selected>-- Associar Perfil --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col s12 m4 l4">
+                    <div class="input-field">
+                        <button type="submit" asp-page-handler="AddRole" asp-route-id="@Model.Input.Id" class="btn waves-effect">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>
+                        Perfil Habilitado
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Input.ListRoles != null)
+                {
+
+                    foreach (var item in Model.Input.ListRoles)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item)
+                            </td>
+
+                            <td>
+                                <button type="submit" asp-page-handler="RemoveRole" asp-route-id="@Model.Input.Id" asp-route-role="@item" class="btn btn-small waves-effect" title="Excluir Role"><i class="material-icons">delete_outline</i></button>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </form>
+</div>
+

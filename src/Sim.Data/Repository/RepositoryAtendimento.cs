@@ -125,28 +125,29 @@ namespace Sim.Data.Repository
         {
             var dataI = (DateTime)lparam[0];
             var dataF = (DateTime)lparam[1];
-            var cpf = lparam[2] != null ? (string)lparam[2] : "#";
-            var nome = lparam[3] != null ? (string)lparam[3] : "#";
-            var cnpj = lparam[4] != null ? (string)lparam[4] : "#";
-            var razaosocial = lparam[5] != null ? (string)lparam[5] : "#";
-            var cnae = lparam[6] != null ? (string)lparam[6] : "#";
-            var servico = lparam[7] != null ? (string)lparam[7] : "#";
-            var user = lparam[8] != null ? (string)lparam[8] : "#";
+            var cpf = lparam[2] != null ? (string)lparam[2] : "";
+            var nome = lparam[3] != null ? (string)lparam[3] : "";
+            var cnpj = lparam[4] != null ? (string)lparam[4] : "";
+            var razaosocial = lparam[5] != null ? (string)lparam[5] : "";
+            var cnae = lparam[6] != null ? (string)lparam[6] : "";
+            var servico = lparam[7] != null ? (string)lparam[7] : "";
+            var user = lparam[8] != null ? (string)lparam[8] : "";
 
 
-            var t = Task.Run(() => _db.Atendimento
+            return await _db.Atendimento
             .Include(p => p.Pessoa)
             .Include(e => e.Empresa)
             .Include(s => s.Sebrae)
-            .Where(a => a.Data.Value.Date >= dataI
-            && a.Data.Value.Date <= dataF && a.Status == "Finalizado" && a.Ativo == true &&
-            (a.Pessoa.CPF == cpf || a.Pessoa.Nome.Contains(nome) ||
-            a.Empresa.CNPJ == cnpj || a.Empresa.Nome_Empresarial.Contains(razaosocial) || a.Empresa.CNAE_Principal.Contains(cnae) ||
-            a.Servicos.Contains(servico) ||
-            a.Owner_AppUser_Id == user))
-            .OrderBy(o => o.Data));
-
-            return await t;  
+            .Where(a => a.Data.Value.Date >= dataI && a.Data.Value.Date <= dataF)
+            .Where(a => a.Status == "Finalizado" && a.Ativo == true)
+            .Where(a => a.Pessoa.CPF.Contains(cpf) || a.Pessoa.Nome.Contains(nome))
+            .Where(a => a.Empresa.CNPJ.Contains(cnpj) || a.Empresa.Nome_Empresarial.Contains(razaosocial))
+            .Where(a => a.Empresa.CNAE_Principal.Contains(cnae))
+            .Where(a => a.Servicos.Contains(servico))
+            .Where(a => a.Owner_AppUser_Id.Contains(user))
+            .AsNoTracking()
+            .OrderBy(o => o.Data)
+            .ToListAsync();             
         }
 
         public async Task<IEnumerable<Atendimento>> ListPeriodoAsync(DateTime? dataI, DateTime? dataF)

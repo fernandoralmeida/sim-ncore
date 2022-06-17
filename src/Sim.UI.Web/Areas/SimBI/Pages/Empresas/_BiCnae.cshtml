@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Sim.Domain.Cnpj.Entity;
+@model IEnumerable<BICnae>
+
+<blockquote class="grey-text darken-2">
+    Informações extraidas da base de dados da RFB em 12-03-2022
+</blockquote>
+
+    <div class="row">
+        <ul class="collapsible white">
+            @foreach (var emp in Model)
+            {
+
+                @foreach (var s in emp.ListaSecao)
+                {
+                    <li>
+                        <div class="collapsible-header waves-effect waves-green">@s.Secao.Key<span class="new badge blue" data-badge-caption="">@s.Secao.Value</span></div>
+                        <div class="collapsible-body">
+                            <ul class="collapsible">
+                                @foreach (var d in s.ListaClasse)
+                                {
+                                    <li>
+                                        <div class="collapsible-header waves-effect waves-green">@d.Classe.Key<span class="new badge blue-grey darken-1" data-badge-caption="">@d.Classe.Value</span></div>
+                                        <div class="collapsible-body">
+                                            <ul class="collection z-depth-1">
+                                                @foreach (var sc in d.ListaSubClasse)
+                                                {
+                                                    string[] cnae = sc.Key.Split(" - ");
+                                                    var codigo = cnae[0].ToString();
+
+                                                    <li class="collection-item"><a class="modal-trigger" href="#viewmodal" data-id="@codigo" title="Ver empresas"><span class="new badge" data-badge-caption="">@sc.Value</span></a>@sc.Key</li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>

@@ -1,0 +1,80 @@
+﻿@page
+@model Sim.UI.Web.Areas.Admin.Pages.Manager.IndexModel
+@{
+    Layout = "_Layout.cshtml";
+
+    ViewData["Title"] = "Contas de Usuário";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+<form class="card">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Email Confirmado
+                </th>
+                <th>
+                    Bloqueado
+                </th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                int cont = 0;
+            }
+
+            @foreach (var item in Model.Input.Users)
+            {
+
+                <tr>
+                    <td>
+                        @{cont++;}
+                        @cont.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" asp-for="@item.EmailConfirmed" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" asp-for="@item.LockoutEnabled" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>
+                        <a asp-page="./UserRoles" asp-route-id="@item.Id" class="btn btn-small waves-effect" title="Editar"><i class="material-icons">edit</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

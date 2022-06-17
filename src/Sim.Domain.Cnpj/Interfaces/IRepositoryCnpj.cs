@@ -11,6 +11,8 @@ namespace Sim.Domain.Cnpj.Interfaces
         Task<IEnumerable<BaseReceitaFederal>> ListAllSocioAsync(string nomesocio);
         Task<IEnumerable<BaseReceitaFederal>> ListAllMatrizFilialAsync(string cnpjbase);
         Task<IEnumerable<BaseReceitaFederal>> ListAllRazaoSocialAsync(string razaosocial);
+        Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividade, string municipio);
         Task<BaseReceitaFederal> GetCNPJAsync(string cnpj);
+        Task<IEnumerable<Municipio>> ToListMinicipiosAsync();
     }
 }

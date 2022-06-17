@@ -1,0 +1,76 @@
+﻿@page
+@model Sim.UI.Web.Areas.Settings.Pages.Common.EventosModel
+@{
+    Layout = "_Layout.cshtml";
+
+    ViewData["Title"] = "Index";
+}
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div>
+    <form method="post">
+        <div class="col s12" hidden>
+            <label asp-for="Input.Id" class="form-label"></label>
+            <input asp-for="Input.Id" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="col s12 m4 l4">
+                    <div class="input-field">
+                        <input asp-for="Input.Nome" />
+                        <label asp-for="Input.Nome"></label>
+                    </div>
+                </div>
+                <div class="col s12 m4 l4">
+                    <div class="input-field">
+                        <select asp-for="Input.Tipo">
+                            <option selected>Evento</option>
+                        </select>
+                        <label asp-for="Input.Tipo"></label>
+                    </div>
+                </div>
+                <div class="col s12 m3 l3">
+                    <div class="input-field">
+                        <button type="submit" asp-page-handler="Add" class="btn waves-effect">Incluir Tipo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Nome
+                        </th>
+                        <th>Tipo</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Input.Listar != null)
+                    {
+                        foreach (var item in Model.Input.Listar)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Owner)
+                                </td>
+
+                                <td>
+                                    <button type="submit" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" title="Excluir item"><i class="material-icons">delete_outline</i></button>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </form>
+</div>

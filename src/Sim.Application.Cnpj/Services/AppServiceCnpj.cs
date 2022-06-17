@@ -52,5 +52,35 @@ namespace Sim.Application.Cnpj.Services
         {
             return await _cnpj.ListOptantesSimplesNacionalAsync(endereco, cnae, municipio, situacaocadastral);
         }
+
+        public async Task<IEnumerable<BICnae>> ToListBICnaeAsync(string municipio)
+        {
+            return await _cnpj.ToListBICnaeAsync(municipio);
+        }
+
+        public async Task<IEnumerable<BIEmpresas>> ToListBIEmpresasAsync(string municipio, string situacao, string ano, string mes)
+        {
+            return await _cnpj.ToListBIEmpresasAsync(municipio, situacao, ano, mes);
+        }
+
+        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividade, string municipio)
+        {
+            return await _cnpj.ToListByCnaeAsync(atividade, municipio);
+        }
+
+        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email)>> ToListCnaeEmpresasJsonAsync(string cnae, string municipio, string situacao)
+        {
+            return await _cnpj.ToListCnaeEmpresasJsonAsync(cnae, municipio, situacao);
+        }
+
+        public async Task<IEnumerable<Municipio>> ToListMicroRegiaoJahuAsync()
+        {
+            return await _cnpj.ToListMicroRegiaoJahuAsync();
+        }
+
+        public async Task<IEnumerable<Municipio>> ToListMinicipiosAsync()
+        {
+            return await _cnpj.ToListMinicipiosAsync();
+        }
     }
 }

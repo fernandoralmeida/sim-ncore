@@ -1,0 +1,481 @@
+﻿@page
+@model Sim.UI.Web.Areas.SimBI.Pages.Empresas.IndexModel
+
+@{
+    Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Index";
+    ViewData["BIEmpActivePage"] = "Empresas";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+@if (Model.Input.Modo == "Atividades")
+{
+    <partial name="_BiCnae" model="Model.ListCnaes" />
+}
+else
+{
+<div class="row">
+    @foreach (var emp in Model.ListEmpresas)
+    {
+    <blockquote class="grey-text darken-2">
+        Informações extraidas da base de dados da RFB em 12-03-2022
+        <br />E não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"
+    </blockquote>
+
+        <div class="row">
+            <div class="col s12 m4 l4">
+                <div class="card hoverable">
+                    <table class="centered striped">
+                        <thead>
+                            <tr>
+                                <th class="card-header grey-text darken-3" title="Mortalidade de Empresas abertas nos ultimos 24 meses"><span>Mortalidade</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tx in emp.ListaMortalidadeEmpresas)
+                            {
+                                <tr>
+                                    <td>
+                                        <h5 class="blue-text darken-1">@tx.Value</h5>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card hoverable">
+                    <table class="centered striped">
+                        <thead>
+                            <tr>
+                                <th class="card-header grey-text darken-3">@emp.Formalizacoes.Key @Model.Input.Ano</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tx in emp.ListaMortalidadeEmpresas)
+                            {
+                                <tr>
+                                    <td>
+                                        <h5 class="green-text darken-1">@emp.Formalizacoes.Value</h5>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card hoverable">
+                    <table class="centered striped">
+                        <thead>
+                            <tr>
+                                <th class="card-header grey-text darken-3">@emp.Baixas.Key @Model.Input.Ano</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tx in emp.ListaMortalidadeEmpresas)
+                            {
+                                <tr>
+                                    <td>
+                                        <h5 class="materialize-red-text darken-1">@emp.Baixas.Value</h5>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="card hoverable">
+                    @if (Model.Input.Mes == "99")
+                    {
+
+                        <table class="responsive-table striped centered">
+                            <caption class="grey-text">Demostrativo Geral</caption>
+                            <thead>
+                                <tr>
+                                    @foreach (var op in emp.ListaSituacao)
+                                    {
+                                        if (op.Key != "Baixada")
+                                        {
+                                            <th class="grey-text darken-3">@op.Key</th>
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    @{ var cst = 0;} 
+
+                                    @foreach(var c in emp.ListaSituacao)
+                                    {
+                                        if (c.Key != "Baixada")
+                                        {
+                                            cst += c.Value;
+                                        }
+                                    }
+
+
+                                    @foreach (var op in emp.ListaSituacao)
+                                    {
+                                        if (op.Key != "Baixada")
+                                        {
+                                            float v1 = op.Value;
+                                            float v2 = cst;
+                                            float r = (v1 / v2) * 100;
+                                            <td class="blue-text darken-3">@op.Value <span class="purple-text">(@r.ToString("N2")%)</span></td>
+                                        }
+
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    }
+                    else if(Model.Input.Mes == "00")
+                    {
+                        <table class="responsive-table striped centered">
+                            <caption class="grey-text">Empresas Formalizadas @Model.Input.Ano</caption>
+                            <thead>
+                                <tr>
+                                    @foreach (var op in emp.ListaMensal)
+                                    {
+                                        <th class="grey-text darken-3">@op.Key</th>
+                                    }
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    @foreach (var op in emp.ListaMensal)
+                                    {
+                                        float v1 = op.Value;
+                                        float v2 = emp.EmpresasAtivas.Value;
+                                        float r = (v1 / v2) * 100;
+                                        <td class="blue-text darken-3">@op.Value <span class="purple-text">(@r.ToString("N2")%)</span></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 m6 l6">
+                <div class="card hoverable">
+                    <table class="responsive-table striped centered">
+                        <caption class="grey-text">Porte</caption>
+                        <thead>
+                            <tr>
+                                @foreach (var op in emp.Porte)
+                                {
+                                    <th class="grey-text darken-3">@op.Key</th>
+                                }
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                @foreach (var op in emp.Porte)
+                                {
+                                    float v1 = op.Value;
+                                    float v2 = emp.EmpresasAtivas.Value;
+                                    float r = (v1 / v2) * 100;
+                                    <td class="blue-text darken-3">@op.Value <span class="purple-text">(@r.ToString("N2")%)</span></td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col s12 m6 l6">
+                <div class="card hoverable">
+                    <table class="responsive-table striped centered">
+                        <caption class="grey-text">Regime Tributário</caption>
+                        <thead>
+                            <tr>
+                                <th class="grey-text darken-3" title="Lucro Real ou Presumido">Lucro RP</th>
+                                <th class="grey-text darken-3">Simples Nacional</th>
+                                <th class="grey-text darken-3">Optante MEI</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+
+                                @{
+                                    float et = emp.EmpresasAtivas.Value;
+                                    float osn = emp.SimplesNacional.Value - emp.OptanteMEI.Value;
+                                    float mei = emp.OptanteMEI.Value;
+                                    float lrp = emp.EmpresasAtivas.Value - emp.SimplesNacional.Value;
+
+                                    float vlrp = (lrp / et) * 100;
+                                    float vsn = (osn / et) * 100;
+                                    float vmei = (mei / et) * 100;
+                                }
+                                <td class="blue-text darken-3">@lrp <span class="purple-text">(@vlrp.ToString("N2")%)</span></td>
+                                <td class="blue-text darken-3">@osn <span class="purple-text">(@vsn.ToString("N2")%)</span></td>
+                                <td class="blue-text darken-3">@emp.OptanteMEI.Value <span class="purple-text">(@vmei.ToString("N2")%)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="card hoverable">
+                    <table class="responsive-table striped centered">
+                        <caption class="grey-text">Distribuição por Setor</caption>
+                        <thead>
+                            <tr>
+                                @foreach (var st in emp.ListaSetores)
+                                {
+                                    <th class="grey-text">@st.Key</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (var st in emp.ListaSetores)
+                                {
+                                    float v1 = st.Value;
+                                    float v2 = emp.EmpresasAtivas.Value;
+                                    float r = (v1 / v2) * 100;
+                                    <td class="blue-text">@st.Value <span class="purple-text">(@r.ToString("N2")%)</span></td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            @{ var count = 0; var sz = "m3 l3";}
+
+            @foreach (var str in emp.ListaSetores)
+            {
+                if(count == 0 || count == 4)
+                {
+                    sz = "m3 l3";
+                }
+                else
+                    sz = "m2 l2";
+
+                count++;
+
+                <div class="col s12 @sz">
+                    <div class="card hoverable">
+                        <ul class="collection">
+                            @if (str.Key == "Serviços")
+                            {
+                                int c = 0;
+                                <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
+                                @foreach (var at in emp.Servicos)
+                                {
+                                    if (c < 5)
+                                    {
+                                        <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
+                                    }
+                                    else
+                                        break;
+                                    c++;
+                                }
+                            }
+                            @if (str.Key == "Comércio")
+                            {
+                                int c = 0;
+                                <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>                                
+
+                                @foreach (var at in emp.Comercio)
+                                {
+                                    if (c < 5)
+                                    {
+                                        <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
+                                    }
+                                    else
+                                        break;
+                                    c++;
+                                }
+                            }
+                            @if (str.Key == "Indústria")
+                            {
+                                int c = 0;
+                                <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
+                                
+                                @foreach (var at in emp.Indistria)
+                                {
+                                    if (c < 5)
+                                    {
+                                        <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
+                                    }
+                                    else
+                                        break;
+                                    c++;
+                                }
+                            }
+                            @if (str.Key == "Construção")
+                            {
+                                int c = 0;
+                                <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
+                                
+                                @foreach (var at in emp.Construcao)
+                                {
+                                    if (c < 5)
+                                    {
+                                        <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
+                                    }
+                                    else
+                                        break;
+                                    c++;
+                                }
+                            }
+                            @if (str.Key == "Agropecuária")
+                            {
+                                int c = 0;
+                                <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
+                                
+                                @foreach (var at in emp.Agro)
+                                {
+                                    if (c < 5)
+                                    {
+                                        <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
+                                    }
+                                    else
+                                        break;
+                                    c++;
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card hoverable">
+                    <ul class="collection striped">
+                        <li class="collection-item grey-text truncate"><b>Atividades Primárias (10+ Ocorrências no geral)</b></li>
+                        @{int v = 0;}
+
+                        @foreach (var op in emp.ListaAtividades)
+                        {
+                            if (v < 10)
+                            {
+                                <li class="collection-item truncate"><span class="badge purple-text" data-badge-caption="@op.Value"></span>@op.Key</li>
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            v++;
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m12 l12">
+            <div id="piechart" class="col  white z-depth-1" hidden></div>
+            <div id="chart2" class="col  white z-depth-1" hidden></div>
+        </div>
+    }
+</div>
+}
+
+
+
+<!-- Modal Structure -->
+<!--
+<div id="viewmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <ul class="collection showcollection"></ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>-->
+
+<div id="viewmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+        <table class="striped" style="font-size:12px;">
+        <thead>
+          <tr>
+              <th>CNPJ</th>
+              <th>Razão Social</th>
+              <th>Tel</th>
+              <th>Email</th>
+          </tr>
+        </thead>
+        <tbody class="showcollection"></tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $(".modal-trigger").click(function () {
+                var param1 = $(this).data('id');
+                var param2 = $('#municip').val();
+                var param3 = $('#situacaocad').val();
+                $(".showcollection").empty();
+                $(".showcollection").append(`<span>LOADING...</span>`);
+                $.getJSON(`/SimBI/Empresas?c=${param1}&m=${param2}&a=${param3}&handler=Preview`, function (data) {
+                    $(".showcollection").empty();
+                    $.each(data, function (i, item) {
+
+                        var v1 = item.item1;
+                        var vm = v1.slice(0,2) + "." + v1.slice(2,5) + "." + v1.slice(5,8) + "/" + v1.slice(8,12) + "-" + v1.slice(12,14);
+                        var v2 = item.item2;
+                        var v3 = item.item3 != null? item.item3: "";
+                        var v4 = item.item4 != null? item.item4: "";
+                        
+                        $(".showcollection").append(
+                            
+                            `<tr>
+                            <td><a href="/Censo/Empresas/Detalhe?id=${v1}" target="_blank">${vm}</a></td>
+                            <td>${v2}</td>
+                            <td>${v3}</td>
+                            <td>${v4}</td>
+                            </tr>`
+                        
+                        );
+
+                        //$(".showcollection").append(`<li class="collection-item"><a href="/Censo/Empresas/Detalhe?id=${v1}" target="_blank"><span class="new badge" data-badge-caption="Perfil Completo"></span></a>${data.nome_Empresarial}</li>`);
+                    });
+                });
+            });
+        });
+
+        $(function () {
+            $("#submit").click(function () {
+                document.forms[0].submit();                
+                return false;
+            });
+        });
+    </script>
+}

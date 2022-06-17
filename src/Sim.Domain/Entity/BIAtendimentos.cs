@@ -1,6 +1,6 @@
 ﻿namespace Sim.Domain.Entity
 {
-    internal class BIAtendimentos
+    public class BIAtendimentos
     {
         public (string Titulo, int Atendimentos, int Servicos) Cliente { get; set; }
         public (string Titulo, int Atendimentos, int Servicos) ClientePF { get; set; }

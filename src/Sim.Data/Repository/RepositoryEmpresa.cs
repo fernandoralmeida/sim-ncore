@@ -40,17 +40,20 @@ namespace Sim.Data.Repository
         {
             var brf = new List<Empresas>();
 
-            var cnpj = lparam[0] != null ? (string)lparam[0] : "#";
-            var razaosocial = lparam[1] != null ? (string)lparam[1] : "#";
-            var cnae = lparam[2] != null ? (string)lparam[2] : "#";
-            var logradouro = lparam[3] != null ? (string)lparam[3] : "#";
-            var bairro = lparam[4] != null ? (string)lparam[4] : "#";
+            var cnpj = lparam[0] != null ? (string)lparam[0] : "";
+            var razaosocial = lparam[1] != null ? (string)lparam[1] : "";
+            var cnae = lparam[2] != null ? (string)lparam[2] : "";
+            var logradouro = lparam[3] != null ? (string)lparam[3] : "";
+            var bairro = lparam[4] != null ? (string)lparam[4] : "";
 
-            return await _db.Empresa.Where(s => s.CNPJ == cnpj
-            || s.Nome_Empresarial.Contains(razaosocial)
-            || s.CNAE_Principal.Contains(cnae)
-            || s.Logradouro.Contains(logradouro)
-            || s.Bairro.Contains(bairro)).OrderByDescending(o => o.Data_Abertura).ToListAsync();            
+            return await _db.Empresa.Where(s => s.CNPJ.Contains(cnpj))
+                .Where(s => s.Nome_Empresarial.Contains(razaosocial))
+                .Where(s => s.CNAE_Principal.Contains(cnae))
+                .Where(s => s.Logradouro.Contains(logradouro))
+                .Where(s => s.Bairro.Contains(bairro))
+                .OrderByDescending(o => o.Data_Abertura)
+                .AsNoTracking()
+                .ToListAsync();            
         }
 
         public async Task<IEnumerable<Empresas>> ListTop20Async()
