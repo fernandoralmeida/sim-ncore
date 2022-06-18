@@ -415,9 +415,7 @@ else
 
 <div id="viewmodal" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <div class="progress">
-            <div class="indeterminate"></div>
-        </div>
+        <div class="loadingpage"></div>
         <table class="striped" style="font-size:12px;">
         <thead>
           <tr>
@@ -443,9 +441,9 @@ else
                 var param2 = $('#municip').val();
                 var param3 = $('#situacaocad').val();
                 $(".showcollection").empty();
-                $(".showcollection").append(`<span>LOADING...</span>`);
+                $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
                 $.getJSON(`/SimBI/Empresas?c=${param1}&m=${param2}&a=${param3}&handler=Preview`, function (data) {
-                    $(".showcollection").empty();
+                    $(".loadingpage").empty();
                     $.each(data, function (i, item) {
 
                         var v1 = item.item1;

@@ -8,13 +8,12 @@
         Layout = "/Pages/Shared/_Layout.cshtml";
     }
     ViewData["ActivePage"] = Web.Pages.Shared.LayoutNavPages.Inicio;
-    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.InicioSA;
+    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.InicioSA;    
 }
 
-   <partial name="_SebraeAquiNav" />
+<partial name="_SebraeAquiNav" />
 
-
-<div style="margin:20px 20px 20px 20px;">
+<div class="row">
     @RenderBody()
 </div>
 

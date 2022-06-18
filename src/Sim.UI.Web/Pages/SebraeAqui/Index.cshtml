@@ -2,27 +2,12 @@
 @model Sim.UI.Web.Pages.SebraeAqui.IndexModel
 @{
     ViewData["Title"] = "Index";
+    ViewData["ActivePageNSA"] = Web.Pages.SebraeAqui.SebraeAquiNavPages.Inicio;
 }
-
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<div class="row mt-5 mb-5" hidden>
-    <form method="post">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a asp-area="" asp-page="./Iniciar" class="btn btn-primary" title="Novo Atendimento"><i class="fas fa-plus-square"></i></a>
-            <div class="col-md-auto">
-                <div class="input-group">
-                    <span class="input-group-text">Data</span>
-                    <input asp-for="Input.DataAtendimento" class="form-control" aria-describedby="button-addon2">
-                    <button class="btn btn-primary" type="submit" role="button" id="button-addon2"><i class="fas fa-sync"></i></button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="card">
+<div id="Rae1" class="card">
     <table class="responsive-table striped">
         <thead>
             <tr>
@@ -55,7 +40,7 @@
             }
 
 
-            @foreach (var item in Model.Input.ListaAtendimento)
+            @foreach (var item in Model.Input.ListaAtendimentosNaoLancados)
             {
             <tr>
                 <td>
@@ -86,6 +71,86 @@
                     <a asp-page="./Rae/Lancar" class="btn blue lighten-2 waves-effect waves-light" asp-route-id="@item.Id">Lançar</a>
                 </td>
             </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="Rae2" class="card">
+    <table class="responsive-table striped">
+        <thead>
+            <tr>
+                <th>
+                    N
+                </th>
+                <th>
+                    Protocolo
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Servicos
+                </th>
+                <th>
+                    Canal
+                </th>
+                <th>
+                    Lançado
+                </th>
+                <th>
+                    Rae
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                cont = 0;
+            }
+
+
+            @foreach (var item in Model.Input.ListaAtendimento)
+            {
+                <tr>
+                    <td>
+                        @{cont++;}
+                        @cont.ToString()
+                    </td>
+                    <td>
+                        <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Protocolo)</a>
+                    </td>
+                    <td>
+                        @{
+                            var d1 = Convert.ToDateTime(item.Data);
+                            var datainicial = d1.ToShortDateString();
+                        }
+
+                        @Html.DisplayFor(modelItem => datainicial)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pessoa.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Servicos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Canal)
+                    </td>
+                    <td>
+                        @{
+                            var dua = Convert.ToDateTime(item.Ultima_Alteracao);
+                            var ultima_alteracao = dua.ToShortDateString();
+                        }
+
+                        @Html.DisplayFor(modelItem => ultima_alteracao)
+                    </td>
+                    <td class="blue-text">
+                        <a asp-page="./Rae/Lancar" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Sebrae.RAE)</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

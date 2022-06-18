@@ -1,27 +1,7 @@
 ﻿@using Sim.UI.Web.Pages.Agenda
 
-<div class="navbar navbar-fixed">
-    <nav class="navbar">
-        <div class="nav-wrapper white">
-            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
-            <span class="navbar-page-name grey-text">Agenda</span>
 
-            <ul class="right">
-                <li>
-                    <a class="@AgendaNavPages.EventoEditClass(ViewContext) grey-text" asp-page="/Agenda/Index"><i class="material-icons">event</i></a>
-                </li>
-                <li>
-                    <a class="@AgendaNavPages.EventoEditClass(ViewContext) grey-text" asp-page="/Agenda/Inscricoes/Consulta/Index"><i class="material-icons">person_search</i></a>
-                </li>
-                <li class="blue lighten-1 waves-effect waves-light">
-                    <form>
-                        <a asp-area="" asp-page="/Agenda/Eventos/Index">Novo Evento</a>
-                    </form>
-                </li>
-            </ul>
 
-        </div>
-    </nav>
-</div>
+
 
 

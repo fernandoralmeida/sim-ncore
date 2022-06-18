@@ -5,9 +5,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="~/favicon.ico" />
-    <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />
     <link rel="stylesheet" href="~/css/site.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +13,12 @@
 </head>
 <body class="has-fixed-sidenav">
     <header>
-        <partial name="_SidebarNav" />
+        <partial name="_LoginPartial" />
+        <partial name="_SidebarNav" />        
     </header>
-    <main>
-        <div>
+    <main>  
+        <div class="progress fixed"><div class="indeterminate"></div></div>
+        <div style="margin:20px 20px 20px 20px;">
             @RenderBody()
         </div>
     </main>

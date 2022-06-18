@@ -33,11 +33,13 @@ namespace Sim.UI.Web.Pages.SebraeAqui
             public DateTime? DataAtendimento { get; set; }
 
             public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
+            public IEnumerable<Domain.Entity.Atendimento> ListaAtendimentosNaoLancados { get; set; }
         }
 
         private async Task LoadAsync()
         {
-            Input.ListaAtendimento = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
+            Input.ListaAtendimentosNaoLancados = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
+            Input.ListaAtendimento = await _appServiceAtendimento.ListRaeLancadosAsync(User.Identity.Name);
         }
 
         public async Task<IActionResult> OnGetAsync()

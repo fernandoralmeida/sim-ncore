@@ -25,8 +25,8 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Lista
         public string StatusMessage { get; set; }
         public async Task OnGetAsync(int id)
         {
-            Input = _mapper.Map<InputModelEvento>(
-                await _appServiceEvento.GetCodigoAsync((int)id));
+            var lista = await _appServiceEvento.GetCodigoAsync((int)id);
+            Input = _mapper.Map<InputModelEvento>(lista);
         }
     }
 }

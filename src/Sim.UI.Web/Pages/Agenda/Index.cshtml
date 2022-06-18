@@ -6,29 +6,46 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<form method="post">
-    <div class="card row valign-wrapper">
-        <div class="input-field col s2 m2 l2 valign-wrapper">
+<div class="white z-depth-1 rounded">
+    <form method="post">
+    <div class="row" style="margin-bottom:0px;">
+        <div class="input-field col s2 m2 l2">
             <input asp-for="Input.Ano" />
             <label asp-for="Input.Ano"></label>
         </div>
-        <div class="input-field col s5 m6 l7 valign-wrapper">
+        <div class="input-field col s3 m3 l3">
+            <select asp-for="Input.Owner" asp-items="Model.Setores"></select>
+            <label asp-for="Input.Owner"></label>
+        </div>
+        <div class="input-field col s7 m7 l7 valign-wrapper">
             <input asp-for="Input.Evento"/>
             <label asp-for="Input.Evento"></label>
-            <button class="btn waves-effect waves-light" asp-page-handler="Event"><i class="material-icons">search</i></button>
-        </div>
-        <div class="col s5 m4 l3 right-align">
-            <button class="btn btn-floating waves-effect waves-light green" asp-page-handler="Available" title="Eventos Ativos"><i class="material-icons">event_available</i></button>
-            <button class="btn btn-floating waves-effect waves-light orange" asp-page-handler="Finalized" title="Eventos Finalizados"><i class="material-icons">event</i></button>
-            <button class="btn btn-floating waves-effect waves-light materialize-red" asp-page-handler="Canceled" title="Eventos Cancelados"><i class="material-icons">event_busy</i></button>
-        </div>
+            <button class="btn waves-effect waves-light" asp-page-handler="Event"><i class="material-icons">refresh</i></button>|            
+            <a asp-page="/Agenda/Inscricoes/Consulta/Index" class="btn orange waves-light waves-effect"><i class="material-icons">search</i></a>|
+            <a asp-page="/Agenda/Eventos/Index" class="btn blue waves-light waves-effect"><i class="material-icons">add</i></a>
+        </div>        
     </div>
-</form>
+    </form>
+    <nav class="nav-extended white z-depth-0">
+        <div class="nav-content">
+            <ul class="tabs">
+                <li class="tab right"><a href="#AgendaCancelados" class="red-text"><i class="material-icons">event_busy</i></a></li>
+                <li class="tab right"><a href="#AgendaFinalizados" class="orange-text"><i class="material-icons">event</i></a></li>
+                <li class="tab right"><a href="#AgendaAtivos" class="green-text active"><i class="material-icons">event_available</i></a></li>                
+            </ul>
+        </div>
+    </nav>
+</div>
 
-<!--
-<partial name="_AgendaList" model="Model.Input.ListaEventos" />
--->
-<partial name="_AgendaList" model="Model.Input.ListaEventosMes" />
+<div id="AgendaAtivos">
+    <partial name="_AgendaList" model="Model.Input.ListaEventosMes" />
+</div>
+<div id="AgendaFinalizados">
+    <partial name="_AgendaList" model="Model.Input.ListaEventosMesFinalizados" />
+</div>
+<div id="AgendaCancelados">
+    <partial name="_AgendaList" model="Model.Input.ListaEventosMesCancelados" />
+</div>
 
 @section scripts
 {

@@ -2,74 +2,108 @@ using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Agenda
 {
-
-
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly IAppServiceInscricao _appServiceInscricao;
         private readonly IAppServiceEvento _appServiceEvento;
-        private readonly IMapper _mapper;
+        private readonly IAppServiceSetor _appServiceSetor;
 
         [BindProperty(SupportsGet = true)]
         public InputModelIndex Input { get; set; }
 
+        public SelectList Setores { get; set; }
+
         public class InputModelIndex
         {
-            [DisplayName("Nome Evento")]
+            [DisplayName("Evento")]
             public string Evento { get; set; }
             public int Ano { get; set; }
+
+            [DisplayName("Setor")]
+            public string Owner { get; set; }
             public IEnumerable<InputModelEvento> ListaEventos { get; set; }
             public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMes { get; set; }
+            public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMesFinalizados { get; set; }
+            public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMesCancelados { get; set; }
         }
 
         [TempData]
         public string StatusMessage { get; set; }
 
         public IndexModel(IAppServiceEvento appServiceEvento,
-            IAppServiceInscricao appServiceInscricao,
-            IMapper mapper)
+            IAppServiceSetor appServiceSetor)
         {
-            _mapper = mapper;
             _appServiceEvento = appServiceEvento;
-            _appServiceInscricao = appServiceInscricao;
+            _appServiceSetor = appServiceSetor;
+        }
+
+        private async Task Onload()
+        {
+            var s = await _appServiceSetor.ListAllAsync();
+
+            if (s != null)
+                Setores = new SelectList(s, nameof(Setor.Nome), nameof(Setor.Nome), null);
+
+            if (Input.Owner == null || Input.Owner == "Geral")
+                Input.Owner = "";
         }
 
         public async Task OnGetAsync()
         {
+            await Onload();
+
             Input.Ano = DateTime.Now.Year;
-            Input.ListaEventosMes = await _appServiceEvento.ListEventosPorMesAsync(await _appServiceEvento.ListEventosAtivosAsync(Input.Ano));
+
+            var evento = await _appServiceEvento.ListAllAsync();
+
+            Input.ListaEventosMes = await _appServiceEvento
+                .ListEventosPorMesAsync(evento
+                .Where(s => 
+                s.Data.Value.Year == Input.Ano &&
+                s.Situacao <= Evento.ESituacao.Ativo &&
+                s.Owner.Contains(Input.Owner))
+                .OrderBy(s => s.Data));
+
+            Input.ListaEventosMesFinalizados = await _appServiceEvento
+                .ListEventosPorMesAsync(evento
+                .Where(s => 
+                s.Data.Value.Year == Input.Ano &&
+                s.Situacao == Evento.ESituacao.Finalizado &&
+                s.Owner.Contains(Input.Owner))
+                .OrderBy(s => s.Data));
+
+            Input.ListaEventosMesCancelados = await _appServiceEvento
+                .ListEventosPorMesAsync(evento
+                .Where(s => 
+                s.Data.Value.Year == Input.Ano &&
+                s.Situacao == Evento.ESituacao.Cancelado &&
+                s.Owner.Contains(Input.Owner))
+                .OrderBy(s => s.Data));
         }
 
         public async Task OnPostEventAsync()
         {
-            Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(_appServiceEvento.ListNomeAsync(Input.Evento)
-                .Result
-                .Where(s=>s.Data.Value.Year == Input.Ano));
-        }
-        public async Task OnPostAvailableAsync()
-        {
-            Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosAtivosAsync(Input.Ano));
-        }
+            await Onload();
 
-        public async Task OnPostFinalizedAsync()
-        {
-            Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosFinalizadosAsync(Input.Ano));
-        }
+            var evento = await _appServiceEvento.ListNomeAsync(Input.Evento);
 
-        public async Task OnPostCanceledAsync()
-        {
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosCanceladosAsync(Input.Ano));
+                .ListEventosPorMesAsync(evento
+                .Where(s => s.Data.Value.Year == Input.Ano && s.Situacao <= Evento.ESituacao.Ativo && s.Owner.Contains(Input.Owner)).OrderBy(s => s.Data));
+
+            Input.ListaEventosMesFinalizados = await _appServiceEvento
+                .ListEventosPorMesAsync(evento
+                .Where(s => s.Data.Value.Year == Input.Ano && s.Situacao == Evento.ESituacao.Finalizado && s.Owner.Contains(Input.Owner)).OrderBy(s => s.Data));
+
+            Input.ListaEventosMesCancelados = await _appServiceEvento
+                .ListEventosPorMesAsync(evento
+                .Where(s => s.Data.Value.Year == Input.Ano && s.Situacao == Evento.ESituacao.Cancelado && s.Owner.Contains(Input.Owner)).OrderBy(s => s.Data));
         }
 
         private int QuantosDiasFaltam(DateTime dataalvo)

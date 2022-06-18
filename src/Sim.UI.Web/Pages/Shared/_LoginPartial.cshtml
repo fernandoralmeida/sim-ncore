@@ -4,27 +4,34 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+<div class="navbar navbar-fixed z-depth-0">
+    <nav class="navbar">
+        <div class="nav-wrapper white grey-text">
+            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
+            <a class="navbar-page-name grey-text">@ViewData["Title"]</a>
+            <ul class="right">                
+                    @if(SignInManager.IsSignedIn(User))
+                    {
+                        var DisplayName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).Name;
+                        var DisplayLastName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).LastName;
+                       
+                        <li class="waves-effect waves-light">
+                            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="grey-text"><i class="material-icons left">account_circle</i>@DisplayName @DisplayLastName</a>
+                        </li>
+                        <li class="waves-effect waves-light">
+                            <a asp-area="Identity" asp-page="/Account/Logout" class="grey-text"><i class="material-icons left">logout</i>Sair</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="waves-effect waves-light">
+                            <a class="grey-text waves-effect waves-light" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
+                        </li>                        
+                    } 
+            </ul>
+        </div>
+    </nav>
+</div>
 
-@if (SignInManager.IsSignedIn(User))
-{
-    var DisplayName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).Name;
-    var DisplayLastName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).LastName;
 
-    <li class="waves-block waves-effect waves-red @LayoutNavPages.LoginNavClass(ViewContext)" style="border-bottom:solid 1px #e0e0e0;">
-        <div class="collapsible-header">Olá @DisplayName @DisplayLastName</div>
-        <div class="collapsible-body transparent">
-            <ul>
-                <li class="@LayoutNavPages.LoginPerfilNavClass(ViewContext)"><a asp-area="Identity" asp-page="/Account/Manage/Index" class="waves-effect">Meu Espaço<i class="material-icons">person</i></a></li>
-                <li class="@LayoutNavPages.LoginOutNavClass(ViewContext)"><a asp-area="Identity" asp-page="/Account/Logout" class="waves-effect">Sair<i class="material-icons">logout</i></a></li>
-
-            </ul>            
-        </div>        
-    </li>    
-}
-else
-{
-    <li>
-        <a asp-area="Identity" asp-page="/Account/Login">Entrar</a>
-    </li>
-}
 

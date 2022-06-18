@@ -1,7 +1,8 @@
 ﻿@page
 @model Sim.UI.Web.Pages.SebraeAqui.Rae.LancadosModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lançados";
+    ViewData["ActivePageNSA"] = Web.Pages.SebraeAqui.SebraeAquiNavPages.RaeLancados;
 }
 
 
@@ -10,7 +11,7 @@
 <div class="row mt-5 mb-5" hidden>
     <form method="post">
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a asp-area="" asp-page="./Iniciar" class="btn btn-primary" title="Novo Atendimento"><i class="fas fa-plus-square"></i></a>
+            <a asp-area="" asp-page="/Atendimento/Iniciar" class="btn btn-primary" title="Novo Atendimento"><i class="fas fa-plus-square"></i></a>
             <div class="col-md-auto">
                 <div class="input-group">
                     <span class="input-group-text">Data</span>

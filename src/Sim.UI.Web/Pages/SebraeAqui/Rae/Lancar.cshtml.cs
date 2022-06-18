@@ -65,7 +65,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 
                 await _appServiceAtendimento.UpdateAsync(atsebrae);
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("/SebraeAqui/Index");
 
             }
             catch (Exception ex)

@@ -26,12 +26,12 @@ namespace Sim.Domain.Entity
 
         public bool RaeLancados(Atendimento obj)
         {
-            return obj.Sebrae != null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui";
+            return obj.Sebrae != null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value >= DateTime.Now.AddDays(-90);
         }
 
         public bool RaeNaoLancados(Atendimento obj)
         {
-            return obj.Sebrae == null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == DateTime.Now.Year;
+            return obj.Sebrae == null || obj.Sebrae.RAE == "" && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == DateTime.Now.Year;
         }
 
         public bool BySetor(Atendimento obj, string setor_name)

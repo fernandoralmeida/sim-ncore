@@ -24,7 +24,10 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 
         private async Task LoadAsync()
         {
-            Input.Users = await _appIdentity.ListAllAsync();
+            Input = new()
+            {
+                Users = await _appIdentity.ListAllAsync()
+            };
         }
 
         public async Task<IActionResult> OnGetAsync()

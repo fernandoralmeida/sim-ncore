@@ -85,8 +85,8 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account
 
                     _logger.LogInformation("Usuário conectado.");
 
-                    //return LocalRedirect(returnUrl);
-                    return RedirectToPage("/Planner/Index");
+                    return LocalRedirect(returnUrl);
+                    //return RedirectToPage("/Planner/Index");
                 }
                 if (result.RequiresTwoFactor)
                 {

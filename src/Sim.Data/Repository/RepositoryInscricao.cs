@@ -65,7 +65,11 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<Inscricao>> ListEventoAsync(string evento)
         {
-            return await _db.Inscricao.Where(u => u.Numero.ToString() == evento).ToListAsync();
+            return await _db.Inscricao
+                .Include(p => p.Participante)
+                .Include(e => e.Empresa)
+                .Include(e => e.Evento)
+                .Where(u => u.Evento.Codigo.ToString() == evento).ToListAsync();
         }
 
         public async Task<IEnumerable<Inscricao>> ListParticipanteAsync(string nome)
