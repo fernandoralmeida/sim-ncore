@@ -27,6 +27,7 @@ namespace Sim.IoC
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));
             services.AddScoped<DbContext, ApplicationContext>();
             services.AddScoped<IReceitaWS, ReceitaWS>();
+            ApplicationContext.GetConnection(config.GetConnectionString(connection));
         }
         public static void ApplicationContextServices(IServiceCollection services)
         {

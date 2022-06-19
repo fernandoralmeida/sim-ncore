@@ -7,5 +7,6 @@ namespace Sim.Application.Interfaces
         Task<IEnumerable<Servico>> ListServicoOwnerAsync(string setor);
         Task<Servico> GetIdAsync(Guid id);
         Task<IEnumerable<Servico>> ListAllAsync();
+        Task<IEnumerable<(string canal, string value)>> ToListJson(string setor);
     }
 }

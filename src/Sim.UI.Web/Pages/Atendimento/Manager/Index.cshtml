@@ -94,14 +94,11 @@
     <div class="section">
         <div class="row">
             <div class="col s12">
-                <div class="input-field col s12 m5 l5">
+                <div class="input-field col s12 m6 l6">
                     <select asp-for="Input.Setor" asp-items="Model.Setores">
                         <option selected>-- Selecione um Setor --</option>
                     </select>
                     <label asp-for="Input.Setor"></label>
-                </div>
-                <div class="input-field col s12 m1 l1">
-                    <a href="#" class="btn waves-effect viewbutton" data-secao="Atendimento" data-acao="Detail" data-id="@Model.Input.Id" title="Carregar Serviços"><i class="material-icons">refresh</i></a>
                 </div>
                 <div class="input-field col s12 m6 l6">
                     <select asp-for="Input.Canal" asp-items="Model.Canais"></select>
@@ -163,42 +160,31 @@
 @section scripts{
     <script>
         $(function () {
-            $("#Input_Setor").change(function () {
-                var getSetor = $(this).val();
-                //get canais de atendimento
+            document.querySelector('#Input_Setor').addEventListener("change", function() {
+                var getSetor = $("#Input_Setor").val(); 
                 $("#Input_Canal").empty();
-                $("#Input_Canal").append("<option value=''>-- Selecione um Canal --</option>");
-                $.getJSON(`?handler=Canais&getSetor=${getSetor}`, (data) => {
-                    $.each(data, function (i, item) {
-                        $("#Input_Canal").append(`<option value="${item.nome}">${item.nome}</option>`);
+                $.getJSON(`/Atendimento/Novo/Index?handler=Canais&getSetor=${getSetor}`, (data) => {
+                    data.forEach(function(item) {
+                        $("#Input_Canal").append(`<option>${item.item1}</option>`);
                     });
+                    $("#Input_Canal").trigger('contentChanged');
                 });
-                //get servicos por setor
+                
                 $("#Input_Servicos").empty();
-                $.getJSON(`?handler=Servicos&getSetor=${getSetor}`, (data) => {
-                    $.each(data, function (i, item) {
-                        $("#Input_Servicos").append(`<option value="${item.nome}">${item.nome}</option>`)
+                $.getJSON(`/Atendimento/Novo/Index?handler=Servicos&getSetor=${getSetor}`, (data) => {
+                    data.forEach(function(item) {
+                        $("#Input_Servicos").append(`<option>${item.item1}</option>`);
                     });
+                    $("#Input_Servicos").trigger('contentChanged');
                 });
             });
-
-            $(".dataload").click(function () {
-                var getSetor = $("#Input_Setor").val();
-                //get canais de atendimento
-                $("#Input_Canal").empty();
-                $("#Input_Canal").append("<option value=''>-- Selecione um Canal --</option>");
-                $.getJSON(`?handler=Canais&getSetor=${getSetor}`, (data) => {
-                    $.each(data, function (i, item) {
-                        $("#Input_Canal").append(`<option value="${item.nome}">${item.nome}</option>`);
-                    });
-                });
-                //get servicos por setor
-                $("#Input_Servicos").empty();
-                $.getJSON(`?handler=Servicos&getSetor=${getSetor}`, (data) => {
-                    $.each(data, function (i, item) {
-                        $("#Input_Servicos").append(`<option value="${item.nome}">${item.nome}</option>`)
-                    });
-                });
+            
+            $('#Input_Canal').on('contentChanged', function() {
+                $(this).formSelect();
+            });
+            
+            $('#Input_Servicos').on('contentChanged', function() {
+                $(this).formSelect();
             });
 
             $("#onbtn").click(function () {
@@ -211,7 +197,7 @@
                     document.getElementById("ServicosSelecionados").value = selectedValues;
                 }
                 
-                //alert(selectedValues);
+                alert(selectedValues);
                 return true;
             });
         });

@@ -2,45 +2,59 @@
 @model Sim.UI.Web.Pages.Empresa.IndexModel
 
 @{
-    ViewData["Title"] = "Empresa/Consulta";
+    ViewData["Title"] = "Empresas";
     ViewData["ActivePage"] = EmpresaNavPages.Inicio;
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-
-    <div class="card">
-        <div class="row">
+    <div class="white rounded-default z-depth-1-half">
+        <div class="row pdn-10 mgn-b-0">
+            <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>
+            <div class="right-align">                
+                <button class="btn waves-effect waves-light" asp-page-handler="View">Pesquisar</button>
+                <button class="btn waves-effect waves-light green" asp-page-handler="Export" title="Exportar"><i class="material-icons">description file_download</i></button>
+                <span class="grey-text lighten-2"> | </span>
+                <a class="dropdown-trigger btn waves-effect waves-light" href="#" title="Opções de consulta" data-target="dropdownrfb"><i class="material-icons left">manage_search</i>RFB</a>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="row mgn-b-0">
             <div class="col s12">
-                <div class="input-field col s6 m4 xl3">
+                <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.CNPJ" id="inputCNPJ"/>
                     <label asp-for="Input.CNPJ"></label>
                 </div>
-                <div class="input-field col s6 m4 xl3">
-                    <input asp-for="Input.RazaoSocial" />
-                    <label asp-for="Input.RazaoSocial"></label>
-                </div>
-                <div class="input-field col s6 m4 xl2">
+                <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.CNAE" id="inputCNAE" />
                     <label asp-for="Input.CNAE"></label>
                 </div>
-                <div class="input-field col s6 m4 xl4">
+                <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.Logradouro" />
                     <label asp-for="Input.Logradouro"></label>
                 </div>
-                <div class="input-field col s6 m4 xl3">
+                <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.Bairro" />
                     <label asp-for="Input.Bairro"></label>
                 </div>
+                <div class="input-field col s12 m12 x12">
+                    <input asp-for="Input.RazaoSocial" />
+                    <label asp-for="Input.RazaoSocial"></label>
+                </div>
             </div>
-        </div>
-        <div class="card-action right-align">
-            <button class="btn waves-effect waves-light" asp-page-handler="View">Pesquisar</button>
-            <button class="btn btn-floating waves-effect waves-light green" asp-page-handler="Export" title="Exportar"><i class="material-icons">description</i></button>
         </div>
     </div>
 </form>
+
+<ul id="dropdownrfb" class="dropdown-content">
+    <li><a asp-area="Censo" asp-page="/Empresas/Index">por CNPJ</a></li>
+    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-razao-social">Razao Social</a></li>
+    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-socio">Nome Sócio</a></li>
+    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-cnae">Atividade</a></li>
+    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-logradouro">Logradouro</a></li>
+    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-bairro">Bairro</a></li>
+</ul>
 
 <div class="card" style="overflow-y:auto;">
     <table class="striped">

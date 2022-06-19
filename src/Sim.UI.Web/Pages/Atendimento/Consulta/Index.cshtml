@@ -11,10 +11,16 @@
 
 <form method="post">
 
-    <div class="card">
-
-        <div class="row">
-            <div class="col s12">
+    <div class="row white z-depth-1-half rounded-default">
+        <div class="row mgn-b-0 pdn-10 right-align">
+            <!--<button class="btn btn-floating orange waves-effect waves-light left" asp-page-handler="AtPendentes">Pendentes</button>
+            <button class="btn btn-floating red waves-effect waves-light left" asp-page-handler="AtCancelados" title="Meus atendimentos cancelados"><i class="material-icons">cancel</i></button>-->
+            <button class="btn waves-effect waves-light" asp-page-handler="View">Pesquisar</button>
+            <button class="btn waves-effect waves-light green" asp-page-handler="Export" title="Exportar"><i class="material-icons">description file_download</i></button>
+        </div>
+        <div class="divider"></div>
+        <div class="row mgn-b-0">
+            <div class="col s12 mgn-b-0">
                 <div class="input-field col s6 m4 xl2">
                     <input asp-for="Input.DataI" />
                     <label asp-for="Input.DataI"></label>
@@ -62,16 +68,7 @@
                 }
             </div>
         </div>
-        <div class="card-action right-align">
-            <!--<button class="btn btn-floating orange waves-effect waves-light left" asp-page-handler="AtPendentes">Pendentes</button>
-            <button class="btn btn-floating red waves-effect waves-light left" asp-page-handler="AtCancelados" title="Meus atendimentos cancelados"><i class="material-icons">cancel</i></button>-->
-            <button class="btn waves-effect waves-light" asp-page-handler="View">Pesquisar</button>
-            <button class="btn btn-floating waves-effect waves-light green" asp-page-handler="Export" title="Exportar"><i class="material-icons">description</i></button>
-        </div>
-
     </div>
-
-
 </form>
 
 

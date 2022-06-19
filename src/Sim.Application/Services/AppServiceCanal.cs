@@ -26,5 +26,10 @@ namespace Sim.Application.Services
         {
             return await _canal.ListCanalOwner(setor);
         }
+
+        public async Task<IEnumerable<(string canal, string value)>> ToListJson(string setor)
+        {
+            return await _canal.ToListJson(setor);
+        }
     }
 }

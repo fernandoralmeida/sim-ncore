@@ -52,6 +52,8 @@ namespace Sim.UI.Web.Pages.Cliente
                 {
                     if (Input.CPF != null)
                     {
+                        Input.RouteCPF = Input.CPF.MaskRemove();
+
                         if (Validate.IsCpf(Input.CPF))
                         {
                             StatusMessage = "";
@@ -66,7 +68,7 @@ namespace Sim.UI.Web.Pages.Cliente
                         Input.ListaPessoas = await _pessoaApp.ConsultaCPFAsync(Input.CPF);
 
                         if(CpfValido && !Input.ListaPessoas.Any())
-                            StatusMessage = "Pessoa não cadastrada!";
+                            StatusMessage = "Erro: Pessoa não cadastrada!";
                     }
                     else
                         Input.ListaPessoas = await _pessoaApp.ConsultaNomeAsync(Input.Nome);

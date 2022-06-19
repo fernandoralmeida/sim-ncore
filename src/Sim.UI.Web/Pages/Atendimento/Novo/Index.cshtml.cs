@@ -86,14 +86,14 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
             return Page();
         }
 
-        public JsonResult OnGetCanais()
+        public async Task<JsonResult> OnGetCanais()
         {
-            return new JsonResult(_appServiceCanal.ListCanalOwner(GetSetor).Result);
+            return new JsonResult(await _appServiceCanal.ToListJson(GetSetor));
         }
 
-        public JsonResult OnGetServicos()
+        public async Task<JsonResult> OnGetServicos()
         {
-            return new JsonResult(_appServiceServico.ListServicoOwnerAsync(GetSetor).Result);
+            return new JsonResult(await _appServiceServico.ToListJson(GetSetor));
         }
 
         public async Task<IActionResult> OnPostAsync()

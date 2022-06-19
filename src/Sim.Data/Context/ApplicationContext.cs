@@ -8,7 +8,7 @@ namespace Sim.Data.Context
 
     public class ApplicationContext : DbContext
     {
-
+        private static string _connectionstring;
         public ApplicationContext()
         { }
 
@@ -73,6 +73,19 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.StatusAtendimentoMap());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public static void GetConnection(string connection)
+        {
+            _connectionstring = connection;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_connectionstring);
+            }
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

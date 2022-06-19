@@ -1,4 +1,5 @@
 ﻿@using Sim.UI.Web.Pages.Shared
+@inject Sim.Application.Interfaces.IAppServiceAtendimento MeuAtendimento
 
 <ul id="sidenav-left" class="sidenav sidenav-fixed">
     <li>
@@ -21,10 +22,20 @@
                 <div class="collapsible-header">Atendimentos</div>
                 <div class="collapsible-body transparent">
                     <ul>
-                        <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Atendimento/Novo/Index" class="waves-effect"><i class="material-icons">access_alarm</i>Ativo</a></li>
+                        @{
+                            var _has_atendimento = await MeuAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
+
+                        }
+                        @if(_has_atendimento.Any())
+                        {
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Atendimento/Novo/Index" class="waves-effect"><i class="material-icons">shortcut</i>Continuar</a></li>
+                        }
+                        else
+                        {
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Cliente/Index" class="waves-effect"><i class="material-icons">alarm_add</i>Novo</a></li>
+                        }
                         <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext)"><a asp-page="/Atendimento/Index" class="waves-effect">Diários<i class="material-icons">access_time</i></a></li>
                         <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta/Index" class="waves-effect">Consultar<i class="material-icons">search</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoStatusNavClass(ViewContext)"><a asp-page="/Atendimento/Status" class="waves-effect">Status<i class="material-icons">notification_important</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -52,9 +63,6 @@
                     <ul>
                         <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Atendimentos/Index" class="waves-effect">Atendimentos<i class="material-icons">access_time</i></a></li>
                         <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empresas/Index" class="waves-effect">Empresas<i class="material-icons">domain</i></a></li>
-                        <!--
-                            <li class="@LayoutNavPages.PowerBIPessoasNavClass(ViewContext)"><a href="#" class="waves-effect">Pessoas<i class="material-icons">people</i></a></li>
-                            -->
                     </ul>
                 </div>
             </li>
@@ -72,7 +80,6 @@
                 </li>
 
             }
-            <!--<partial name="_LoginPartial" />-->
         </ul>
     </li>
     <li>

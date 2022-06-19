@@ -6,5 +6,6 @@
         Task<IEnumerable<Servico>> ListServicoOwnerAsync(string setor);
         Task<Servico> GetIdAsync(Guid id);
         Task<IEnumerable<Servico>> ListAllAsync();
+        Task<IEnumerable<(string servico, string value)>> ToListJson(string setor);
     }
 }

@@ -22,6 +22,22 @@ html {
     /*font-size: 14px;*/
 }
 
+.rounded-default{
+    border-radius:2px;
+}
+.rounded-4 {
+    border-radius: 4px;
+}
+.rounded-6 {
+    border-radius: 6px;
+}
+.rounded-8 {
+    border-radius: 8px;
+}
+.rounded-10 {
+    border-radius: 10px;
+}
+
 .mgn-t-4{
     margin-top:4px;
 }
@@ -29,6 +45,9 @@ html {
     margin-top: 10px;
 }
 
+.mgn-b-0 {
+    margin-bottom: 0px;
+}
 .mgn-b-4{
     margin-bottom:4px;
 }
@@ -40,6 +59,13 @@ html {
 .pdn-h-4{
     padding-left:4px;
     padding-right:4px;
+}
+
+.pdn-4{
+    padding:4px;
+}
+.pdn-10 {
+    padding: 10px;
 }
 
 /* Navbar Page Name */

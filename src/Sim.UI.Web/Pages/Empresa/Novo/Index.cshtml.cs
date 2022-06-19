@@ -8,7 +8,7 @@ using Sim.Domain.Entity;
 using Sim.Application.WebService.RWS.Services;
 using Sim.UI.Web.Functions;
 
-namespace Sim.UI.Web.Pages.Empresa.Manager
+namespace Sim.UI.Web.Pages.Empresa.Novo
 {
     [Authorize]
     public class IndexModel : PageModel
@@ -59,7 +59,7 @@ namespace Sim.UI.Web.Pages.Empresa.Manager
         {
             try
             {
-                if(string.IsNullOrEmpty(id))
+                if(!string.IsNullOrEmpty(id))
                     await LoadAsync(id);
                 
                 return Page();
@@ -76,10 +76,10 @@ namespace Sim.UI.Web.Pages.Empresa.Manager
             var emp = await _appServiceEmpresa.ConsultaCNPJAsync(Input.CNPJ);
                         
             if(!emp.Any())              
-                return RedirectToPage("./Novo/Index", new { id = Input.CNPJ.MaskRemove() });
+                return RedirectToPage("/Empresa/Novo/Index", new { id = Input.CNPJ.MaskRemove() });
             
             else
-                return RedirectToPage("./Manager/Update", new { id = emp.FirstOrDefault().Id });
+                return RedirectToPage("/Empresa/Manager/Update", new { id = emp.FirstOrDefault().Id });
                        
         }
     }

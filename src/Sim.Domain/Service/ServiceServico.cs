@@ -28,5 +28,18 @@ namespace Sim.Domain.Service
         {
             return await _servico.ListServicoOwnerAsync(setor);
         }
+
+        public async Task<IEnumerable<(string servico, string value)>> ToListJson(string setor)
+        {
+            var list = await ListServicoOwnerAsync(setor);
+            var servicelist = new List<(string canal, string value)>();
+
+            foreach (var item in list)
+            {
+                servicelist.Add(new() { canal = item.Nome, value = item.Nome });
+            }
+
+            return servicelist;
+        }
     }
 }
