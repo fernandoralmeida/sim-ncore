@@ -15,7 +15,6 @@ namespace Sim.Identity.Entity
         public async Task<IdentityResult> AppUserClaimsAsync(UserManager<ApplicationUser> userManager)
         {
            return await userManager.AddClaimAsync(this, new Claim(DisplayName, Name));
-            //userclaim = await userManager.AddClaimAsync(this, new Claim(DisplayID, Id));
         }
     }
 }

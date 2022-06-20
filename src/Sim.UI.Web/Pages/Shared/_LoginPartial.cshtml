@@ -14,9 +14,13 @@
                     {
                         var DisplayName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).Name;
                         var DisplayLastName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).LastName;
-                       
+                        var account_color = "red";
+
+                        @if (User.Identity.IsAuthenticated)
+                        { account_color = "greem"; }
+
                         <li class="waves-effect waves-light">
-                            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="grey-text"><i class="material-icons left">account_circle</i>@DisplayName @DisplayLastName</a>
+                            <a class="dropdown-trigger btn @account_color" href="#" data-target="dropdownuser"><i class="material-icons left">account_circle</i>@DisplayName @DisplayLastName</a>
                         </li>
                         <li class="waves-effect waves-light">
                             <a asp-area="Identity" asp-page="/Account/Logout" class="grey-text"><i class="material-icons left">logout</i>Sair</a>
@@ -33,5 +37,9 @@
     </nav>
 </div>
 
-
+<ul id="dropdownuser" class="dropdown-content">
+    <li><a asp-area="Identity" asp-page="/Account/Manage/Index">Meu Perfil</a></li>
+    <li><a hhref="#">Ficar Offline</a></li>
+    <li><a hhref="#">Ficar Online</a></li> 
+</ul>
 
