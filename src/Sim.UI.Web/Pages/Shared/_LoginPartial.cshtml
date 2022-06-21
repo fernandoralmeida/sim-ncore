@@ -1,8 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Sim.Identity.Entity
+@using Sim.Application.Interfaces
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IAppServiceStatusAtendimento MeuStatus
+
+@{
+    var _lstatus = await MeuStatus.ListUserAsync(User.Identity.Name);
+    var _status = _lstatus.FirstOrDefault().Online;
+}
 
 <div class="navbar navbar-fixed z-depth-0">
     <nav class="navbar">
@@ -14,13 +21,17 @@
                     {
                         var DisplayName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).Name;
                         var DisplayLastName = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name).LastName;
-                        var account_color = "red";
+                        
+                        var fn = DisplayName.FirstOrDefault();
+                        var ln = DisplayLastName.FirstOrDefault();
 
-                        @if (User.Identity.IsAuthenticated)
-                        { account_color = "greem"; }
+                        var account_color = "";
 
-                        <li class="waves-effect waves-light">
-                            <a class="dropdown-trigger btn @account_color" href="#" data-target="dropdownuser"><i class="material-icons left">account_circle</i>@DisplayName @DisplayLastName</a>
+                        @if (!_status)
+                        { account_color = "grey"; }
+
+                        <li class="dropdown-trigger" data-target="dropdownuser">
+                            <a id="btnstatus" class="btn @account_color" href="#" title="@DisplayName @DisplayLastName"><i class="material-icons left">account_circle</i>@fn@ln</a>
                         </li>
                         <li class="waves-effect waves-light">
                             <a asp-area="Identity" asp-page="/Account/Logout" class="grey-text"><i class="material-icons left">logout</i>Sair</a>
@@ -37,9 +48,31 @@
     </nav>
 </div>
 
-<ul id="dropdownuser" class="dropdown-content">
-    <li><a asp-area="Identity" asp-page="/Account/Manage/Index">Meu Perfil</a></li>
-    <li><a hhref="#">Ficar Offline</a></li>
-    <li><a hhref="#">Ficar Online</a></li> 
-</ul>
+
+<div id="dropdownuser" class="dropdown-content rounded-default row">
+    <div class="center-align"><a class="btn" asp-area="Identity" asp-page="/Account/Manage/Index">Perfil</a></></div>
+    <div class="divider"></div>
+    <div class="center-align"><div class="switch" title="Alterar meu status"><label>Online<input id="chkstatus" checked="@_status" type="checkbox" onclick="myFunction()" /><span class="lever"></span></label></div></div>          
+</div>
+
+
+<script>
+    function myFunction() {
+        var st = document.querySelector('#chkstatus');
+        const btnstatus = document.querySelector('#btnstatus');
+        btnstatus.classList.remove('grey');
+
+        if (!st.checked) { $('#btnstatus').addClass('grey'); }
+        
+        //alert(st.checked);
+    }
+    function CallFunction() {
+        $.ajax({
+                type: "GET",
+                url: 'CallFunction',
+        }).done(function (result) {
+            $("#data").val(result.toString());
+            });
+    }
+</script>
 
