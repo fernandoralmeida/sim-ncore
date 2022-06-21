@@ -9,8 +9,9 @@
 @{
     var _lstatus = await MeuStatus.ListUserAsync(User.Identity.Name);
     var _status = _lstatus.FirstOrDefault().Online;
+    var _idstatus = _lstatus.FirstOrDefault().Id;
 }
-
+<input id="meustatusonline" type="text" value="@_idstatus" hidden/>
 <div class="navbar navbar-fixed z-depth-0">
     <nav class="navbar">
         <div class="nav-wrapper white grey-text">
@@ -52,27 +53,25 @@
 <div id="dropdownuser" class="dropdown-content rounded-default row">
     <div class="center-align"><a class="btn" asp-area="Identity" asp-page="/Account/Manage/Index">Perfil</a></></div>
     <div class="divider"></div>
-    <div class="center-align"><div class="switch" title="Alterar meu status"><label>Online<input id="chkstatus" checked="@_status" type="checkbox" onclick="myFunction()" /><span class="lever"></span></label></div></div>          
+    <div class="center-align"><div class="switch" title="Alterar meu status"><label>Online<input id="chkstatus" checked="@_status" type="checkbox" onclick="myStatus()" /><span class="lever"></span></label></div></div>          
 </div>
 
 
 <script>
-    function myFunction() {
+    function myStatus() {
         var st = document.querySelector('#chkstatus');
+        var uid = document.querySelector('#meustatusonline').value;
         const btnstatus = document.querySelector('#btnstatus');
         btnstatus.classList.remove('grey');
-
-        if (!st.checked) { $('#btnstatus').addClass('grey'); }
-        
-        //alert(st.checked);
-    }
-    function CallFunction() {
-        $.ajax({
-                type: "GET",
-                url: 'CallFunction',
-        }).done(function (result) {
-            $("#data").val(result.toString());
-            });
+        if (!st.checked) { $('#btnstatus').addClass('grey'); }        
+        //alert(uid);
+        var formData = { id: uid, val: st.checked };
+        $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 
+        function(returnedData){
+            //alert(returnedData);
+        }).fail(function(){
+            alert("Erro");
+        });
     }
 </script>
 
