@@ -1,9 +1,138 @@
 ﻿@page
-@model IndexModel
+@model Sim.UI.Web.Pages.Planner.IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Planner";
 }
 
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+@{
+    var d1 = Model.InicioSemana.Value.ToShortDateString();
+    var d2 = Model.FimSemana.Value.ToShortDateString();
+}
+
+<form method="post">
+    <div class="row">
+        <div class="col s12">
+            <input asp-for="Input.Id" hidden />
+            <input asp-for="Input.Owner_AppUser_Id" hidden />
+            <input asp-for="Input.DataFinal" hidden />
+            <input asp-for="Input.DataInicial" hidden />
+            <span class="new badge" data-badge-caption="@d1 à @d2">Semana de</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m4 l2">
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Segunda" class="materialize-textarea" style="height: 300px;"></textarea>
+                        <label class="badge" asp-for="Input.Segunda"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m4 l2">
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Terca" class="materialize-textarea" style="height: 300px"></textarea>
+                        <label asp-for="Input.Terca"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m4 l2">
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Quarta" class="materialize-textarea" style="height: 300px"></textarea>
+                        <label asp-for="Input.Quarta"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m4 l2">
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Quinta" class="materialize-textarea" style="height: 300px"></textarea>
+                        <label asp-for="Input.Quinta"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m4 l2">
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Sexta" class="materialize-textarea" style="height: 300px"></textarea>
+                        <label asp-for="Input.Sexta"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m4 l2">
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Sabado" class="materialize-textarea" style="height: 300px"></textarea>
+                        <label asp-for="Input.Sabado"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m4 l4">
+            <div class="card blue lighten-5">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.ProximaSemana" class="materialize-textarea" style="height: 150px"></textarea>
+                        <label asp-for="Input.ProximaSemana"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m4 l4">
+            <div class="card pink lighten-5">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Prioridades" class="materialize-textarea" style="height: 150px"></textarea>
+                        <label asp-for="Input.Prioridades"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s12 m4 l4">
+            <div class="card yellow lighten-5">
+                <div class="card-content">
+                    <div class="input-field">
+                        <textarea asp-for="Input.Anotacao" class="materialize-textarea" style="height: 150px"></textarea>
+                        <label asp-for="Input.Anotacao"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-large waves-effect waves-light">Gravar</button>
+        </div>
+    </div>
+</form>
+
+
+<!--
 <div class="center">
     <h5>Bem-vindos!</h5>
     <p>
@@ -34,4 +163,4 @@
     </p>
     <h6 class="grey-text text-lighten-1" style="font-size:10px;">SECRETARIA DE DESENVOLVIMENTO ECONÔMICO E EMPREENDEDORISMO</h6>
 </div>
-
+-->
