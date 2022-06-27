@@ -48,12 +48,9 @@
 </form>
 
 <ul id="dropdownrfb" class="dropdown-content">
-    <li><a asp-area="Censo" asp-page="/Empresas/Index">por CNPJ</a></li>
+    <li><a asp-area="Censo" asp-page="/Empresas/Index">CNPJ Base</a></li>
     <li><a asp-area="Censo" asp-page="/Empresas/Consulta-razao-social">Razao Social</a></li>
     <li><a asp-area="Censo" asp-page="/Empresas/Consulta-socio">Nome Sócio</a></li>
-    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-cnae">Atividade</a></li>
-    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-logradouro">Logradouro</a></li>
-    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-bairro">Bairro</a></li>
 </ul>
 
 <div class="card" style="overflow-y:auto;">
@@ -120,7 +117,6 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/jquery.mask.min.js"></script>
     <script src="~/js/jquery.mask.min.js"></script>
     <script>
         $('#inputCNPJ').mask('00.000.000/0000-00');

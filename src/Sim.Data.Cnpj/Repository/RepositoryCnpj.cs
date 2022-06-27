@@ -8,7 +8,7 @@ namespace Sim.Data.Cnpj.Repository
     public class RepositoryCnpj : RepositoryBase<BaseReceitaFederal>, IRepositoryCnpj
     {
         
-        public RepositoryCnpj(ApplicationContext applicationContext)
+        public RepositoryCnpj(ApplicationContextCnpj applicationContext)
             :base(applicationContext)
         {
 

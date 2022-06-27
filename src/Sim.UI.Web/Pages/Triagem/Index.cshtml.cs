@@ -46,18 +46,16 @@ namespace Sim.UI.Web.Pages.Triagem
             _appServiceStatusAtendimento = appServiceStatusAtendimento;
         }
 
-        private async Task LoadPATAsync()
+        private async Task<IEnumerable<InputModelIndex>> ListUsersAsync(string setor)
         {
             var list = new List<InputModelIndex>();
-            var pat = await _userManager.GetUsersInRoleAsync("M_Pat");
+            var users = await _userManager.GetUsersInRoleAsync(setor);
 
-            foreach (ApplicationUser s in pat)
+            foreach (ApplicationUser s in users)
             {
-
                 var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
 
-                if (t.Any())
-
+                if(t.Any())
                     if (t.FirstOrDefault().Online)
                     {
                         var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
@@ -68,144 +66,17 @@ namespace Sim.UI.Web.Pages.Triagem
                         else
                             list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
                     }
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
-                else
-                {
-                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                    if (ativo.Any())
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
-
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
-                }
-
             }
 
-            ListaPAT = list;
+            return list;
         }
 
-        private async Task LoadBPPAsync()
-        {
-            var list = new List<InputModelIndex>();
-            var pat = await _userManager.GetUsersInRoleAsync("M_BancoPovo");
-
-            foreach (ApplicationUser s in pat)
-            {
-                var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
-
-                if (t.Any())
-
-                    if (t.FirstOrDefault().Online)
-                    {
-                        var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                        if (ativo.Any())
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
-
-                        else
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
-                    }
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
-                else
-                {
-                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                    if (ativo.Any())
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
-
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
-                }
-            }
-
-            ListaBPP = list;
-        }
-
-        private async Task LoadSAAsync()
-        {
-            var list = new List<InputModelIndex>();
-            var pat = await _userManager.GetUsersInRoleAsync("M_Sebrae");
-
-            foreach (ApplicationUser s in pat)
-            {
-                var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
-
-                if (t.Any())
-
-                    if (t.FirstOrDefault().Online)
-                    {
-                        var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                        if (ativo.Any())
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
-
-                        else
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
-                    }
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
-                else
-                {
-                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                    if (ativo.Any())
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
-
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
-                }
-            }
-
-            ListaSA = list;
-        }
-
-        private async Task LoadSEAsync()
-        {
-            var list = new List<InputModelIndex>();
-            var pat = await _userManager.GetUsersInRoleAsync("M_SalaEmpreendedor");
-
-            foreach (ApplicationUser s in pat)
-            {
-                var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
-
-                if (t.Any())
-
-                    if (t.FirstOrDefault().Online)
-                    {
-                        var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                        if (ativo.Any())
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
-
-                        else
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
-                    }
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Indisponível" });
-                else
-                {
-                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                    if (ativo.Any())
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
-
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
-                }
-            }
-
-            ListaSE = list;
-
-        }
         public async Task<IActionResult> OnGetAsync()
         {
-            await LoadPATAsync();
-            await LoadBPPAsync();
-            await LoadSAAsync();
-            await LoadSEAsync();
+            ListaPAT = await ListUsersAsync("M_Pat");
+            ListaBPP = await ListUsersAsync("M_BancoPovo");
+            ListaSA = await ListUsersAsync("M_Sebrae");
+            ListaSE = await ListUsersAsync("M_SalaEmpreendedor");
             return Page();
         }
     }

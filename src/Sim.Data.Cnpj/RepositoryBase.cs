@@ -7,9 +7,9 @@ namespace Sim.Data.Cnpj
 
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
-        protected readonly ApplicationContext _db;
+        protected readonly ApplicationContextCnpj _db;
 
-        public RepositoryBase(ApplicationContext dbcontext)
+        public RepositoryBase(ApplicationContextCnpj dbcontext)
         {
             _db = dbcontext;
         }

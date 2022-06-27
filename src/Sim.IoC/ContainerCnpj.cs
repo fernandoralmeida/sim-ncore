@@ -21,8 +21,8 @@ namespace Sim.IoC
     {
         public static void RegisterDataContext(IServiceCollection services, IConfiguration config, string connection)
         {
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));
-            services.AddScoped<DbContext, ApplicationContext>();
+            services.AddDbContext<ApplicationContextCnpj>(options => options.UseSqlServer(config.GetConnectionString(connection)));
+            services.AddScoped<DbContext, ApplicationContextCnpj>();
         }
         public static void ApplicationContextServices(IServiceCollection services)
         {

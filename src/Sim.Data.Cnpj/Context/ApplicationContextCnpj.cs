@@ -5,13 +5,13 @@ using Sim.Data.Cnpj.Config.Entity;
 namespace Sim.Data.Cnpj.Context
 {  
 
-    public class ApplicationContext : DbContext
+    public class ApplicationContextCnpj : DbContext
     {
 
-        public ApplicationContext()
+        public ApplicationContextCnpj()
         { }
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        public ApplicationContextCnpj(DbContextOptions<ApplicationContextCnpj> options) : base(options)
         {  }
 
         public DbSet<CNAE> CNAEs { get; set; }
