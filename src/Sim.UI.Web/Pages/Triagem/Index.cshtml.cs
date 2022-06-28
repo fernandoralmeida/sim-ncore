@@ -61,10 +61,10 @@ namespace Sim.UI.Web.Pages.Triagem
                         var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                         if (ativo.Any())
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Em Atendimento" });
+                            list.Add(new InputModelIndex() { Atendente = s.Name, Status = "Em Atendimento" });
 
                         else
-                            list.Add(new InputModelIndex() { Atendente = s.Name + " " + s.LastName, Status = "Disponível" });
+                            list.Add(new InputModelIndex() { Atendente = s.Name, Status = "Disponível" });
                     }
             }
 
