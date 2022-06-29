@@ -13,11 +13,14 @@ namespace Sim.UI.Web.Pages.Agenda
     {
         private readonly IAppServiceEvento _appServiceEvento;
         private readonly IAppServiceSetor _appServiceSetor;
+        private readonly IAppServiceTipo _appServiceTipo;
 
         [BindProperty(SupportsGet = true)]
         public InputModelIndex Input { get; set; }
 
         public SelectList Setores { get; set; }
+
+        public SelectList Tipos { get; set; }
 
         public class InputModelIndex
         {
@@ -27,6 +30,7 @@ namespace Sim.UI.Web.Pages.Agenda
 
             [DisplayName("Setor")]
             public string Owner { get; set; }
+            public string Tipo { get; set; }
             public IEnumerable<InputModelEvento> ListaEventos { get; set; }
             public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMes { get; set; }
             public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMesFinalizados { get; set; }
@@ -37,10 +41,12 @@ namespace Sim.UI.Web.Pages.Agenda
         public string StatusMessage { get; set; }
 
         public IndexModel(IAppServiceEvento appServiceEvento,
-            IAppServiceSetor appServiceSetor)
+            IAppServiceSetor appServiceSetor,
+            IAppServiceTipo appServiceTipo)
         {
             _appServiceEvento = appServiceEvento;
             _appServiceSetor = appServiceSetor;
+            _appServiceTipo = appServiceTipo;
         }
 
         private async Task Onload()
@@ -52,6 +58,8 @@ namespace Sim.UI.Web.Pages.Agenda
 
             if (Input.Owner == null || Input.Owner == "Geral")
                 Input.Owner = "";
+
+            Tipos = new SelectList(await _appServiceTipo.ListAllAsync(), nameof(Tipo.Nome), nameof(Tipo.Nome), null);
         }
 
         public async Task OnGetAsync()

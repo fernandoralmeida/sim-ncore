@@ -26,7 +26,7 @@ namespace Sim.Domain.Entity
 
         public bool RaeLancados(Atendimento obj)
         {
-            return obj.Sebrae != null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value >= DateTime.Now.AddDays(-90);
+            return obj.Sebrae != null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == DateTime.Now.Year;
         }
 
         public bool RaeNaoLancados(Atendimento obj)

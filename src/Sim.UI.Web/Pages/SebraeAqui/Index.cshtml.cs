@@ -31,15 +31,12 @@ namespace Sim.UI.Web.Pages.SebraeAqui
         {
             [DataType(DataType.Date)]
             public DateTime? DataAtendimento { get; set; }
-
-            public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
             public IEnumerable<Domain.Entity.Atendimento> ListaAtendimentosNaoLancados { get; set; }
         }
 
         private async Task LoadAsync()
         {
             Input.ListaAtendimentosNaoLancados = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
-            Input.ListaAtendimento = await _appServiceAtendimento.ListRaeLancadosAsync(User.Identity.Name);
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -52,7 +49,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui
         public async Task<IActionResult> OnPostAsync()
         {
             await LoadAsync();
-            if (!Input.ListaAtendimento.Any())
+            if (!Input.ListaAtendimentosNaoLancados.Any())
             {
                 StatusMessage = string.Format("Não há atendimentos para lançar");
             }

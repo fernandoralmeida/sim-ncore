@@ -1,9 +1,12 @@
 ﻿@using Sim.UI.Web.Pages.SebraeAqui
 
-<div class="nav-content card">
-      <ul class="tabs">
-          <li class="tab"><a href="#Rae1" class="grey-text @SebraeAquiNavPages.InicioNavClass(ViewContext)">Não Lançados</a></li>
-          <li class="tab"><a href="#Rae2" class="grey-text @SebraeAquiNavPages.LancadosNavClass(ViewContext)">Lançados</a></li>
+<nav class="navbar">
+    <div class="nav-wrapper white">
+      <ul class="right">
+          <li class="@SebraeAquiNavPages.InicioNavClass(ViewContext)"><a asp-page="/SebraeAqui/Index" class="grey-text ">Não Lançados</a></li>
+          <li class="@SebraeAquiNavPages.LancadosNavClass(ViewContext)"><a asp-page="/SebraeAqui/Rae/Lancados" class="grey-text">Lançados</a></li>
       </ul>
-</div>
+    </div>
+</nav>
+
 

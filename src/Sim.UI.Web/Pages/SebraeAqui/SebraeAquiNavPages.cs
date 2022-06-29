@@ -13,7 +13,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui
         {
             var activePage = viewContext.ViewData["ActivePageNSA"] as string
                 ?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
-            return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null;
+            return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active teal lighten-5" : null;
         }
     }
 }

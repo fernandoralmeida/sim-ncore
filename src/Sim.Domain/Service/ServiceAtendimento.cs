@@ -91,12 +91,12 @@ namespace Sim.Domain.Service
 
         public async Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(IEnumerable<Atendimento> atendimentos)
         {
-            return await Task.Run(() => atendimentos.Where(s => s.RaeNaoLancados(s)).ToList());
+            return await Task.Run(() => atendimentos.Where(a => a.RaeLancados(a)).OrderByDescending(o => o.Data));
         }
 
         public async Task<IEnumerable<Atendimento>> ListRaeLancadosAsync(IEnumerable<Atendimento> atendimentos)
         {
-            return await Task.Run(() => atendimentos.Where(s => s.RaeLancados(s)).ToList());
+            return await Task.Run(() => atendimentos.Where(s => s.RaeLancados(s)));
         }
 
         public async Task<IEnumerable<Atendimento>> ListServicosAsync(string servicos)

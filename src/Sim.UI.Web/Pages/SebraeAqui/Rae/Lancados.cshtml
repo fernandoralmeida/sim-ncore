@@ -5,23 +5,7 @@
     ViewData["ActivePageNSA"] = Web.Pages.SebraeAqui.SebraeAquiNavPages.RaeLancados;
 }
 
-
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-
-<div class="row mt-5 mb-5" hidden>
-    <form method="post">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a asp-area="" asp-page="/Atendimento/Iniciar" class="btn btn-primary" title="Novo Atendimento"><i class="fas fa-plus-square"></i></a>
-            <div class="col-md-auto">
-                <div class="input-group">
-                    <span class="input-group-text">Data</span>
-                    <input asp-for="Input.DataAtendimento" class="form-control" aria-describedby="button-addon2">
-                    <button class="btn btn-primary" type="submit" role="button" id="button-addon2"><i class="fas fa-sync"></i></button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
 
 <div class="card">
     <table class="responsive-table striped">
@@ -95,7 +79,7 @@
                         @Html.DisplayFor(modelItem => ultima_alteracao)
                     </td>
                     <td class="blue-text">
-                        <a asp-page="./Adicionar.Rae" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Sebrae.RAE)</a>
+                        <a asp-page="/SebraeAqui/Rae/Lancar" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Sebrae.RAE)</a>
                     </td>
                 </tr>
             }
