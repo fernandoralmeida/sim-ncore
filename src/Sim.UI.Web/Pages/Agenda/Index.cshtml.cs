@@ -33,8 +33,6 @@ namespace Sim.UI.Web.Pages.Agenda
             public string Tipo { get; set; }
             public IEnumerable<InputModelEvento> ListaEventos { get; set; }
             public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMes { get; set; }
-            public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMesFinalizados { get; set; }
-            public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMesCancelados { get; set; }
         }
 
         [TempData]
@@ -51,67 +49,55 @@ namespace Sim.UI.Web.Pages.Agenda
 
         private async Task Onload()
         {
-            var s = await _appServiceSetor.ListAllAsync();
+            Setores = new SelectList(
+                await _appServiceSetor.ListAllAsync(),
+                nameof(Setor.Nome), nameof(Setor.Nome), null);
 
-            if (s != null)
-                Setores = new SelectList(s, nameof(Setor.Nome), nameof(Setor.Nome), null);
-
-            if (Input.Owner == null || Input.Owner == "Geral")
-                Input.Owner = "";
-
-            Tipos = new SelectList(await _appServiceTipo.ListAllAsync(), nameof(Tipo.Nome), nameof(Tipo.Nome), null);
+            Tipos = new SelectList(
+                await _appServiceTipo.ListAllAsync(),
+                nameof(Tipo.Nome), nameof(Tipo.Nome), null);
         }
 
         public async Task OnGetAsync()
         {
+            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoAtivo;
             await Onload();
 
             Input.Ano = DateTime.Now.Year;
 
-            var evento = await _appServiceEvento.ListAllAsync();
-
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(evento
-                .Where(s => 
-                s.Data.Value.Year == Input.Ano &&
-                s.Situacao <= Evento.ESituacao.Ativo &&
-                s.Owner.Contains(Input.Owner))
-                .OrderBy(s => s.Data));
-
-            Input.ListaEventosMesFinalizados = await _appServiceEvento
-                .ListEventosPorMesAsync(evento
-                .Where(s => 
-                s.Data.Value.Year == Input.Ano &&
-                s.Situacao == Evento.ESituacao.Finalizado &&
-                s.Owner.Contains(Input.Owner))
-                .OrderBy(s => s.Data));
-
-            Input.ListaEventosMesCancelados = await _appServiceEvento
-                .ListEventosPorMesAsync(evento
-                .Where(s => 
-                s.Data.Value.Year == Input.Ano &&
-                s.Situacao == Evento.ESituacao.Cancelado &&
-                s.Owner.Contains(Input.Owner))
-                .OrderBy(s => s.Data));
+                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosAtivosAsync(Input.Ano));
         }
 
         public async Task OnPostEventAsync()
         {
             await Onload();
+            Input.ListaEventosMes = await _appServiceEvento
+                .ListEventosPorMesAsync(await _appServiceEvento.ListNomeAsync(Input.Evento));
+        }
 
-            var evento = await _appServiceEvento.ListNomeAsync(Input.Evento);
+        public async Task OnPostAvailableAsync()
+        {
+            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoAtivo;
 
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(evento
-                .Where(s => s.Data.Value.Year == Input.Ano && s.Situacao <= Evento.ESituacao.Ativo && s.Owner.Contains(Input.Owner)).OrderBy(s => s.Data));
+                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosAtivosAsync(Input.Ano));
+        }
 
-            Input.ListaEventosMesFinalizados = await _appServiceEvento
-                .ListEventosPorMesAsync(evento
-                .Where(s => s.Data.Value.Year == Input.Ano && s.Situacao == Evento.ESituacao.Finalizado && s.Owner.Contains(Input.Owner)).OrderBy(s => s.Data));
+        public async Task OnPostFinalizedAsync()
+        {
+            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoFinalizado;
 
-            Input.ListaEventosMesCancelados = await _appServiceEvento
-                .ListEventosPorMesAsync(evento
-                .Where(s => s.Data.Value.Year == Input.Ano && s.Situacao == Evento.ESituacao.Cancelado && s.Owner.Contains(Input.Owner)).OrderBy(s => s.Data));
+            Input.ListaEventosMes = await _appServiceEvento
+                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosFinalizadosAsync(Input.Ano));
+        }
+
+        public async Task OnPostCanceledAsync()
+        {
+            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoCancelado;
+
+            Input.ListaEventosMes = await _appServiceEvento
+                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosCanceladosAsync(Input.Ano));
         }
 
         private int QuantosDiasFaltam(DateTime dataalvo)

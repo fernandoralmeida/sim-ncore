@@ -1,7 +1,7 @@
 ﻿@page
 @model Sim.UI.Web.Pages.Agenda.IndexModel
 @{
-    ViewData["Title"] = "Eventos";
+    ViewData["Title"] = "Eventos";    
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -31,28 +31,19 @@
             <a asp-page="/Agenda/Eventos/Index" class="btn blue waves-light waves-effect" title="Incluir Novo Evento"><i class="material-icons">event add</i></a>
         </div> 
     </div>
-    </form>
-
     <nav class="nav-extended white z-depth-0">
         <div class="nav-content">
             <ul class="tabs">
-                <li class="tab right"><a href="#AgendaCancelados" class="red-text"><i class="material-icons">event_busy</i></a></li>
-                <li class="tab right"><a href="#AgendaFinalizados" class="orange-text"><i class="material-icons">event</i></a></li>
-                <li class="tab right"><a href="#AgendaAtivos" class="green-text active"><i class="material-icons">event_available</i></a></li>                
+                <li class="tab right @AgendaNavPages.EventoAtivoClass(ViewContext)"><button asp-page-handler="Available" class="btn-flat red-text"><i class="material-icons">event_busy</i></button></li>
+                <li class="tab right @AgendaNavPages.EventoFinalizadoClass(ViewContext)"><button asp-page-handler="Finalized" class="btn-flat orange-text"><i class="material-icons">event</i></button></li>
+                <li class="tab right @AgendaNavPages.EventoCanceladoClass(ViewContext)"><button asp-page-handler="Canceled" class="btn-flat green-text"><i class="material-icons">event_available</i></button></li>                
             </ul>
         </div>
     </nav>
+    </form>
 </div>
 
-<div id="AgendaAtivos">
-    <partial name="_AgendaList" model="Model.Input.ListaEventosMes" />
-</div>
-<div id="AgendaFinalizados">
-    <partial name="_AgendaList" model="Model.Input.ListaEventosMesFinalizados" />
-</div>
-<div id="AgendaCancelados">
-    <partial name="_AgendaList" model="Model.Input.ListaEventosMesCancelados" />
-</div>
+<partial name="_AgendaList" model="Model.Input.ListaEventosMes" />
 
 @section scripts
 {
