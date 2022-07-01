@@ -126,6 +126,7 @@ namespace Sim.Domain.Service
         private readonly List<string> _mes_servicos = new();
         private readonly List<string> _pessoas_mes_servicos = new();
         private readonly List<string> _empresas_mes_servicos = new();
+        private readonly List<string> _servicos = new();
 
         private void ConstruirMeses(Atendimento at_param, string[] serv_param)
         {
@@ -189,10 +190,15 @@ namespace Sim.Domain.Service
                     _empresas_mes_servicos.Clear();
 
                     var _meses_t = new List<(string Nome, string Atendimento, string Servico)>();
+                    var _l_servicos = new List<(string Servico, int Quantidade)>();
 
                     foreach (Atendimento at in list.Where(s => s.Servicos != null))
                     {
                         string[] servicos = at.Servicos.ToString().Split(new char[] { ';', ',' });
+
+                        foreach (var s in servicos)
+                            _servicos.Add(s);
+
                         for (int i = 1; i < 13; i++)
                             if (at.Data.Value.Month == i)
                                 ConstruirMeses(at, servicos);
@@ -212,10 +218,19 @@ namespace Sim.Domain.Service
                         mlist.Add((x.Mes, x.Atend, _mes_servicos.Where(s => s.Contains(x.Mes)).Count()));
                     }
 
+                    foreach(var x in from a in _servicos
+                                     group a by a into g
+                                     let count = g.Count()
+                                     orderby count descending
+                                     select new { Servico = g.Key, Qtde = count })
+                    {
+                        _l_servicos.Add((x.Servico, x.Qtde));
+                    }
+
+                    r_all.ListaServicos = _l_servicos;
                     r_all.ListaMensal = mlist;
 
-                    GC.Collect();
-
+                    GC.SuppressFinalize(this);
                 }
                 catch { }
 

@@ -8,18 +8,23 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<form class="center-align" method="post">
-        <div class="input-field col s2 l2 m2 valign-wrapper">
+<form method="post">
+    <div class="row centered">
+        <div class="input-field col s12 l2 m6 valign-wrapper white z-depth-1 hoverable rounded-default">
             <input asp-for="Ano" />
             <button class="btn waves-effect waves-light" asp-page-handler="Month"><i class="material-icons">refresh</i></button>
         </div>
+    </div>
 </form>
 
+
 <div class="row">
-                
-        @if(Model.Atendimentos_List != null)
-        {
-            <div class="col s6 m4 l4">
+
+@if(Model.Atendimentos_List != null)
+{
+    
+        <div class="col s12 m10 l10">
+            <div class="col s6 m6 l6">
                 <div class="card hoverable">
                     <div class="card-content center">
                         <h2 class="blue-text">@Model.Atendimentos_List.Cliente.Atendimentos</h2>
@@ -33,8 +38,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col s6 m4 l4">
-                <div class="card hoverable">
+            <div class="col s6 m6 l6">
+                    <div class="card hoverable">
                     <div class="card-content center">
                         <h2 class="green-text">@Model.Atendimentos_List.Cliente.Servicos</h2>
                     </div>
@@ -44,26 +49,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12 m4 l4">
-                @if(Model.Atendimentos_List.ListaMensal != null)
-                {
-                    <div class="card medium hoverable" style="overflow-x:auto;">
-                        @foreach(var m in Model.Atendimentos_List.ListaMensal)
-                        {
-                            <div class="col s1 l1 m1 center font-size-14 pdn-4">
-                                <p class="grey-text lighten-2">@m.Mes</p>
-                                <p class="blue-text">@m.Atendimentos</p>
-                                <p class="green-text">@m.Servicos</p>
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
-            
-            @if(Model.Atendimentos_List.ListaMensal != null)
-            {
-                <div class="col s12 m8 l8">                    
-                    <div class="card hoverable" style="overflow-x:auto;">
+            <div class="col s12 m12 l12">
+                    @if(Model.Atendimentos_List.ListaMensal != null)
+                    {
+                        <div class="card hoverable" style="overflow-x:auto;">
                         @foreach(var m in Model.Atendimentos_List.ListaMensal)
                         {
                             <div class="col s1 l1 m1 center font-size-12 pdn-4">
@@ -72,20 +61,37 @@
                                 <p class="green-text">@m.Servicos</p>
                             </div>
                         }
+                        </div>               
+                    }
+            </div>
+        </div>
+        <div class="col s12 m2 l2">
+            <div class="col s12 m12 l12">
+                @if(Model.Atendimentos_List.ListaServicos != null)
+                {
+                    <div class="card medium hoverable" style="overflow-x:auto;">
+                        @foreach(var m in Model.Atendimentos_List.ListaServicos)
+                        {
+                            <div class="font-size-12 pdn-4">
+                                <p class="grey-text lighten-2">@m.Servico</p>                                
+                                <p class="green-text">@m.Quantidade</p>
+                            </div>
+                        }
                     </div>
-                </div>
-            }
-            
-        }   
+                }
+            </div>
+        </div> 
+    
+}
 
-        @if(Model.Setores != null)
-        {
-            @foreach(var set in Model.Setores.Where(s => s.Cliente.Atendimentos > 0))
-            {                
-
+@if(Model.Setores != null)
+{
+    <div class="col s12 m10 l10">        
+        @foreach(var set in Model.Setores.Where(s => s.Cliente.Atendimentos > 0))
+            {
                <div class="col s6 m6 l6">
                 <div class="card hoverable">
-                    <table class="centered striped">
+                    <table class="striped">
                         <caption class="grey-text">@set.Cliente.Titulo</caption>
                              <thead class="grey-text darken-3">                                 
                                  <tr>
@@ -114,26 +120,30 @@
                         </div>                    
                     }
                 </div>
-            </div>
+               </div>
             }
-        }
-    
-    @if (Model.AppUsers != null)
-    {
-        <div class="col s12">
-            <div class="card hoverable" style="overflow-x:auto;">
-                @foreach(var m in Model.AppUsers.ListaAppUser)
-                {
-                    <div class="col center">
-                        <p class="grey-text lighten-2 font-size-12">@m.Nome</p>
-                        <p class="blue-text font-size-14">@m.Atendimentos</p>
+    </div>    
+}
+    <div class="col s12 m2 l2">
+        
+            @if (Model.AppUsers != null)
+            {
+                <div class="col s12 m12 l12">
+                    <div class="card medium hoverable" style="overflow-x:auto;">
+                        @foreach(var m in Model.AppUsers.ListaAppUser)
+                        {
+                            <div class="font-size-12 pdn-4">
+                                <p class="grey-text lighten-2 font-size-12">@m.Nome</p>
+                                <p class="blue-text font-size-14">@m.Atendimentos</p>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
-        </div>
-    }
-
+                </div>
+            }
+        
+    </div>
 </div>
+
 
 <!-- Modal Structure -->
 <div id="viewmodal" class="modal modal-fixed-footer">
