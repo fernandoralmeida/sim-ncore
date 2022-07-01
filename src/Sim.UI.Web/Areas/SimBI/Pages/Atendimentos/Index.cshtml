@@ -17,12 +17,10 @@
     </div>
 </form>
 
-
 <div class="row">
 
 @if(Model.Atendimentos_List != null)
-{
-    
+{    
         <div class="col s12 m10 l10">
             <div class="col s6 m6 l6">
                 <div class="card hoverable">
@@ -42,6 +40,9 @@
                     <div class="card hoverable">
                     <div class="card-content center">
                         <h2 class="green-text">@Model.Atendimentos_List.Cliente.Servicos</h2>
+                        <div class="divider"></div>
+                        <span class="orange-text left">@Model.Atendimentos_List.ClientePF.Servicos<i class="material-icons orange-text left">person</i></span>
+                        <span class="purple-text right">@Model.Atendimentos_List.ClientePJ.Servicos<i class="material-icons purple-text left">factory</i></span>
                     </div>
                     <div class="card-action">
                         <span class="grey-text">Serviços</span>
@@ -72,16 +73,16 @@
                     <div class="card medium hoverable" style="overflow-x:auto;">
                         @foreach(var m in Model.Atendimentos_List.ListaServicos)
                         {
-                            <div class="font-size-12 pdn-4">
+                            <div class="font-size-12 pdn-4 center">
                                 <p class="grey-text lighten-2">@m.Servico</p>                                
                                 <p class="green-text">@m.Quantidade</p>
                             </div>
+                            <div class="divider"></div>
                         }
                     </div>
                 }
             </div>
-        </div> 
-    
+        </div>    
 }
 
 @if(Model.Setores != null)
@@ -136,11 +137,11 @@
                                 <p class="grey-text lighten-2 font-size-12">@m.Nome</p>
                                 <p class="blue-text font-size-14">@m.Atendimentos</p>
                             </div>
+                            <div class="divider"></div>
                         }
                     </div>
                 </div>
-            }
-        
+            }        
     </div>
 </div>
 
