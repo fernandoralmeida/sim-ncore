@@ -19,18 +19,21 @@
                 
         @if(Model.Atendimentos_List != null)
         {
-            <div class="col s6 m3 l3">
+            <div class="col s6 m4 l4">
                 <div class="card hoverable">
                     <div class="card-content center">
                         <h2 class="blue-text">@Model.Atendimentos_List.Cliente.Atendimentos</h2>
+                        <div class="divider"></div>
+                        <span class="orange-text left">@Model.Atendimentos_List.ClientePF.Atendimentos<i class="material-icons orange-text left">person</i></span>
+                        <span class="purple-text right">@Model.Atendimentos_List.ClientePJ.Atendimentos<i class="material-icons purple-text left">factory</i></span>
                     </div>
                     <div class="card-action">
                         <span class="grey-text">Atendimentos</span>
-                        <i class="material-icons blue-text right">person</i>
+                        <i class="material-icons blue-text right">timer</i>
                     </div>
                 </div>
             </div>
-            <div class="col s6 m3 l3">
+            <div class="col s6 m4 l4">
                 <div class="card hoverable">
                     <div class="card-content center">
                         <h2 class="green-text">@Model.Atendimentos_List.Cliente.Servicos</h2>
@@ -41,36 +44,29 @@
                     </div>
                 </div>
             </div>
-            <div class="col s6 m3 l3">
-                <div class="card hoverable">
-                    <div class="card-content center">
-                        <h2 class="orange-text">@Model.Atendimentos_List.ClientePF.Atendimentos</h2>
+            <div class="col s12 m4 l4">
+                @if(Model.Atendimentos_List.ListaMensal != null)
+                {
+                    <div class="card medium hoverable" style="overflow-x:auto;">
+                        @foreach(var m in Model.Atendimentos_List.ListaMensal)
+                        {
+                            <div class="col s1 l1 m1 center font-size-14 pdn-4">
+                                <p class="grey-text lighten-2">@m.Mes</p>
+                                <p class="blue-text">@m.Atendimentos</p>
+                                <p class="green-text">@m.Servicos</p>
+                            </div>
+                        }
                     </div>
-                    <div class="card-action">
-                        <span class="grey-text">Clientes</span>
-                        <i class="material-icons orange-text right">person</i>
-                    </div>
-                </div>
-            </div>
-            <div class="col s6 m3 l3">
-                <div class="card hoverable">
-                    <div class="card-content center">
-                        <h2 class="purple-text">@Model.Atendimentos_List.ClientePJ.Atendimentos</h2>
-                    </div>
-                    <div class="card-action">
-                        <span class="grey-text">Empresas</span>
-                        <i class="material-icons purple-text right">factory</i>
-                    </div>
-                </div>
+                }
             </div>
             
             @if(Model.Atendimentos_List.ListaMensal != null)
             {
-                <div class="col s12 m12 l12">                    
+                <div class="col s12 m8 l8">                    
                     <div class="card hoverable" style="overflow-x:auto;">
                         @foreach(var m in Model.Atendimentos_List.ListaMensal)
                         {
-                            <div class="col s1 l1 m1 center font-size-12">
+                            <div class="col s1 l1 m1 center font-size-12 pdn-4">
                                 <p class="grey-text lighten-2">@m.Mes</p>
                                 <p class="blue-text">@m.Atendimentos</p>
                                 <p class="green-text">@m.Servicos</p>
@@ -79,6 +75,7 @@
                     </div>
                 </div>
             }
+            
         }   
 
         @if(Model.Setores != null)

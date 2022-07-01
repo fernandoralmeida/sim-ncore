@@ -47,13 +47,11 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 
         private async Task LoadMunicipios()
         {
-
-            var t = await _appEmpresa.ToListMicroRegiaoJahuAsync();
-
-            if (t != null)
-            {
-                ListaMunicipios = new SelectList(t, nameof(Municipio.Codigo), nameof(Municipio.Descricao), null);
-            }
+            ListaMunicipios = new SelectList(
+                await _appEmpresa.ToListMicroRegiaoJahuAsync(),
+                nameof(Municipio.Codigo),
+                nameof(Municipio.Descricao),
+                null);            
         }
 
         private async Task LoadAsync()
@@ -69,11 +67,13 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 
         public async Task OnGetAsync()
         {
-            Input = new();
-            Input.Municipio = "6607";
-            Input.Situacao = "Ativa";
-            Input.Ano = DateTime.Today.Year;
-            Input.Mes = "00";      
+            Input = new()
+            {
+                Municipio = "6607",
+                Situacao = "Ativa",
+                Ano = DateTime.Today.Year,
+                Mes = "00"
+            };
             await LoadAsync();
         }
 
