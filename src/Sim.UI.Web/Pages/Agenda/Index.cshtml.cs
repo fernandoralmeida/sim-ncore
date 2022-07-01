@@ -60,7 +60,7 @@ namespace Sim.UI.Web.Pages.Agenda
 
         public async Task OnGetAsync()
         {
-            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoAtivo;
+            ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
             await Onload();
 
             Input.Ano = DateTime.Now.Year;
@@ -79,7 +79,7 @@ namespace Sim.UI.Web.Pages.Agenda
         public async Task OnPostAvailableAsync()
         {
             await Onload();
-            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoAtivo;
+            ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
 
             Input.ListaEventosMes = await _appServiceEvento
                 .ListEventosPorMesAsync(await _appServiceEvento.ListEventosAtivosAsync(Input.Ano));
@@ -88,7 +88,7 @@ namespace Sim.UI.Web.Pages.Agenda
         public async Task OnPostFinalizedAsync()
         {
             await Onload();
-            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoFinalizado;
+            ViewData["ActivePageEvento"] = AgendaNavPages.EventoFinalizado;
 
             Input.ListaEventosMes = await _appServiceEvento
                 .ListEventosPorMesAsync(await _appServiceEvento.ListEventosFinalizadosAsync(Input.Ano));
@@ -97,7 +97,7 @@ namespace Sim.UI.Web.Pages.Agenda
         public async Task OnPostCanceledAsync()
         {
             await Onload();
-            ViewData["ActivePageEvento"] = Agenda.AgendaNavPages.EventoCancelado;
+            ViewData["ActivePageEvento"] = AgendaNavPages.EventoCancelado;
 
             Input.ListaEventosMes = await _appServiceEvento
                 .ListEventosPorMesAsync(await _appServiceEvento.ListEventosCanceladosAsync(Input.Ano));

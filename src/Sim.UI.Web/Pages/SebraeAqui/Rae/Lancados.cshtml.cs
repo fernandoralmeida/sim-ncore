@@ -39,7 +39,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
         private async Task LoadAsync()
         {
 
-            Input.ListaAtendimento = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
+            Input.ListaAtendimento = await _appServiceAtendimento.ListRaeLancadosAsync(User.Identity.Name);
         }
 
         public async Task<IActionResult> OnGetAsync()
