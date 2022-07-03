@@ -3,8 +3,7 @@
 
 
     <nav class="navbar row">
-        <form class="nav-wrapper white" method="post">
-            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
+        <form class="nav-wrapper white" method="post">           
             <span class="navbar-page-name grey-text">BI</span>
             <ul class="right valign-wrapper">
                 <li class="pdn-h-4">
@@ -15,33 +14,6 @@
                 </li>
                 <li class="pdn-h-4">
                     <select id="municip" asp-for="Input.Municipio" class="browser-default" asp-items="@Model.ListaMunicipios"></select>
-                </li>
-                <li class="pdn-h-4">
-                    <select id="situacaocad" asp-for="Input.Situacao" class="browser-default">
-                        <option selected>Ativa</option>
-                        <option>Inapta</option>
-                        <option>Suspensa</option>
-                        <option>Nula</option>
-                        <option>Baixada</option>
-                    </select>
-                </li>
-                <li class="pdn-h-4">
-                    <select asp-for="Input.Mes" class="browser-default">
-                        <option value="99" selected>Geral</option>
-                        <option value="00">Anual</option>
-                        <option value="01">Janeiro</option>
-                        <option value="02">Feveiro</option>
-                        <option value="03">Março</option>
-                        <option value="04">Abril</option>
-                        <option value="05">Maio</option>
-                        <option value="06">Junho</option>
-                        <option value="07">Julho</option>
-                        <option value="08">Agosto</option>
-                        <option value="09">Setembro</option>
-                        <option value="10">Outubro</option>
-                        <option value="11">Novembro</option>
-                        <option value="12">Dezembro</option>
-                    </select>
                 </li>
                 <li class="pdn-h-4">
                     <input class="col" type="number" asp-for="Input.Ano" />

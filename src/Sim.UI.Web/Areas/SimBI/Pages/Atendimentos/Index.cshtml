@@ -21,42 +21,37 @@
 
 @if(Model.Atendimentos_List != null)
 {    
-        <div class="col s12 m10 l10">
+        <div class="col s12 m9 l9 no-padding">
             <div class="col s6 m6 l6">
                 <div class="card hoverable">
-                    <div class="card-content center">
-                        <h2 class="blue-text">@Model.Atendimentos_List.Cliente.Atendimentos</h2>
-                        <div class="divider"></div>
-                        <span class="orange-text left">@Model.Atendimentos_List.ClientePF.Atendimentos<i class="material-icons orange-text left">person</i></span>
-                        <span class="purple-text right">@Model.Atendimentos_List.ClientePJ.Atendimentos<i class="material-icons purple-text left">factory</i></span>
-                    </div>
-                    <div class="card-action">
-                        <span class="grey-text">Atendimentos</span>
-                        <i class="material-icons blue-text right">timer</i>
+                    <div class="card-header grey-text">Atendimentos<i class="material-icons left">timelapse</i></div>
+                    <h2 class="blue-text center pdn-b-4">@Model.Atendimentos_List.Cliente.Atendimentos</h2>
+                    <div class="card-action font-size-12">
+                        <span class="grey-text">@Model.Atendimentos_List.ClientePF.Atendimentos<i class="tiny material-icons left">person</i></span>
+                        <span class="grey-text right">@Model.Atendimentos_List.ClientePJ.Atendimentos<i class="tiny material-icons left">business</i></span>
                     </div>
                 </div>
             </div>
             <div class="col s6 m6 l6">
-                    <div class="card hoverable">
-                    <div class="card-content center">
-                        <h2 class="green-text">@Model.Atendimentos_List.Cliente.Servicos</h2>
-                        <div class="divider"></div>
-                        <span class="orange-text left">@Model.Atendimentos_List.ClientePF.Servicos<i class="material-icons orange-text left">person</i></span>
-                        <span class="purple-text right">@Model.Atendimentos_List.ClientePJ.Servicos<i class="material-icons purple-text left">factory</i></span>
+                <div class="card hoverable">
+                    <div class="card-header grey-text">Serviços<i class="material-icons left">construction</i></div>
+                    <div class="font-size-12 pdn-b-4 center">
+                        <h2 class="light-green-text">@Model.Atendimentos_List.Cliente.Servicos</h2>
                     </div>
-                    <div class="card-action">
-                        <span class="grey-text">Serviços</span>
-                        <i class="material-icons green-text right">construction</i>
+                    <div class="card-action font-size-12">
+                        <span class="grey-text"><i class="tiny material-icons left">person</i>@Model.Atendimentos_List.ClientePF.Servicos</span>                                
+                        <span class="grey-text right"><i class="tiny material-icons left">business</i>@Model.Atendimentos_List.ClientePJ.Servicos</span>
                     </div>
                 </div>
             </div>
             <div class="col s12 m12 l12">
                     @if(Model.Atendimentos_List.ListaMensal != null)
                     {
-                        <div class="card hoverable" style="overflow-x:auto;">
+                        <div class="card hoverable pdn-h-10" style="overflow-x:auto;">
+                            <div class="card-header grey-text">Atendimentos nos meses<i class="material-icons left">calendar_month</i></div>
                         @foreach(var m in Model.Atendimentos_List.ListaMensal)
                         {
-                            <div class="col s1 l1 m1 center font-size-12 pdn-4">
+                            <div class="border-l col s1 l1 m1 center font-size-12 mgn-10">
                                 <p class="grey-text lighten-2">@m.Mes</p>
                                 <p class="blue-text">@m.Atendimentos</p>
                                 <p class="green-text">@m.Servicos</p>
@@ -66,83 +61,78 @@
                     }
             </div>
         </div>
-        <div class="col s12 m2 l2">
-            <div class="col s12 m12 l12">
+        <div class="col s12 m3 l3">            
                 @if(Model.Atendimentos_List.ListaServicos != null)
                 {
                     <div class="card medium hoverable" style="overflow-x:auto;">
+                        <div class="card-header grey-text">Lista Serviços<i class="material-icons left">construction</i></div>
                         @foreach(var m in Model.Atendimentos_List.ListaServicos)
                         {
                             <div class="font-size-12 pdn-4 center">
                                 <p class="grey-text lighten-2">@m.Servico</p>                                
-                                <p class="green-text">@m.Quantidade</p>
+                                <p class="light-green-text">@m.Quantidade</p>
                             </div>
                             <div class="divider"></div>
                         }
                     </div>
-                }
-            </div>
-        </div>    
+                }            
+        </div>
+
 }
 
 @if(Model.Setores != null)
 {
-    <div class="col s12 m10 l10">        
+    <div class="col s12 m9 l9 no-padding">        
         @foreach(var set in Model.Setores.Where(s => s.Cliente.Atendimentos > 0))
-            {
-               <div class="col s6 m6 l6">
+        { 
+            <div class="col s12 m6 l6">           
                 <div class="card hoverable">
-                    <table class="striped">
-                        <caption class="grey-text">@set.Cliente.Titulo</caption>
-                             <thead class="grey-text darken-3">                                 
-                                 <tr>
-                                     <th>Atendimentos</th>
-                                     <th>Serviços</th>
-                                 </tr>
-                             </thead>
-                             <tbody class="grey-text darken-3">
-                                 <tr>
-                                     <td><h5><a href="#" class="blue-text">@set.Cliente.Atendimentos</a></h5></td>
-                                     <td><h5><a href="#" class="green-text">@set.Cliente.Servicos</a></h5></td>                                     
-                                 </tr>
-                             </tbody>
-                    </table>
+                    <div class="card-header grey-text">@set.Cliente.Titulo<i class="material-icons left">meeting_room</i></div>
+                    <div class="row pdn-h-12">
+                        <div class="col s6 l6 m6 center font-size-12">
+                            <p class="grey-text"><i class="tiny material-icons">timelapse</i><h5 class="light-blue-text">@set.Cliente.Atendimentos</h5></p>
+                        </div>
+                        <div class="col s6 l6 m6 center font-size-12">
+                            <p class="grey-text"><i class="tiny material-icons">construction</i><h5 class="light-green-text">@set.Cliente.Servicos</h5></p>
+                        </div>
+                    </div>
+                    <div class="card-action no-padding pdn-h-10 grey lighten-5"> 
                     @if(set.ListaMensal != null)
-                    {
-                        <div class="row center">
+                    {                
+                        <div class="row pdn-h-12">                        
                             @foreach(var m in set.ListaMensal)
                             {
-                                <div class="col s2 l2 m2 center font-size-12">
+                                <div class="col s1 l1 m1 center font-size-12">
                                     <p class="grey-text lighten-2">@m.Mes</p>
                                     <p class="blue-text">@m.Atendimentos</p>
-                                    <p class="green-text">@m.Servicos</p>
+                                    <p class="light-green-text">@m.Servicos</p>
                                 </div>
                             }
-                        </div>                    
+                        </div>                                         
                     }
+                    </div>
                 </div>
-               </div>
-            }
+            </div>
+        }
     </div>    
 }
-    <div class="col s12 m2 l2">
-        
-            @if (Model.AppUsers != null)
-            {
-                <div class="col s12 m12 l12">
-                    <div class="card medium hoverable" style="overflow-x:auto;">
+    <div class="col s12 m3 l3">       
+                @if (Model.AppUsers != null)
+                {                
+                    <div class="card hoverable" style="overflow-x:auto;">
+                        <div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>
                         @foreach(var m in Model.AppUsers.ListaAppUser)
                         {
-                            <div class="font-size-12 pdn-4">
+                            <div class="font-size-12 center pdn-4">
                                 <p class="grey-text lighten-2 font-size-12">@m.Nome</p>
                                 <p class="blue-text font-size-14">@m.Atendimentos</p>
                             </div>
                             <div class="divider"></div>
                         }
                     </div>
-                </div>
-            }        
+                }  
     </div>
+
 </div>
 
 

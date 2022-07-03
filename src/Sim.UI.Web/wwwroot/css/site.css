@@ -32,6 +32,21 @@ html {
     font-size: 14px;
 }
 
+.border-a{
+    border: 1px solid #ddd;
+}
+.border-l {
+    border-left: 1px solid #ddd;
+}
+.border-r {
+    border-right: 1px solid #ddd;
+}
+.border-t {
+    border-top: 1px solid #ddd;
+}
+.border-b {
+    border-bottom: 1px solid #ddd;
+}
 .rounded-default{
     border-radius:2px;
 }
@@ -50,6 +65,15 @@ html {
 
 .mgn-0 {
     margin: 0px 0px 0px 0px;
+}
+.mgn-4 {
+    margin: 4px 4px 4px 4px;
+}
+.mgn-8 {
+    margin: 8px 8px 8px 8px;
+}
+.mgn-10 {
+    margin: 10px 10px 10px 10px;
 }
 .mgn-t-4{
     margin-top:4px;
@@ -72,6 +96,26 @@ html {
 .pdn-h-4{
     padding-left:4px;
     padding-right:4px;
+}
+.pdn-h-6 {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.pdn-h-8 {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.pdn-h-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.pdn-h-12 {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.pdn-h-14 {
+    padding-left: 14px;
+    padding-right: 14px;
 }
 
 .pdn-4{

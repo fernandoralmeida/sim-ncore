@@ -429,6 +429,7 @@ else
       </table>
     </div>
     <div class="modal-footer">
+        <a href="#" class="btn waves-effect">Exportar</a>
         <a href="#!" class="modal-close btn waves-effect">Fechar</a>
     </div>
 </div>
@@ -442,7 +443,7 @@ else
                 var param3 = $('#situacaocad').val();
                 $(".showcollection").empty();
                 $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
-                $.getJSON(`/SimBI/Empresas?c=${param1}&m=${param2}&a=${param3}&handler=Preview`, function (data) {
+                $.getJSON(`/SimBI/Empresas?c=${param1}&m=${param2}&a=Ativa&handler=Preview`, function (data) {
                     $(".loadingpage").empty();
                     $.each(data, function (i, item) {
 

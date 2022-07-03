@@ -18,12 +18,14 @@
                     <li>
                         <div class="collapsible-header waves-effect waves-green">@s.Secao.Key<span class="new badge blue" data-badge-caption="">@s.Secao.Value</span></div>
                         <div class="collapsible-body">
+                             <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-id="@s.Secao.Key">Listar Classe</a></div>
                             <ul class="collapsible">
                                 @foreach (var d in s.ListaClasse)
                                 {
                                     <li>
                                         <div class="collapsible-header waves-effect waves-green">@d.Classe.Key<span class="new badge blue-grey darken-1" data-badge-caption="">@d.Classe.Value</span></div>
                                         <div class="collapsible-body">
+                                            <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-id="@d.Classe.Key">Listar Subclasse</a></div>
                                             <ul class="collection z-depth-1">
                                                 @foreach (var sc in d.ListaSubClasse)
                                                 {

@@ -85,7 +85,16 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
         public async Task<JsonResult> OnGetPreview(string c, string m, string a)
         {
             return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(c, m, a));
-        }       
+        }
 
+        public async Task<JsonResult> OnGetClasses(string c, string m, string a)
+        {
+            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(c, m, a));
+        }
+
+        public async Task<JsonResult> OnGetSubClasses(string c, string m, string a)
+        {
+            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(c, m, a));
+        }
     }
 }
