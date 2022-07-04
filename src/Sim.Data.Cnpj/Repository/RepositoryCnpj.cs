@@ -108,7 +108,7 @@ namespace Sim.Data.Cnpj.Repository
             });
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string situacaocadastral)
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio)
         {
             return await Task.Run(() =>
             {
@@ -117,7 +117,32 @@ namespace Sim.Data.Cnpj.Repository
                 var qry = (from est in _db.Estabelecimentos
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
                            select new { est, emp })
-                          .Where(s => s.est.SituacaoCadastral == situacaocadastral).Distinct().AsNoTracking();
+                          .Where(s => s.est.Municipio == municipio).Distinct().AsNoTracking();
+
+                foreach (var e in qry)
+                {
+                    var _cnpj = string.Format("{0}{1}{2}", e.est.CNPJBase, e.est.CNPJOrdem, e.est.CNPJDV);
+
+
+                    brf.Add(new BaseReceitaFederal(
+                        0, _cnpj, e.emp, e.est, null, null, null, null, null, null, null, null));
+                }
+                return brf;
+            });
+        }
+
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio, string situacaocadastral)
+        {
+            return await Task.Run(() =>
+            {
+                var brf = new List<BaseReceitaFederal>();
+
+                var qry = (from est in _db.Estabelecimentos
+                           from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
+                           select new { est, emp })
+                          .Where(s => s.est.SituacaoCadastral == situacaocadastral &&
+                          s.est.Municipio == municipio)
+                          .Distinct().AsNoTracking();
 
                 foreach (var e in qry)
                 {
@@ -283,7 +308,7 @@ namespace Sim.Data.Cnpj.Repository
             });
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividade, string municipio)
+        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividadei, string atividadef, string municipio)
         {
             return await Task.Run(() =>
             {
@@ -294,7 +319,7 @@ namespace Sim.Data.Cnpj.Repository
                            from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                                //from sn in _db.Simples.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
                            select new { est, emp, atv })
-                           .Where(s => s.est.CnaeFiscalPrincipal.Contains(atividade) && s.est.Municipio.Contains(municipio))
+                           .Where(s => s.est.CnaeFiscalPrincipal.CompareTo(atividadei) >= 0 && s.est.CnaeFiscalPrincipal.CompareTo(atividadef) <= 0 && s.est.Municipio.Contains(municipio))
                            .Distinct()
                            .AsNoTracking();
 

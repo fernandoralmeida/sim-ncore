@@ -419,17 +419,19 @@ else
         <table class="striped" style="font-size:12px;">
         <thead>
           <tr>
+              <th>#</th>
               <th>CNPJ</th>
               <th>Razão Social</th>
               <th>Tel</th>
               <th>Email</th>
+              <th>Cnae</th>
           </tr>
         </thead>
         <tbody class="showcollection"></tbody>
       </table>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn waves-effect">Exportar</a>
+        <a id="btn-export" href="" class="btn waves-effect" title="Exportar"><i class="material-icons">description file_download</i></a>
         <a href="#!" class="modal-close btn waves-effect">Fechar</a>
     </div>
 </div>
@@ -438,12 +440,18 @@ else
     <script>
         $(function () {
             $(".modal-trigger").click(function () {
-                var param1 = $(this).data('id');
+                var param0 = $(this).data('cnaei');
+                var param1 = $(this).data('cnaef');
                 var param2 = $('#municip').val();
                 var param3 = $('#situacaocad').val();
+                var cont = 0;
+
+                var a = document.getElementById('btn-export');
+                a.href = `/SimBI/Empresas/Export?ci=${param0}&cf=${param1}&m=${param2}&a=Ativa`;
+
                 $(".showcollection").empty();
                 $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
-                $.getJSON(`/SimBI/Empresas?c=${param1}&m=${param2}&a=Ativa&handler=Preview`, function (data) {
+                $.getJSON(`/SimBI/Empresas?ci=${param0}&cf=${param1}&m=${param2}&a=Ativa&handler=Preview`, function (data) {
                     $(".loadingpage").empty();
                     $.each(data, function (i, item) {
 
@@ -452,29 +460,32 @@ else
                         var v2 = item.item2;
                         var v3 = item.item3 != null? item.item3: "";
                         var v4 = item.item4 != null? item.item4: "";
+                        var v5 = item.item5;
                         
-                        $(".showcollection").append(
-                            
+                        cont++;
+
+                        $(".showcollection").append(                            
                             `<tr>
+                            <td>${cont}</td>
                             <td><a href="/Censo/Empresas/Detalhe?id=${v1}" target="_blank">${vm}</a></td>
                             <td>${v2}</td>
                             <td>${v3}</td>
                             <td>${v4}</td>
-                            </tr>`
-                        
+                            <td>${v5}</td>
+                            </tr>`                        
                         );
-
-                        //$(".showcollection").append(`<li class="collection-item"><a href="/Censo/Empresas/Detalhe?id=${v1}" target="_blank"><span class="new badge" data-badge-caption="Perfil Completo"></span></a>${data.nome_Empresarial}</li>`);
                     });
                 });
             });
         });
-
+        
         $(function () {
             $("#submit").click(function () {
                 document.forms[0].submit();                
                 return false;
             });
         });
+        ///SimBI/Empresas?ci=6200000&cf=6299999&m=6607&a=Ativa&handler=Export
+        ///SimBI/Empresas/Export?ci=660000&cf=6699999&m=6607&a=Ativa
     </script>
 }

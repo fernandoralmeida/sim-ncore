@@ -23,9 +23,13 @@ namespace Sim.Application.Cnpj.Services
             return await _cnpj.ListAllAsync(bairro, endereco, cnae, municipio, situacaocadastral);
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string situacaocadastral)
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio)
         {
-            return await _cnpj.ListAllAsync(situacaocadastral);
+            return await _cnpj.ListAllAsync(municipio);
+        }
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio, string situacaocadastral)
+        {
+            return await _cnpj.ListAllAsync(municipio, situacaocadastral);
         }
 
         public async Task<IEnumerable<BaseReceitaFederal>> ListAllMatrizFilialAsync(string cnpjbase)
@@ -63,14 +67,14 @@ namespace Sim.Application.Cnpj.Services
             return await _cnpj.ToListBIEmpresasAsync(municipio, situacao, ano, mes);
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividade, string municipio)
+        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividadei, string atividadef, string municipio)
         {
-            return await _cnpj.ToListByCnaeAsync(atividade, municipio);
+            return await _cnpj.ToListByCnaeAsync(atividadei, atividadef, municipio);
         }
 
-        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email)>> ToListCnaeEmpresasJsonAsync(string cnae, string municipio, string situacao)
+        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> ToListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao)
         {
-            return await _cnpj.ToListCnaeEmpresasJsonAsync(cnae, municipio, situacao);
+            return await _cnpj.ToListCnaeEmpresasJsonAsync(cnaei, cnaef, municipio, situacao);
         }
 
         public async Task<IEnumerable<Municipio>> ToListMicroRegiaoJahuAsync()

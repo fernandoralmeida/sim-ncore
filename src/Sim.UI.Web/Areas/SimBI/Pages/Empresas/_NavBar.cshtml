@@ -4,7 +4,6 @@
 
     <nav class="navbar row">
         <form class="nav-wrapper white" method="post">           
-            <span class="navbar-page-name grey-text">BI</span>
             <ul class="right valign-wrapper">
                 <li class="pdn-h-4">
                     <select asp-for="Input.Modo" class="browser-default">
@@ -16,7 +15,7 @@
                     <select id="municip" asp-for="Input.Municipio" class="browser-default" asp-items="@Model.ListaMunicipios"></select>
                 </li>
                 <li class="pdn-h-4">
-                    <input class="col" type="number" asp-for="Input.Ano" />
+                    <input type="number" asp-for="Input.Ano" />
                 </li>
                 <li class="waves-effect waves-light blue lighten-1">
                     <a id="submit"><i class="material-icons">autorenew</i></a>

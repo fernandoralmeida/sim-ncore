@@ -9,6 +9,8 @@
     {
         public KeyValuePair<string, int> Secao { get; set; }
         public List<CnaeClasse> ListaClasse { get; set; }
+        public string FaixaInicial { get; set; }
+        public string FaixaFinal { get; set; }
     }
 
     public class CnaeClasse

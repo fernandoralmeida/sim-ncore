@@ -22,9 +22,13 @@ namespace Sim.Domain.Cnpj.Services
             return await _cnpj.ListAllAsync(bairro, endereco, cnae, municipio, situacaocadastral);
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string situacaocadastral)
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio)
         {
-            return await _cnpj.ListAllAsync(situacaocadastral);
+            return await _cnpj.ListAllAsync(municipio);
+        }
+        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio, string situacaocadastral)
+        {
+            return await _cnpj.ListAllAsync(municipio, situacaocadastral);
         }
 
         public async Task<IEnumerable<BaseReceitaFederal>> ListAllMatrizFilialAsync(string cnpjbase)
@@ -55,7 +59,7 @@ namespace Sim.Domain.Cnpj.Services
         public async Task<IEnumerable<BICnae>> ToListBICnaeAsync(string municipio)
         {
 
-            var emp = await _cnpj.ToListByCnaeAsync("", municipio);
+            var emp = await _cnpj.ToListByCnaeAsync("0000000","9999999", municipio);
 
             return await Task.Run(() => {
 
@@ -81,7 +85,12 @@ namespace Sim.Domain.Cnpj.Services
                 var sub_sec_count = 0;
 
                 //agro
-                var agro = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var agro = new CnaeSecao() { ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "0100000",
+                    FaixaFinal = "0399999"
+                };
+
                 for (int i = 1; i <= 3; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -128,7 +137,14 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(agro);
 
                 //Ind Ext
-                var indextrativa = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var indextrativa = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "0500000",
+                    FaixaFinal = "0999999"
+                };
+
                 for (int i = 5; i <= 9; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -144,6 +160,7 @@ namespace Sim.Domain.Cnpj.Services
                         {
                             sec_count += s.Count;
                             secao = new KeyValuePair<string, int>("INDÚSTRIAS EXTRATIVAS", sec_count);
+
 
                             if (i == 05 && sec == 05)
                             {
@@ -187,7 +204,11 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(indextrativa);
 
                 //Ind Transf
-                var indetransf = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var indetransf = new CnaeSecao() { ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "1000000",
+                    FaixaFinal = "3399999"
+                };
                 for (int i = 10; i <= 33; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -361,7 +382,13 @@ namespace Sim.Domain.Cnpj.Services
 
 
                 //Eletricidade e Gás
-                var eletrigas = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var eletrigas = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "3500000",
+                    FaixaFinal = "3599999"
+                };
                 for (int i = 35; i <= 35; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -396,7 +423,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(eletrigas);
 
                 //Agua e Esgoto etc...
-                var aguaesgot = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var aguaesgot = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "3600000",
+                    FaixaFinal = "3999999"
+                };
                 for (int i = 36; i <= 39; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -449,7 +482,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(aguaesgot);
 
                 //Construcao...
-                var construcao = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var construcao = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "4100000",
+                    FaixaFinal = "4399999"
+                };
                 for (int i = 41; i <= 43; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -496,7 +535,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(construcao);
 
                 //Comércio...
-                var comercio = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var comercio = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "4500000",
+                    FaixaFinal = "4799999"
+                };
                 for (int i = 45; i <= 47; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -543,7 +588,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(comercio);
 
                 //Transporte...
-                var transporte = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var transporte = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "4900000",
+                    FaixaFinal = "5399999"
+                };
                 for (int i = 49; i <= 53; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -602,7 +653,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(transporte);
 
                 //Alojamento e Alimentacao...
-                var alojamento = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var alojamento = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "5500000",
+                    FaixaFinal = "5699999"
+                };
                 for (int i = 55; i <= 56; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -643,7 +700,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(alojamento);
 
                 //INFORMAÇÃO E COMUNICAÇÃO...
-                var inforcom = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var inforcom = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "5800000",
+                    FaixaFinal = "6399999"
+                };
                 for (int i = 58; i <= 63; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -708,7 +771,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(inforcom);
 
                 //Financeiras etc...
-                var finance = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var finance = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "6400000",
+                    FaixaFinal = "6699999"
+                };
                 for (int i = 64; i <= 66; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -755,7 +824,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(finance);
 
                 //Imobiliárias etc...
-                var imobili = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var imobili = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "6800000",
+                    FaixaFinal = "6899999"
+                };
                 for (int i = 68; i <= 68; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -790,7 +865,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(imobili);
 
                 //Cientificas Tecnicas etc...
-                var cientifica = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var cientifica = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "6900000",
+                    FaixaFinal = "7599999"
+                };
                 for (int i = 69; i <= 75; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -861,7 +942,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(cientifica);
 
                 //Administrativo etc...
-                var administrativo = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var administrativo = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "7700000",
+                    FaixaFinal = "8299999"
+                };
                 for (int i = 77; i <= 82; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -926,7 +1013,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(administrativo);
 
                 //Adm Publico etc...
-                var admpublic = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var admpublic = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "8400000",
+                    FaixaFinal = "8499999"
+                };
                 for (int i = 84; i <= 84; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -962,7 +1055,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(admpublic);
 
                 //Educação etc...
-                var educa = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var educa = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "8500000",
+                    FaixaFinal = "8599999"
+                };
                 for (int i = 85; i <= 85; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -998,7 +1097,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(educa);
 
                 //Saude humana etc...
-                var saude = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var saude = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "8600000",
+                    FaixaFinal = "8899999"
+                };
                 for (int i = 86; i <= 88; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -1045,7 +1150,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(saude);
 
                 //Artes etc...
-                var artes = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var artes = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "9000000",
+                    FaixaFinal = "9399999"
+                };
                 for (int i = 90; i <= 93; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -1098,7 +1209,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(artes);
 
                 //Outras atv, servicos etc...
-                var outrosservi = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var outrosservi = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "9400000",
+                    FaixaFinal = "9699999"
+                };
                 for (int i = 94; i <= 96; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -1145,7 +1262,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(outrosservi);
 
                 //Domestico etc...
-                var domestic = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var domestic = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "9700000",
+                    FaixaFinal = "9799999"
+                };
                 for (int i = 97; i <= 97; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -1180,7 +1303,13 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(domestic);
 
                 //Internacionais etc...
-                var internac = new CnaeSecao() { ListaClasse = new(), Secao = new() };
+                var internac = new CnaeSecao()
+                {
+                    ListaClasse = new(),
+                    Secao = new(),
+                    FaixaInicial = "9900000",
+                    FaixaFinal = "9999999"
+                };
                 for (int i = 99; i <= 99; i++)
                 {
                     var n_cnae = new CnaeClasse() { ListaSubClasse = new(), Classe = new() };
@@ -1748,26 +1877,28 @@ namespace Sim.Domain.Cnpj.Services
             });
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividade, string municipio)
+        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividadei, string atividadef, string municipio)
         {
-            return await _cnpj.ToListByCnaeAsync(atividade, municipio);
+            return await _cnpj.ToListByCnaeAsync(atividadei, atividadef, municipio);
         }
 
-        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email)>> ToListCnaeEmpresasJsonAsync(string cnae, string municipio, string situacao)
+        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> ToListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao)
         {
-            var emp = await ToListByCnaeAsync(cnae, municipio);
+            var emp = await ToListByCnaeAsync(cnaei, cnaef, municipio);
 
-            return await Task.Run(() => {
-                var lista = new List<(string Cnpj, string RazaoSocial, string Tel, string Email)>();
+            return await Task.Run(() =>
+            {
+                var lista = new List<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>();
 
-                foreach (var s in emp.Where(s => s.Estabelecimento.SituacaoCadastral == situacao))
+                foreach (var s in emp.Where(s => s.Estabelecimento.SituacaoCadastral == situacao).OrderBy(s => s.AtividadePrincipal.Codigo))
                 {
                     lista.Add(new()
                     {
                         Cnpj = s.CNPJ,
                         RazaoSocial = s.Empresa.RazaoSocial,
                         Tel = String.Format("{0} {1}", s.Estabelecimento.DDD1, s.Estabelecimento.Telefone1),
-                        Email = s.Estabelecimento.CorreioEletronico
+                        Email = s.Estabelecimento.CorreioEletronico,
+                        Cnae = s.AtividadePrincipal.Codigo + " - " + s.AtividadePrincipal.Descricao
                     });
                 }
 

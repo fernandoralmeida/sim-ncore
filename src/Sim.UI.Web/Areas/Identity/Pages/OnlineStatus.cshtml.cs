@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Sim.Domain.Entity;
 using Sim.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 

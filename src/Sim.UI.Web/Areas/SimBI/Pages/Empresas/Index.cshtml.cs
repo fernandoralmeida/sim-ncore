@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using Sim.Application.Cnpj.Interfaces;
 using Sim.Domain.Cnpj.Entity;
+using OfficeOpenXml;
 
 namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 { 
@@ -82,19 +83,9 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
             await LoadAsync();
         }
 
-        public async Task<JsonResult> OnGetPreview(string c, string m, string a)
+        public async Task<JsonResult> OnGetPreview(string ci, string cf, string m, string a)
         {
-            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(c, m, a));
-        }
-
-        public async Task<JsonResult> OnGetClasses(string c, string m, string a)
-        {
-            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(c, m, a));
-        }
-
-        public async Task<JsonResult> OnGetSubClasses(string c, string m, string a)
-        {
-            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(c, m, a));
+            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(ci, cf, m, a));
         }
     }
 }
