@@ -10,38 +10,30 @@
     <div class="row white z-depth-1-half rounded-default">
         <div class="row pdn-10 mgn-b-0 right-align">
             <a asp-page="/Agenda/Eventos/Index" class="btn blue waves-light waves-effect left" title="Incluir Novo Evento"><i class="material-icons">event add</i></a>
+            <button asp-page-handler="Available" class="btn-flat green-text @AgendaNavPages.EventoAtivoClass(ViewContext)"><i class="material-icons">event_available</i></button>                    
+            <button asp-page-handler="Finalized" class="btn-flat orange-text @AgendaNavPages.EventoFinalizadoClass(ViewContext)"><i class="material-icons">event</i></button>
+            <button asp-page-handler="Canceled" class="btn-flat red-text @AgendaNavPages.EventoCanceladoClass(ViewContext)"><i class="material-icons">event_busy</i></button>            
             <a asp-page="/Agenda/Inscricoes/Consulta/Index" class="btn waves-light waves-effect" title="Consultar Participante"><i class="material-icons">event person_search</i></a>
         </div>
         <div class="divider"></div>
-        <div class="row mgn-b-0 valign-wrapper">
-           
-                <div class="input-field col s2 m2 l2">
+        <div class="row mgn-b-0">           
+                <div class="input-field col s6 m6 l3">
                     <input asp-for="Input.Ano" />
                     <label asp-for="Input.Ano"></label>
                 </div>
-                <div class="input-field col s4 m3 l3">
+                <div class="input-field col s6 m6 l3">
                     <select asp-for="Input.Owner" asp-items="Model.Setores"></select>
                     <label asp-for="Input.Owner"></label>
                 </div>
-                <div class="input-field col s4 m3 l3">
+                <div class="input-field col s6 m6 l3">
                     <select asp-for="Input.Tipo" asp-items="Model.Tipos"></select>
                     <label asp-for="Input.Tipo"></label>
                 </div>
-                <div class="input-field col s4 m3 l3 valign-wrapper">
-                    <select>
-                        <option>Ativo</option>
-                        <option>Finalizado</option>
-                        <option>Cancelado</option>
-                    </select>
-                    <label>Situação</label>
+                <div class="input-field col s6 m6 l3 valign-wrapper">
+                    <input asp-for="Input.Evento" />
+                    <label asp-for="Input.Evento"></label>
                     <button class="btn waves-effect waves-light" asp-page-handler="Event" title="Consultar"><i class="material-icons">search</i></button>
-                </div>
-                <div class="col s3 m3 l3 right-align">            
-                    <button asp-page-handler="Available" class="btn-flat green-text @AgendaNavPages.EventoAtivoClass(ViewContext)"><i class="material-icons">event_available</i></button>                    
-                    <button asp-page-handler="Finalized" class="btn-flat orange-text @AgendaNavPages.EventoFinalizadoClass(ViewContext)"><i class="material-icons">event</i></button>
-                    <button asp-page-handler="Canceled" class="btn-flat red-text @AgendaNavPages.EventoCanceladoClass(ViewContext)"><i class="material-icons">event_busy</i></button>
-                </div>
-            
+                </div>            
         </div>
     </div>
 </form>
