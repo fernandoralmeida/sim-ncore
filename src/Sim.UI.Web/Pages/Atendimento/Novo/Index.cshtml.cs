@@ -77,7 +77,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
 
             if (!atendimemnto_ativio.Any())
             {
-                StatusMessage = "Não existe atendimento ativo no momento!";
+                StatusMessage = "Alerta: Não existe atendimento ativo no momento!";
                 return RedirectToPage("/Atendimento/Index");
             }
 
@@ -104,7 +104,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
 
                 if (Input.Servicos == null || Input.Servicos == string.Empty)
                 {
-                    StatusMessage = "Erro: " + "Selecione um serviço ou mais!";
+                    StatusMessage = "Alerta: " + "Selecione um serviço ou mais!";
                     await OnLoad();
                     return RedirectToPage();
                 }

@@ -20,7 +20,7 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<Servico>> ListAllAsync()
         {
-            return await _db.Servico.ToListAsync();
+            return await _db.Servico.OrderBy(s => s.Nome).ToListAsync();
         }
 
         public async Task<IEnumerable<Servico>> ListServicoOwnerAsync(string setor)
@@ -28,7 +28,9 @@ namespace Sim.Data.Repository
             return await _db.Servico
                 .Include(s => s.Setor)
                 .Include(s => s.Secretaria)
-                .Where(p => p.Setor.Nome.Contains(setor)).ToListAsync();
+                .Where(p => p.Setor.Nome.Contains(setor) 
+                || p.Setor.Nome.Contains("Geral"))
+                .OrderBy(s => s.Nome).ToListAsync();
         }
     }
 
