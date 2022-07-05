@@ -68,6 +68,7 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.ServicoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.SetorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.InscricaoMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.EventoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.TipoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.ContadorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.StatusAtendimentoMap());

@@ -53,7 +53,8 @@
                         <br />Vagas: @l.Vagas()                        
                     </div>
                     <div class="card-action">
-                        <a class="blue-text" asp-page="/Agenda/Eventos/Edit/Index" asp-route-id="@l.Id">Gerenciar</a><a asp-page="/Agenda/Inscricoes/Index" asp-route-id="@l.Codigo"><span class="new badge" data-badge-caption="inscritos">@l.Inscricoes()</span></a>
+                        <a class="btn amber waves-effect waves-light" asp-page="/Agenda/Eventos/Edit/Index" asp-route-id="@l.Id"><i class="material-icons">edit_calendar</i></a>
+                        <a class="btn waves-effect waves-light right" asp-page="/Agenda/Inscricoes/Index" asp-route-id="@l.Codigo">@l.Inscricoes()<i class="left material-icons">person</i></a>
                     </div>
                 </div>
                 </div>

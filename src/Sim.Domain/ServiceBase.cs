@@ -20,6 +20,11 @@
             await _repositoryBase.RemoveAsync(obj);
         }
 
+        public async Task<TEntity> SingleIdAsync(Guid id)
+        {
+            return await _repositoryBase.SingleIdAsync(id);
+        }
+
         public async Task UpdateAsync(TEntity obj)
         {
             await _repositoryBase.UpdateAsync(obj);

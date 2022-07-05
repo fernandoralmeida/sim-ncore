@@ -6,6 +6,6 @@ namespace Sim.Application
         Task AddAsync(TEntity obj);
         Task UpdateAsync(TEntity obj);
         Task RemoveAsync(TEntity obj);
-
+        Task<TEntity> SingleIdAsync(Guid id);
     }
 }

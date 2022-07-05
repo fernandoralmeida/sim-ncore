@@ -16,7 +16,7 @@ namespace Sim.Data
 
         public async Task AddAsync(TEntity obj)
         {
-            await _db.AddAsync(obj);
+            await _db.Set<TEntity>().AddAsync(obj);
             await _db.SaveChangesAsync();
         }
 
@@ -32,5 +32,9 @@ namespace Sim.Data
             await _db.SaveChangesAsync();
         }
 
+        public async Task<TEntity> SingleIdAsync(Guid id)
+        {
+            return await _db.Set<TEntity>().FindAsync(id);
+        }
     }
 }

@@ -16,11 +16,9 @@ namespace Sim.UI.Web.Pages.Agenda
         public int Codigo { get; set; }
 
         [Required]
-        [DisplayName("Tipo")]
         public string Tipo { get; set; }
 
         [Required]
-        [DisplayName("Nome")]
         public string Nome { get; set; }
 
         [Required]
@@ -28,7 +26,6 @@ namespace Sim.UI.Web.Pages.Agenda
         public string Formato { get; set; }
 
         [Required]
-        [DisplayName("Data")]
         [DataType(DataType.DateTime)]
         public DateTime? Data { get; set; }
 
@@ -49,27 +46,5 @@ namespace Sim.UI.Web.Pages.Agenda
         public Evento.ESituacao Situacao { get; set; }
 
         public virtual ICollection<InputModelInscricao> Inscritos { get; set; }
-
-        public int NumeroInscritos
-        {
-            get
-            {
-                if (Inscritos == null) 
-                    return 0; 
-                else 
-                    return Inscritos.Count;
-            }
-        }
-
-        public int Vagas
-        {
-            get
-            {
-                if (Inscritos == null)
-                    return Lotacao;
-                else
-                    return Lotacao - Inscritos.Count;
-            }
-        }
     }
 }

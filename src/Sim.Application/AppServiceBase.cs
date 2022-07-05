@@ -20,6 +20,11 @@ namespace Sim.Application
             await _serviceBase.RemoveAsync(obj);
         }
 
+        public async Task<TEntity> SingleIdAsync(Guid id)
+        {
+            return await _serviceBase.SingleIdAsync(id);
+        }
+
         public async Task UpdateAsync(TEntity obj)
         {
             await _serviceBase.UpdateAsync(obj);

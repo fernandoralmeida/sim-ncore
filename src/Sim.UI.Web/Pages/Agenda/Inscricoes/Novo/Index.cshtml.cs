@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Sim.Domain.Entity;
 using Sim.Application.Interfaces;
 using Sim.UI.Web.Functions;
+using System.ComponentModel;
 
 namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
 {
-
-
     [Authorize]
     public class IndexModel : PageModel
     {
@@ -29,8 +28,10 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
         }
 
         [BindProperty]
+        [DisplayName("CPF")]
         public string GetCPF { get; set; }
 
+        [DisplayName("CNPJ")]
         [BindProperty]
         public string GetCNPJ { get; set; }
         [BindProperty]
@@ -39,40 +40,43 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
         [BindProperty(SupportsGet = true)]
         public InputModelInscricao Input { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public ICollection<Inscricao> ListaInscritos { get; set; }
-
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task LoadInscritos(int id)
-        {
-            var t = await _appServiceEvento.GetCodigoAsync(id);
-            
-            ListaInscritos = t.Inscritos.ToList();
-            Input.Evento = t;
-        }
-
         public async Task OnGetAsync(int? id)
         {
+            
             if (id != null)
-            {
-                await LoadInscritos((int)id);
-            }
-            Input.Data_Inscricao = DateTime.Now;
+                Input.Evento = await _appServiceEvento.GetCodigoAsync((int)id);            
         }
 
         public async Task OnPostIncluirPessoaAsync()
         {
             var t = await _appServicePessoa.ConsultaCPFAsync(GetCPF);
             Input.Participante = t.FirstOrDefault();
-           
 
             if (Input.Participante != null)
             {
-                var e = await _appServiceEmpresa.ConsultaRazaoSocialAsync(Input.Participante.CPF.MaskRemove());
-                Input.Empresa = e.FirstOrDefault();
+
+                bool ja_inscricao = _appServiceInscricao.JaInscrito(GetCPF, Input.Evento.Codigo);
+
+                if (ja_inscricao)
+                {
+                    StatusMessage = "Erro: Pessoa já consta na lista de participantes!";
+                    Input.Participante = null;
+                }
+                else
+                {
+
+                    if (Input.Participante != null)
+                    {
+                        var e = await _appServiceEmpresa.ConsultaRazaoSocialAsync(Input.Participante.CPF.MaskRemove());
+                        Input.Empresa = e.FirstOrDefault();
+                    }
+                }
             }
+            else
+                StatusMessage = "Alerta: Pessoa não encontrada no Sistema!";
         }
 
         public void OnPostRemoverPessoa()
@@ -82,10 +86,10 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
 
         public async Task OnPostIncluirEmpresaAsync()
         {
-
             var t = await _appServiceEmpresa.ConsultaCNPJAsync(GetCNPJ);
             Input.Empresa = t.FirstOrDefault();
-
+            if (Input.Empresa == null)
+                StatusMessage = "Alerta: Empresa não encontrada no Sistema!";
         }
 
         public void OnPostRemoverEmpresa()
@@ -97,8 +101,7 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
         {
             try
             {
-                var t = await _appServiceEvento.GetCodigoAsync(GetNumeroEvento);
-                Input.Evento = t;
+                Input.Evento = await _appServiceEvento.GetCodigoAsync(GetNumeroEvento);
             }
             catch (Exception ex)
             {
@@ -113,60 +116,35 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
 
         public async Task<IActionResult> OnPostSaveAsync()
         {
-            var ja_inscricao = false;
-
-            if (Input.Evento == null || Input.Participante == null)
+            try
             {
-                StatusMessage = "Erro: Verifique se os campos foram preenchidos corretamente!";
-                return Page();
-            }
+                if (Input.Evento == null || Input.Participante == null)
+                {
+                    StatusMessage = "Erro: Verifique se os campos foram preenchidos corretamente!";
+                    return Page();
+                }
 
-            var inscricao = new Inscricao()
-            {
-                AplicationUser_Id = User.Identity.Name,
-                Data_Inscricao = DateTime.Now,
-                Presente = false
-            };
-
-            var numero = _appServiceInscricao.LastCodigo();
-
-            if (numero < 1)
-                inscricao.Numero = 100001;
-            else
-                inscricao.Numero = numero + 1;
-
-            var pessoa = await _appServicePessoa.GetIdAsync(Input.Participante.Id);
-
-            if (pessoa != null)
-                inscricao.Participante = pessoa;
-
-            if (Input.Empresa != null)
-            {
-                var empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id);
-
-                if (empresa != null)
-                    inscricao.Empresa = empresa;
-            }
-
-            var evento = await _appServiceEvento.GetIdAsync(Input.Evento.Id);
-
-            if (evento != null)
-                inscricao.Evento = evento;
-
-            ja_inscricao = _appServiceInscricao.JaInscrito(inscricao.Participante.CPF, inscricao.Evento.Codigo);
-
-            if (ja_inscricao)
-                StatusMessage = "Erro: Pessoa já consta na lista de participantes!";
-            
-            else
+                var inscricao = new Inscricao()
+                {
+                    AplicationUser_Id = User.Identity.Name,
+                    Data_Inscricao = DateTime.Now,
+                    Presente = false,
+                    Numero = _appServiceInscricao.LastCodigo() < 1 ? 100001 : _appServiceInscricao.LastCodigo() + 1,
+                    Participante = await _appServicePessoa.SingleIdAsync(Input.Participante.Id),
+                    Empresa = Input.Empresa != null ? await _appServiceEmpresa.SingleIdAsync(Input.Empresa.Id) : null,
+                    Evento = await _appServiceEvento.SingleIdAsync(Input.Evento.Id)
+                };
+                
                 await _appServiceInscricao.AddAsync(inscricao);
 
+                return RedirectToPage("/Agenda/Inscricoes/Index", new { id = inscricao.Evento.Codigo });
 
-            if (ja_inscricao)
+            }
+            catch(Exception ex)
+            {
+                StatusMessage = string.Format("Erro: {0}", ex.Message);
                 return Page();
-            else
-                return RedirectToPage("/Agenda/Index");
-
+            }
         }
     }
 }
