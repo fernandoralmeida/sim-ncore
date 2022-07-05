@@ -88,7 +88,18 @@ html {
 .mgn-b-4{
     margin-bottom:4px;
 }
-
+.mgn-h-4 {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.mgn-h-6 {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+.mgn-h-8 {
+    margin-left: 8px;
+    margin-right: 8px;
+}
 .pdn-b-4{
     padding-bottom:4px;
 }
