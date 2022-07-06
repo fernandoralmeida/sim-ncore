@@ -22,7 +22,7 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {
-            var activePage = viewContext.ViewData["ActivePage"] as string
+            var activePage = viewContext.ViewData["ActivePageAreaAdmin"] as string
                 ?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
             return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null;
         }

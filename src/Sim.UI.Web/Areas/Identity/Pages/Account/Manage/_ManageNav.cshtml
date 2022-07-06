@@ -6,18 +6,16 @@
 
     <nav class="navbar">
         <div class="nav-wrapper white">
-            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
-            <span class="navbar-page-name grey-text">Minha Conta</span>
             <ul class="right">
-                <li><a class="@ManageNavPages.IndexNavClass(ViewContext) grey-text" id="profile" asp-page="./Index">Perfil</a></li>
-                <li><a class="@ManageNavPages.EmailNavClass(ViewContext) grey-text" id="email" asp-page="./Email">Email</a></li>
-                <li><a class="@ManageNavPages.ChangePasswordNavClass(ViewContext) grey-text" id="change-password" asp-page="./ChangePassword">Senha</a></li>
+                <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a class="grey-text" id="profile" asp-page="./Index">Perfil</a></li>
+                <li class="@ManageNavPages.EmailNavClass(ViewContext)"><a class="grey-text" id="email" asp-page="./Email">Email</a></li>
+                <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a class="grey-text" id="change-password" asp-page="./ChangePassword">Senha</a></li>
                 @if (hasExternalLogins)
                 {
-                    <li id="external-logins"><a id="external-login" class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) grey-text" asp-page="./ExternalLogins">Logins externos</a></li>
+                    <li id="external-logins" class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a id="external-login" class="grey-text" asp-page="./ExternalLogins">Logins externos</a></li>
                 }
-                <li hidden><a hidden class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) grey-text" id="two-factor" asp-page="./TwoFactorAuthentication">Autenticação de dois fatores</a></li>
-                <li><a class=" @ManageNavPages.PersonalDataNavClass(ViewContext) grey-text" id="personal-data" asp-page="./PersonalData">Dados pessoais</a></li>
+                <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" hidden><a hidden class="grey-text" id="two-factor" asp-page="./TwoFactorAuthentication">Autenticação de dois fatores</a></li>
+                <li class="@ManageNavPages.PersonalDataNavClass(ViewContext)"><a class="grey-text" id="personal-data" asp-page="./PersonalData">Dados pessoais</a></li>
             </ul>
         </div>
     </nav>

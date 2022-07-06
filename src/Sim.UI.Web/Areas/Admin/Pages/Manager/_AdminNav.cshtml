@@ -3,20 +3,18 @@
 
     <nav class="navbar">
         <div class="nav-wrapper white">
-            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
-            <span class="navbar-page-name grey-text">Contas</span>
             <ul class="right">
-                <li>
+                <li class="@AdminNavPages.IndexNavClass(ViewContext)">
                     <a class="@AdminNavPages.IndexNavClass(ViewContext) grey-text" id="lusers" asp-page="./Index">Listar</a>
                 </li>
-                <li hidden>
-                    <a class="@AdminNavPages.RegisterNavClass(ViewContext) grey-text" id="regs" asp-page="./Register"><i class="fas fa-user-plus"></i></a>
+                <li class="@AdminNavPages.RegisterNavClass(ViewContext)" hidden>
+                    <a class="grey-text" id="regs" asp-page="./Register"><i class="fas fa-user-plus"></i></a>
                 </li>
-                <li>
-                    <a class="@AdminNavPages.RolesNavClass(ViewContext) grey-text" id="roles" asp-page="./Roles">Apolices</a>
+                <li class="@AdminNavPages.RolesNavClass(ViewContext)">
+                    <a class="grey-text" id="roles" asp-page="./Roles">Apolices</a>
                 </li>
-                <li hidden>
-                    <a class="@AdminNavPages.ClaimsNavClass(ViewContext) grey-text" id="claims" asp-page="./Claims">Papeis</a>
+                <li class="@AdminNavPages.ClaimsNavClass(ViewContext)" hidden>
+                    <a class="grey-text" id="claims" asp-page="./Claims">Papeis</a>
                 </li>
                 <li class="blue lighten-1 waves-effect waves-light">
                     <form>

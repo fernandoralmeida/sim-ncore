@@ -4,30 +4,23 @@
     Layout = "_Layout.cshtml";
 
     ViewData["Title"] = "Apolice";
+    ViewData["ActivePageAreaAdmin"] = AdminNavPages.Roles;
 }
 
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<div>
+<form method="post">
     
-        <form method="post">
-            <div class="row">
-                <div class="col s12">
-                    <div class="col s4 m4 l4">
-                        <div class="input-field">
-                            <input asp-for="Input.Name" class="validate" />
-                            <label asp-for="Input.Name"></label>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-field">
-                            <button class="btn waves-effect" type="submit">Adicionar</button>
-                        </div>                        
-                    </div>
-                </div>
+    <div class="card">
+        <div class="row">
+            <div class="input-field col s12 m12 l12 valign-wrapper">
+                <input asp-for="Input.Name"/>
+                <label asp-for="Input.Name"></label>
+                <button class="btn waves-effect" type="submit"><i class="material-icons">description add</i></button>
             </div>
-        </form>
+        </div>
+    </div>    
     
     <div class="card">
         
@@ -40,8 +33,7 @@
                         <th>
                             Role Id
                         </th>
-                        <th></th>
-                        <th></th>
+                        <th>Comando</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,22 +48,14 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
-
                                 <td>
-                                </td>
-
-                                <td>
-                                    <form method="post">
-                                        <button type="submit" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-small waves-effect" title="Excluir Role"><i class="material-icons">delete_outline</i></button>
-                                    </form>
-                                    
+                                    <button type="submit" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-small materilize-red waves-effect waves-light" title="Excluir Role"><i class="material-icons">remove</i></button>                                                                    
                                 </td>
                             </tr>
                         }
                     }
                 </tbody>
-            </table>
-        
+            </table>        
     </div>
 
-</div>
+</form>

@@ -8,117 +8,50 @@
 
 <div class="card" style="margin:20px 20px 20px 20px;">
         
-    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        
-        <div class="row">
-            <div class="col s12">
-                <h6>Criar nova conta de usuário</h6>
-            </div>            
-        </div>        
-        <div class="row">
-            <div class="col s6">
-                <div class="input-field">
-                    <input asp-for="Input.UserName" class="form-control" />
-                    <label asp-for="Input.UserName" class="form-label"></label>
-                    <span asp-validation-for="Input.UserName" class="red-text"></span>
-                </div>
-            </div>
+    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">        
+        <div class="card-header">
+            Novo Usuário<i class="left material-icons">person add</i>
         </div>
-        <div class="row">
-            <div class="col s12 m6 l6 ">
-                <div class="input-field">
-                    <input asp-for="Input.Name" class="form-control" />
-                    <label asp-for="Input.Name" class="form-label"></label>
-                    <span asp-validation-for="Input.Name" class="red-text"></span>
+        <div class="card-content">
+            <div class="row">
+                <div class="input-field col s12 m6 l4">
+                    <input asp-for="Input.UserName" />
+                    <label asp-for="Input.UserName" ></label>
                 </div>
-            </div>
-            <div class="col s12 m6 l6">
-                <div class="input-field">
-                    <input asp-for="Input.LastName" class="form-control" />
-                    <label asp-for="Input.LastName" class="form-label"></label>
-                    <span asp-validation-for="Input.LastName" class="red-text"></span>
+                <div class="input-field col s12 m6 l4">
+                    <input asp-for="Input.Name" />
+                    <label asp-for="Input.Name"></label>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                <div class="input-field">
+                <div class="input-field col s12 m6 l4">
+                    <input asp-for="Input.LastName" />
+                    <label asp-for="Input.LastName"></label>
+                </div>
+                <div class="input-field col s12 m6 l4">
                     <select asp-for="Input.Genero">
                         <option selected></option>
                         <option>Feminino</option>
                         <option>Masculino</option>
                     </select>
                     <label asp-for="Input.Genero"></label>
-                    <span asp-validation-for="Input.Genero" class="red-text"></span>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field">
-                    <label asp-for="Input.Email"></label>
+                <div class="input-field col s12 m6 l4">                    
                     <input asp-for="Input.Email" />
-                    <span asp-validation-for="Input.Email" class="red-text"></span>
+                    <label asp-for="Input.Email"></label>
+                </div>
+                <div class="input-field col s12 m6 l4">
+                    <input asp-for="Input.Password"/>
+                    <label asp-for="Input.Password"></label>                    
+                </div>
+                <div class="input-field col s12 m6 l4">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword"/>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col s12 m6 l6">
-                <div class="input-field">
-                    <label asp-for="Input.Password" class="form-label"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col s12 m6 l6">
-                <div class="input-field">
-                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
-                    <input asp-for="Input.ConfirmPassword" class="form-control" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field">
-                    <button type="submit" class="btn btn-large waves-effect">Registrar</button>
-                </div>
-            </div>
-        </div>  
+        <div class="card-action">
+            <button type="submit" class="btn btn-large waves-effect">Registrar</button>
+        </div>        
     </form>
-
-    <div class="row">
-        <div class="col s12">
-            <section>
-                <h6>Use outro serviço para se registrar.</h6>
-                <div class="divider"></div>
-                @{
-                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                    {
-                        <div>
-                            <p>
-                                Não há serviços de autenticação externa configurados. Consulte <a href="https://go.microsoft.com/fwlink/?LinkID=532715"> este artigo </a>
-                                para obter detalhes sobre como configurar este aplicativo ASP.NET para dar suporte ao logon por meio de serviços externos.
-                            </p>
-                        </div>
-                    }
-                    else
-                    {
-                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                            <div>
-                                <p>
-                                    @foreach (var provider in Model.ExternalLogins)
-                                    {
-                                        <button type="submit" class="btn waves-effect" name="provider" value="@provider.Name" title="Faça login usando a seu @provider.DisplayName conta">@provider.DisplayName</button>
-                                    }
-                                </p>
-                            </div>
-                        </form>
-                    }
-                }
-            </section>
-        </div>
-    </div>
 </div>
 
 @section Scripts {

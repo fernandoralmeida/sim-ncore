@@ -2,76 +2,47 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Perfil";
-    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["ActivePageIdentityManager"] = ManageNavPages.Index;
 }
 
-
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-
-<div class="section">
-    <form id="profile-form" method="post">
+<form id="profile-form" method="post">
+<div class="card">
+    <div class="card-header">@ViewData["Title"]<i class="left material-icons">assignment_ind</i></div>
+    <div class="card-content">
         <div class="row">
-            <div class="col">
-                <h6>@ViewData["Title"]</h6>
+            <div class="input-field col s6 m6 l6">
+                <input asp-for="UserName" disabled />
+                <label asp-for="UserName"></label>
+            </div>
+            <div class="col s6 m6 l6"></div>
+            <div class="input-field col s12 m6 l6">
+                <input asp-for="Input.Name" />
+                <label asp-for="Input.Name"></label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+                <input asp-for="Input.LastName" />
+                <label asp-for="Input.LastName"></label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+                <select asp-for="Input.Genero">
+                    <option selected></option>
+                    <option>Feminino</option>
+                    <option>Masculino</option>
+                </select>
+                <label asp-for="Input.Genero"></label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+                <input asp-for="Input.PhoneNumber" />
+                <label asp-for="Input.PhoneNumber"></label>                
             </div>
         </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="col s6">
-                    <div class="input-field">
-                        <input asp-for="UserName" disabled />
-                        <label asp-for="UserName"></label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s12">
-                <div class="col s12 m6 l6">
-                    <div class="input-field">
-                        <input asp-for="Input.Name" />
-                        <label asp-for="Input.Name"></label>
-                        <span asp-validation-for="Input.Name" class="red-text"></span>
-                    </div>
-                </div>
-                <div class="col s12 m6 l6">
-                    <div class="input-field">
-                        <input asp-for="Input.LastName" />
-                        <label asp-for="Input.LastName"></label>
-                        <span asp-validation-for="Input.LastName" class="red-text"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s12">
-                <div class="col s12 m6 l6">
-                    <div class="input-field">
-                        <select asp-for="Input.Genero">
-                            <option selected></option>
-                            <option>Feminino</option>
-                            <option>Masculino</option>
-                        </select>
-                        <label asp-for="Input.Genero"></label>
-                        <span asp-validation-for="Input.Genero" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col s12 m6 l6">
-                    <div class="input-field">
-                        <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                        <input asp-for="Input.PhoneNumber" class="form-control" />
-                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="col s6">
-                    <button id="update-profile-button" type="submit" class="btn btn-large waves-effect">Gravar Alterações</button>
-                </div>
-            </div>
-        </div>
-    </form>
+    </div>
+    <div class="card-action">
+        <button id="update-profile-button" type="submit" class="btn waves-effect waves-ligth">Gravar Alterações</button>
+    </div>
 </div>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
