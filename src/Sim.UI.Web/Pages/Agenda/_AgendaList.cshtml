@@ -40,23 +40,23 @@
                 }
                
                 <div class="col s12 m6 l4 xl3">
-                <div class="card hoverable">
-                    <div class="card-image @cor lighten-2">
-                        <div style="height:100px;"><span style="font-size:12px; color:#fff; margin-left:10px;">@l.Tipo (@l.Situacao.ToString())</span></div>                        
-                        <span class="card-title truncate white-text">@l.Nome</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light blue" asp-page="/Agenda/Inscricoes/Novo/Index" asp-route-id="@l.Codigo" title="Inscrever"><i class="material-icons">add</i></a>
+                    <div class="card hoverable">
+                        <div class="card-image @cor lighten-2">
+                            <div style="height:100px;"><span style="font-size:12px; color:#fff; margin-left:10px;">@l.Tipo (@l.Situacao.ToString())</span></div>                        
+                            <span class="card-title truncate white-text">@l.Nome</span>
+                            <a class="btn-floating halfway-fab waves-effect waves-light blue" asp-page="/Agenda/Inscricoes/Novo/Index" asp-route-id="@l.Codigo" title="Inscrever"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="card-content truncate">
+                            Data: <span class="@cor-text">@l.Data</span>                        
+                            <br />Formato: @l.Formato
+                            <br />Setor: @l.Owner
+                            <br />Vagas: @l.Vagas()                        
+                        </div>
+                        <div class="card-action pdn-10">
+                            <a class="waves-effect waves-light" asp-page="/Agenda/Eventos/Edit/Index" asp-route-id="@l.Id">Gerenciar</a>
+                            <a class="teal pdn-h-4 white-text rounded-default waves-effect waves-light rigth" asp-page="/Agenda/Inscricoes/Index" asp-route-id="@l.Codigo">@l.Inscricoes()<i class="left material-icons">person</i></a>
+                        </div>
                     </div>
-                    <div class="card-content truncate">
-                        Data: <span class="@cor-text">@l.Data</span>                        
-                        <br />Formato: @l.Formato
-                        <br />Setor: @l.Owner
-                        <br />Vagas: @l.Vagas()                        
-                    </div>
-                    <div class="card-action">
-                        <a class="btn orange waves-effect waves-light" asp-page="/Agenda/Eventos/Edit/Index" asp-route-id="@l.Id"><i class="material-icons">edit_calendar</i></a>
-                        <a class="btn waves-effect waves-light right" asp-page="/Agenda/Inscricoes/Index" asp-route-id="@l.Codigo">@l.Inscricoes()<i class="left material-icons">person</i></a>
-                    </div>
-                </div>
                 </div>
             }
             </div>

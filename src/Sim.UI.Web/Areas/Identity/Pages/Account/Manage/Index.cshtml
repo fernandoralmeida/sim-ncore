@@ -8,14 +8,14 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <form id="profile-form" method="post">
 <div class="card">
-    <div class="card-header">@ViewData["Title"]<i class="left material-icons">assignment_ind</i></div>
+    <div class="card-header grey-text">@ViewData["Title"]<i class="left material-icons">assignment_ind</i></div>
     <div class="card-content">
         <div class="row">
-            <div class="input-field col s6 m6 l6">
+            <div class="input-field col s7 m7 l7">
                 <input asp-for="UserName" disabled />
                 <label asp-for="UserName"></label>
             </div>
-            <div class="col s6 m6 l6"></div>
+            <div class="col s12 m6 l6"></div>
             <div class="input-field col s12 m6 l6">
                 <input asp-for="Input.Name" />
                 <label asp-for="Input.Name"></label>
@@ -33,7 +33,7 @@
                 <label asp-for="Input.Genero"></label>
             </div>
             <div class="input-field col s12 m6 l6">
-                <input asp-for="Input.PhoneNumber" />
+                <input asp-for="Input.PhoneNumber"/>
                 <label asp-for="Input.PhoneNumber"></label>                
             </div>
         </div>
