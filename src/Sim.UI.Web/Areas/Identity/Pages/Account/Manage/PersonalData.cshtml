@@ -8,10 +8,9 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <div class="card">
-    <div class="card-header"></div>
+    <div class="card-header">@ViewData["Title"]<i class="left material-icons">assignment_ind</i></div>
     <div class="card-content">
             <div class="row">
-                <h6>@ViewData["Title"]</h6>
 
                 <p>Sua conta contém dados pessoais que você nos forneceu. Esta página permite que você baixe ou exclua esses dados.</p>
                 <p>
@@ -24,7 +23,7 @@
         <form id="download-data" asp-page="DownloadPersonalData" method="post">
             <button class="btn waves-effect waves-light" type="submit">Baixar dados pessoais</button>
         </form>
-        <a id="delete" asp-page="DeletePersonalData" class="btn materialize-red waves-effect waves-ligth right">Excluir dados pessoais</a>
+        <a id="delete" asp-page="DeletePersonalData" class="btn materialize-red waves-effect waves-ligth rigth">Excluir dados pessoais</a>
     </div>
 </div>
 

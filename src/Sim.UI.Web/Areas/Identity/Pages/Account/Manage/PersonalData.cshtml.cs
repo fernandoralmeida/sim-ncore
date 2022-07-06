@@ -12,6 +12,9 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<PersonalDataModel> _logger;
 
+        [TempData]
+        public string StatusMessage{get;set;}
+
         public PersonalDataModel(
             UserManager<ApplicationUser> userManager,
             ILogger<PersonalDataModel> logger)
