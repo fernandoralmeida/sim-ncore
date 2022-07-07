@@ -18,23 +18,19 @@
         </div>
 
         <div class="row rounded-default white z-depth-1">
-
-                    <div class="input-field col s12 m4 l4">
-                        <input asp-for="Input.Nome" />
-                        <label asp-for="Input.Nome" ></label>
-                    </div>
-
-                    <div class="input-field col s12 m4 l4">
-                        <select asp-for="SecretariaSelecionada" asp-items="Model.Secretarias"></select>
-                        <label asp-for="Input.Secretaria" ></label>
-                    </div>
-                
-                    <div class="input-field col s12 m4 l4 valign-wrapper">
-                        <select asp-for="SetorSelecionado" asp-items="Model.Setores"></select>
-                        <label asp-for="Input.Setor" ></label>
-                        <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
-                    </div>
-            
+            <div class="input-field col s12 m4 l4">
+                <select asp-for="SecretariaSelecionada" asp-items="Model.Secretarias"></select>
+                <label asp-for="Input.Secretaria" ></label>
+            </div>                
+            <div class="input-field col s12 m4 l4">
+                <select asp-for="SetorSelecionado" asp-items="Model.Setores"></select>
+                <label asp-for="Input.Setor" ></label>                        
+            </div>    
+            <div class="input-field col s12 m4 l4 valign-wrapper">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome" ></label>
+                <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
+            </div>        
         </div>
 
 

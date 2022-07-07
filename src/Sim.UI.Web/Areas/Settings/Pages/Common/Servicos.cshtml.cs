@@ -30,7 +30,7 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
             public Guid Id { get; set; }
 
             //[Required]
-            [DisplayName("Serviço")]
+            [DisplayName("ServiÃ§o")]
             public string Nome { get; set; }
 
             [DisplayName("Secretaria")]
@@ -86,7 +86,7 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
             return Page();
         }
 
-        public async Task OnPostServicosBySetor()
+        public async Task OnPostServicosBySetor(string id)
         {
             await OnLoad();
             var setorname = await _appServiceSetor.GetIdAsync(SetorSelecionado);
@@ -121,7 +121,7 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
             }
             catch (Exception ex)
             {
-                StatusMessage = "Erro ao tentar incluír novo serviço!" + "\n" + ex.Message;
+                StatusMessage = "Erro ao tentar incluir novo serviÃ§o!" + "\n" + ex.Message;
             }
 
         }
@@ -138,7 +138,7 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
             }
             catch (Exception ex)
             {
-                StatusMessage = "Erro ao tentar remover serviço!" + "\n" + ex.Message;
+                StatusMessage = "Erro ao tentar remover serviÃ§o!" + "\n" + ex.Message;
             }
 
         }

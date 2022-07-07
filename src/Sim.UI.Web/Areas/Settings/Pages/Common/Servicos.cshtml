@@ -17,24 +17,20 @@
         </div>
 
         <div class="row white z-depth-1 rounded-default">
-
-                    <div class="input-field col s12 m3 l3">
-                        <input asp-for="Input.Nome" />
-                        <label asp-for="Input.Nome"></label>
-                    </div>
-
-                    <div class="input-field col s12 m4 l4">
-                        <select asp-for="ItemSelecionado" asp-items="Model.Secretarias"></select>
-                        <label asp-for="Secretarias"></label>
-                    </div>
-
-                    <div class="input-field col s12 m5 l5 valign-wrapper">
-                        <select class="is-selected" asp-for="SetorSelecionado" asp-items="Model.Setores" onchange="sendData()"></select>
-                        <label asp-for="Setores"></label>
-                        <button type="submit" asp-page-handler="ServicosBySetor" class="btn waves-effect waves-light light-green"><i class="material-icons">filter_list</i></button>
-                        <button type="submit" asp-page-handler="Add" class="mgn-h-6 btn waves-effect waves-light"><i class="material-icons">add</i></button>                    
-                    </div>
-
+            <div class="input-field col s12 m3 l3 valign-wrapper">
+                <select id="inputsetor" asp-for="SetorSelecionado" asp-items="Model.Setores"></select>
+                <label asp-for="Setores"></label>       
+                <button type="submit" asp-page-handler="ServicosBySetor" class="btn waves-effect waves-light light-green"><i class="material-icons">filter_list</i></button>                                                         
+            </div>
+            <div class="input-field col s12 m5 l5">
+                <select asp-for="ItemSelecionado" asp-items="Model.Secretarias"></select>
+                <label asp-for="Secretarias"></label>
+            </div>
+            <div class="input-field col s12 m4 l4 valign-wrapper">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome"></label>
+                <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>                    
+            </div>
         </div>
 
         <div class="card">
@@ -76,10 +72,13 @@
 
 @section scripts{
     <script>
-        function sendData1() {
-            var selectedFilter = $(".is-selected").val();
-            $.getScript(`?id=${selectedFilter}&handler=ServicosBySetor`, alert(selectedFilter));
-        }
+        $(function(){
+            document.querySelector('#inputsetor').addEventListener("change", function() {
+                var getSetor = $("#inputsetor").val(); 
+                alert(getSetor));
+                $.getScript(`?id=${getSetor}&handler=ServicosBySetor`, alert(getSetor));
+            });
+        });
     </script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

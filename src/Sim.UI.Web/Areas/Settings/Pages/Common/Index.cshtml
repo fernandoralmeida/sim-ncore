@@ -12,24 +12,22 @@
 <div>
     <form method="post">
         <div class="col s12" hidden>
-            <label asp-for="Input.Id" class="form-label"></label>
-            <input asp-for="Input.Id" class="form-control" />
+            <label asp-for="Input.Id"></label>
+            <input asp-for="Input.Id"/>
         </div>
 
-        <div class="row rounded-default z-depth-1 white">
-
-                    <div class="input-field col s12 m6 l6">
-                        <input asp-for="Input.Nome" />
-                        <label asp-for="Input.Nome"></label>
-                    </div>
-
-                    <div class="input-field col s12 m6 l6 valign-wrapper">
-                        <select asp-for="Input.Owner">
-                            <option selected>Prefeitura do Município de Jahu</option>
-                        </select>
-                        <label asp-for="Input.Owner"></label>
-                        <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
-                    </div>
+        <div class="row z-depth-1 rounded-default white">
+            <div class="input-field col s12 m6 l6">
+                <select asp-for="Input.Owner">
+                    <option selected>Prefeitura do Município de Jahu</option>
+                </select>
+                <label asp-for="Input.Owner"></label>                         
+            </div>      
+            <div class="input-field col s12 m6 l6 valign-wrapper">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome"></label>
+                <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>                        
+            </div>    
         </div>
 
         <div class="card">

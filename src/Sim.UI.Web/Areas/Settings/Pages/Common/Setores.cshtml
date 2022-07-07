@@ -16,21 +16,15 @@
             <input asp-for="Input.Id" class="form-control" />
         </div>
         <div class="row white z-depth-1 rounded-default">
-
-                    <div class="input-field col s12 m4 l4">
-                        <input asp-for="Input.Nome" />
-                        <label asp-for="Input.Nome"></label>
-                    </div>
-
-                    <div class="input-field col s12 m4 l4">
-                        <select asp-for="ItemSelecionado" asp-items="Model.Secretarias"></select>
-                        <label asp-for="Secretarias"></label>
-                    </div>
-
-                    <div class="input-field col s12 l4 m4">
-                        <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
-                    </div>
-
+            <div class="input-field col s12 m6 l6">
+                <select asp-for="ItemSelecionado" asp-items="Model.Secretarias"></select>
+                <label asp-for="Secretarias"></label>
+            </div>
+            <div class="input-field col s12 m6 l6 valign-wrapper">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome"></label>
+                <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
+            </div>
         </div>
         <div class="card">
             <table class="striped responsive-table">

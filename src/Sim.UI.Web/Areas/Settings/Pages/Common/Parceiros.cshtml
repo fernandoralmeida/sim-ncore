@@ -15,18 +15,15 @@
         </div>
 
         <div class="row rounded-default z-depth-1 white">
-
-                    <div class="input-field col s12 m6 l6">
-                        <input asp-for="Input.Nome" />
-                        <label asp-for="Input.Nome"></label>
-                    </div>
-
-                    <div class="input-field col s12 m6 l6 valign-wrapper">
-                        <select asp-for="SecretariaSelecionada" asp-items="Model.Secretarias"></select>
-                        <label asp-for="Input.Secretaria"></label>
-                        <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
-                    </div>
-
+            <div class="input-field col s12 m6 l6">
+                <select asp-for="SecretariaSelecionada" asp-items="Model.Secretarias"></select>
+                <label asp-for="Input.Secretaria"></label>                        
+            </div>
+            <div class="input-field col s12 m6 l6 valign-wrapper">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome"></label>
+                <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
+            </div>
         </div>
 
 
