@@ -11,11 +11,10 @@
     <div class="card-header grey-text">@ViewData["Title"]<i class="left material-icons">assignment_ind</i></div>
     <div class="card-content">
         <div class="row">
-            <div class="input-field col s7 m7 l7">
+            <div class="input-field col s12 m7 l7">
                 <input asp-for="UserName" disabled />
                 <label asp-for="UserName"></label>
-            </div>
-            <div class="col s12 m6 l6"></div>
+            </div>            
             <div class="input-field col s12 m6 l6">
                 <input asp-for="Input.Name" />
                 <label asp-for="Input.Name"></label>
@@ -33,7 +32,7 @@
                 <label asp-for="Input.Genero"></label>
             </div>
             <div class="input-field col s12 m6 l6">
-                <input asp-for="Input.PhoneNumber"/>
+                <input asp-for="Input.PhoneNumber" id="inputphone"/>
                 <label asp-for="Input.PhoneNumber"></label>                
             </div>
         </div>
@@ -46,4 +45,8 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/jquery.mask.min.js"></script> 
+    <script>
+        $('#inputphone').mask('(00) 00000-0000');
+    </script>
 }

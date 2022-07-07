@@ -2,10 +2,21 @@
 
 @if (!String.IsNullOrEmpty(Model))
 {
-    var statusMessageClass = Model.StartsWith("Error") ? "danger" : "success";
-    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+    var statusMessageClass = "green";
+    var iconclass = "done";
 
-        @Model
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    if (Model.StartsWith("Erro:"))
+    {
+        statusMessageClass = "red";
+        iconclass = "error";
+    }
+    else if (Model.StartsWith("Alerta:"))
+    {
+        statusMessageClass = "orange";
+        iconclass = "warning";
+    }
+
+    <div class="card-panel z-depth-0 @statusMessageClass lighten-3 @statusMessageClass-text text-darken-2" role="alert">
+        <i class="left material-icons">@iconclass</i>@Model
+    </div>   
 }

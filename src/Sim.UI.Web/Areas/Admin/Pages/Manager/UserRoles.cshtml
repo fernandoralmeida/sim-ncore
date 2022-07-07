@@ -3,6 +3,7 @@
 @{
     Layout = "_Layout.cshtml";
     ViewData["Title"] = "Perfil de Acesso";
+    ViewData["ActivePageAreaAdmin"] = AdminNavPages.Index;
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -89,7 +90,7 @@
                                 </td>
 
                                 <td>
-                                    <button type="submit" asp-page-handler="RemoveRole" asp-route-id="@Model.Input.Id" asp-route-role="@item" class="btn btn-small waves-effect" title="Excluir Role"><i class="material-icons">delete_outline</i></button>
+                                    <button type="submit" asp-page-handler="RemoveRole" asp-route-id="@Model.Input.Id" asp-route-role="@item" class="btn-small waves-effect waves-light materialize-red" title="Excluir Role"><i class="material-icons">remove</i></button>
                                 </td>
                             </tr>
                         }

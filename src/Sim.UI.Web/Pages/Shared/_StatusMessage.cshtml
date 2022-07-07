@@ -12,11 +12,11 @@
     }
     else if (Model.StartsWith("Alerta:"))
     {
-        statusMessageClass = "amber";
+        statusMessageClass = "orange";
         iconclass = "warning";
     }
 
-    <div class="card-panel z-depth-0 @statusMessageClass lighten-5 @statusMessageClass-text text-accent-4" role="alert">
+    <div class="card-panel z-depth-0 @statusMessageClass lighten-3 @statusMessageClass-text text-darken-2" role="alert">
         <i class="left material-icons">@iconclass</i>@Model
     </div>    
 }
