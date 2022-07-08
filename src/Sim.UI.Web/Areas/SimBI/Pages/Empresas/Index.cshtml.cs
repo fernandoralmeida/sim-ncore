@@ -30,7 +30,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 
         public class InputModel
         {
-            [DisplayName("Situa��o")]
+            [DisplayName("Situação")]
             public string Situacao { get; set; }
             public string Municipio { get; set; }
             public string Mes { get; set; }
@@ -63,7 +63,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
                 ListCnaes = await _appEmpresa.ToListBICnaeAsync(Input.Municipio);            
 
             else
-                ListEmpresas = await _appEmpresa.ToListBIEmpresasAsync(Input.Municipio, Input.Situacao, Input.Ano.ToString(), Input.Mes);
+                ListEmpresas = await _appEmpresa.ToListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano.ToString(), Input.Mes);
         }
 
         public async Task OnGetAsync()

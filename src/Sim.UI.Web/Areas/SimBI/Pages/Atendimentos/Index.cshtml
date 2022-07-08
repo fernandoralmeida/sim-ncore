@@ -9,10 +9,12 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-    <div class="row centered">
-        <div class="input-field col s12 l2 m6 valign-wrapper white z-depth-1 hoverable rounded-default">
-            <input asp-for="Ano" />
-            <button class="btn waves-effect waves-light" asp-page-handler="Month"><i class="material-icons">refresh</i></button>
+    <div class="row">
+        <div  class="col s6 l3 m3 right">
+            <div class="input-field valign-wrapper white z-depth-1 hoverable rounded-default pdn-h-8" style="margin:0px;">
+                <input asp-for="Ano" />
+                <button class="btn waves-effect waves-light" asp-page-handler="Month"><i class="material-icons">refresh</i></button>
+            </div>
         </div>
     </div>
 </form>
@@ -45,20 +47,22 @@
                 </div>
             </div>
             <div class="col s12 m12 l12">
-                    @if(Model.Atendimentos_List.ListaMensal != null)
-                    {
-                        <div class="card hoverable pdn-h-10" style="overflow-x:auto;">
-                            <div class="card-header grey-text">Atendimentos nos meses<i class="material-icons left">calendar_month</i></div>
-                        @foreach(var m in Model.Atendimentos_List.ListaMensal)
-                        {
-                            <div class="border-l col s1 l1 m1 center font-size-12 mgn-10">
-                                <p class="grey-text lighten-2">@m.Mes</p>
-                                <p class="blue-text">@m.Atendimentos</p>
-                                <p class="green-text">@m.Servicos</p>
-                            </div>
-                        }
-                        </div>               
-                    }
+                @if(Model.Atendimentos_List.ListaMensal != null)
+                {
+                    <div class="card hoverable">
+                        <div class="card-header grey-text">Atendimentos nos meses<i class="material-icons left">calendar_month</i></div>
+                        <div class="row pdn-h-14 mgn-h-4">
+                            @foreach(var m in Model.Atendimentos_List.ListaMensal)
+                            {
+                                <div class="border-l col s1 l1 m1 center font-size-12 mgn-10">
+                                    <p class="grey-text lighten-2">@m.Mes</p>
+                                    <p class="blue-text">@m.Atendimentos</p>
+                                    <p class="green-text">@m.Servicos</p>
+                                </div>
+                            }
+                        </div>
+                    </div>               
+                }
             </div>
         </div>
         <div class="col s12 m3 l3">            
@@ -119,7 +123,7 @@
     <div class="col s12 m3 l3">       
                 @if (Model.AppUsers != null)
                 {                
-                    <div class="card hoverable" style="overflow-x:auto;">
+                    <div class="card large hoverable" style="overflow-x:auto;">
                         <div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>
                         @foreach(var m in Model.AppUsers.ListaAppUser)
                         {
