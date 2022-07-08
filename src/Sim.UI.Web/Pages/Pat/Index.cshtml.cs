@@ -33,8 +33,18 @@ namespace Sim.UI.Web.Pages.Pat
 
         public async Task OnPost()
         {
-            ListaEmpregos = await appEmpregos.ListEmpregosAsync(CNPJ);
             ListaEmpresas = await appEmpresa.ConsultaCNPJAsync(CNPJ);
+
+            StatusMessage = "";
+
+            if (ListaEmpresas.Any())
+            {
+                ListaEmpregos = await appEmpregos.ListEmpregosAsync(CNPJ);
+            }
+            else
+            {
+                StatusMessage = "Alerta: Empresa não cadastrada!";
+            }
         }
     }
 }

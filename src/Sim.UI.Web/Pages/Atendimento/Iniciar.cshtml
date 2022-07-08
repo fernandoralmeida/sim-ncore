@@ -11,10 +11,16 @@
 
     <div class="row">
 
+        <div class="col s12 m12 l12">
+            <div class="card teal lighten-3 teal-text text-darken-2">
+                <div class="card-header">Novo Atendimento<i class="left material-icons">timer</i></div>
+            </div>
+        </div>
+
         @if(Model.Input.Pessoa != null)
         {
             <input asp-for="Input.Pessoa.Id" hidden />
-            <div class="row col s12 m6 l6">
+            <div class="col s12 m6 l6">
                 <div class="card hoverable">
                     <div class="card-header grey-text">
                         <span>Cliente!</span>
@@ -54,7 +60,7 @@
         @if(Model.Input.Empresa != null)
         {
             <input asp-for="Input.Empresa.Id" hidden />
-            <div class="row col s12 m6 l6">               
+            <div class="col s12 m6 l6">               
                 <div class="card hoverable">                    
                     <div class="card-header grey-text">
                         <button class="btn-floating halfway-fab waves-effect waves-light red" asp-page-handler="RemoverEmpresa" title="Remover"><i class="material-icons">remove</i></button>
@@ -86,7 +92,7 @@
             </div>
         }
             
-        <div class="row col l12 m12 s12">
+        <div class="col l12 m12 s12">
             <button asp-page-handler="Save" type="submit" class="btn waves-effect waves-light" title="Iniciar Atendimento">Iniciar Atendimento</button>     
             <a asp-page="/Atendimento/Index" class="grey btn waves-effect">Cancelar</a>
         </div>
