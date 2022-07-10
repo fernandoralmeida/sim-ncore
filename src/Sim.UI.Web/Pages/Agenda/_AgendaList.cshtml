@@ -27,7 +27,7 @@
                         }
                         else if((int)l.Data.Value.Subtract(DateTime.Today).TotalDays <= 15 && (int)l.Data.Value.Subtract(DateTime.Today).TotalDays > 1)
                         {
-                            cor = "materialize-red";
+                            cor = "red";
                         }
                         else if((int)l.Data.Value.Subtract(DateTime.Today).TotalDays <= 1 && (int)l.Data.Value.Subtract(DateTime.Today).TotalDays >= 0)
                         {
@@ -41,7 +41,7 @@
                 
                     <div class="col s12 m6 l4 xl3">
                         <div class="card hoverable">
-                             <div class="card-image @cor lighten-3">
+                             <div class="card-image @cor lighten-3 waves">
                                 <p><strong><span class="@cor-text text-darken-2" style="font-size:12px; margin-left:10px;">@l.Tipo (@l.Situacao.ToString())</span></strong></p>                        
                                 <p class="card-header truncate @cor-text text-darken-2">@l.Nome</p>
                                 <div style="height: 10px;"></div>

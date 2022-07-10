@@ -12,7 +12,8 @@
     var _idstatus = _lstatus.FirstOrDefault().Id;
 }
 <input id="meustatusonline" type="text" value="@_idstatus" hidden/>
-<div class="navbar navbar-fixed z-depth-0">    
+
+<div class="navbar-fixed">
     <nav class="navbar">
         <div class="nav-wrapper white grey-text">
             <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
@@ -49,8 +50,7 @@
     </nav>
 </div>
 
-
-<div id="dropdownuser" class="dropdown-content rounded-default row">
+<div id="dropdownuser" class="dropdown-content rounded-default row" style="z-index: 2;">
     <div class="center-align"><a class="btn" asp-area="Identity" asp-page="/Account/Manage/Index">Perfil</a></></div>
     <div class="divider"></div>
     <div class="center-align"><div class="switch" title="Alterar meu status"><label>Online<input id="chkstatus" checked="@_status" type="checkbox" onclick="myStatus()" /><span class="lever"></span></label></div></div>          

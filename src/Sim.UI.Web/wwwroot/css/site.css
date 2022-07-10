@@ -153,20 +153,21 @@ html {
 }
 
 /* Navbar Page Name */
+.aplha-text{ color: rgba(0, 0, 0, 0.5);}
 .navbar-page-name {
     margin-left: 10px;
     font-size:large;
 }
-
 /* materialize */
 .sidenav {
     width: 250px
 }
-
 .has-fixed-sidenav .fixed-chart {
     left: 250px
 }
-
+.sidenav .collapsible>li.waves-effect {
+    display: block;
+}
 .waves-effect.waves-blue .waves-ripple {
     /* The alpha value allows the text and background color
    of the button to still show through. */
@@ -197,14 +198,21 @@ nav.navbar .brand-logo {
     height: 64px;
     line-height: 64px;
     font-size: 24px;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
     box-sizing: content-box
 }
 
     .sidenav .logo-container i.material-icons {
         line-height: inherit
     }
-
+    .sidenav .collapsible .collapsible-header {
+        display: block;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        text-transform: uppercase;
+        height: 64px;
+        line-height: 64px;
+    }
 .sidenav .collapsible > .active .collapsible-header .chevron {
     transform: rotate(-90deg)
 }
@@ -217,8 +225,32 @@ nav.navbar .brand-logo {
     margin: 20px 0 0 0;
     transition: transform .2s
 }
+.sidenav .collapsible .collapsible-body {
+    padding-bottom: 10px;
+    background-color: transparent;
+}
 
-.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+.sidenav .collapsible>li {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    transition: background-color .2s;
+}
+.sidenav li.active {    
+    color: teal;
+}
+.sidenav .collapsible-body>ul:not(.collapsible)>li.active, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active {
+    background-color: #80cbc4;    
+}
+.sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a {
+    color: #fff;
+}
+.sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a>i.material-icons {
+    color: #fff;
+}
+.sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a {
+    color: rgba(0,0,0,0.5);
+}
+.sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a>i.material-icons {
+    color: rgba(0,0,0,0.4);
     margin: 0 10px 0 0;
 }
 
@@ -258,16 +290,16 @@ nav.navbar .brand-logo {
         }
 
         ul.collapsible-accordion {
-            background-color: #FFF
+            background-color: transparent /*#FFF*/
         }
 
         ul.sidenav.sidenav-fixed ul.collapsible-accordion a.collapsible-header {
-            padding: 0 30px
+            padding: 0 15px
         }
 
         ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
             font-weight: 400;
-            padding: 0 37.5px 0 45px
+            padding: 0 20px 0 20px
         }
 
         ul.sidenav.sidenav-fixed:hover {
@@ -316,9 +348,9 @@ nav.navbar .brand-logo {
 }
         /***/
 
-        @media (min-width: 768px) {
-            html {
-                /*font-size: 16px;*/
+        @media (max-width: 768px) {
+            .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
+                padding: 0 20px 0 20px;
             }
         }
 
