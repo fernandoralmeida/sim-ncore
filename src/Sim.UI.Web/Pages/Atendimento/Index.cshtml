@@ -9,17 +9,16 @@
 <!---->
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-    <div class="card center">
-        <form method="post" class="row valign-wrapper">
-            <div class="col s4 m4 l4"></div>
-            <div class="input-field col">
-                <i class="material-icons prefix">event</i>
-                <input asp-for="Input.DataAtendimento" />                
+<form method="post">
+    <div class="row">        
+        <div  class="col s6 l4 m4 offset-s3 offset-m4 offset-l4 no-padding">
+            <div class="input-field valign-wrapper white z-depth-1 hoverable rounded-default pdn-h-8" style="margin:0px;">
+                <input asp-for="Input.DataAtendimento" />
+                <button class="btn waves-effect waves-light"><i class="material-icons">refresh</i></button>
             </div>
-            <button class="btn waves-effect waves-light"><i class="material-icons">refresh</i></button>
-            <div class="col s4 m4 l4"></div>
-        </form>
+        </div>
     </div>
+</form>
 
 <div class="card">
     <table class="responsive-table striped">

@@ -40,7 +40,6 @@ background-size: cover;*/
     min-height: 100vh;
     flex-direction: column;
 }
-
 .container-m20{
     margin:20px 20px 20px 20px;
   }  .container-m10{
@@ -59,7 +58,6 @@ background-size: cover;*/
 .font-size-14 {
     font-size: 14px;
 }
-
 .border-a{
     border: 1px solid #ddd;
 }
@@ -90,7 +88,6 @@ background-size: cover;*/
 .rounded-10 {
     border-radius: 10px;
 }
-
 .mgn-0 {
     margin: 0px 0px 0px 0px;
 }
@@ -131,7 +128,6 @@ background-size: cover;*/
 .pdn-b-4{
     padding-bottom:4px;
 }
-
 .pdn-h-4{
     padding-left:4px;
     padding-right:4px;
@@ -156,7 +152,6 @@ background-size: cover;*/
     padding-left: 14px;
     padding-right: 14px;
 }
-
 .pdn-4{
     padding:4px;
 }
@@ -191,25 +186,21 @@ background-size: cover;*/
    of the button to still show through. */
     background-color: rgba(33, 150, 243, 0.7);
 }
-
 .waves-effect.waves-blue-grey .waves-ripple {
     /* The alpha value allows the text and background color
    of the button to still show through. */
     background-color: rgba(96, 125, 139, 0.7);
 }
-
 nav.navbar .brand-logo {
     position: relative;
     float: left;
     font-size: 18px;
     /*color: rgba(0,0,0,0.87)*/
 }
-
     nav.navbar .brand-logo i {
         line-height: inherit;
         transition: color .2s
     }
-
 /*  Sidenav  */
 .sidenav .logo-container {
     padding: 0 16px;
@@ -219,7 +210,6 @@ nav.navbar .brand-logo {
     border-bottom: 1px solid rgba(0,0,0,0.1);
     box-sizing: content-box
 }
-
     .sidenav .logo-container i.material-icons {
         line-height: inherit
     }
@@ -234,7 +224,6 @@ nav.navbar .brand-logo {
 .sidenav .collapsible > .active .collapsible-header .chevron {
     transform: rotate(-90deg)
 }
-
 .sidenav .collapsible .collapsible-header .chevron {
     float: right;
     height: 24px;
@@ -247,7 +236,6 @@ nav.navbar .brand-logo {
     padding-bottom: 10px;
     background-color: transparent;
 }
-
 .sidenav .collapsible>li {
     border-bottom: 1px solid rgba(0,0,0,0.1);
     transition: background-color .2s;
@@ -271,59 +259,47 @@ nav.navbar .brand-logo {
     color: rgba(0,0,0,0.6);
     margin: 0 5px 0 0;
 }
-
 /* End Sidenav  */
-
 @media only screen and (max-width: 992px) {
     .has-fixed-sidenav .fixed-chart {
         left: 0
     }
 }
-
 @media only screen and (min-width: 993px) {
     body.has-fixed-sidenav {
         padding-left: 250px
     }
-
     @media only screen and (min-width: 993px) {
         body.has-fixed-sidenav {
             padding-left: 250px
         }
-
         @media only screen and (min-width: 993px) {
             .has-fixed-sidenav .navbar-fixed nav.navbar {
                 width: calc(100% - 250px);
                 left: 250px
             }
-
             body:not(.has-fixed-sidenav) nav a.sidenav-trigger {
                 display: block
             }
-
             body:not(.has-fixed-sidenav) nav.navbar .brand-logo {
                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%)
             }
         }
-
         ul.collapsible-accordion {
             background-color: transparent /*#FFF*/
         }
-
         ul.sidenav.sidenav-fixed ul.collapsible-accordion a.collapsible-header {
             padding: 0 15px
         }
-
         ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
             font-weight: 400;
             padding: 0 20px 0 20px
         }
-
         ul.sidenav.sidenav-fixed:hover {
             overflow-y: auto
         }
-
         .search-wrapper {
             color: #777;
             margin-top: -1px;
@@ -331,11 +307,9 @@ nav.navbar .brand-logo {
             -webkit-transition: margin .25s ease;
             transition: margin .25s ease
         }
-
         #nav-mobile li.search .search-wrapper.focused .search-results:not(:empty) {
             border-bottom: 1px solid rgba(0,0,0,0.14)
         }
-
         #nav-mobile li.search .search-wrapper input#search {
             color: #777;
             display: block;
@@ -349,13 +323,11 @@ nav.navbar .brand-logo {
             padding: 0 45px 0 30px;
             border: 0
         }
-
             #nav-mobile li.search .search-wrapper input#search:focus {
                 outline: none;
                 -webkit-box-shadow: none;
                 box-shadow: none
             }
-
         #nav-mobile li.search .search-wrapper i.material-icons {
             position: absolute;
             top: 21px;
@@ -365,33 +337,27 @@ nav.navbar .brand-logo {
     }
 }
         /***/
-
         @media (max-width: 768px) {
             .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
                 padding: 0 20px 0 20px;
             }
         }
-
         button.accept-policy {
             font-size: 1rem;
             line-height: inherit;
         }
-
         /* Sticky footer styles
 -------------------------------------------------- */
         .bg-teal {
             background-color: #20c997 !important;
         }
-
         .bg-silver {
             background-color: #f8f8f8 !important;
         }
-
         /**/
         .table {
             font-size: 10.5pt;
         }
-
         .footer {            
             position: absolute;
             bottom: 0;
@@ -399,8 +365,6 @@ nav.navbar .brand-logo {
             white-space: wrap;
             line-height: 50px;
         }
-
-
         /* Login style */
         .form-signin {
             width: 100%;
@@ -408,7 +372,6 @@ nav.navbar .brand-logo {
             padding: 15px;
             margin: auto;
         }
-
             .form-signin .checkbox {
                 font-weight: 400;
             }
@@ -416,38 +379,31 @@ nav.navbar .brand-logo {
             .form-signin .form-floating:focus-within {
                 z-index: 2;
             }
-
             .form-signin input[type="text"] {
                 margin-bottom: -1px;
                 border-bottom-right-radius: 0;
                 border-bottom-left-radius: 0;
             }
-
             .form-signin input[type="password"] {
                 margin-bottom: 10px;
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
             }
-
-
         .strip-bg {
             margin: 0px 0px 0px 0px;
             height: 20px;
         }
-
         /* faixa pontilhada */
         .strip-dot {
             margin: 0px 0px 0px 0px;
             height: 20px;
             background-image: url(imgs/dot.jpg);
         }
-
         .strip-dot-b4 {
             margin: 0px 0px 0px 0px;
             height: 6px;
             background-image: url(imgs/dot.jpg);
         }
-
         /* Logo SIM */
         .logo-sim-sm {
             display: flex;
@@ -458,14 +414,12 @@ nav.navbar .brand-logo {
             width: 32px;
             image-rendering: optimizeQuality;
         }
-
         .logo-sim {
             background-image: url(imgs/sim_logo_nb.png);
             background-size: 40px 40px;
             height: 40px;
             width: 40px;
         }
-
         .logo-sim-lg {
             margin: auto;
             background-image: url(imgs/sim-ico.ico);
@@ -474,17 +428,14 @@ nav.navbar .brand-logo {
             width: 64px;
             image-rendering: optimizeQuality;
         }
-
         .sedemp {
             margin: 0px 0px 0px 0px;
             background-image: url(imgs/n_logo_sedemp.jpeg);
             image-rendering: optimizeQuality;
         }
-
         /**** Links ****/
 
         /**** Modulos ****/
-
         .l-btn /* estrutura principal */ {
             display: inline-block;
             margin: 5px;
@@ -496,25 +447,18 @@ nav.navbar .brand-logo {
             border-radius: 0px;
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-
-
-
             .l-btn:hover /* ao mover o mouse */ {
                 background-color: #26dca6;
                 color: #ffffff;
                 text-decoration: none;
             }
-
             .l-btn:active {
                 background-color: #20c997;
             }
-
         .div-modulos /* div das seções free-hand, digital paint, comp grafica e web-dev */ {
-            text-align: center; /*
-       
-    background-image: url(imgs/dot.jpg);*/
+            text-align: center; /*       
+            background-image: url(imgs/dot.jpg);*/
         }
-
         .agenda {
             display: inline-block;
             margin: 10px;
@@ -523,15 +467,12 @@ nav.navbar .brand-logo {
             text-decoration: none;
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-
             .agenda:hover /* ao mover o mouse */ {
                 background-color: #fafafa;
             }
-
             .agenda:active {
                 background-color: #fafafa;
             }
-
 /* Card */
 .card-header{
     padding:10px 10px 10px 10px;
