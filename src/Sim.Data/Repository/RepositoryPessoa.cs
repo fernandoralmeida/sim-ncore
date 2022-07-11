@@ -35,7 +35,7 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<Pessoa>> ListTop10Async()
         {
-            return await _db.Pessoa.Take(10).OrderByDescending(d => d.Ultima_Alteracao).ToListAsync();
+            return await (from p in _db.Pessoa orderby p.Ultima_Alteracao descending select p).Take(10).ToListAsync();            
         }
 
     }
