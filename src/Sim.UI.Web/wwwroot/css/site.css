@@ -22,7 +22,25 @@ html {
     /* Substitui fonte padrão Roboto */
     font-family: GillSans, Calibri, Trebuchet, sans-serif;
     /*font-size: 14px;*/
+
 }
+main{
+    flex: 1 0 auto;
+}
+body {
+    /* Margin bottom by footer height 
+margin-bottom: 80px;*/
+    /* Margin top by fixed navbar height 
+margin-top: 90px;*/
+    /* background: url(imgs/bgios.jpg) no-repeat fixed;
+background-size: cover;*/
+    /**/
+    background-color: #f5f5f5;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
 .container-m20{
     margin:20px 20px 20px 20px;
   }  .container-m10{
@@ -153,7 +171,7 @@ html {
 }
 
 /* Navbar Page Name */
-.aplha-text{ color: rgba(0, 0, 0, 0.5);}
+.aplha-text{ color: rgba(0, 0, 0, 0.6);}
 .navbar-page-name {
     margin-left: 10px;
     font-size:large;
@@ -238,7 +256,7 @@ nav.navbar .brand-logo {
     color: teal;
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active {
-    background-color: #80cbc4;    
+    background-color: rgba(0, 128, 128, 0.7);   
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a {
     color: #fff;
@@ -247,11 +265,11 @@ nav.navbar .brand-logo {
     color: #fff;
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a {
-    color: rgba(0,0,0,0.5);
+    color: rgba(0,0,0,0.6);
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a>i.material-icons {
-    color: rgba(0,0,0,0.4);
-    margin: 0 10px 0 0;
+    color: rgba(0,0,0,0.6);
+    margin: 0 5px 0 0;
 }
 
 /* End Sidenav  */
@@ -361,22 +379,6 @@ nav.navbar .brand-logo {
 
         /* Sticky footer styles
 -------------------------------------------------- */
-        html {
-            position: relative;
-            min-height: 100%;
-        }
-
-        body {
-            /* Margin bottom by footer height 
-        margin-bottom: 80px;*/
-            /* Margin top by fixed navbar height 
-    margin-top: 90px;*/
-            /* background: url(imgs/bgios.jpg) no-repeat fixed;
-    background-size: cover;*/
-            /**/
-            background-color: #f5f5f5;
-        }
-
         .bg-teal {
             background-color: #20c997 !important;
         }
@@ -390,12 +392,12 @@ nav.navbar .brand-logo {
             font-size: 10.5pt;
         }
 
-        .footer {
+        .footer {            
             position: absolute;
             bottom: 0;
             width: 100%;
-            white-space: nowrap;
-            line-height: 50px; /* Vertically center the text there */
+            white-space: wrap;
+            line-height: 50px;
         }
 
 
