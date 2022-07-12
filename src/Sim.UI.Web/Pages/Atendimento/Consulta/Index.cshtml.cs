@@ -49,7 +49,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
 
             public string Nome { get; set; }
 
-            [DisplayName("Raz„o Social")]
+            [DisplayName("Raz√£o Social")]
             public string RazaSocial { get; set; }
 
             public string CNAE { get; set; }
@@ -164,7 +164,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
             return File(stream, "application/vnd.openxmlformat-officedocument.spreadsheetml.sheet", excelname);
         }
 
-        public async Task OnPostViewAsync()
+        public async Task OnPostAsync()
         {
             try
             {

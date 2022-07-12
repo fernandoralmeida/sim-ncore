@@ -67,7 +67,7 @@ namespace Sim.UI.Web.Pages.Atendimento
 
                 if (!Input.ListaAtendimento.Any())
                 {
-                    StatusMessage = string.Format("Erro: N„o h· atendimentos para {0}", Input.DataAtendimento.Value.Date);
+                    StatusMessage = string.Format("Alerta: N√£o h√° atendimentos para {0}", Input.DataAtendimento.Value.Date);
                 }
             }
             catch (Exception ex)

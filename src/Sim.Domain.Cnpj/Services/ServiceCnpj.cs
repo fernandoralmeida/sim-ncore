@@ -1509,40 +1509,40 @@ namespace Sim.Domain.Cnpj.Services
                                         switch (data[1])
                                         {
                                             case "01":
-                                                _var_mes.Add("01Janeiro");
+                                                _var_mes.Add("01Jan");
                                                 break;
                                             case "02":
-                                                _var_mes.Add("02Fevereiro");
+                                                _var_mes.Add("02Fev");
                                                 break;
                                             case "03":
-                                                _var_mes.Add("03Março");
+                                                _var_mes.Add("03Mar");
                                                 break;
                                             case "04":
-                                                _var_mes.Add("04Abril");
+                                                _var_mes.Add("04Abr");
                                                 break;
                                             case "05":
-                                                _var_mes.Add("05Maio");
+                                                _var_mes.Add("05Mai");
                                                 break;
                                             case "06":
-                                                _var_mes.Add("06Junho");
+                                                _var_mes.Add("06Jun");
                                                 break;
                                             case "07":
-                                                _var_mes.Add("07Julho");
+                                                _var_mes.Add("07Jul");
                                                 break;
                                             case "08":
-                                                _var_mes.Add("08Agosto");
+                                                _var_mes.Add("08Ago");
                                                 break;
                                             case "09":
-                                                _var_mes.Add("09Setembro");
+                                                _var_mes.Add("09Set");
                                                 break;
                                             case "10":
-                                                _var_mes.Add("10Outubro");
+                                                _var_mes.Add("10Out");
                                                 break;
                                             case "11":
-                                                _var_mes.Add("11Novembro");
+                                                _var_mes.Add("11Nov");
                                                 break;
                                             case "12":
-                                                _var_mes.Add("12Dezembro");
+                                                _var_mes.Add("12Dez");
                                                 break;
                                         }
 
@@ -1699,9 +1699,9 @@ namespace Sim.Domain.Cnpj.Services
                     }
 
                     bi_empresas.EmpresasAtivas = new KeyValuePair<string, int>("Estatísticas", _emp.Count);
-                    bi_empresas.TotalEmpresas = new KeyValuePair<string, int>("Total Empresas", _temp.Count);
-                    bi_empresas.Formalizacoes = new KeyValuePair<string, int>("Empresas Formalizadas", _formalizacao.Count);
-                    bi_empresas.Baixas = new KeyValuePair<string, int>("Empresas Baixadas", _baixada.Count);
+                    bi_empresas.TotalEmpresas = new KeyValuePair<string, int>("Empresas", _temp.Count);
+                    bi_empresas.Formalizacoes = new KeyValuePair<string, int>("Formalizadas", _formalizacao.Count);
+                    bi_empresas.Baixas = new KeyValuePair<string, int>("Baixadas", _baixada.Count);
                     bi_empresas.SimplesNacional = new KeyValuePair<string, int>("Simples Nacional", _osn.Count);
                     bi_empresas.OptanteMEI = new KeyValuePair<string, int>("Optante MEI", _mei.Count);
 

@@ -16,11 +16,11 @@
         <partial name="_LoginPartial" />
         <partial name="_SidebarNav" />        
     </header>
-    <main>  
-        <div class="progress" style="position: fixed; margin-top:-15px; z-index:10;"><div class="indeterminate"></div></div>
-        <div class="container-m20">
+    <main>        
+        <div class="progress" style="display: flex; position: fixed; margin-top: -4px; z-index:998; border-radius: 0px;"><div class="indeterminate"></div></div>             
+        <div class="container-m20">            
             @RenderBody()
-        </div>
+        </div>        
     </main>
     <footer class="page-footer teal lighten-1">
         <div class="container">
@@ -58,6 +58,14 @@
         $(window).on('load', function () { 
             $(".progress").fadeOut("slow");  
         });  
+    
+        $(function () {
+            $(".submit").click(function () {
+                $(".progress").show(); 
+                //document.forms[0].submit();                
+                return true;
+            });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

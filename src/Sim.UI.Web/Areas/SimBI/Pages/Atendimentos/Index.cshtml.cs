@@ -66,12 +66,11 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
             AppUsers = await _appAtendimento.ToListBIAtendimentosAppUser(nperiodo);
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync()
         {
             Ano = DateTime.Now.Year;
             await LoadSecretaria();
             await LoadAsync();
-            return Page();
         }
 
         public JsonResult OnGetPreview(string id, string id2, string mth, int y)
@@ -89,17 +88,11 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
             return null;
         }
 
-        public async Task<IActionResult> OnPostMonth()
+        public async Task OnPostAsync()
         {
             await LoadSecretaria();
             await LoadAsync();
-            return Page();
         }
 
-        public async Task<IActionResult> OnPostYear()
-        {
-            await LoadAsync();
-            return Page();
-        }
     }
 }

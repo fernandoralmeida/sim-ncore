@@ -89,7 +89,7 @@ namespace Sim.UI.Web.Pages.Empresa
             return File(stream, "application/vnd.openxmlformat-officedocument.spreadsheetml.sheet", excelname);
         }
 
-        public async Task OnPostViewAsync()
+        public async Task OnPostAsync()
         {
             try
             {
