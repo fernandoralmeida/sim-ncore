@@ -6,23 +6,18 @@ a.navbar-brand {
     text-align: center;
     word-break: break-all;
 }
-
 Provide sufficient contrast against white background
 a {
     color: #0366d6;
 }
  */
-
 /* Sticky footer styles
 -------------------------------------------------- 
 @import "../lib/bootstrap/dist/css/bootstrap-utilities.min.css";*/
-
-
 html {
     /* Substitui fonte padrão Roboto 
     font-family: GillSans, Calibri, Trebuchet, sans-serif;*/
     /*font-size: 14px;*/
-
 }
 main{
     flex: 1 0 auto;
@@ -164,7 +159,14 @@ background-size: cover;*/
 .pdn-10 {
     padding: 10px;
 }
-
+.navbar-extended{
+    display:flex;
+    position:absolute;
+    margin-top:0px;
+    z-index:-20;
+    height:145px;
+    width:calc(100% - 250px);
+}
 /* Navbar Page Name */
 .aplha-text{ color: rgba(0, 0, 0, 0.6);}
 .navbar-page-name {
@@ -262,8 +264,14 @@ nav.navbar .brand-logo {
 }
 /* End Sidenav  */
 @media only screen and (max-width: 992px) {
+    .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
+        padding: 0 20px 0 20px;
+    }
     .has-fixed-sidenav .fixed-chart {
         left: 0
+    }
+    .navbar-extended{
+        width:100vw;
     }
 }
 @media only screen and (min-width: 993px) {

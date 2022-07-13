@@ -16,8 +16,8 @@
 <div class="navbar-fixed">
     <nav class="navbar z-depth-0">
         <div class="nav-wrapper teal lighten-2">
-            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>
-            <a class="navbar-page-name grey-text">@ViewData["Title"]</a>
+            <a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text text-lighten-4"><i class="material-icons">menu</i></a>
+            <a class="navbar-page-name grey-text text-lighten-4">@ViewData["Title"]</a>
             <ul class="right">                
                     @if(SignInManager.IsSignedIn(User))
                     {
@@ -31,18 +31,19 @@
 
                         @if (!_status)
                         { account_color = "grey"; }
+                        else{ account_color = "lime";}
 
                         <li class="dropdown-trigger" data-target="dropdownuser">
                             <a id="btnstatus" class="btn @account_color waves-effect waves-light" href="#" title="@DisplayName @DisplayLastName"><i class="material-icons left">account_circle</i>@fn@ln</a>
                         </li>
                         <li class="waves-effect waves-light">
-                            <a asp-area="Identity" asp-page="/Account/Logout" class="grey-text"><i class="material-icons left">logout</i>Sair</a>
+                            <a asp-area="Identity" asp-page="/Account/Logout" class="grey-text text-lighten-4"><i class="left material-icons">logout</i>Sair</a>
                         </li>
                     }
                     else
                     {
                         <li class="waves-effect waves-light">
-                            <a class="grey-text waves-effect waves-light" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
+                            <a class="grey-text text-lighten-4waves-effect waves-light" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
                         </li>                        
                     } 
             </ul>
