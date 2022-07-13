@@ -218,8 +218,9 @@ nav.navbar .brand-logo {
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
         text-transform: uppercase;
+        /*
         height: 64px;
-        line-height: 64px;
+        line-height: 64px;*/
     }
 .sidenav .collapsible > .active .collapsible-header .chevron {
     transform: rotate(-90deg)
@@ -229,7 +230,7 @@ nav.navbar .brand-logo {
     height: 24px;
     width: 24px;
     line-height: 24px;
-    margin: 20px 0 0 0;
+    margin: 12px 0 0 0;
     transition: transform .2s
 }
 .sidenav .collapsible .collapsible-body {
