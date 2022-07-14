@@ -164,7 +164,7 @@ background-size: cover;*/
     position:absolute;
     margin-top:0px;
     z-index:-20;
-    height:145px;
+    height:139px;
     width:calc(100% - 250px);
 }
 /* Navbar Page Name */

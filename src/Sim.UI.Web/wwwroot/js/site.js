@@ -10,9 +10,9 @@ $(document).ready(function () {
 
     $('.dropdown-trigger').dropdown(
         {
-            hover:true,
-            restringirWidth:false,
-            coverTrigger:false
+            hover:false,
+            restringirWidth:true,
+            coverTrigger:true
         });
 
     $('select').formSelect();

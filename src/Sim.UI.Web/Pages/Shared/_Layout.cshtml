@@ -1,12 +1,12 @@
 ﻿
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br">    
 <head>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
-    <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />
+    <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />    
     <link rel="stylesheet" href="~/css/site.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIM - @ViewData["Title"]</title>
@@ -17,11 +17,12 @@
         <partial name="_SidebarNav" />        
     </header>
     <main>        
-        <div class="progress" style="display: flex; position: fixed; margin-top: -4px; z-index:998; border-radius: 0px;"><div class="indeterminate"></div></div>
+        <div class="progress" style="display: flex; position: fixed; margin-top: -64px; z-index:998; border-radius: 0px;"><div class="indeterminate"></div></div>
         <div class="teal lighten-2 navbar-extended"></div>         
         <div class="container-m20">            
             @RenderBody()
-        </div>        
+        </div>    
+            
     </main>
     <footer class="page-footer teal lighten-1">
         <div class="container">

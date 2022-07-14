@@ -27,34 +27,29 @@
                         var fn = DisplayName.FirstOrDefault();
                         var ln = DisplayLastName.FirstOrDefault();
 
-                        var account_color = "";
+                        var account_color = "white-text";
 
                         @if (!_status)
-                        { account_color = "grey"; }
-                        else{ account_color = "lime";}
+                        { account_color = "teal-text"; }
+                        else
+                        { account_color = "white-text"; }
 
-                        <li class="dropdown-trigger" data-target="dropdownuser">
-                            <a id="btnstatus" class="btn @account_color waves-effect waves-light" href="#" title="@DisplayName @DisplayLastName"><i class="material-icons left">account_circle</i>@fn@ln</a>
+                        <li class="dropdown-trigger @LayoutNavPages.LoginNavClass(ViewContext)" data-target="dropdownuser">
+                            <a id="btnstatus" class="@account_color" href="#">@DisplayName @ln<i class="left material-icons">account_circle</i></a>
                         </li>
                         <li class="waves-effect waves-light">
-                            <a asp-area="Identity" asp-page="/Account/Logout" class="grey-text text-lighten-4"><i class="left material-icons">logout</i>Sair</a>
+                            <a asp-area="Identity" asp-page="/Account/Logout" class="grey-text text-lighten-4">Sair<i class="left material-icons">logout</i></a>
                         </li>
                     }
-                    else
-                    {
-                        <li class="waves-effect waves-light">
-                            <a class="grey-text text-lighten-4waves-effect waves-light" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
-                        </li>                        
-                    } 
             </ul>
         </div>
     </nav>
 </div>
 
-<div id="dropdownuser" class="dropdown-content rounded-default row" style="z-index: 2;">
-    <div class="center-align"><a class="btn" asp-area="Identity" asp-page="/Account/Manage/Index">Perfil</a></></div>
+<div id="dropdownuser" class="dropdown-content rounded-default row">
+    <div class="center-align"><a class="grey-text" asp-area="Identity" asp-page="/Account/Manage/Index">Meu Perfil</a></></div>
     <div class="divider"></div>
-    <div class="center-align"><div class="switch" title="Alterar meu status"><label>Online<input id="chkstatus" checked="@_status" type="checkbox" onclick="myStatus()" /><span class="lever"></span></label></div></div>          
+    <div class="center-align"><div class="switch" title="Alterar meu status"><label style="font-size:10px;">OFF<input id="chkstatus" checked="@_status" type="checkbox" onclick="myStatus()" /><span class="lever"></span>ON</label></div></div>          
 </div>
 
 <script>
@@ -62,8 +57,8 @@
         var st = document.querySelector('#chkstatus');
         var uid = document.querySelector('#meustatusonline').value;
         const btnstatus = document.querySelector('#btnstatus');
-        btnstatus.classList.remove('grey');
-        if (!st.checked) { $('#btnstatus').addClass('grey'); }        
+        btnstatus.classList.remove('teal-text');
+        if (!st.checked) { $('#btnstatus').addClass('teal-text'); }        
         //alert(uid);
         var formData = { id: uid, val: st.checked };
         $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 
