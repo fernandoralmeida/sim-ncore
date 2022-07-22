@@ -56,6 +56,9 @@ blockquote{
 .font-size-14 {
     font-size: 14px;
 }
+.t-uppercase{
+    text-transform: uppercase;
+}
 .borderless{
     border: 0px solid transparent;
 }
@@ -107,12 +110,14 @@ blockquote{
 .mgn-t-10 {
     margin-top: 10px;
 }
-
 .mgn-b-0 {
     margin-bottom: 0px;
 }
 .mgn-b-4{
     margin-bottom:4px;
+}
+.mgn-b-10{
+    margin-bottom:10px;
 }
 .mgn-h-4 {
     margin-left: 4px;

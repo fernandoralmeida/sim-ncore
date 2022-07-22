@@ -44,22 +44,6 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes
             Input.Inscritos = Input.Inscritos.OrderBy(s => s.Participante.Nome).ToList();
         }
 
-        public async Task<IActionResult> OnPostPresenteAsync(Guid id, int ide)
-        {
-            var inscrito = await _appServiceInscricao.GetIdAsync(id);
-
-            var ispresente = inscrito;
-
-            if (ispresente.Presente)
-                ispresente.Presente = false;
-            else
-                ispresente.Presente = true;
-
-            await _appServiceInscricao.UpdateAsync(ispresente);
-
-            return RedirectToPage("./Index", new { id = ide });
-        }
-
         public async Task<JsonResult> OnGetDetalheInscrito(string id)
         {
             return new JsonResult( new List<Domain.Entity.Inscricao>() { await _appServiceInscricao.GetInscritoAsync(new Guid(id)) });

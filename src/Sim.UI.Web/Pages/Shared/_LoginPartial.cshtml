@@ -16,8 +16,8 @@
 <div class="navbar-fixed">
     <nav class="navbar z-depth-0">
         <div class="nav-wrapper teal lighten-2">
-            <a href="#" data-target="sidenav-left" class="sidenav-trigger alpha-w-text-8"><i class="material-icons">menu</i></a>
-            <a class="navbar-page-name alpha-w-text-8">@ViewData["Title"]</a>
+            <a href="#" data-target="sidenav-left" class="sidenav-trigger alpha-w-text-9"><i class="material-icons">menu</i></a>
+            <a class="navbar-page-name alpha-w-text-9">@ViewData["Title"]</a>
             <ul class="right">                
                     @if(SignInManager.IsSignedIn(User))
                     {
@@ -30,15 +30,15 @@
                         var account_color = "";
 
                         @if (!_status)
-                        { account_color = "alpha-w-text-4"; }
+                        { account_color = "alpha-text-5"; }
                         else
-                        { account_color = "alpha-w-text-8"; }
+                        { account_color = "alpha-w-text-9"; }
 
                         <li class="dropdown-trigger @LayoutNavPages.LoginNavClass(ViewContext)" data-target="dropdownuser">
                             <a id="btnstatus" class="@account_color" href="#">@DisplayName @ln<i class="left material-icons">account_circle</i></a>
                         </li>
                         <li class="waves-effect waves-light">
-                            <a asp-area="Identity" asp-page="/Account/Logout" class="alpha-w-text-8">Sair<i class="left material-icons">logout</i></a>
+                            <a asp-area="Identity" asp-page="/Account/Logout" class="alpha-w-text-9">Sair<i class="left material-icons">logout</i></a>
                         </li>
                     }
             </ul>
@@ -57,8 +57,8 @@
         var st = document.querySelector('#chkstatus');
         var uid = document.querySelector('#meustatusonline').value;
         const btnstatus = document.querySelector('#btnstatus');
-        btnstatus.classList.remove('alpha-w-text-4');
-        if (!st.checked) { $('#btnstatus').addClass('alpha-w-text-4'); }        
+        btnstatus.classList.remove('alpha-text-5');
+        if (!st.checked) { $('#btnstatus').addClass('alpha-text-5'); }        
         //alert(uid);
         var formData = { id: uid, val: st.checked };
         $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 

@@ -46,14 +46,12 @@
                 {
                     <tr>
                         <td>
-                            <!--
-                            <a href="#" id="clickbutton" class="btn" data-secao="Pessoa" data-acao="Details" data-id="@Model.Input.Pessoa.Id" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="fas fa-eye"></i></a>-->
                             <a class="btn btn-small orange waves-effect waves-light" asp-page="/Cliente/Manager/Index" asp-route-id="@Model.Input.Pessoa.Id"><i class="material-icons">edit</i></a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => Model.Input.Pessoa.CPF)
                         </td>
-                        <td>
+                        <td class="t-uppercase">
                             @Html.DisplayFor(modelItem => Model.Input.Pessoa.Nome)
                         </td>
                         <td>
@@ -69,7 +67,6 @@
                 {
                     <tr>
                         <td>
-                            <!--<a href="#" class="btn viewbutton" data-secao="Empresa" data-acao="Perfil" data-id="@Model.Input.Empresa.Id" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="fas fa-eye"></i></a>-->
                             <a class="btn btn-small orange waves-effect waves-light" asp-page="/Empresa/Manager/Update" asp-route-id="@Model.Input.Empresa.Id"><i class="material-icons">edit</i></a>
                         </td>
                         <td>
@@ -134,10 +131,7 @@
         </div>
 
     </div>
-
 </form>
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="viewmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewmodalLabel" aria-hidden="true">

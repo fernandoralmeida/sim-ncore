@@ -5,9 +5,9 @@
 }
 
 <div class="row">
-    <div class="col s12">
+    <div class="col s12 alpha-text-7">
         Código: @Model.Input.Codigo
-        <br /><span class="light-blue-text">@Model.Input.Tipo @Model.Input.Nome - @Model.Input.Formato</span>
+        <br /><span class="alpha-w-text-9">@Model.Input.Tipo @Model.Input.Nome - @Model.Input.Formato</span>
         <br />Data: @Model.Input.Data
         <br />@Model.Input.Descricao
     </div>
@@ -48,8 +48,6 @@
                 @{
                     int cont = 0;
                 }
-
-
                 @foreach (var item in Model.Input.Inscritos)
                 {
                 <tr>
@@ -58,19 +56,14 @@
                         @cont.ToString()
                     </td>
                     <td>
-                        @if (item.Presente)
-                        {
-                            <button asp-page-handler="Presente" asp-route-id="@item.Id" asp-route-ide="@Model.Input.Codigo" type="submit" class="btn-flat"><i class="material-icons large">done</i></button>
-                        }
-                        else
-                        {
-                            <button asp-page-handler="Presente" asp-route-id="@item.Id" asp-route-ide="@Model.Input.Codigo" type="submit" class="btn-flat"><i class="material-icons large">check_box_outline_blank</i></button>
-                        }
+                        <div class="switch">
+                            <label><input class="icheckbox" data-id="@item.Id" data-cd="@Model.Input.Codigo" checked="@item.Presente" type="checkbox" /><span class="lever"></span></label>
+                        </div>                        
                     </td>
                     <td>
                         <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Participante.CPF)</a>
                     </td>
-                    <td>
+                    <td class="t-uppercase">
                         @Html.DisplayFor(modelItem => item.Participante.Nome)
                     </td>
                     <td>
@@ -105,6 +98,17 @@
 @section scripts{
     <script>
         $(function () {
+            $(".icheckbox").click(function(){
+                var g_id = $(this).data('id');
+                var e_id = $(this).data('cd');
+                var chk = $(this).prop("checked");                
+                $.get(`/Agenda/Inscricoes/Status?id=${g_id}&ide=${e_id}&st=${chk}`, 
+                    function(returnedData){
+                        
+                }).fail(function(erroData){
+                    alert("Erro");
+                });
+            });
             $(".modal-trigger").click(function () {
                 var customerId = $(this).data('id');
                 $(".modal-content").empty();
