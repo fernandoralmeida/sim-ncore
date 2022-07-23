@@ -35,10 +35,7 @@
                         { account_color = "alpha-w-text-9"; }
 
                         <li class="dropdown-trigger @LayoutNavPages.LoginNavClass(ViewContext)" data-target="dropdownuser">
-                            <a id="btnstatus" class="@account_color" href="#">@DisplayName @ln<i class="left material-icons">account_circle</i></a>
-                        </li>
-                        <li class="waves-effect waves-light">
-                            <a asp-area="Identity" asp-page="/Account/Logout" class="alpha-w-text-9">Sair<i class="left material-icons">logout</i></a>
+                            <a id="btnstatus" class="@account_color" href="#">@DisplayName<i class="left material-icons">account_box</i></a>
                         </li>
                     }
             </ul>
@@ -50,6 +47,8 @@
     <div class="center-align"><a class="grey-text" asp-area="Identity" asp-page="/Account/Manage/Index">Meu Perfil</a></></div>
     <div class="divider"></div>
     <div class="center-align"><div class="switch" title="Alterar meu status"><label style="font-size:10px;">OFF<input id="chkstatus" checked="@_status" type="checkbox" onclick="myStatus()" /><span class="lever"></span>ON</label></div></div>          
+    <div class="divider"></div>
+    <div><a asp-area="Identity" asp-page="/Account/Logout" class="grey-text">Sair<i class="left material-icons">logout</i></a></div>
 </div>
 
 <script>
@@ -59,11 +58,9 @@
         const btnstatus = document.querySelector('#btnstatus');
         btnstatus.classList.remove('alpha-text-5');
         if (!st.checked) { $('#btnstatus').addClass('alpha-text-5'); }        
-        //alert(uid);
         var formData = { id: uid, val: st.checked };
         $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 
         function(returnedData){
-            //alert(returnedData);
         }).fail(function(){
             alert("Erro");
         });

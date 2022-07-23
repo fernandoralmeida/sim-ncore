@@ -18,6 +18,7 @@
     </header>
     <main>        
         <div class="progress" style="display: flex; position: fixed; margin-top: -4px; z-index:998; border-radius: 0px;"><div class="indeterminate"></div></div>
+        <div class="blackboxload"></div>
         <div class="teal lighten-2 navbar-extended"></div>         
         <div class="container-m20">            
             @RenderBody()
@@ -27,26 +28,29 @@
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
-                    <img src="~/icons/sedempi-white-166p.svg" style="margin-top: 15px; margin-bottom: 0px;" />                    
-                    <p class="grey-text text-lighten-4 mgn-0">Secretaria de Desenvolvimento Econômico, Empreendedorimos e Inovação</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="alpha-w-text-9">Links</h5>
+                    <h6 class="white-text">Servidores</h6>
                     <ul>
-                        <li><a class="alpha-w-text-8" href="https://jau.sp.gov.br/servidor" target="_blank">Servidores</a></li>
-                        <li><a class="alpha-w-text-8" href="http://pontodigital.jau.sp.gov.br/" target="_blank">Ponto Digital</a></li>
-                        <li><a class="alpha-w-text-8" href="https://jau.sp.gov.br/servicos-online" target="_blank">Serviços Online</a></li>
-                        <li><a class="alpha-w-text-8" href="https://jau.sp.gov.br/jornal-oficial" target="_blank">Jornal Oficial</a></li>
-                        <li><a class="alpha-w-text-8" href="https://leideacesso.etransparencia.com.br/jahu.prefeitura.sp" target="_blank">Transparencia Pública</a></li>
-                        <li><a class="alpha-w-text-8" href="http://leis.jau.sp.gov.br/" target="_blank">Legislação Municipal</a></li> 
+                        <li><a class="alpha-w-text-9" href="https://portal.conam.com.br/rhjau/login.php" target="_blank">Meu Holerite</a></li>
+                        <li><a class="alpha-w-text-9" href="http://www.jau.sp.gov.br/arquivos/manual_do_servidor.pdf" target="_blank">Manual do Servidor Público</a></li>
+                        <li><a class="alpha-w-text-9" href="http://pontodigital.jau.sp.gov.br/" target="_blank">Ponto Digital</a></li>
+                        <li><a class="alpha-w-text-9" href="http://webmail.jau.sp.gov.br/" target="_blank">Web Mail</a></li>
+                    </ul>
+                </div>
+                <div class="col l4 offset-l2 s12 right">
+                    <h6 class="white-text">Links</h6>
+                    <ul>
+                        <li><a class="alpha-w-text-9" href="https://jau.sp.gov.br/servicos-online" target="_blank">Serviços Online</a></li>
+                        <li><a class="alpha-w-text-9" href="https://jau.sp.gov.br/jornal-oficial" target="_blank">Jornal Oficial</a></li>
+                        <li><a class="alpha-w-text-9" href="https://leideacesso.etransparencia.com.br/jahu.prefeitura.sp" target="_blank">Transparencia Pública</a></li>
+                        <li><a class="alpha-w-text-9" href="http://leis.jau.sp.gov.br/" target="_blank">Legislação Municipal</a></li> 
                     </ul>
                 </div>
             </div>
-            </div>
-            <div class="footer-copyright teal">
-            <div class="container alpha-w-text-9">
+        </div>
+        <div class="footer-copyright">
+            <div class="container white-text">
                 &copy; @DateTime.Now.Year - Sim.Web
-                <a class="right alpha-w-text-9" href="http://www.jau.sp.gov.br">Prefeitura do Municipio de Jahu</a>
+                <a class="white-text right" href="http://www.jau.sp.gov.br" target="_blank">Jahu-SP</a>
             </div>
         </div>
     </footer>
@@ -57,14 +61,13 @@
     
     <script>
         $(window).on('load', function () { 
-            $(".progress").fadeOut("slow");  
-        });  
-    
+            $(".progress").fadeOut("slow"); 
+            $(".blackboxload").hide();
+        });    
         $(function () {
             $(".submit").click(function () {
-                $(".progress").show(); 
-                //document.forms[0].submit();                
-                return true;
+                $(".blackboxload").show();
+                $(".progress").show();
             });
         });
     </script>

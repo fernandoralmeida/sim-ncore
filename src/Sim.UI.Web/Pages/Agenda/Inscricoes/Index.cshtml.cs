@@ -40,7 +40,7 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes
 
         public async Task OnPostReorder(int id)
         {
-            Input = _mapper.Map<InputModelEvento>(await _appServiceEvento.GetCodigoAsync(id));
+            Input = _mapper.Map<InputModelEvento>(await _appServiceEvento.GetEventoToListParticipantes(id));
             Input.Inscritos = Input.Inscritos.OrderBy(s => s.Participante.Nome).ToList();
         }
 

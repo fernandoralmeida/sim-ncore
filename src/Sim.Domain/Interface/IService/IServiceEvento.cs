@@ -7,6 +7,7 @@
         Task<IEnumerable<Evento>> ListNomeAsync(string nome);
         Task<Evento> GetCodigoAsync(int codigo);
         Task<Evento> GetCodigoParticipanteAsync(int codigo);
+        Task<Evento> GetEventoToListParticipantes(int codigo);
         int LastCodigo();
         Task<IEnumerable<Evento>> ListEventosAtivosAsync(IEnumerable<Evento> eventos);
         Task<IEnumerable<Evento>> ListEventosCanceladosAsync(IEnumerable<Evento> eventos);

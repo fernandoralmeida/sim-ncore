@@ -33,6 +33,16 @@ namespace Sim.Data.Repository
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<Evento> GetEventoToListParticipantes(int codigo)
+        {
+            return await _db.Evento                
+                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
+                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)
+                .Where(i => i.Codigo == codigo)                
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<Evento> GetIdAsync(Guid id)
         {
             return await _db.Evento

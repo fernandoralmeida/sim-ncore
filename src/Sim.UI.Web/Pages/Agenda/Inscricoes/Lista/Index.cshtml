@@ -6,18 +6,20 @@
     ViewData["Title"] = "Lista Inscritos";
 }
 
-<div class="row" style="font-family:Arial; font-size:12px;">
-    <div class="col s12">
+<div class="row valign-wrapper">
+    <div class="col s9 m9 l9">
         Código: @Model.Input.Codigo
         <br /><b>@Model.Input.Tipo @Model.Input.Nome</b>
         <br />@Model.Input.Formato para até @Model.Input.Lotacao pessoas.
         <br />Data: @Model.Input.Data
-        <br />Descrição: @Model.Input.Descricao
+    </div>
+    <div class="col s3 m3 l3">
+        <img class="right" src="~/icons/sedempi_166p.svg" style="height:60px;">
     </div>
 </div>
 
-<div style="font-family:Arial; font-size:10px;">
-    <table class="responsive-table">
+<div>
+    <table class="responsive-table border-a">
         <thead>
             <tr>
                 <th>
@@ -35,14 +37,13 @@
                 <th>
                     Contato
                 </th>
+                <th>Assinatura</th>
             </tr>
         </thead>
         <tbody>
             @{
                 int cont = 0;
             }
-
-
             @foreach (var item in Model.Input.Inscritos)
             {
                 <tr>
@@ -93,12 +94,14 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Participante.Tel_Movel)
                     </td>
+                    <td>A.</td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-<div>gerado por @User.Identity.Name</div>
+<span>Secretaria de Desenvolvimento Econômico, Empreendedorismo e Inovação: @User.Identity.Name</span>
+<span class="right">Prefeitura do Município de Jahu</span>
 <!---->
 <div class="row">
     <p class="center">

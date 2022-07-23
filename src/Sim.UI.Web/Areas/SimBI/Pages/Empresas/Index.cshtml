@@ -427,8 +427,12 @@ else
 </div>
 
 @section scripts{
-    <script>
+    <script>        
         $(function () {
+            $(".btn").click(function () {
+                $('#formbiemp').submit();
+                $(this).prop('disabled', true);                
+            });
             $(".modal-trigger").click(function () {
                 var param0 = $(this).data('cnaei');
                 var param1 = $(this).data('cnaef');

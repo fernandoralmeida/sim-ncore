@@ -110,5 +110,10 @@ namespace Sim.Domain.Service
         {
             return await _evento.ListAllAsync();
         }
+
+        public async Task<Evento> GetEventoToListParticipantes(int codigo)
+        {
+            return await _evento.GetEventoToListParticipantes(codigo);
+        }
     }
 }

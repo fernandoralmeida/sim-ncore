@@ -103,8 +103,7 @@
                 var e_id = $(this).data('cd');
                 var chk = $(this).prop("checked");                
                 $.get(`/Agenda/Inscricoes/Status?id=${g_id}&ide=${e_id}&st=${chk}`, 
-                    function(returnedData){
-                        
+                    function(returnedData){                        
                 }).fail(function(erroData){
                     alert("Erro");
                 });

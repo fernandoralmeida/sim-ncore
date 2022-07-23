@@ -31,7 +31,7 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 0;
     options.Lockout.AllowedForNewUsers = false;
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(720);
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
     options.Lockout.MaxFailedAccessAttempts = 5;
 });
 #endregion

@@ -23,6 +23,11 @@ namespace Sim.Application.Services
             return await _evento.GetCodigoParticipanteAsync(codigo);
         }
 
+        public async Task<Evento> GetEventoToListParticipantes(int codigo)
+        {
+            return await _evento.GetEventoToListParticipantes(codigo);
+        }
+
         public async Task<Evento> GetIdAsync(Guid id)
         {
             return await _evento.GetIdAsync(id);
