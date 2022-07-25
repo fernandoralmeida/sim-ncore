@@ -9,7 +9,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-    <div class="white rounded-default z-depth-1-half">
+    <div class="row white rounded-default z-depth-1-half">
         <div class="row pdn-10 mgn-b-0">
             <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>
             <div class="right-align">                
@@ -70,16 +70,18 @@
             </tr>
         </thead>
         <tbody>
-            @{ var cont = 0;}
-            @if(Model.Input.ListaEmpresas != null)
+            @{
+                int cont = 1;
+                int t = (Model.PaginationEmpresas.PageIndex - 1) * Model.PaginationEmpresas.ItemsViews;
+            }
+            @if(Model.PaginationEmpresas != null)
             {
-                @foreach (var item in Model.Input.ListaEmpresas)
+
+                @foreach (var item in Model.PaginationEmpresas)
             {
-                    cont++;
+                    
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => cont)
-                </td>
+                <td>@Functions.Extensions.Contador(cont++, t)</td>
                 <td>
                     @{ var ano = item.Data_Abertura.Value.Year; }
                     @Html.DisplayFor(modelItem => ano)
@@ -113,6 +115,21 @@
             
         </tbody>
     </table>
+
+    @{
+        var prevDisabled = !Model.PaginationEmpresas.HasPreviusPage ? "disabled" : "";
+        var nextDisabled = !Model.PaginationEmpresas.HasNextPage ? "disabled" : "";
+    }
+
+    <div class="card-action right-align">
+        <span class="left teal-text">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
+        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+            <i class="material-icons">navigate_before</i>
+        </a>
+        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+            <i class="material-icons">navigate_next</i> 
+        </a>
+    </div>
 </div>
 
 @section Scripts {

@@ -18,8 +18,8 @@ else
     <div class="row">
         @foreach (var emp in Model.ListEmpresas)
         {
-        <blockquote class="grey-text text-lighten-4">
-            Informações extraidas da base de dados da RFB em 12-03-2022
+        <blockquote class="alpha-text-4">
+            Informações extraidas da base de dados da RFB em 12-07-2022
             <br />E não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"
         </blockquote>
 
@@ -429,7 +429,7 @@ else
 @section scripts{
     <script>        
         $(function () {
-            $(".btn").click(function () {
+            $(".btnsubmit").click(function () {
                 $('#formbiemp').submit();
                 $(this).prop('disabled', true);                
             });

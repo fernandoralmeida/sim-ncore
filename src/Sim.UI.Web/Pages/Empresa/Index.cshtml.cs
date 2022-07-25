@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Domain.Entity;
 using Sim.Application.Interfaces;
+using Sim.UI.Web.Functions;
 using OfficeOpenXml;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sim.UI.Web.Pages.Empresa
 {
@@ -27,6 +29,9 @@ namespace Sim.UI.Web.Pages.Empresa
         [BindProperty(SupportsGet = true)]
         public InputModel Input { get; set; }
 
+        public Pagination<Empresas> PaginationEmpresas { get; set; }
+        public int RegCount { get; set; }
+
         public class InputModel
         {
             
@@ -38,11 +43,38 @@ namespace Sim.UI.Web.Pages.Empresa
             public string CNAE { get; set; }
             public string Logradouro { get; set; }
             public string Bairro { get; set; }
-            public IEnumerable<Empresas> ListaEmpresas { get; set; }
         }
 
-        public void OnGet()
-        {        }
+        public async Task OnGetAsync(string cnpj, string rs, string cnae, string lgd, string bro, int? pag)
+        {
+            try
+            {
+                    var param = new List<object>() {
+                        cnpj,
+                        rs,
+                        cnae,
+                        lgd,
+                        bro
+                    };
+
+                    if (pag == null)
+                        pag = 1;
+
+                    var _list = await   _empresaApp.ListEmpresasAsync(param);
+                    
+                    RegCount = _list.Count();
+                    
+                    var pagesize = 10;
+
+                    IQueryable<Empresas> _empresas = _list.AsQueryable();       
+
+                    PaginationEmpresas = Pagination<Empresas>.Create(_empresas.AsNoTracking(), pag?? 1, pagesize);
+            }
+            catch(Exception ex)
+            {
+                StatusMessage ="Erro: " + ex.Message;
+            }
+        }
 
         public async Task<IActionResult> OnPostExport()
         {
@@ -96,13 +128,22 @@ namespace Sim.UI.Web.Pages.Empresa
                 if (ModelState.IsValid)
                 {                    
                     var param = new List<object>() {
-                    Input.CNPJ,
-                    Input.RazaoSocial,
-                    Input.CNAE,
-                    Input.Logradouro,
-                    Input.Bairro};
+                        Input.CNPJ,
+                        Input.RazaoSocial,
+                        Input.CNAE,
+                        Input.Logradouro,
+                        Input.Bairro
+                    };
 
-                    Input.ListaEmpresas = await _empresaApp.ListEmpresasAsync(param);
+                    var _list = await   _empresaApp.ListEmpresasAsync(param);
+                    
+                    RegCount = _list.Count();
+                    
+                    var pagesize = 10;
+
+                    IQueryable<Empresas> _empresas = _list.AsQueryable();       
+
+                    PaginationEmpresas = Pagination<Empresas>.Create(_empresas.AsNoTracking(), 1, pagesize);
                 }
             }
             catch (Exception ex)

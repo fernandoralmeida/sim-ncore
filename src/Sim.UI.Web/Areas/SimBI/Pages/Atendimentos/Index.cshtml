@@ -86,7 +86,7 @@
 
 @if(Model.Setores != null)
 {
-    <div class="col s12 m9 l9 no-padding">        
+    <div id="divsetores" class="col s12 m9 l9 no-padding">        
         @foreach(var set in Model.Setores.Where(s => s.Cliente.Atendimentos > 0))
         { 
             <div class="col s12 m6 l6">           
@@ -123,7 +123,7 @@
     <div class="col s12 m3 l3">       
                 @if (Model.AppUsers != null)
                 {                
-                    <div class="card large hoverable" style="overflow-x:auto;">
+                    <div id="carduser" class="card hoverable" style="overflow-x:auto;">
                         <div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>
                         @foreach(var m in Model.AppUsers.ListaAppUser)
                         {
@@ -172,6 +172,8 @@
 
 @section scripts{
     <script>
+        var divHeight = Number(document.getElementById('divsetores').offsetHeight - 24) + "px";
+        document.getElementById("carduser").style.height = divHeight;        
         $(function () {
             $(".modal-trigger").click(function () {
                 var param1 = $(this).data('id');

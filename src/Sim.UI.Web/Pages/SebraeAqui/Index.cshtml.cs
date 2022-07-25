@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
-
 using Sim.Application.Interfaces;
+using Sim.UI.Web.Functions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sim.UI.Web.Pages.SebraeAqui
 {
@@ -12,49 +12,38 @@ namespace Sim.UI.Web.Pages.SebraeAqui
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
 
+        public Pagination<Domain.Entity.Atendimento> PaginationAtendimentos { get; set; }
         public IndexModel(IAppServiceAtendimento appServiceAtendimento)
         {
             _appServiceAtendimento = appServiceAtendimento;
-            Input = new()
-            {
-                DataAtendimento = DateTime.Now.Date
-            };
         }
 
         [TempData]
         public string StatusMessage { get; set; }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
-
-        public class InputModel
+        public int RegCount { get; set; }
+               
+        public async Task OnGetAsync(int? pag)
         {
-            [DataType(DataType.Date)]
-            public DateTime? DataAtendimento { get; set; }
-            public IEnumerable<Domain.Entity.Atendimento> ListaAtendimentosNaoLancados { get; set; }
-        }
+            var _list = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
 
-        private async Task LoadAsync()
-        {
-            Input.ListaAtendimentosNaoLancados = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
-        }
+            RegCount = _list.Count();
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            await LoadAsync();
-            return Page();
-        }
+            IQueryable<Domain.Entity.Atendimento> _atendimentos = _list.AsQueryable();
 
+            if (pag == null)
+                pag = 1;
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            await LoadAsync();
-            if (!Input.ListaAtendimentosNaoLancados.Any())
+            var pagesize = 10;
+
+            PaginationAtendimentos = Pagination<Domain.Entity.Atendimento>.Create(_atendimentos.AsNoTracking(), pag ?? 1, pagesize);
+
+            if (!PaginationAtendimentos.Any())
             {
-                StatusMessage = string.Format("N„o h· atendimentos para lanÁar");
+                StatusMessage = string.Format("N√£o h√° atendimentos para lan√ßar");
             }
-            return Page();
         }
+
         public JsonResult OnGetPreview(string id)
         {
             return new JsonResult(_appServiceAtendimento.GetAtendimentoAsync(new Guid(id)).Result);

@@ -3,67 +3,51 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Sim.Application.Interfaces;
+using Sim.UI.Web.Functions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 {
-
 
     [Authorize(Roles = "Administrador,M_Sebrae")]
     public class LancadosModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
-
+        public Pagination<Domain.Entity.Atendimento> PaginationAtendimentos { get; set; }
         public LancadosModel(IAppServiceAtendimento appServiceAtendimento)
         {
             _appServiceAtendimento = appServiceAtendimento;
-            Input = new()
-            {
-                DataAtendimento = DateTime.Now.Date
-            };
         }
 
         [TempData]
         public string StatusMessage { get; set; }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        public int RegCount { get; set; }
 
-        public class InputModel
+        public async Task OnGetAsync(int? pag)
         {
-            [DataType(DataType.Date)]
-            public DateTime? DataAtendimento { get; set; }
+            var _list = await _appServiceAtendimento.ListRaeLancadosAsync(User.Identity.Name);
 
-            public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
-        }
+            RegCount = _list.Count();
 
-        private async Task LoadAsync()
-        {
+            IQueryable<Domain.Entity.Atendimento> _atendimentos = _list.AsQueryable();
 
-            Input.ListaAtendimento = await _appServiceAtendimento.ListRaeLancadosAsync(User.Identity.Name);
-        }
+            if (pag == null)
+                pag = 1;
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            await LoadAsync();
-            return Page();
-        }
+            var pagesize = 10;
 
+            PaginationAtendimentos = Pagination<Domain.Entity.Atendimento>.Create(_atendimentos.AsNoTracking(), pag ?? 1, pagesize);
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            await LoadAsync();
-            if (!Input.ListaAtendimento.Any())
+            if (!PaginationAtendimentos.Any())
             {
-                StatusMessage = string.Format("Erro: Não há atendimentos para do {0}", Input.DataAtendimento.Value.Date);
+                StatusMessage = string.Format("Não há atendimentos para lançar");
             }
-
-            return Page();
         }
 
-        public async Task<JsonResult> OnGetPreview(string id)
+        public JsonResult OnGetPreview(string id)
         {
-            return new JsonResult(await _appServiceAtendimento
-                .GetAtendimentoAsync(new Guid(id)));
+            return new JsonResult(_appServiceAtendimento.GetAtendimentoAsync(new Guid(id)).Result);
         }
     }
 }

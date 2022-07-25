@@ -2,15 +2,14 @@
 @inject Sim.Application.Interfaces.IAppServiceAtendimento MeuAtendimento
 
 <ul id="sidenav-left" class="sidenav sidenav-fixed">
-    <li>
-        <a class="logo-container submit" asp-page="/Index"><img src="~/icons/sedempi-166p.svg" width="150px" style="margin-top: 17px;"/><i class="left teal-text material-icons">show_chart</i></a>
-    </li>
+
     <li class="no-padding alpha-text-6">
         <ul class="collapsible collapsible-accordion">
             <li class="waves-effect waves-teal @LayoutNavPages.InicioNavClass(ViewContext)">
-                <div class="collapsible-header">Setor<i class="material-icons chevron">chevron_left</i></div>
+                <div class="collapsible-header"><img src="~/icons/sedempi-166p.svg" width="150px" style="margin-top: 17px;"/><i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body alpha-text-6">
                     <ul>
+                        <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext)"><a class="waves-effect submit" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
                         <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)"><a class="waves-effect submit" asp-page="/Pat/Index">PAT<i class="left material-icons">chevron_right</i></a></li>
                         <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)"><a class="waves-effect" href="#" >Banco do Povo<i class="left material-icons">chevron_right</i></a></li>
                         <li class="@LayoutNavPages.InicioSANavClass(ViewContext)"><a class="waves-effect submit" asp-page="/SebraeAqui/Index">Sebrae Aqui<i class="left material-icons">chevron_right</i></a></li>

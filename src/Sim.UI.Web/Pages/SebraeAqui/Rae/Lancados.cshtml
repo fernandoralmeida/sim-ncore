@@ -39,17 +39,13 @@
         </thead>
         <tbody>
             @{
-                int cont = 0;
+                int cont = 1;
+                int t = (Model.PaginationAtendimentos.PageIndex - 1) * Model.PaginationAtendimentos.ItemsViews;
             }
-
-
-            @foreach (var item in Model.Input.ListaAtendimento)
+            @foreach (var item in Model.PaginationAtendimentos)
             {
                 <tr>
-                    <td>
-                        @{cont++;}
-                        @cont.ToString()
-                    </td>
+                    <td>@Functions.Extensions.Contador(cont++, t)</td>
                     <td>
                         <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Protocolo)</a>
                     </td>
@@ -85,6 +81,19 @@
             }
         </tbody>
     </table>
+    @{
+        var prevDisabled = !Model.PaginationAtendimentos.HasPreviusPage ? "disabled" : "";
+        var nextDisabled = !Model.PaginationAtendimentos.HasNextPage ? "disabled" : "";
+    }
+    <div class="card-action right-align">
+        <span class="left teal-text">Página @Model.PaginationAtendimentos.PageIndex de @Model.PaginationAtendimentos.TotalPages - @Model.RegCount Reg.</span>
+        <a asp-page="/SebraeAqui/Rae/Lancados" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+            <i class="material-icons">navigate_before</i>
+        </a>
+        <a asp-page="/SebraeAqui/Rae/Lancados" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+            <i class="material-icons">navigate_next</i> 
+        </a>
+    </div>
 </div>
 
 <!-- Modal Structure -->

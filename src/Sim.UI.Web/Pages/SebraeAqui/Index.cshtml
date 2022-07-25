@@ -36,44 +36,53 @@
         </thead>
         <tbody>
             @{
-                int cont = 0;
+                int cont = 1;
+                int t = (Model.PaginationAtendimentos.PageIndex - 1) * Model.PaginationAtendimentos.ItemsViews;
             }
-
-
-            @foreach (var item in Model.Input.ListaAtendimentosNaoLancados)
+            @foreach (var item in Model.PaginationAtendimentos)
             {
-            <tr>
-                <td>
-                    @{cont++;}
-                    @cont.ToString()
-                </td>
-                <td>
-                    <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Protocolo)</a>
-                </td>
-                <td>
-                    @{
+                <tr>
+                    <td>@Functions.Extensions.Contador(cont++, t)</td>
+                    <td>
+                        <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Protocolo)</a>
+                    </td>
+                    <td>
+                        @{
                             var d1 = Convert.ToDateTime(item.Data);
                             var datainicial = d1.ToShortDateString();
-                    }
+                        }
 
-                    @Html.DisplayFor(modelItem => datainicial)
-                </td>
-                <td class="t-uppercase">
-                    @Html.DisplayFor(modelItem => item.Pessoa.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Servicos)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Canal)
-                </td>
-                <td>
-                    <a asp-page="./Rae/Lancar" class="btn-small waves-effect waves-light" asp-route-id="@item.Id">Lançar</a>
-                </td>
-            </tr>
+                        @Html.DisplayFor(modelItem => datainicial)
+                    </td>
+                    <td class="t-uppercase">
+                        @Html.DisplayFor(modelItem => item.Pessoa.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Servicos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Canal)
+                    </td>
+                    <td>
+                        <a asp-page="./Rae/Lancar" class="btn-small waves-effect waves-light" asp-route-id="@item.Id">Lançar</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
+    @{
+        var prevDisabled = !Model.PaginationAtendimentos.HasPreviusPage ? "disabled" : "";
+        var nextDisabled = !Model.PaginationAtendimentos.HasNextPage ? "disabled" : "";
+    }
+    <div class="card-action right-align">
+        <span class="left teal-text">Página @Model.PaginationAtendimentos.PageIndex de @Model.PaginationAtendimentos.TotalPages - @Model.RegCount Reg.</span>
+        <a asp-page="./Index" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+            <i class="material-icons">navigate_before</i>
+        </a>
+        <a asp-page="./Index" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+            <i class="material-icons">navigate_next</i> 
+        </a>
+    </div>
 </div>
 
 <!-- Modal Structure -->
