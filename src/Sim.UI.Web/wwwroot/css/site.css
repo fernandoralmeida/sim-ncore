@@ -266,7 +266,7 @@ nav.navbar .brand-logo {
     transition: transform .2s
 }
 .sidenav .collapsible .collapsible-body {
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     background-color: transparent;
 }
 .sidenav .collapsible>li {
@@ -302,6 +302,15 @@ nav.navbar .brand-logo {
     }
     .navbar-extended{
         width:100vw;
+    }
+    .blackboxload{
+        display:flex;
+        position:absolute;
+        margin-top:0px;
+        z-index:997;
+        height:calc(100% - 56px);
+        width:100%;
+        background-color: rgba(0, 0, 0, 0.5);
     }
 }
 @media only screen and (min-width: 993px) {
@@ -517,6 +526,34 @@ nav.navbar .brand-logo {
     padding:10px 10px 10px 10px;
     vertical-align:middle;
     font-weight:bold;
+}
+.box-middle{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    column-gap: 5px;
+}
+.box-cell{
+    padding-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    column-gap: 4px;
+    padding-bottom: 5px;
+}
+.box-cell-item{
+    padding: 10px;
+    text-align: center;        
+    min-width: 50px;
+    border-radius: 2px;
+}
+.box-cell-item>p{
+    line-height: 28px;   
+}
+.boxbetween{
+    display: flex;
+    justify-content: space-between;
 }
 
 

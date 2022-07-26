@@ -29,8 +29,10 @@
                     <div class="card-header grey-text">Atendimentos<i class="material-icons left">timelapse</i></div>
                     <h2 class="blue-text center pdn-b-4">@Model.Atendimentos_List.Cliente.Atendimentos</h2>
                     <div class="card-action font-size-12">
-                        <span class="grey-text">@Model.Atendimentos_List.ClientePF.Atendimentos<i class="tiny material-icons left">person</i></span>
-                        <span class="grey-text right">@Model.Atendimentos_List.ClientePJ.Atendimentos<i class="tiny material-icons left">business</i></span>
+                        <div class="boxbetween" >
+                            <div class="grey-text box-middle"><i class="tiny material-icons">person</i>@Model.Atendimentos_List.ClientePF.Atendimentos</div>
+                            <div class="grey-text box-middle"><i class="tiny material-icons">business</i>@Model.Atendimentos_List.ClientePJ.Atendimentos</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,8 +43,10 @@
                         <h2 class="light-green-text">@Model.Atendimentos_List.Cliente.Servicos</h2>
                     </div>
                     <div class="card-action font-size-12">
-                        <span class="grey-text"><i class="tiny material-icons left">person</i>@Model.Atendimentos_List.ClientePF.Servicos</span>                                
-                        <span class="grey-text right"><i class="tiny material-icons left">business</i>@Model.Atendimentos_List.ClientePJ.Servicos</span>
+                        <div class="boxbetween">
+                            <div class="grey-text box-middle"><i class="tiny material-icons">person</i>@Model.Atendimentos_List.ClientePF.Servicos</div>
+                            <div class="grey-text box-middle"><i class="tiny material-icons">business</i>@Model.Atendimentos_List.ClientePJ.Servicos</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,15 +55,17 @@
                 {
                     <div class="card hoverable">
                         <div class="card-header grey-text">Atendimentos nos meses<i class="material-icons left">calendar_month</i></div>
-                        <div class="row pdn-h-14 mgn-h-4">
+                        <div class="card-content no-padding">
+                            <div class="box-cell ">                            
                             @foreach(var m in Model.Atendimentos_List.ListaMensal)
                             {
-                                <div class="border-l col s1 l1 m1 center font-size-12 mgn-10">
+                                <div class="box-cell-item grey lighten-5 font-size-12">
                                     <p class="grey-text lighten-2">@m.Mes</p>
                                     <p class="blue-text">@m.Atendimentos</p>
                                     <p class="green-text">@m.Servicos</p>
                                 </div>
                             }
+                            </div>
                         </div>
                     </div>               
                 }
