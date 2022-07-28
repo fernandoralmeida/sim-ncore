@@ -12,10 +12,8 @@
     <div class="row white rounded-default z-depth-1-half">
         <div class="row pdn-10 mgn-b-0">
             <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>
-            <div class="right-align">                
-                <button class="btn waves-effect waves-light submit">Pesquisar</button>
+            <div class="right-align">
                 <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
-                <span class="grey-text lighten-2"> | </span>
                 <a class="dropdown-trigger btn waves-effect waves-light" href="#" title="Opções de consulta" data-target="dropdownrfb"><i class="material-icons left">manage_search</i>RFB</a>
             </div>
         </div>
@@ -38,9 +36,10 @@
                     <input asp-for="Input.Bairro" />
                     <label asp-for="Input.Bairro"></label>
                 </div>
-                <div class="input-field col s12 m12 x12">
+                <div class="input-field col s12 m12 x12 valign-wrapper">
                     <input asp-for="Input.RazaoSocial" />
                     <label asp-for="Input.RazaoSocial"></label>
+                    <button class="btn waves-effect waves-light submit">Pesquisar</button>
                 </div>
             </div>
         </div>
