@@ -106,13 +106,13 @@
                             <p class="grey-text"><i class="tiny material-icons">construction</i><h5 class="light-green-text">@set.Cliente.Servicos</h5></p>
                         </div>
                     </div>
-                    <div class="card-action no-padding pdn-h-10 grey lighten-5"> 
+                    <div class="card-action no-padding"> 
                     @if(set.ListaMensal != null)
                     {                
-                        <div class="row pdn-h-12">                        
+                        <div class="box-cell">                        
                             @foreach(var m in set.ListaMensal)
                             {
-                                <div class="col s1 l1 m1 center font-size-12">
+                                <div class="box-cell-item grey lighten-5 font-size-12">
                                     <p class="grey-text lighten-2">@m.Mes</p>
                                     <p class="blue-text">@m.Atendimentos</p>
                                     <p class="light-green-text">@m.Servicos</p>
