@@ -18,81 +18,221 @@ else
     <div class="row">
         @foreach (var emp in Model.ListEmpresas)
         {
-        <blockquote class="alpha-text-4">
-            Informações extraidas da base de dados da RFB em 12-07-2022
-            <br />E não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"
-        </blockquote>
+            <blockquote class="alpha-text-4">
+                Informações extraidas da base de dados da RFB em 12-07-2022
+                <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"              
+            </blockquote>
 
             <div class="row">
-                <div class="col s12 m4 l4">
-                    <div class="card hoverable">
-                        <table class="centered striped">
-                            <thead>
-                                <tr>
-                                    <th class="card-header grey-text darken-3" title="Mortalidade de Empresas abertas nos ultimos 24 meses"><span>Mortalidade</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var tx in emp.ListaMortalidadeEmpresas)
+                <div class="box-container-card">
+                    <div class="box-column-7">
+                        <div class="box-card hoverable">
+                            <div class="card-header grey-text">Empresas @Model.Input.Ano</div>
+                            <div class="box-stretch mgn-10">
+                                <div class="grey-text">
+                                    <i class="material-icons">file_upload</i><span class="font-h4 blue-text">@emp.Formalizacoes.Value</span>
+                                </div>
+                                <div class="grey-text">
+                                    <i class="material-icons">file_download</i><span class="font-h4 red-text">@emp.Baixas.Value</span>
+                                </div>
+                            </div>                            
+                            <div class="box-card-action font-size-12">
+                                <div class="box-between">
+                                    <div class="grey-text box-middle">Mortalidade em 24 meses</div>
+                                    @foreach (var tx in emp.ListaMortalidadeEmpresas)
+                                    {
+                                        <div class="grey-text box-middle">@tx.Value</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-card hoverable">
+                            <div class="card-header grey-text">Porte</div>
+                            <div class="box-around">                            
+                                @foreach (var op in emp.Porte)
                                 {
-                                    <tr>
-                                        <td>
-                                            <h5 class="blue-text darken-1">@tx.Value</h5>
-                                        </td>
-                                    </tr>
+                                    float v1 = op.Value;
+                                    float v2 = emp.EmpresasAtivas.Value;
+                                    float r = (v1 / v2) * 100;
+                                    <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                        <p class="grey-text">@op.Key</p>
+                                        <p class="blue-text font-h5">@op.Value</p>
+                                        <p class="grey-text">(@r.ToString("N2")%)</p>
+                                    </div>
+                                }   
+                            </div>
+                        </div>
+                        <div class="box-card hoverable">
+                            <div class="card-header grey-text">Fiscal</div>
+                            <div class="box-around">
+                                @{
+                                    float et = emp.EmpresasAtivas.Value;
+                                    float osn = emp.SimplesNacional.Value - emp.OptanteMEI.Value;
+                                    float mei = emp.OptanteMEI.Value;
+                                    float lrp = emp.EmpresasAtivas.Value - emp.SimplesNacional.Value;
 
+                                    float vlrp = (lrp / et) * 100;
+                                    float vsn = (osn / et) * 100;
+                                    float vmei = (mei / et) * 100;
                                 }
-                            </tbody>
-                        </table>
+                                <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                    <p class="grey-text">LRP</p>
+                                    <p class="blue-text font-h5">@lrp</p>
+                                    <p class="grey-text">(@vlrp.ToString("N2")%)</p>
+                                </div>
+                                <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                    <p class="grey-text">S N</p>
+                                    <p class="blue-text font-h5">@osn</p>
+                                    <p class="grey-text">(@vsn.ToString("N2")%)</p>
+                                </div>
+                                <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                    <p class="grey-text">MEI</p>
+                                    <p class="blue-text font-h5">@emp.OptanteMEI.Value</p>
+                                    <p class="grey-text">(@vmei.ToString("N2")%)</p>
+                                </div>                                 
+                            </div>
+                        </div>
+                        <div class="box-card hoverable" style="overflow-x: auto;">
+                            <div class="card-header grey-text">Setores</div>
+                            <div class="box-cell">
+                                @foreach (var st in emp.ListaSetores)
+                                {
+                                    float v1 = st.Value;
+                                    float v2 = emp.EmpresasAtivas.Value;
+                                    float r = (v1 / v2) * 100;
+                                    <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                        <p class="grey-text">@st.Key</p>
+                                        <p class="blue-text font-h6">@st.Value</p>
+                                        <p class="grey-text">(@r.ToString("N2")%)</p>
+                                        <!--
+                                        <div class="divider"></div>
+                                        <div class="box-cell-item-flex-desc">
+                                            @if (st.Key == "Serviços")
+                                            {
+                                                int c = 0;
+                                                @foreach (var at in emp.Servicos)
+                                                {
+                                                    if (c < 5)
+                                                    {
+                                                        <p class="grey-text truncate" title="@at.Key">[@at.Value] @at.Key</p>
+                                                    }
+                                                    else
+                                                        break;
+                                                    c++;
+                                                }
+                                            }
+                                            @if (st.Key == "Comércio")
+                                            {
+                                                int c = 0;
+                                                @foreach (var at in emp.Comercio)
+                                                {
+                                                    if (c < 5)
+                                                    {
+                                                        <p class="grey-text truncate" title="@at.Key">[@at.Value] @at.Key</p>
+                                                    }
+                                                    else
+                                                        break;
+                                                    c++;
+                                                }
+                                            }
+                                            @if (st.Key == "Indústria")
+                                            {
+                                                int c = 0;
+                                                @foreach (var at in emp.Indistria)
+                                                {
+                                                    if (c < 5)
+                                                    {
+                                                        <p class="grey-text" title="@at.Key">[@at.Value] @at.Key</p>
+                                                    }
+                                                    else
+                                                        break;
+                                                    c++;
+                                                }
+                                            }
+                                            @if (st.Key == "Construção")
+                                            {
+                                                int c = 0;
+                                                @foreach (var at in emp.Construcao)
+                                                {
+                                                    if (c < 5)
+                                                    {
+                                                        <p class="grey-text" title="@at.Key">[@at.Value] @at.Key</p>
+                                                    }
+                                                    else
+                                                        break;
+                                                    c++;
+                                                }
+                                            }
+                                            @if (st.Key == "Agropecuária")
+                                            {
+                                                int c = 0;
+                                                @foreach (var at in emp.Agro)
+                                                {
+                                                    if (c < 5)
+                                                    {
+                                                        <p class="grey-text" title="@at.Key">[@at.Value] @at.Key</p>
+                                                    }
+                                                    else
+                                                        break;
+                                                    c++;
+                                                }
+                                            }  
+                                        </div>-->
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="box-card hoverable">
+                            <div class="card-header grey-text">Novas Empresas</div>
+                            <div class="box-around">
+                                @foreach (var op in emp.ListaMensal)
+                                {
+                                    float v1 = op.Value;
+                                    float v2 = emp.EmpresasAtivas.Value;
+                                    float r = (v1 / v2) * 100;
+                                    <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                        <p class="grey-text">@op.Key</p>
+                                        <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@op.Value</p>
+                                        <p class="grey-text">(@r.ToString("N2")%)</p>
+                                    </div>   
+                                }
+                            
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col s12 m4 l4">
-                    <div class="card hoverable">
-                        <table class="centered striped">
-                            <thead>
-                                <tr>
-                                    <th class="card-header grey-text darken-3">@emp.Formalizacoes.Key @Model.Input.Ano</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var tx in emp.ListaMortalidadeEmpresas)
+                    <div class="box-column-3">
+                        <div class="box-card hoverable" style="overflow-x:auto;">
+                            <div class="card-header grey-text">Atividades</div>                            
+                            @{int v = 0;}
+                            @foreach (var op in emp.ListaAtividades)
+                            {
+                                if (v < 5)
                                 {
-                                    <tr>
-                                        <td>
-                                            <h5 class="green-text darken-1">@emp.Formalizacoes.Value</h5>
-                                        </td>
-                                    </tr>
-
+                                    <div class="font-size-12 pdn-4 center">
+                                        <p class="grey-text lighten-2 truncate">@op.Key</p>                                
+                                        <p class="light-green-text">@op.Value</p>
+                                    </div>
+                                    <div class="divider"></div>
                                 }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col s12 m4 l4">
-                    <div class="card hoverable">
-                        <table class="centered striped">
-                            <thead>
-                                <tr>
-                                    <th class="card-header grey-text darken-3">@emp.Baixas.Key @Model.Input.Ano</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var tx in emp.ListaMortalidadeEmpresas)
+                                else
                                 {
-                                    <tr>
-                                        <td>
-                                            <h5 class="materialize-red-text darken-1">@emp.Baixas.Value</h5>
-                                        </td>
-                                    </tr>
-
+                                    break;
                                 }
-                            </tbody>
-                        </table>
+                                v++;
+                            }                            
+                        </div>
                     </div>
                 </div>
             </div>
+        }
+    </div>
 
 
+
+
+    <div class="row">
+        @foreach (var emp in Model.ListEmpresas)
+        {
 
             <div class="row">
                 <div class="col s12 m12 l12">
@@ -142,252 +282,7 @@ else
                                 </tbody>
                             </table>
 
-                        }
-                        else if(Model.Input.Mes == "00")
-                        {
-                            <table class="responsive-table striped centered">
-                                <caption class="grey-text">Empresas Formalizadas @Model.Input.Ano</caption>
-                                <thead>
-                                    <tr>
-                                        @foreach (var op in emp.ListaMensal)
-                                        {
-                                            <th class="grey-text darken-3">@op.Key</th>
-                                        }
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        @foreach (var op in emp.ListaMensal)
-                                        {
-                                            float v1 = op.Value;
-                                            float v2 = emp.EmpresasAtivas.Value;
-                                            float r = (v1 / v2) * 100;
-                                            <td class="blue-text darken-3">@op.Value <span class="purple-text">(@r.ToString("N2")%)</span></td>
-                                        }
-                                    </tr>
-                                </tbody>
-                            </table>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <div class="card hoverable">
-                        <table class="responsive-table striped centered">
-                            <caption class="grey-text">Porte</caption>
-                            <thead>
-                                <tr>
-                                    @foreach (var op in emp.Porte)
-                                    {
-                                        <th class="grey-text darken-3">@op.Key</th>
-                                    }
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    @foreach (var op in emp.Porte)
-                                    {
-                                        float v1 = op.Value;
-                                        float v2 = emp.EmpresasAtivas.Value;
-                                        float r = (v1 / v2) * 100;
-                                        <td class="blue-text darken-3">@op.Value <span class="purple-text">(@r.ToString("N2")%)</span></td>
-                                    }
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col s12 m6 l6">
-                    <div class="card hoverable">
-                        <table class="responsive-table striped centered">
-                            <caption class="grey-text">Regime Tributário</caption>
-                            <thead>
-                                <tr>
-                                    <th class="grey-text darken-3" title="Lucro Real ou Presumido">Lucro RP</th>
-                                    <th class="grey-text darken-3">Simples Nacional</th>
-                                    <th class="grey-text darken-3">Optante MEI</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-
-                                    @{
-                                        float et = emp.EmpresasAtivas.Value;
-                                        float osn = emp.SimplesNacional.Value - emp.OptanteMEI.Value;
-                                        float mei = emp.OptanteMEI.Value;
-                                        float lrp = emp.EmpresasAtivas.Value - emp.SimplesNacional.Value;
-
-                                        float vlrp = (lrp / et) * 100;
-                                        float vsn = (osn / et) * 100;
-                                        float vmei = (mei / et) * 100;
-                                    }
-                                    <td class="blue-text darken-3">@lrp <span class="purple-text">(@vlrp.ToString("N2")%)</span></td>
-                                    <td class="blue-text darken-3">@osn <span class="purple-text">(@vsn.ToString("N2")%)</span></td>
-                                    <td class="blue-text darken-3">@emp.OptanteMEI.Value <span class="purple-text">(@vmei.ToString("N2")%)</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col s12">
-                    <div class="card hoverable">
-                        <table class="responsive-table striped centered">
-                            <caption class="grey-text">Distribuição por Setor</caption>
-                            <thead>
-                                <tr>
-                                    @foreach (var st in emp.ListaSetores)
-                                    {
-                                        <th class="grey-text">@st.Key</th>
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    @foreach (var st in emp.ListaSetores)
-                                    {
-                                        float v1 = st.Value;
-                                        float v2 = emp.EmpresasAtivas.Value;
-                                        float r = (v1 / v2) * 100;
-                                        <td class="blue-text">@st.Value <span class="purple-text">(@r.ToString("N2")%)</span></td>
-                                    }
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                @{ var count = 0; var sz = "m3 l3";}
-
-                @foreach (var str in emp.ListaSetores)
-                {
-                    if(count == 0 || count == 4)
-                    {
-                        sz = "m3 l3";
-                    }
-                    else
-                        sz = "m2 l2";
-
-                    count++;
-
-                    <div class="col s12 @sz">
-                        <div class="card hoverable">
-                            <ul class="collection">
-                                @if (str.Key == "Serviços")
-                                {
-                                    int c = 0;
-                                    <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
-                                    @foreach (var at in emp.Servicos)
-                                    {
-                                        if (c < 5)
-                                        {
-                                            <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
-                                        }
-                                        else
-                                            break;
-                                        c++;
-                                    }
-                                }
-                                @if (str.Key == "Comércio")
-                                {
-                                    int c = 0;
-                                    <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>                                
-
-                                    @foreach (var at in emp.Comercio)
-                                    {
-                                        if (c < 5)
-                                        {
-                                            <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
-                                        }
-                                        else
-                                            break;
-                                        c++;
-                                    }
-                                }
-                                @if (str.Key == "Indústria")
-                                {
-                                    int c = 0;
-                                    <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
-                                    
-                                    @foreach (var at in emp.Indistria)
-                                    {
-                                        if (c < 5)
-                                        {
-                                            <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
-                                        }
-                                        else
-                                            break;
-                                        c++;
-                                    }
-                                }
-                                @if (str.Key == "Construção")
-                                {
-                                    int c = 0;
-                                    <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
-                                    
-                                    @foreach (var at in emp.Construcao)
-                                    {
-                                        if (c < 5)
-                                        {
-                                            <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
-                                        }
-                                        else
-                                            break;
-                                        c++;
-                                    }
-                                }
-                                @if (str.Key == "Agropecuária")
-                                {
-                                    int c = 0;
-                                    <li class="collection-item grey-text truncate" title="@str.Key (@str.Value)"><b>@str.Key (@str.Value)</b></li>
-                                    
-                                    @foreach (var at in emp.Agro)
-                                    {
-                                        if (c < 5)
-                                        {
-                                            <li class="collection-item truncate" title="@at.Key"><span class="badge purple-text" data-badge-caption="@at.Value"></span>@at.Key</li>
-                                        }
-                                        else
-                                            break;
-                                        c++;
-                                    }
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                }
-
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <div class="card hoverable">
-                        <ul class="collection striped">
-                            <li class="collection-item grey-text truncate"><b>Atividades Primárias (10+ Ocorrências no geral)</b></li>
-                            @{int v = 0;}
-
-                            @foreach (var op in emp.ListaAtividades)
-                            {
-                                if (v < 10)
-                                {
-                                    <li class="collection-item truncate"><span class="badge purple-text" data-badge-caption="@op.Value"></span>@op.Key</li>
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                                v++;
-                            }
-                        </ul>
+                        }                        
                     </div>
                 </div>
             </div>

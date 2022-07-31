@@ -29,7 +29,7 @@
                     <div class="card-header grey-text">Atendimentos<i class="material-icons left">timelapse</i></div>
                     <h2 class="blue-text center pdn-b-4">@Model.Atendimentos_List.Cliente.Atendimentos</h2>
                     <div class="card-action font-size-12">
-                        <div class="boxbetween" >
+                        <div class="box-between" >
                             <div class="grey-text box-middle"><i class="tiny material-icons">person</i>@Model.Atendimentos_List.ClientePF.Atendimentos</div>
                             <div class="grey-text box-middle"><i class="tiny material-icons">business</i>@Model.Atendimentos_List.ClientePJ.Atendimentos</div>
                         </div>
@@ -43,7 +43,7 @@
                         <h2 class="light-green-text">@Model.Atendimentos_List.Cliente.Servicos</h2>
                     </div>
                     <div class="card-action font-size-12">
-                        <div class="boxbetween">
+                        <div class="box-between">
                             <div class="grey-text box-middle"><i class="tiny material-icons">person</i>@Model.Atendimentos_List.ClientePF.Servicos</div>
                             <div class="grey-text box-middle"><i class="tiny material-icons">business</i>@Model.Atendimentos_List.ClientePJ.Servicos</div>
                         </div>
@@ -55,7 +55,7 @@
                 {
                     <div class="card hoverable">
                         <div class="card-header grey-text">Atendimentos nos meses<i class="material-icons left">calendar_month</i></div>
-                        <div class="card-content no-padding">
+                        <div class="card-content no-padding" style="margin-top:9px;">
                             <div class="box-cell ">                            
                             @foreach(var m in Model.Atendimentos_List.ListaMensal)
                             {
@@ -97,7 +97,7 @@
         { 
             <div class="col s12 m6 l6">           
                 <div class="card hoverable">
-                    <div class="card-header grey-text">@set.Cliente.Titulo<i class="material-icons left">meeting_room</i></div>
+                    <div class="card-header grey-text">@set.Cliente.Titulo<i class="material-icons left">keyboard_arrow_down</i></div>
                     <div class="row pdn-h-12">
                         <div class="col s6 l6 m6 center font-size-12">
                             <p class="grey-text"><i class="tiny material-icons">timelapse</i><h5 class="light-blue-text">@set.Cliente.Atendimentos</h5></p>
@@ -106,7 +106,7 @@
                             <p class="grey-text"><i class="tiny material-icons">construction</i><h5 class="light-green-text">@set.Cliente.Servicos</h5></p>
                         </div>
                     </div>
-                    <div class="card-action no-padding"> 
+                    <div class="card-content no-padding"> 
                     @if(set.ListaMensal != null)
                     {                
                         <div class="box-cell">                        
