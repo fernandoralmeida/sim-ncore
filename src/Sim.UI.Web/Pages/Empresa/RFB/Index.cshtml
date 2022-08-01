@@ -1,6 +1,5 @@
-﻿@page
-@model Sim.UI.Web.Pages.Empresa.IndexModel
-
+@page
+@model Sim.UI.Web.Pages.Empresa.RFB.IndexModel
 @{
     ViewData["Title"] = "Empresas";
     ViewData["ActivePage"] = EmpresaNavPages.Inicio;
@@ -20,25 +19,9 @@
         <div class="divider"></div>
         <div class="row mgn-b-0">
             <div class="col s12">
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.CNPJ" id="inputCNPJ"/>
-                    <label asp-for="Input.CNPJ"></label>
-                </div>
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.CNAE" id="inputCNAE" />
-                    <label asp-for="Input.CNAE"></label>
-                </div>
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.Logradouro" />
-                    <label asp-for="Input.Logradouro"></label>
-                </div>
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.Bairro" />
-                    <label asp-for="Input.Bairro"></label>
-                </div>
                 <div class="input-field col s12 m12 x12 valign-wrapper">
-                    <input asp-for="Input.RazaoSocial" />
-                    <label asp-for="Input.RazaoSocial"></label>
+                    <input asp-for="GetCNPJ" />
+                    <label asp-for="GetCNPJ"></label>
                     <button class="btn waves-effect waves-light submit">Pesquisar</button>
                 </div>
             </div>
@@ -122,7 +105,7 @@
 
     <div class="card-action right-align">
         <span class="left teal-text">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
-        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+        <a asp-page="./Index" asp-route-cnpj="@GetCNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
         <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
@@ -130,12 +113,3 @@
         </a>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/jquery.mask.min.js"></script>
-    <script>
-        $('#inputCNPJ').mask('00.000.000/0000-00');
-        $('#inputCNAE').mask('00.00-0-00');
-    </script>
-}
