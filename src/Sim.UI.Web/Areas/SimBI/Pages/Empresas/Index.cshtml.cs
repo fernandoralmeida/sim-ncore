@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel;
 using Sim.Application.Cnpj.Interfaces;
 using Sim.Domain.Cnpj.Entity;
-using OfficeOpenXml;
 
 namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 { 
@@ -14,28 +11,16 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
     {
         private readonly IAppServiceCnpj _appEmpresa;
 
-        public SelectList ListaMunicipios { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public IEnumerable<BIEmpresas> ListEmpresas { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<BICnae> ListCnaes { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<BaseReceitaFederal> ListCnaeTB { get; set; }
 
         [BindProperty]
         public InputModel Input { get; set; }
 
         public class InputModel
         {
-            [DisplayName("Situação")]
-            public string Situacao { get; set; }
             public string Municipio { get; set; }
-            public string Mes { get; set; }
             public int Ano { get; set; }
-            public string Modo { get; set; }
         }
 
         [TempData]
@@ -43,49 +28,31 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 
         public IndexModel(IAppServiceCnpj appEmpresa)
         {
-            _appEmpresa = appEmpresa;
+            _appEmpresa = appEmpresa;     
+            Input=new();       
         }
-
-        private async Task LoadMunicipios()
+        public async Task OnGetAsync(string? m)
         {
-            ListaMunicipios = new SelectList(
-                await _appEmpresa.ToListMicroRegiaoJahuAsync(),
-                nameof(Municipio.Codigo),
-                nameof(Municipio.Descricao),
-                null);            
-        }
+            StatusMessage = "";
 
-        private async Task LoadAsync()
-        {
-            await LoadMunicipios();
-
-            if (Input.Modo == "Atividades")
-                ListCnaes = await _appEmpresa.ToListBICnaeAsync(Input.Municipio);            
-
+            if(string.IsNullOrEmpty(m))
+                Input.Municipio = "6607";
             else
-                ListEmpresas = await _appEmpresa.ToListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano.ToString(), Input.Mes);
+                Input.Municipio = m;
+
+            Input.Ano= DateTime.Today.Year;
+            
+            ListEmpresas = await _appEmpresa.ToListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano.ToString(), "00");
         }
 
-        public async Task OnGetAsync()
+        public async Task OnPostAsync(string? m)
         {
-            Input = new()
-            {
-                Municipio = "6607",
-                Situacao = "Ativa",
-                Ano = DateTime.Today.Year,
-                Mes = "00"
-            };
-            await LoadAsync();
-        }
-
-        public async Task OnPostAsync()
-        {
-            await LoadAsync();
-        }
-
-        public async Task<JsonResult> OnGetPreview(string ci, string cf, string m, string a)
-        {
-            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(ci, cf, m, a));
+            if(string.IsNullOrEmpty(m))
+                Input.Municipio = "6607";
+            else
+                Input.Municipio = m;
+                
+            ListEmpresas = await _appEmpresa.ToListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano.ToString(), "00");
         }
     }
 }

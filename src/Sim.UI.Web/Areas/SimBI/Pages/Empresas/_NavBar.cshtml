@@ -1,47 +1,26 @@
 ﻿@using Sim.UI.Web.Areas.SimBI.Pages.Empresas
-@model Sim.UI.Web.Areas.SimBI.Pages.Empresas.IndexModel
+@inject Sim.Application.Cnpj.Interfaces.IAppServiceCnpj appServiceCnpj;
+@model string
 
+@{ var municipios = await appServiceCnpj.ToListMicroRegiaoJahuAsync();}
 
-<form id="formbiemp" method="post">
-    <div class="row white rounded-default z-depth-1">
-        <div class="col s12 l3 m3 right">
-            <div class="input-field valign-wrapper pdn-h-8" style="margin:0px;">
-                <input asp-for="Input.Ano" />
-                <button class="btn waves-effect waves-light submit btnsubmit"><i class="material-icons">refresh</i></button>
-            </div>
-        </div>
-        <div class="col right"> 
-            <div class="input-field valign-wrapper pdn-h-8" style="margin:0px;">
-                <select asp-for="Input.Mes">
-                    <option value="99" selected>Geral</option>
-                    <option value="00">Anual</option>
-                    <option value="01">Janeiro</option>
-                    <option value="02">Feveiro</option>
-                    <option value="03">Março</option>
-                    <option value="04">Abril</option>
-                    <option value="05">Maio</option>
-                    <option value="06">Junho</option>
-                    <option value="07">Julho</option>
-                    <option value="08">Agosto</option>
-                    <option value="09">Setembro</option>
-                    <option value="10">Outubro</option>
-                    <option value="11">Novembro</option>
-                    <option value="12">Dezembro</option>
-                </select>
-            </div>
-        </div>
-        <div class="col right">
-            <div class="input-field valign-wrapper pdn-h-8" style="margin:0px;">
-                <select id="municip" asp-for="Input.Municipio" asp-items="@Model.ListaMunicipios"></select>
-            </div>
-        </div>
-        <div class="col right">
-            <div class="input-field valign-wrapper pdn-h-8" style="margin:0px;">
-                <select asp-for="Input.Modo">
-                    <option selected>Empresas</option>
-                    <option>Atividades</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</form>
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  @foreach (var item in municipios)
+  {
+    <li><a class="submit" asp-route-m="@item.Codigo">@item.Descricao</a></li>
+  }
+</ul>
+<nav>
+  <div class="nav-wrapper">
+    <ul class="right">
+      <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model">Empresas</a></li>
+      <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model">Cnaes</a></li>
+
+      @{var nome = municipios.Where(n=>n.Codigo.Contains(Model));}
+
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@nome.SingleOrDefault().Descricao<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+  </div>
+</nav>
+

@@ -1438,7 +1438,7 @@ namespace Sim.Domain.Cnpj.Services
                                         }
                                     }
 
-                                    _atv.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                    _atv.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                     _emp.Add("E");
 
                                     cnae = Convert.ToInt32(at.AtividadePrincipal.Codigo.Remove(2, 5));
@@ -1446,23 +1446,23 @@ namespace Sim.Domain.Cnpj.Services
                                     if (cnae >= 1 && cnae <= 3)
                                     {
                                         _setores.Add("Agropecuária");
-                                        _agro.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                        _agro.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                     }
 
                                     else if (cnae >= 45 && cnae <= 47)
                                     {
                                         _setores.Add("Comércio");
-                                        _comercio.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                        _comercio.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                     }
                                     else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
                                     {
                                         _setores.Add("Indústria");
-                                        _industria.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                        _industria.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                     }
                                     else if (cnae >= 41 & cnae <= 43)
                                     {
                                         _setores.Add("Construção");
-                                        _construcao.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                        _construcao.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                     }
                                     else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
                                         || (cnae >= 49 && cnae <= 53)
@@ -1481,7 +1481,7 @@ namespace Sim.Domain.Cnpj.Services
                                         || (cnae == 99))
                                     {
                                         _setores.Add("Serviços");
-                                        _servico.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                        _servico.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                     }
                                 }
 
@@ -1562,7 +1562,7 @@ namespace Sim.Domain.Cnpj.Services
                                             }
                                         }
 
-                                        _atv.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                        _atv.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         _emp.Add("E");
 
                                         cnae = Convert.ToInt32(at.AtividadePrincipal.Codigo.Remove(2, 5));
@@ -1570,23 +1570,23 @@ namespace Sim.Domain.Cnpj.Services
                                         if (cnae >= 1 && cnae <= 3)
                                         {
                                             _setores.Add("Agropecuária");
-                                            _agro.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _agro.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
 
                                         else if (cnae >= 45 && cnae <= 47)
                                         {
                                             _setores.Add("Comércio");
-                                            _comercio.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _comercio.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                         else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
                                         {
                                             _setores.Add("Indústria");
-                                            _industria.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _industria.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                         else if (cnae >= 41 & cnae <= 43)
                                         {
                                             _setores.Add("Construção");
-                                            _construcao.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _construcao.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                         else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
                                             || (cnae >= 49 && cnae <= 53)
@@ -1605,7 +1605,7 @@ namespace Sim.Domain.Cnpj.Services
                                             || (cnae == 99))
                                         {
                                             _setores.Add("Serviços");
-                                            _servico.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _servico.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                     }
 
@@ -1644,7 +1644,7 @@ namespace Sim.Domain.Cnpj.Services
                                             }
                                         }
 
-                                        _atv.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                        _atv.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         _emp.Add("E");
 
                                         cnae = Convert.ToInt32(at.AtividadePrincipal.Codigo.Remove(2, 5));
@@ -1652,23 +1652,23 @@ namespace Sim.Domain.Cnpj.Services
                                         if (cnae >= 1 && cnae <= 3)
                                         {
                                             _setores.Add("Agropecuária");
-                                            _agro.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _agro.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
 
                                         else if (cnae >= 45 && cnae <= 47)
                                         {
                                             _setores.Add("Comércio");
-                                            _comercio.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _comercio.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                         else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
                                         {
                                             _setores.Add("Indústria");
-                                            _industria.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _industria.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                         else if (cnae >= 41 & cnae <= 43)
                                         {
                                             _setores.Add("Construção");
-                                            _construcao.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _construcao.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                         else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
                                             || (cnae >= 49 && cnae <= 53)
@@ -1687,7 +1687,7 @@ namespace Sim.Domain.Cnpj.Services
                                             || (cnae == 99))
                                         {
                                             _setores.Add("Serviços");
-                                            _servico.Add(string.Format("{0} - {1}", at.AtividadePrincipal.Codigo, at.AtividadePrincipal.Descricao));
+                                            _servico.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
                                         }
                                     }
 
