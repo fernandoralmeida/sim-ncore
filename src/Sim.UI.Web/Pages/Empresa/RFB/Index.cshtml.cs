@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Sim.Application.Cnpj.Interfaces;
 using Sim.Domain.Cnpj.Entity;
 using Sim.UI.Web.Functions;
@@ -18,8 +19,7 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
         [BindProperty(SupportsGet = true)]
         public string GetCNPJ{ get; set; }
 
-        public IEnumerable<BaseReceitaFederal> DoList { get; set; }
-        public Pagination<BaseReceitaFederal> PaginationEmpresas { get; set; }
+        public Pagination<BaseReceitaFederal> Pagination { get; set; }
         public int RegCount { get; set; }
 
         public IndexModel(IAppServiceCnpj appServiceCnpj)
@@ -27,13 +27,37 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
             _appServiceCnpj = appServiceCnpj;
         }
 
-        public async Task OnGetAsync(){ 
-            await Task.Run(()=>{});
-            StatusMessage = "Iniciando RFB!";
+        private async Task<Pagination<BaseReceitaFederal>> DoListAsync(string c, int? p)
+        {
+            var list = await _appServiceCnpj.ListAllMatrizFilialAsync(c);
+            RegCount = list.Count();
+            var pagesize = 10;
+            var _empresas = list.AsQueryable();
+            return Pagination<BaseReceitaFederal>.Create(_empresas.AsNoTracking(), p?? 1, pagesize);
+        }
+
+        public async Task OnGetAsync(string c, int? p)
+        { 
+            try
+            {
+                Pagination = await DoListAsync(c, p);
+            }
+            catch(Exception ex)
+            {
+                StatusMessage = "Erro: " + ex.Message;
+            }
         }
 
         public async Task OnPostAsync(){
-            DoList = await _appServiceCnpj.ListAllMatrizFilialAsync(GetCNPJ);
+
+            try
+            {
+                Pagination = await DoListAsync(GetCNPJ.MaskRemove(), 1);
+            }
+            catch(Exception ex)
+            {
+                StatusMessage = "Erro: " + ex.Message;
+            }
         }
     }
 }

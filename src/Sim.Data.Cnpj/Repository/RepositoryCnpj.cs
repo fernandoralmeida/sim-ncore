@@ -164,7 +164,14 @@ namespace Sim.Data.Cnpj.Repository
 
                 var qry = (from est in _db.Estabelecimentos
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
-                           select new { est, emp })
+
+                           from atv in _db.CNAEs
+                           .Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+
+                           from mnp in _db.Municipios
+                           .Where(s => est.Municipio == s.Codigo)
+
+                           select new { est, emp, atv, mnp })
                           .Where(s => s.emp.CNPJBase == cnpjbase).Distinct().AsNoTracking();
 
                 foreach (var e in qry)
@@ -173,7 +180,7 @@ namespace Sim.Data.Cnpj.Repository
 
 
                     brf.Add(new BaseReceitaFederal(
-                        0, _cnpj, e.emp, e.est, null, null, null, null, null, null, null, null));
+                        0, _cnpj, e.emp, e.est, null, null, e.atv, null, null, null, e.mnp, null));
                 }
                 return brf;
             });

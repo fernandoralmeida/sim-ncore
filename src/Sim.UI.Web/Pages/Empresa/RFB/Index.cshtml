@@ -10,18 +10,15 @@
 <form method="post">
     <div class="row white rounded-default z-depth-1-half">
         <div class="row pdn-10 mgn-b-0">
-            <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>
-            <div class="right-align">
-                <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
-                <a class="dropdown-trigger btn waves-effect waves-light" href="#" title="Opções de consulta" data-target="dropdownrfb"><i class="material-icons left">manage_search</i>RFB</a>
-            </div>
+            <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>                        
+            <a class="dropdown-trigger btn waves-effect waves-light right" href="#" title="Opções de consulta" data-target="dropdownrfb"><i class="material-icons left">manage_search</i>RFB</a>            
         </div>
         <div class="divider"></div>
         <div class="row mgn-b-0">
             <div class="col s12">
                 <div class="input-field col s12 m12 x12 valign-wrapper">
-                    <input asp-for="GetCNPJ" />
-                    <label asp-for="GetCNPJ"></label>
+                    <input asp-for="GetCNPJ" id="inputCNPJ"/>
+                    <label>CNPJ Base</label>
                     <button class="btn waves-effect waves-light submit">Pesquisar</button>
                 </div>
             </div>
@@ -31,8 +28,8 @@
 
 <ul id="dropdownrfb" class="dropdown-content">
     <li><a asp-page="/Empresa/RFB/Index">CNPJ Base</a></li>
-    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-razao-social">Razao Social</a></li>
-    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-socio">Nome Sócio</a></li>
+    <li><a asp-page="/Empresas/RFB/RSocial">Razao Social</a></li>
+    <li><a asp-page="/Empresas/RFB/Socios">Nome Sócio</a></li>
 </ul>
 
 <div class="card" style="overflow-y:auto;">
@@ -54,42 +51,41 @@
         <tbody>
             @{
                 int cont = 1;
-                int t = (Model.PaginationEmpresas.PageIndex - 1) * Model.PaginationEmpresas.ItemsViews;
+                int t = (Model.Pagination.PageIndex - 1) * Model.Pagination.ItemsViews;
             }
-            @if(Model.PaginationEmpresas != null)
+            @if(Model.Pagination != null)
             {
 
-                @foreach (var item in Model.PaginationEmpresas)
+                @foreach (var item in Model.Pagination)
             {
                     
             <tr>
                 <td>@Functions.Extensions.Contador(cont++, t)</td>
-                <td>
-                    @{ var ano = item.Data_Abertura.Value.Year; }
-                    @Html.DisplayFor(modelItem => ano)
+                <td>                    
+                    @Html.DisplayFor(modelItem => item.Estabelecimento.DataInicioAtividade)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CNPJ)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nome_Empresarial)
+                    @Html.DisplayFor(modelItem => item.Empresa.RazaoSocial)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Telefone)
+                    @Html.DisplayFor(modelItem => item.Estabelecimento.Telefone1)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.Estabelecimento.CorreioEletronico)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
+                    @Html.DisplayFor(modelItem => item.Estabelecimento.SituacaoCadastral)
                 </td>
                 <td>
-                    @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
+                    @{var end = string.Format("{0}, {1}",item.Estabelecimento.Logradouro, item.Estabelecimento.Numero);}
                     @Html.DisplayFor(modelItem => end) 
                 </td>
-                <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cidade.Descricao)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CNAE_Principal) @Html.DisplayFor(modelItem => item.Atividade_Principal)
+                    @Html.DisplayFor(modelItem => item.AtividadePrincipal.Codigo) @Html.DisplayFor(modelItem => item.AtividadePrincipal.Descricao)
                 </td>
             </tr>
             }
@@ -99,17 +95,25 @@
     </table>
 
     @{
-        var prevDisabled = !Model.PaginationEmpresas.HasPreviusPage ? "disabled" : "";
-        var nextDisabled = !Model.PaginationEmpresas.HasNextPage ? "disabled" : "";
+        var prevDisabled = !Model.Pagination.HasPreviusPage ? "disabled" : "";
+        var nextDisabled = !Model.Pagination.HasNextPage ? "disabled" : "";
     }
 
     <div class="card-action right-align">
-        <span class="left teal-text">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
-        <a asp-page="./Index" asp-route-cnpj="@GetCNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+        <span class="left teal-text">Página @Model.Pagination.PageIndex de @Model.Pagination.TotalPages - @Model.RegCount Reg.</span>
+        <a asp-page="./Index" asp-route-cnpj="@Model.GetCNPJ" asp-route-pag="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
-        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+        <a asp-page="./Index" asp-route-cnpj="@Model.GetCNPJ" asp-route-pag="@(Model.Pagination.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
         </a>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#inputCNPJ').mask('00.000.000');
+    </script>
+}

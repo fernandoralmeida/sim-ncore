@@ -34,7 +34,7 @@ namespace Sim.Application.Cnpj.Services
 
         public async Task<IEnumerable<BaseReceitaFederal>> ListAllMatrizFilialAsync(string cnpjbase)
         {
-            return await _cnpj.ListAllRazaoSocialAsync(cnpjbase);
+            return await _cnpj.ListAllMatrizFilialAsync(cnpjbase);
         }
 
         public async Task<IEnumerable<BaseReceitaFederal>> ListAllRazaoSocialAsync(string razaosocial)
