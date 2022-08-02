@@ -17,8 +17,12 @@
         <div class="row mgn-b-0">
             <div class="col s12">
                 <div class="input-field col s12 m12 x12 valign-wrapper">
-                    <input asp-for="GetCNPJ" id="inputCNPJ"/>
-                    <label>CNPJ Base</label>
+                    <select asp-for="Tipo">
+                        <option value="0">CNPJ Base</option>
+                        <option value="1">Razão Social</option>
+                        <option value="2">Sócios</option>
+                    </select>
+                    <input asp-for="Search" placeholder="Digite aqui"/>                    <
                     <button class="btn waves-effect waves-light submit">Pesquisar</button>
                 </div>
             </div>
@@ -101,10 +105,10 @@
 
     <div class="card-action right-align">
         <span class="left teal-text">Página @Model.Pagination.PageIndex de @Model.Pagination.TotalPages - @Model.RegCount Reg.</span>
-        <a asp-page="./Index" asp-route-cnpj="@Model.GetCNPJ" asp-route-pag="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-t="@Model.Tipo" asp-route-p="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
-        <a asp-page="./Index" asp-route-cnpj="@Model.GetCNPJ" asp-route-pag="@(Model.Pagination.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-t="@Model.Tipo" asp-route-p="@(Model.Pagination.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
         </a>
     </div>
