@@ -11,7 +11,7 @@
     <div class="row white rounded-default z-depth-1-half">
         <div class="row pdn-10 mgn-b-0">
             <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>                        
-            <a class="dropdown-trigger btn waves-effect waves-light right" href="#" title="Opções de consulta" data-target="dropdownrfb"><i class="material-icons left">manage_search</i>RFB</a>            
+            <a class="btn grey waves-effect waves-light right" asp-page="/Empresa/Index" title="Voltar consulta padrão"><i class="material-icons left">manage_search</i>RFB</a>            
         </div>
         <div class="divider"></div>
         <div class="row mgn-b-0">
@@ -29,12 +29,6 @@
         </div>
     </div>
 </form>
-
-<ul id="dropdownrfb" class="dropdown-content">
-    <li><a asp-page="/Empresa/RFB/Index">CNPJ Base</a></li>
-    <li><a asp-page="/Empresas/RFB/RSocial">Razao Social</a></li>
-    <li><a asp-page="/Empresas/RFB/Socios">Nome Sócio</a></li>
-</ul>
 
 <div class="card" style="overflow-y:auto;">
     <table class="striped">

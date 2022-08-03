@@ -14,7 +14,7 @@
             <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>
             <div class="right-align">
                 <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
-                <a class="dropdown-trigger btn waves-effect waves-light" href="#" title="Opções de consulta" data-target="dropdownrfb"><i class="material-icons left">manage_search</i>RFB</a>
+                <a class="btn waves-effect waves-light" asp-page="/Empresa/RFB/Index" title="Opções de consulta" ><i class="material-icons left">manage_search</i>RFB</a>
             </div>
         </div>
         <div class="divider"></div>
@@ -45,12 +45,6 @@
         </div>
     </div>
 </form>
-
-<ul id="dropdownrfb" class="dropdown-content">
-    <li><a asp-page="/Empresa/RFB/Index">CNPJ Base</a></li>
-    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-razao-social">Razao Social</a></li>
-    <li><a asp-area="Censo" asp-page="/Empresas/Consulta-socio">Nome Sócio</a></li>
-</ul>
 
 <div class="card" style="overflow-y:auto;">
     <table class="striped">
