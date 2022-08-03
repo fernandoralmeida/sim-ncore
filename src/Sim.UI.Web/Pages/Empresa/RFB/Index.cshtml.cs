@@ -41,7 +41,6 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
                 
                 case 2:
                     list = await _appServiceCnpj.ListAllSocioAsync(c);
-                    StatusMessage = "Erro: " + Tipo;
                     break;
 
                 default:
@@ -61,8 +60,9 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
                 if(t == null)
                     Tipo = 0;
                 else
-                    Tipo = t;                
+                    Tipo = t;     
 
+                Search = s;
                 Pagination = await DoListAsync(s, t, p);
             }
             catch(Exception ex)
