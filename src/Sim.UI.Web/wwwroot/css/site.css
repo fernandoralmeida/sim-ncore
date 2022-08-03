@@ -601,6 +601,9 @@ nav.navbar .brand-logo {
     min-width: 55px;
     max-width: 65px;
     border-radius: 2px;
+    background-color:rgba(0, 0, 0, .02);
+}.box-cell-item:hover{
+    background-color:rgba(0, 0, 0, .03);
 }
 .box-cell-item>p{
     line-height: 28px;   
@@ -674,6 +677,7 @@ nav.navbar .brand-logo {
     position: relative;
     padding: 10px;
 }
+
 @media only screen and (max-width: 992px) {
     .box-container-card{
         display: flex;
