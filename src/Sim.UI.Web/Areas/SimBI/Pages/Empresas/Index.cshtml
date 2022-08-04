@@ -63,7 +63,7 @@
                                     float v1 = op.Value;
                                     float v2 = emp.EmpresasAtivas.Value;
                                     float r = (v1 / v2) * 100;
-                                    <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                    <div class="box-cell-item-flex font-size-12">
                                         <p class="grey-text">@op.Key</p>
                                         <p class="blue-text font-h5">@op.Value</p>
                                         <p class="grey-text">(@r.ToString("N2")%)</p>
@@ -84,17 +84,17 @@
                                     float vsn = (osn / et) * 100;
                                     float vmei = (mei / et) * 100;
                                 }
-                                <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                <div class="box-cell-item-flex font-size-12">
                                     <p class="grey-text">LRP</p>
                                     <p class="blue-text font-h5">@lrp</p>
                                     <p class="grey-text">(@vlrp.ToString("N2")%)</p>
                                 </div>
-                                <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                <div class="box-cell-item-flex font-size-12">
                                     <p class="grey-text">S N</p>
                                     <p class="blue-text font-h5">@osn</p>
                                     <p class="grey-text">(@vsn.ToString("N2")%)</p>
                                 </div>
-                                <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                <div class="box-cell-item-flex font-size-12">
                                     <p class="grey-text">MEI</p>
                                     <p class="blue-text font-h5">@emp.OptanteMEI.Value</p>
                                     <p class="grey-text">(@vmei.ToString("N2")%)</p>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="box-column-row">
-                        <div class="box-card hoverable" style="overflow-x: auto;">
+                        <div  class="box-card hoverable">
                             <div class="card-header grey-text">Setores</div>
                             <div class="box-cell">
                                 @foreach (var st in emp.ListaSetores)
@@ -111,85 +111,12 @@
                                     float v1 = st.Value;
                                     float v2 = emp.EmpresasAtivas.Value;
                                     float r = (v1 / v2) * 100;
-                                    <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                    
+                                    <a class="box-cell-item-flex font-size-12">
                                         <p class="grey-text">@st.Key</p>
                                         <p class="blue-text font-h6">@st.Value</p>
                                         <p class="grey-text">(@r.ToString("N2")%)</p>
-                                        <!--
-                                        <div class="divider"></div>
-                                        <div class="box-cell-item-flex-desc">
-                                            @if (st.Key == "Serviços")
-                                            {
-                                                int c = 0;
-                                                @foreach (var at in emp.Servicos)
-                                                {
-                                                    if (c < 5)
-                                                    {
-                                                        <p class="grey-text truncate" title="@at.Key">[@at.Value] @at.Key</p>
-                                                    }
-                                                    else
-                                                        break;
-                                                    c++;
-                                                }
-                                            }
-                                            @if (st.Key == "Comércio")
-                                            {
-                                                int c = 0;
-                                                @foreach (var at in emp.Comercio)
-                                                {
-                                                    if (c < 5)
-                                                    {
-                                                        <p class="grey-text truncate" title="@at.Key">[@at.Value] @at.Key</p>
-                                                    }
-                                                    else
-                                                        break;
-                                                    c++;
-                                                }
-                                            }
-                                            @if (st.Key == "Indústria")
-                                            {
-                                                int c = 0;
-                                                @foreach (var at in emp.Indistria)
-                                                {
-                                                    if (c < 5)
-                                                    {
-                                                        <p class="grey-text" title="@at.Key">[@at.Value] @at.Key</p>
-                                                    }
-                                                    else
-                                                        break;
-                                                    c++;
-                                                }
-                                            }
-                                            @if (st.Key == "Construção")
-                                            {
-                                                int c = 0;
-                                                @foreach (var at in emp.Construcao)
-                                                {
-                                                    if (c < 5)
-                                                    {
-                                                        <p class="grey-text" title="@at.Key">[@at.Value] @at.Key</p>
-                                                    }
-                                                    else
-                                                        break;
-                                                    c++;
-                                                }
-                                            }
-                                            @if (st.Key == "Agropecuária")
-                                            {
-                                                int c = 0;
-                                                @foreach (var at in emp.Agro)
-                                                {
-                                                    if (c < 5)
-                                                    {
-                                                        <p class="grey-text" title="@at.Key">[@at.Value] @at.Key</p>
-                                                    }
-                                                    else
-                                                        break;
-                                                    c++;
-                                                }
-                                            }  
-                                        </div>-->
-                                    </div>
+                                    </a>
                                 }
                             </div>
                         </div>
@@ -203,11 +130,11 @@
                                     float v1 = op.Value;
                                     float v2 = emp.EmpresasAtivas.Value;
                                     float r = (v1 / v2) * 100;
-                                    <div class="box-cell-item-flex grey lighten-5 font-size-12">
+                                    <a class="box-cell-item-flex font-size-12">
                                         <p class="grey-text">@op.Key</p>
                                         <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@op.Value</p>
                                         <p class="grey-text">(@r.ToString("N2")%)</p>
-                                    </div>   
+                                    </a>   
                                 }                            
                             </div>
                         </div>
@@ -238,4 +165,3 @@
         </div>
     }
 </div>
-

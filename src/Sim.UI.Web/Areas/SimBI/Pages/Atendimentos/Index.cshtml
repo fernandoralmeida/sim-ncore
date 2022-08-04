@@ -98,20 +98,24 @@
             <div class="col s12 m6 l6">           
                 <div class="card hoverable">
                     <div class="card-header grey-text">@set.Cliente.Titulo<i class="material-icons left">keyboard_arrow_down</i></div>
-                    <div class="row pdn-h-12">
-                        <div class="box-cell">
-                            <a class="box-cell-item-flex font-size-12 modal-trigger"  href="#viewmodal">
-                                <p class="grey-text"><i class="tiny material-icons">timelapse</i><h5 class="light-blue-text">@set.Cliente.Atendimentos</h5></p>
-                            </a>
-                            <a class="box-cell-item-flex font-size-12 modal-trigger" href="#viewmodal">
-                                <p class="grey-text"><i class="tiny material-icons">construction</i><h5 class="light-green-text">@set.Cliente.Servicos</h5></p>
-                            </a>
-                        </div>
-                        <div class="box-between" style="padding-right:20px; padding-left:20px;">
-                            <div class="grey-text box-middle"><i class="tiny material-icons">person</i>@set.ClientePF.Atendimentos</div>
-                            <div class="grey-text box-middle"><i class="tiny material-icons">business</i>@set.ClientePJ.Atendimentos</div>
-                        </div>
+                    
+                    <div class="box-cell">
+                        <a class="box-cell-item-flex font-size-12 modal-trigger"  href="#viewmodal">
+                            <p class="grey-text"><i class="tiny material-icons">timelapse</i><h5 class="light-blue-text">@set.Cliente.Atendimentos</h5></p>
+                            <div class="box-between" style="padding-right:20px; padding-left:20px;">
+                                <div class="grey-text box-middle"><i class="tiny material-icons">person</i>@set.ClientePF.Atendimentos</div>
+                                <div class="grey-text box-middle"><i class="tiny material-icons">business</i>@set.ClientePJ.Atendimentos</div>
+                            </div>
+                        </a>
+                        <a class="box-cell-item-flex font-size-12 modal-trigger" href="#viewmodal">
+                            <p class="grey-text"><i class="tiny material-icons">construction</i><h5 class="light-green-text">@set.Cliente.Servicos</h5></p>
+                            <div class="box-between" style="padding-right:20px; padding-left:20px;">
+                                <div class="grey-text box-middle"><i class="tiny material-icons">person</i>@set.ClientePF.Servicos</div>
+                                <div class="grey-text box-middle"><i class="tiny material-icons">business</i>@set.ClientePJ.Servicos</div>
+                            </div>
+                        </a>
                     </div>
+                    
                     <div class="card-content no-padding"> 
                     @if(set.ListaMensal != null)
                     {                
@@ -185,7 +189,7 @@
 @section scripts{
     <script>
         var divHeight = Number(document.getElementById('divsetores').offsetHeight - 24) + "px";
-        document.getElementById("carduser").style.height = divHeight;        
+        document.getElementById("carduser").style.height = divHeight;     
         $(function () {
             $(".modal-trigger").click(function () {
                 var param1 = $(this).data('id');

@@ -602,8 +602,9 @@ nav.navbar .brand-logo {
     max-width: 65px;
     border-radius: 2px;
     background-color:rgba(0, 0, 0, .02);
+    transition: .3s;
 }.box-cell-item:hover{
-    background-color:rgba(0, 0, 0, .03);
+    background-color:rgba(0, 0, 0, .04);
 }
 .box-cell-item>p{
     line-height: 28px;   
@@ -613,6 +614,11 @@ nav.navbar .brand-logo {
     padding: 5px;
     text-align: center; 
     border-radius: 2px;
+    transition: .3s;
+    background-color: rgba(0, 0, 0, .02);
+}
+.box-cell-item-flex:hover{
+    background-color: rgba(0, 0, 0, .04);
 }
 .box-cell-item-flex-desc{
     text-align: left;
@@ -694,5 +700,11 @@ nav.navbar .brand-logo {
         flex-direction: column;
         width: 100%;  
         row-gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .box-cell-item-flex{
+        padding: 1px;
     }
 }
