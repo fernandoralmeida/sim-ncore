@@ -22,8 +22,11 @@
                     <label asp-for="Input.Ano"></label>
                 </div>
                 <div class="input-field col s6 m6 l3">
-                    <select asp-for="Input.Owner" asp-items="Model.Setores"></select>
-                    <label asp-for="Input.Owner"></label>
+                    <select asp-for="Input.Owner" asp-items="Model.Setores">
+                    </select>
+                    <label asp-for="Input.Owner">
+                        <option></option>
+                    </label>
                 </div>
                 <div class="input-field col s6 m6 l3">
                     <select asp-for="Input.Tipo" asp-items="Model.Tipos"></select>

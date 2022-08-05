@@ -115,5 +115,10 @@ namespace Sim.Domain.Service
         {
             return await _evento.GetEventoToListParticipantes(codigo);
         }
+
+        public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
+        {
+            return await _evento.DoListEventByParam(nome, setor, tipo, ano);
+        }
     }
 }

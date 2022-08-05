@@ -73,7 +73,7 @@ namespace Sim.UI.Web.Pages.Agenda
         {
             await Onload();
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListNomeAsync(Input.Evento));
+                .ListEventosPorMesAsync(await _appServiceEvento.DoListEventByParam(Input.Evento, Input.Tipo, Input.Owner, Input.Ano));
         }
 
         public async Task OnPostAvailableAsync()

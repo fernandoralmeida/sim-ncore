@@ -14,6 +14,19 @@ namespace Sim.Data.Repository
 
         }
 
+        public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
+        {
+            return await _db.Evento                
+                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
+                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)      
+                .Where(s => s.Nome.Contains(nome))
+                .Where(s => s.Tipo.Contains(tipo))
+                .Where(s => s.Owner.Contains(setor))
+                .Where(s => s.Data.Value.Year == ano)          
+                .AsNoTracking()
+                .ToListAsync();    
+        }
+
         public async Task<Evento> GetCodigoAsync(int codigo)
         {
             return await _db.Evento                

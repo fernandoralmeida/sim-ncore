@@ -13,6 +13,11 @@ namespace Sim.Application.Services
             _evento = evento;
         }
 
+        public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
+        {
+            return await _evento.DoListEventByParam(nome, tipo, setor, ano);
+        }
+
         public async Task<Evento> GetCodigoAsync(int codigo)
         {
             return await _evento.GetCodigoAsync(codigo);
