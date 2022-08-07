@@ -7,8 +7,8 @@
 
 <!--<partial name="_StatusMessage" model="Model.StatusMessage" />-->
 
-<form class="card card-content" method="post">
-    <div class="col s12" hidden>
+<form method="post">
+    <div class="row" hidden>
         <div class="input-group">
             <span class="input-group-text">Atendimento</span>
             <input type="text" asp-for="Input.Protocolo" class="form-control" readonly>
@@ -18,7 +18,8 @@
             <input type="text" asp-for="Input.Id" class="form-control" readonly>
         </div>
     </div>
-    <div class="section">
+    <div class="card">
+        <div class="card-header grey-text">Cliente</div>
         <table class="responsive-table striped">
             <!--<caption>Informações do Cliente</caption>-->
             <thead>
@@ -91,55 +92,43 @@
             </tbody>
         </table>
     </div>
-    <div class="section">
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field col s12 m6 l6">
-                    <select asp-for="Input.Setor" asp-items="Model.Setores">
-                        <option selected>-- Selecione um Setor --</option>
-                    </select>
-                    <label asp-for="Input.Setor"></label>
-                </div>
-                <div class="input-field col s12 m6 l6">
-                    <select asp-for="Input.Canal" asp-items="Model.Canais"></select>
-                    <label asp-for="Input.Canal"></label>
-                </div>
+    <div class="card">
+        <div class="card-header grey-text">Informações</div>
+        <div class="row mgn-b-0">
+            <div class="input-field col s12 m6 l6">
+                <select asp-for="Input.Setor" asp-items="Model.Setores">
+                    <option selected>-- Selecione um Setor --</option>
+                </select>
+                <label asp-for="Input.Setor"></label>
+            </div>
+            <div class="input-field col s12 m6 l6">
+                <select asp-for="Input.Canal" asp-items="Model.Canais"></select>
+                <label asp-for="Input.Canal"></label>
+            </div>
+            <div class="input-field col s12 m12 l12">
+                <input asp-for="ServicosSelecionados" />
+                <label for="ServicosSelecionados">Serviços</label>
+            </div>
+            <div class="input-field col s12 m12 l12">
+                <select asp-for="Input.Servicos" multiple size="2" asp-items="Model.Servicos"></select>
+                <label>Alterar Serviços por:</label>
+            </div>
+            <div class="input-field col s12 m12 l12">
+                <textarea asp-for="Input.Descricao" class="materialize-textarea" id="input_descricao"></textarea>
+                <label asp-for="Input.Descricao" for="input_descricao"></label>
             </div>
         </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field col s12">
-                    <input asp-for="ServicosSelecionados" />
-                    <label for="ServicosSelecionados">Serviços</label>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="input-field col s12">
-                    <select asp-for="Input.Servicos" multiple size="2" asp-items="Model.Servicos"></select>
-                    <label>Alterar Serviços por:</label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field col s12">
-                    <textarea asp-for="Input.Descricao" class="materialize-textarea" id="input_descricao"></textarea>
-                    <label asp-for="Input.Descricao" for="input_descricao"></label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-action">
-
-        <button id="onbtn" type="submit" role="button" class="btn btn-large waves-effect waves-light" asp-page-handler="Alterar" asp-route-id="@Model.Input.Id">Alterar Atendimento</button>
-
-        @{
-            if (User.IsInRole("Administrador"))
-            {
-                <button type="submit" role="button" class="btn btn-large waves-effect waves-light red right" asp-page-handler="Excluir" asp-route-id="@Model.Input.Id">Excluir Atendimento</button>
+        <div class="card-action">
+            <button id="onbtn" type="submit" role="button" class="btn waves-effect waves-light" asp-page-handler="Alterar" asp-route-id="@Model.Input.Id">Alterar Atendimento</button>
+            @{
+                if (User.IsInRole("Administrador"))
+                {
+                    <button type="submit" role="button" class="btn waves-effect waves-light red right" asp-page-handler="Excluir" asp-route-id="@Model.Input.Id">Excluir Atendimento</button>
+                }
             }
-        }
+        </div>
     </div>
+
 </form>
 
 <!-- Modal -->

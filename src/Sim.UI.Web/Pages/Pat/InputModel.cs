@@ -19,8 +19,15 @@ namespace Sim.UI.Web.Pages.Pat
         [DisplayName("Ocupação")]
         public string Ocupacao { get; set; }
 
+        [Required(ErrorMessage = "Inclusão exigida!")]
+        [DisplayName("Inclusiva")]
+        public string Inclusiva { get; set; }
+
         [DisplayName("Experiência")]
-        public bool Experiencia { get; set; }
+        public string Experiencia { get; set; }
+        
+        [DisplayName("Gênero")]
+        public string Genero { get; set; }
 
         [DisplayName("Salário Médio")]
         [DataType(DataType.Currency)]
@@ -35,5 +42,14 @@ namespace Sim.UI.Web.Pages.Pat
         public string Status { get;set; }
         public string AppUserID { get; set; }
         public virtual Empresas Empresa { get; set; }
+    }
+
+    public class InputModelAtendimento {        
+        public string InputSetor { get; set; }        
+        public string InputCanal { get; set; }          
+        public string InputServicos { get; set; }     
+        public string ServicosSelecionados { get; set; } 
+        public Guid ID { get; set; }
+        public string Descricao { get; set; }
     }
 }

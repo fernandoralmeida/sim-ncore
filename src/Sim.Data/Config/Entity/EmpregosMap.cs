@@ -12,6 +12,15 @@ namespace Sim.Data.Config.Entity
             builder.Property(c => c.Ocupacao)
                 .HasColumnType("varchar(max)");
 
+            builder.Property(c => c.Genero)
+                .HasColumnType("varchar(50)");
+
+            builder.Property(c => c.Experiencia)
+                .HasColumnType("varchar(50)");
+
+            builder.Property(c => c.Inclusivo)
+                .HasColumnType("varchar(50)");
+
             builder.Property(c => c.Pagamento)
                 .HasColumnType("varchar(50)");
 

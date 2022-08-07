@@ -80,9 +80,10 @@
                     </td>
                     <td class="t-uppercase">
                         @{ 
-                            var _isanonimo = item.Pessoa != null  ? item.Pessoa.Nome : "Anônimo";
+                            var _isempresa = item.Empresa != null ? item.Empresa.Nome_Empresarial : "Anônimo";
+                            var _isperson = item.Pessoa != null ? item.Pessoa.Nome : _isempresa;
                         }
-                        @Html.DisplayFor(modelItem => _isanonimo)
+                        @Html.DisplayFor(modelItem => _isperson)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Servicos)

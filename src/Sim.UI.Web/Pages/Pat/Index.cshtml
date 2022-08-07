@@ -29,16 +29,15 @@
                     Data
                 </th>
                 <th>
-                    Ocupação
+                    Vagas Emprego
                 </th>
                 <th>
                     Experiência
                 </th>
+                <th>Gênero</th>
+                <th>Inclusiva</th>
                 <th>
                     Salário
-                </th>
-                <th>
-                    Vagas
                 </th>
                 <th>Status</th>
                 <th>
@@ -76,23 +75,16 @@
                             @Html.DisplayFor(modelItem => datafinal)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Vagas) - 
                         @Html.DisplayFor(modelItem => item.Ocupacao)
                     </td>
                     <td>
-                        @if(item.Experiencia)
-                            {
-                                <span>Sim</span>
-                            }
-                            else
-                            {
-                                <span>Não</span>
-                            }                        
+                        @Html.DisplayFor(model => item.Experiencia)                    
                     </td>
+                    <td>@Html.DisplayFor(model => item.Genero)</td>
+                    <td>@Html.DisplayFor(model => item.Inclusivo)</td>
                     <td>
                         R$ @Html.DisplayFor(modelItem => item.Salario)/@Html.DisplayFor(modelItem => item.Pagamento)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vagas)
                     </td>
                     <td>@Html.DisplayFor(modelitem => item.Status)</td>
                     <td>

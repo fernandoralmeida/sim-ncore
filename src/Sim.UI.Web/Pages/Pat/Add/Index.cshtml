@@ -23,17 +23,17 @@
                                             
                         <div class="input-field col s12 m6 l8">
                             <input asp-for="Input.Empresa.Nome_Empresarial" />
-                            <label asp-for="Input.Empresa.Nome_Empresarial"></label>
+                            <label>Empresa</label>
                         </div>
                         
                         <div class="input-field col s3 m3 l2">
                             <input asp-for="Input.Empresa.CNAE_Principal" id="inputCNAE"/>
-                            <label asp-for="Input.Empresa.CNAE_Principal" for="inputCNAE"></label>
+                            <label for="inputCNAE">CNAE</label>
                         </div>
 
                         <div class="input-field col s9 m9 l10">
                             <input asp-for="Input.Empresa.Atividade_Principal"/>
-                            <label asp-for="Input.Empresa.Atividade_Principal"></label>
+                            <label>Atividade</label>
                         </div>
                     
                 </div>
@@ -41,55 +41,39 @@
         </div>
     </section>
     <section>
-        <div class="card no-padding">
-            <div class="row">
-                <div class="col s12">
-                    <div class="input-field col s12 m6 l6">
-                        <select asp-for="InputSetor" asp-items="Model.Setores"></select>
-                        <label asp-for="InputSetor"></label>
-                    </div>
-                    <div class="input-field col s12 m6 l6">
-                        <select asp-for="InputCanal" asp-items="Model.Canais"></select>
-                        <label asp-for="InputCanal"></label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <div class="input-field col s12">
-                        <select asp-for="InputServicos" asp-items="Model.Servicos" multiple></select>
-                        <label asp-for="InputServicos"></label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <div class="input-field col s12">
-                        <textarea asp-for="Descricao" class="materialize-textarea"></textarea>
-                        <label asp-for="Descricao"></label>
-                    </div>
-                    <div class="input-field col s12 m6 l6" hidden>
-                        <input asp-for="InputServicos" />
-                        <label for="InputServicos">Serviços</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section>
         <div class="card">
             <div class="row">
-                <div class="input-field col s12 m10 l10">
+                <div class="input-field col s12 m6 l3">
                     <input asp-for="Input.Ocupacao" />
                     <label asp-for="Input.Ocupacao"></label>
                 </div>
-
-                <div class="input-field col s6 m2 l2">                            
+                <div class="input-field col s6 m6 l3">                            
                     <select asp-for="Input.Experiencia">
-                        <option value="True">Sim</option>
-                        <option value="False">Não</option>
+                        <option>Sim</option>
+                        <option>Não</option>
+                        <option>Jovem Aprendiz</option>
                     </select>  
                     <label asp-for="Input.Experiencia"></label>  
+                </div>
+                <div class="input-field col s6 m6 l3">                            
+                    <select asp-for="Input.Inclusiva" multiple>
+                        <option selected>Normal</option>
+                        <option>Deficiência Fisica</option>
+                        <option>Deficiência Auditiva</option>
+                        <option>Deficiência Visual</option>
+                        <option>Deficiência Intelectual</option>
+                        <option>Deficiência Múltipla</option>
+                    </select>  
+                    <label asp-for="Input.Inclusiva"></label>  
+                </div>
+                
+                <div class="input-field col s6 m6 l3">                            
+                    <select asp-for="Input.Genero">
+                        <option selected>Neutro</option>
+                        <option>Feminino</option>
+                        <option>Masculino</option>
+                    </select>  
+                    <label asp-for="Input.Genero"></label>  
                 </div>
                 
                 <div class="input-field col s6 m2 l2">
@@ -131,9 +115,49 @@
         </div>
     </section>
     <section>
+        <div class="card no-padding">
+            <div class="row">
+                <input asp-for="InputAtendimento.ID"/>
+                <div class="col s12">
+                    <div class="input-field col s12 m6 l6">
+                        <select asp-for="InputAtendimento.InputSetor" asp-items="Model.Setores"></select>
+                        <label>Setor</label>
+                    </div>
+                    <div class="input-field col s12 m6 l6">
+                        <select asp-for="InputAtendimento.InputCanal" asp-items="Model.Canais"></select>
+                        <label>Canal</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="input-field col s12">
+                        <select asp-for="InputAtendimento.InputServicos" asp-items="Model.Servicos" multiple>
+                            <option selected>Empresas - Cadastro de Vagas</option>
+                            <option selected>Informações sobre serviços da Secretaria</option>
+                        </select>
+                        <label>Serviços</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" hidden>
+                <div class="col s12">
+                    <div class="input-field col s12">
+                        <textarea asp-for="InputAtendimento.Descricao" class="materialize-textarea"></textarea>
+                        <label asp-for="InputAtendimento.Descricao"></label>
+                    </div>
+                    <div class="input-field col s12 m6 l6">
+                        <input asp-for="InputAtendimento.ServicosSelecionados" />
+                        <label>Serviços</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
         <div class="card">
             <div class="card-action">
-                <button class="btn waves-effect waves-light">Gravar</button>
+                <button id="onbtn" class="btn waves-effect waves-light">Gravar</button>
                 <a asp-page="/Pat/Index" class="btn grey waves-effect waves-light">Voltar</a>
             </div>            
         </div>
@@ -144,21 +168,30 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/jquery.validation.js"></script>
     <script src="~/js/jquery.mask.min.js"></script>
-    <script src="~/js/jquery.mask.min.js"></script>
     <script src="~/js/fcurrency.js"></script>
     <script>
-        $('#inputCPF').mask('000.000.000-00');
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');
         $(function() {                      
             $("#onbtn").click(function () {
-                var selectedValues = [];
-                $("#Input_Servicos :selected").each(function () {
-                    selectedValues.push($(this).val());
+                var selected_inclusivas = [];
+                $("#Input_Inclusiva :selected").each(function () {
+                    selected_inclusivas.push($(this).val());
                 });
-                document.getElementById("InputServicos").value = selectedValues;            
+                document.getElementById("Input_Inclusiva").value = selected_inclusivas;
+                //alert(selected_inclusivas);                 
+                var selected_values = [];
+                $("#InputAtendimento_InputServicos :selected").each(function () {
+                    selected_values.push($(this).val());
+                });
+                var valores = document.getElementById("InputAtendimento_ServicosSelecionados").value = selected_values;
+                //alert(selected_values); 
+                var vagas = document.getElementById("Input_Vagas").value;
+                var ocupacao = document.getElementById("Input_Ocupacao").value
+                document.getElementById("InputAtendimento_Descricao").value = "Cadastro de " + vagas + " vagas para " + ocupacao;
+                //alert("Cadastro de " + vagas + " vagas para " + ocupacao); 
                 return true;
-            });         
+            });           
         });
     </script>
 }

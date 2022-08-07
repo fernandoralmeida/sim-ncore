@@ -43,58 +43,74 @@
     <section>
         <div class="card">
             <div class="row">
-                <div class="col s12">
-                    
-                        <div class="input-field col s12 m10 l10">
-                            <input asp-for="Input.Ocupacao" />
-                            <label asp-for="Input.Ocupacao"></label>
-                        </div>
-
-                        <div class="input-field col s6 m2 l2">                            
-                            <select asp-for="Input.Experiencia">
-                                <option value="True">Sim</option>
-                                <option value="False">Não</option>
-                            </select>  
-                            <label asp-for="Input.Experiencia"></label>  
-                        </div>
-                        
-                        <div class="input-field col s6 m2 l2">
-                            <input asp-for="Input.Vagas" />
-                            <label asp-for="Input.Vagas" ></label>
-                        </div>
-
-                        <div class="input-field col s6 m2 l2">
-                            <i class="prefix" style="font-size:20px;">R$</i>
-                            <input asp-for="Input.Salario" onkeypress="return(moeda(this,'.',',',event))" />
-                            <label asp-for="Input.Salario" ></label>
-                        </div>
-
-                        <div class="input-field col s6 m3 l3">
-                            <select asp-for="Input.Pagamento">
-                                <option>Mês</option>
-                                <option>Quinzena</option>
-                                <option>Semana</option>
-                                <option>Dia</option>
-                                <option>Hora</option>
-                            </select>  
-                            <label asp-for="Input.Pagamento" ></label>
-                        </div>
-
-                        <div class="input-field col s6 m3 l3">                            
-                            <select asp-for="Input.Status">
-                                <option>Ativo</option>
-                                <option>Finalizado</option>
-                                <option>Cancelado</option>
-                            </select>
-                            <label asp-for="Input.Status"></label> 
-                        </div>
-
-                        <div class="input-field col s6 m2 l2">
-                            <input asp-for="Input.Data" />
-                            <label asp-for="Input.Data" ></label>
-                        </div>
-                    
+                <div class="input-field col s12 m6 l3">
+                    <input asp-for="Input.Ocupacao" />
+                    <label asp-for="Input.Ocupacao"></label>
                 </div>
+                <div class="input-field col s6 m6 l3">                            
+                    <select asp-for="Input.Experiencia">
+                        <option>Sim</option>
+                        <option>Não</option>
+                        <option>Jovem Aprendiz</option>
+                    </select>  
+                    <label asp-for="Input.Experiencia"></label>  
+                </div>
+                <div class="input-field col s6 m6 l3">                            
+                    <select asp-for="Input.Inclusiva" multiple>
+                        <option>Normal</option>
+                        <option>Deficiência Fisica</option>
+                        <option>Deficiência Auditiva</option>
+                        <option>Deficiência Visual</option>
+                        <option>Deficiência Intelectual</option>
+                        <option>Deficiência Múltipla</option>
+                    </select>  
+                    <label asp-for="Input.Inclusiva"></label>  
+                </div>
+                
+                <div class="input-field col s6 m6 l3">                            
+                    <select asp-for="Input.Genero">
+                        <option>Neutro</option>
+                        <option>Feminino</option>
+                        <option>Masculino</option>
+                    </select>  
+                    <label asp-for="Input.Genero"></label>  
+                </div>
+                
+                <div class="input-field col s6 m2 l2">
+                    <input asp-for="Input.Vagas" />
+                    <label asp-for="Input.Vagas" ></label>
+                </div>
+
+                <div class="input-field col s6 m2 l2">
+                    <i class="prefix" style="font-size:20px;">R$</i>
+                    <input asp-for="Input.Salario" asp-format="{0:#,###.00}" onkeypress="return(moeda(this,'.',',',event))" />
+                    <label asp-for="Input.Salario" ></label>
+                </div>
+
+                <div class="input-field col s6 m3 l3">
+                    <select asp-for="Input.Pagamento">
+                        <option>Mês</option>
+                        <option>Quinzena</option>
+                        <option>Semana</option>
+                        <option>Dia</option>
+                        <option>Hora</option>
+                    </select>  
+                    <label asp-for="Input.Pagamento" ></label>
+                </div>
+
+                <div class="input-field col s6 m3 l3">                            
+                    <select asp-for="Input.Status">
+                        <option>Ativo</option>
+                        <option>Finalizado</option>
+                        <option>Cancelado</option>
+                    </select>
+                    <label asp-for="Input.Status"></label> 
+                </div>
+
+                <div class="input-field col s6 m2 l2">
+                    <input asp-for="Input.Data" />
+                    <label asp-for="Input.Data" ></label>
+                </div> 
             </div>
         </div>
     </section>
@@ -108,7 +124,7 @@
         </div>
     </section>
 </form>
-
+<button id="onbtn">Teste</button>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/jquery.mask.min.js"></script>
@@ -118,5 +134,15 @@
         $('#inputCPF').mask('000.000.000-00');
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');
+        $(function() {                      
+            $("#onbtn").click(function () {
+                var selected_inclusivas = [];
+                $("#Input_Inclusiva :selected").each(function () {
+                    selected_inclusivas.push($(this).val());
+                });
+                document.getElementById("Input_Inclusiva").value = selected_inclusivas;
+                alert(selected_inclusivas);      
+            });           
+        });
     </script>
 }

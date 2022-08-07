@@ -34,6 +34,8 @@ namespace Sim.UI.Web.Pages.Pat.Manager
                 Pagamento = e.Pagamento,
                 Experiencia = e.Experiencia,
                 Status = e.Status,
+                Inclusiva = e.Inclusivo,
+                Genero = e.Genero,
                 Data = e.Data
             };
 
@@ -51,6 +53,8 @@ namespace Sim.UI.Web.Pages.Pat.Manager
                 Ocupacao = Input.Ocupacao,
                 Pagamento = Input.Pagamento,
                 Salario = Convert.ToDecimal(Input.Salario),
+                Inclusivo = Input.Inclusiva,
+                Genero = Input.Genero,
                 Status = Input.Status
             });
 
@@ -70,6 +74,8 @@ namespace Sim.UI.Web.Pages.Pat.Manager
                     Vagas = Input.Vagas,
                     Ocupacao = Input.Ocupacao,
                     Pagamento = Input.Pagamento,
+                    Inclusivo = Input.Inclusiva,
+                    Genero = Input.Genero,
                     Salario = Convert.ToDecimal(Input.Salario),
                     Status = Input.Status
                 });

@@ -7,54 +7,40 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<form class="card card-content" method="post">
-
-    <div class="section">
-        <p class="grey-text font-size-14 pdn-10">Atendimento Anônimo</h5>
-    </div>
-
-    <div class="section">
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field col s12 m6 l6">
-                    <select id="Input_Setor" class="Input_Setor" asp-for="Input.Setor" asp-items="Model.Setores">
-                        <option selected>-- Selecione um Setor --</option>
-                    </select>
-                    <label asp-for="Input.Setor"></label>
-                </div>
-                <div class="input-field col s12 m6 l6">
-                    <select id="Input_Canal" asp-for="Input.Canal"></select>
-                    <label asp-for="Input.Canal"></label>
-                </div>
+<form method="post">
+    <div class="card">
+        <div class="card-header grey-text">Atendimento Anônimo</div>
+        <div class="row mgn-b-0">
+            <div class="input-field col s12 m6 l6">
+                <select id="Input_Setor" class="Input_Setor" asp-for="Input.Setor" asp-items="Model.Setores">
+                    <option selected>-- Selecione um Setor --</option>
+                </select>
+                <label asp-for="Input.Setor"></label>
             </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field col s12">
-                    <select id="Input_Servicos" asp-for="Input.Servicos" multiple size="2"></select>
-                    <label asp-for="Input.Servicos"></label>
-                </div>
+            <div class="input-field col s12 m6 l6">
+                <select id="Input_Canal" asp-for="Input.Canal"></select>
+                <label asp-for="Input.Canal"></label>
             </div>
 
+            <div class="input-field col s12 m12 l12">
+                <select id="Input_Servicos" asp-for="Input.Servicos" multiple size="2"></select>
+                <label asp-for="Input.Servicos"></label>
+            </div>
+
+            <div class="input-field col s12 m12 l12">
+                <textarea asp-for="Input.Descricao" class="materialize-textarea" id="input_descricao"></textarea>
+                <label asp-for="Input.Descricao" for="input_descricao"></label>
+            </div>
         </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="input-field col s12">
-                    <textarea asp-for="Input.Descricao" class="materialize-textarea" id="input_descricao"></textarea>
-                    <label asp-for="Input.Descricao" for="input_descricao"></label>
-                </div>
+        <div class="card-action">
+            <button id="onbtn" type="submit" role="button" class="btn btn-large waves-effect waves-light">Finalizar Atendimento</button>
+            <div class="input-field col s12 m6 l6" hidden>
+                <input asp-for="ServicosSelecionados" />
+                <label for="ServicosSelecionados">Serviços</label>
             </div>
         </div>
     </div>
-    <div class="card-action">
 
-        <button id="onbtn" type="submit" role="button" class="btn btn-large waves-effect waves-light">Finalizar Atendimento</button>
-        <div class="input-field col s12 m6 l6" hidden>
-            <input asp-for="ServicosSelecionados" />
-            <label for="ServicosSelecionados">Serviços</label>
-        </div>
-
-    </div>
 </form>
 
 <!-- Modal -->

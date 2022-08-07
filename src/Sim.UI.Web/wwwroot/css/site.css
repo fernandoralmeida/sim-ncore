@@ -112,13 +112,16 @@ hr{
     margin-top: 12px;
 }
 .mgn-b-0 {
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
 }
 .mgn-b-4{
     margin-bottom:4px;
 }
 .mgn-b-10{
     margin-bottom:10px;
+}
+.mgn-b-20{
+    margin-bottom:20px;
 }
 .mgn-h-4 {
     margin-left: 4px;

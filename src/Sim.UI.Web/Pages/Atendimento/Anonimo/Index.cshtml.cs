@@ -100,6 +100,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
                 {
                     Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Anônimo"),
                     Data = DateTime.Now,
+                    DataF = DateTime.Now,
                     Status = "Finalizado",
                     Setor = Input.Setor,
                     Canal = Input.Canal,
