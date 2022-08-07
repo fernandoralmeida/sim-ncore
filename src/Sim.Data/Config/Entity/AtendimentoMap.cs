@@ -25,6 +25,8 @@ namespace Sim.Data.Config.Entity
                 .HasColumnType("varchar(max)");
             builder.Property(c => c.Status)
                 .HasColumnType("varchar(max)");
+            builder.Property(c => c.Anonimo)
+                .HasDefaultValue(false);
 
         }
     }

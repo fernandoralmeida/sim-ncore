@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "EduardoPires.vscode-status-bar-custom-item"
+        "visualstudioexptteam.vscodeintellicode",
+        "ecmel.vscode-html-css"
     ]
+
 }

@@ -15,7 +15,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string AtendimentoDiario => "AtendimentoDiario";
         public static string AtendimentoAtivo => "AtendimentoAtivo";
         public static string AtendimentoConsulta => "AtendimentoConsulta";
-        public static string AtendimentoStatus => "AtendimentoStatus";
+        public static string AtendimentoAnonimo => "AtendimentoAnonimo";
         public static string Clientes => "Clientes";
         public static string ClientesEmpresas => "ClientesEmpresas";
         public static string ClientesPessoas => "ClientesPessoas";
@@ -42,7 +42,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string AtendimentoDiarioNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AtendimentoDiario);
         public static string AtendimentoAtivoNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AtendimentoAtivo);
         public static string AtendimentoConsultaNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AtendimentoConsulta);
-        public static string AtendimentoStatusNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AtendimentoStatus);
+        public static string AtendimentoAnonimoNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AtendimentoAnonimo);
         public static string ClientesNavClass(ViewContext viewContext) => PageNavClass(viewContext, Clientes);
         public static string ClientesEmpresasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, ClientesEmpresas);
         public static string ClientesPessoasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, ClientesPessoas);

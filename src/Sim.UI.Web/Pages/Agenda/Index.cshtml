@@ -23,13 +23,14 @@
                 </div>
                 <div class="input-field col s6 m6 l3">
                     <select asp-for="Input.Owner" asp-items="Model.Setores">
+                        <option selected value="">Todos</option>
                     </select>
-                    <label asp-for="Input.Owner">
-                        <option></option>
-                    </label>
+                    <label asp-for="Input.Owner"></label>
                 </div>
                 <div class="input-field col s6 m6 l3">
-                    <select asp-for="Input.Tipo" asp-items="Model.Tipos"></select>
+                    <select asp-for="Input.Tipo" asp-items="Model.Tipos">
+                        <option selected value="">Todos</option>
+                    </select>
                     <label asp-for="Input.Tipo"></label>
                 </div>
                 <div class="input-field col s6 m6 l3 valign-wrapper">

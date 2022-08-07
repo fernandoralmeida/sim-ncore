@@ -23,7 +23,6 @@
                     <ul>
                         @{
                             var _has_atendimento = await MeuAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
-
                         }
                         @if(_has_atendimento.Any())
                         {
@@ -35,6 +34,7 @@
                         }
                         <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext)"><a asp-page="/Atendimento/Index" class="waves-effect submit">Diários<i class="left material-icons">access_time</i></a></li>
                         <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta/Index" class="waves-effect submit">Consultar<i class="left material-icons">search</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoAnonimoNavClass(ViewContext)"><a asp-page="/Atendimento/Anonimo/Index" class="waves-effect submit" >Anônimo<i class="left material-icons">person_2</i></a></li>
                     </ul>
                 </div>
             </li>

@@ -79,7 +79,10 @@
                         @Html.DisplayFor(modelItem => datafinal)
                     </td>
                     <td class="t-uppercase">
-                        @Html.DisplayFor(modelItem => item.Pessoa.Nome)
+                        @{ 
+                            var _isanonimo = item.Pessoa != null  ? item.Pessoa.Nome : "Anônimo";
+                        }
+                        @Html.DisplayFor(modelItem => _isanonimo)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Servicos)

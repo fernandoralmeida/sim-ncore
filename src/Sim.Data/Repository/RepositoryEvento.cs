@@ -16,12 +16,15 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
         {
+            var n = nome ?? "";
+            var t = tipo ?? "";
+            var o = setor ?? "";
+
             return await _db.Evento                
-                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
-                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)      
-                .Where(s => s.Nome.Contains(nome))
-                .Where(s => s.Tipo.Contains(tipo))
-                .Where(s => s.Owner.Contains(setor))
+                .Include(i => i.Inscritos)   
+                .Where(s => s.Nome.Contains(n))
+                .Where(s => s.Tipo.Contains(t))
+                .Where(s => s.Owner.Contains(o))
                 .Where(s => s.Data.Value.Year == ano)          
                 .AsNoTracking()
                 .ToListAsync();    

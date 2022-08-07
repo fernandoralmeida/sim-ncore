@@ -19,6 +19,7 @@ namespace Sim.Domain.Entity
         public string? Status { get; set; }
         public DateTime? Ultima_Alteracao { get; set; }
         public bool Ativo { get; set; }
+        public bool Anonimo { get; set; }
         public string? Owner_AppUser_Id { get; set; }
         public virtual Pessoa? Pessoa { get; set; }
         public virtual Empresas? Empresa { get; set; }

@@ -1,34 +1,34 @@
-using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
 using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
-using AutoMapper;
 
-namespace Sim.UI.Web.Pages.Atendimento.Novo
+namespace Sim.UI.Web.Pages.Atendimento.Anonimo
 {
-
-    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
         private readonly IAppServiceSetor _appServiceSetor;
         private readonly IAppServiceCanal _appServiceCanal;
         private readonly IAppServiceServico _appServiceServico;
+        private readonly IAppServiceContador _appServiceContador;
         private readonly IMapper _mapper;
 
         public IndexModel(IAppServiceAtendimento appServiceAtendimento,
             IAppServiceCanal appServiceCanal,
             IAppServiceServico appServiceServico,
             IAppServiceSetor appServiceSetor,
+            IAppServiceContador appServiceContador,
             IMapper mapper)
         {
             _appServiceAtendimento = appServiceAtendimento;
             _appServiceCanal = appServiceCanal;
             _appServiceServico = appServiceServico;
             _appServiceSetor = appServiceSetor;
+            _appServiceContador = appServiceContador;
             _mapper = mapper;
         }
 
@@ -50,11 +50,10 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
 
         [BindProperty(SupportsGet = true)]
         public string ServicosSelecionados { get; set; }
-
+        
         private async Task OnLoad()
         {
-            var set = await _appServiceSetor.ListAllAsync();
-           
+            var set = await _appServiceSetor.ListAllAsync();           
 
             var lst = new List<Setor>();
             foreach (var s in set)
@@ -69,21 +68,9 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
             }
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync()
         {
             await OnLoad();
-
-            var atendimemnto_ativio = await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
-
-            if (!atendimemnto_ativio.Any())
-            {
-                StatusMessage = "Alerta: Não existe atendimento ativo no momento!";
-                return RedirectToPage("/Atendimento/Index");
-            }
-
-            Input = _mapper.Map<InputModelAtendimento>(atendimemnto_ativio.FirstOrDefault());
-
-            return Page();
         }
 
         public async Task<JsonResult> OnGetCanais()
@@ -104,20 +91,27 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
 
                 if (Input.Servicos == null || Input.Servicos == string.Empty)
                 {
-                    StatusMessage = "Alerta: " + "Selecione um servi�o ou mais!";
+                    StatusMessage = "Alerta: " + "Selecione um serviço ou mais!";
                     await OnLoad();
                     return RedirectToPage();
                 }
+    
+                var _anonimo = new Domain.Entity.Atendimento()
+                {
+                    Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Anônimo"),
+                    Data = DateTime.Now,
+                    Status = "Finalizado",
+                    Setor = Input.Setor,
+                    Canal = Input.Canal,
+                    Servicos = ServicosSelecionados,
+                    Descricao = Input.Descricao,
+                    Anonimo = true,
+                    Ativo = true,
+                    Ultima_Alteracao = DateTime.Now,
+                    Owner_AppUser_Id = User.Identity.Name
+                };
 
-                var atold = await _appServiceAtendimento.GetIdAsync(Input.Id);
-                atold.DataF = DateTime.Now;
-                atold.Setor = Input.Setor;
-                atold.Canal = Input.Canal; 
-                atold.Servicos = ServicosSelecionados; 
-                atold.Descricao = Input.Descricao;
-                atold.Status = "Finalizado";
-                atold.Ultima_Alteracao = DateTime.Now;
-                await _appServiceAtendimento.UpdateAsync(atold);
+                await _appServiceAtendimento.AddAsync(_anonimo);
 
                 return RedirectToPage("/Atendimento/Index");
 
@@ -129,5 +123,6 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
             }
 
         }
+
     }
 }

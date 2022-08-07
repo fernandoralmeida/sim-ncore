@@ -118,7 +118,7 @@ namespace Sim.Domain.Service
 
         public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
         {
-            return await _evento.DoListEventByParam(nome, setor, tipo, ano);
+            return await _evento.DoListEventByParam(nome, tipo, setor, ano);
         }
     }
 }

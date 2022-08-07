@@ -51,13 +51,13 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Ano</th>
+                <!--<th>Ano</th>-->
                 <th>CNPJ</th>                
                 <th>Nome Empresarial</th>
                 <th>Tel</th>
                 <th>E-mail</th>
-                <th>Situação</th>
-                <th>Endereço</th>
+                <!--<th>Situação</th>-->
+                <!--<th>Endereço</th>-->
                 <th>Município</th>
                 <th>Atividade</th>
             </tr>
@@ -74,11 +74,12 @@
             {
                     
             <tr>
-                <td>@Functions.Extensions.Contador(cont++, t)</td>
+                <td>@Functions.Extensions.Contador(cont++, t) <a asp-area="" asp-page="/Atendimento/Iniciar" asp-route-id="@item.Id" title="Iniciar atendimento"><i class="left material-icons">access_time</i></a></td>
+                <!--
                 <td>
                     @{ var ano = item.Data_Abertura.Value.Year; }
                     @Html.DisplayFor(modelItem => ano)
-                </td>
+                </td>-->
                 <td>
                     @Html.DisplayFor(modelItem => item.CNPJ)
                 </td>
@@ -91,16 +92,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
+                <!--
                 <td>
                     @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
                 </td>
                 <td>
                     @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
                     @Html.DisplayFor(modelItem => end) 
-                </td>
+                </td>-->
                 <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CNAE_Principal) @Html.DisplayFor(modelItem => item.Atividade_Principal)
+                    @Html.DisplayFor(modelItem => item.Atividade_Principal)
                 </td>
             </tr>
             }

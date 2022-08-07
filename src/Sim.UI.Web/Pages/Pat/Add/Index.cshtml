@@ -41,60 +41,92 @@
         </div>
     </section>
     <section>
+        <div class="card no-padding">
+            <div class="row">
+                <div class="col s12">
+                    <div class="input-field col s12 m6 l6">
+                        <select asp-for="InputSetor" asp-items="Model.Setores"></select>
+                        <label asp-for="InputSetor"></label>
+                    </div>
+                    <div class="input-field col s12 m6 l6">
+                        <select asp-for="InputCanal" asp-items="Model.Canais"></select>
+                        <label asp-for="InputCanal"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="input-field col s12">
+                        <select asp-for="InputServicos" asp-items="Model.Servicos" multiple></select>
+                        <label asp-for="InputServicos"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="input-field col s12">
+                        <textarea asp-for="Descricao" class="materialize-textarea"></textarea>
+                        <label asp-for="Descricao"></label>
+                    </div>
+                    <div class="input-field col s12 m6 l6" hidden>
+                        <input asp-for="InputServicos" />
+                        <label for="InputServicos">Serviços</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
         <div class="card">
             <div class="row">
+                <div class="input-field col s12 m10 l10">
+                    <input asp-for="Input.Ocupacao" />
+                    <label asp-for="Input.Ocupacao"></label>
+                </div>
+
+                <div class="input-field col s6 m2 l2">                            
+                    <select asp-for="Input.Experiencia">
+                        <option value="True">Sim</option>
+                        <option value="False">Não</option>
+                    </select>  
+                    <label asp-for="Input.Experiencia"></label>  
+                </div>
                 
-                    
-                        <div class="input-field col s12 m10 l10">
-                            <input asp-for="Input.Ocupacao" />
-                            <label asp-for="Input.Ocupacao"></label>
-                        </div>
+                <div class="input-field col s6 m2 l2">
+                    <input asp-for="Input.Vagas" />
+                    <label asp-for="Input.Vagas" ></label>
+                </div>
 
-                        <div class="input-field col s6 m2 l2">                            
-                            <select asp-for="Input.Experiencia">
-                                <option value="True">Sim</option>
-                                <option value="False">Não</option>
-                            </select>  
-                            <label asp-for="Input.Experiencia"></label>  
-                        </div>
-                        
-                        <div class="input-field col s6 m2 l2">
-                            <input asp-for="Input.Vagas" />
-                            <label asp-for="Input.Vagas" ></label>
-                        </div>
+                <div class="input-field col s6 m2 l2">
+                    <i class="prefix" style="font-size:20px;">R$</i>
+                    <input asp-for="Input.Salario" asp-format="{0:#,###.00}" onkeypress="return(moeda(this,'.',',',event))" />
+                    <label asp-for="Input.Salario" ></label>
+                </div>
 
-                        <div class="input-field col s6 m2 l2">
-                            <i class="prefix" style="font-size:20px;">R$</i>
-                            <input asp-for="Input.Salario" asp-format="{0:#,###.00}" onkeypress="return(moeda(this,'.',',',event))" />
-                            <label asp-for="Input.Salario" ></label>
-                        </div>
+                <div class="input-field col s6 m3 l3">
+                    <select asp-for="Input.Pagamento">
+                        <option>Mês</option>
+                        <option>Quinzena</option>
+                        <option>Semana</option>
+                        <option>Dia</option>
+                        <option>Hora</option>
+                    </select>  
+                    <label asp-for="Input.Pagamento" ></label>
+                </div>
 
-                        <div class="input-field col s6 m3 l3">
-                            <select asp-for="Input.Pagamento">
-                                <option>Mês</option>
-                                <option>Quinzena</option>
-                                <option>Semana</option>
-                                <option>Dia</option>
-                                <option>Hora</option>
-                            </select>  
-                            <label asp-for="Input.Pagamento" ></label>
-                        </div>
+                <div class="input-field col s6 m3 l3">                            
+                    <select asp-for="Input.Status">
+                        <option>Ativo</option>
+                        <option>Finalizado</option>
+                        <option>Cancelado</option>
+                    </select>
+                    <label asp-for="Input.Status"></label> 
+                </div>
 
-                        <div class="input-field col s6 m3 l3">                            
-                            <select asp-for="Input.Status">
-                                <option>Ativo</option>
-                                <option>Finalizado</option>
-                                <option>Cancelado</option>
-                            </select>
-                            <label asp-for="Input.Status"></label> 
-                        </div>
-
-                        <div class="input-field col s6 m2 l2">
-                            <input asp-for="Input.Data" />
-                            <label asp-for="Input.Data" ></label>
-                        </div>
-                    
-                
+                <div class="input-field col s6 m2 l2">
+                    <input asp-for="Input.Data" />
+                    <label asp-for="Input.Data" ></label>
+                </div> 
             </div>
         </div>
     </section>
@@ -118,5 +150,15 @@
         $('#inputCPF').mask('000.000.000-00');
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');
+        $(function() {                      
+            $("#onbtn").click(function () {
+                var selectedValues = [];
+                $("#Input_Servicos :selected").each(function () {
+                    selectedValues.push($(this).val());
+                });
+                document.getElementById("InputServicos").value = selectedValues;            
+                return true;
+            });         
+        });
     </script>
 }

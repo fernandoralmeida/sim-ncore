@@ -23,7 +23,7 @@
                     <li>
                         <div class="collapsible-header">@s.Secao.Key<span class="new badge blue" data-badge-caption="">@s.Secao.Value</span></div>
                         <div class="collapsible-body">
-                            <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@s.FaixaInicial" data-cnaef="@s.FaixaFinal">Listar Classe</a></div>
+                            <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@s.FaixaInicial" data-cnaef="@s.FaixaFinal" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
                             <ul class="collapsible z-depth-0">
                                 @foreach (var d in s.ListaClasse)
                                 {
@@ -34,14 +34,14 @@
                                     <li>
                                         <div class="collapsible-header">@d.Classe.Key<span class="new badge blue-grey darken-1" data-badge-caption="">@d.Classe.Value</span></div>
                                         <div class="collapsible-body">
-                                            <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@cnaei" data-cnaef="@cnaef">Listar Subclasse</a></div>
+                                            <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@cnaei" data-munic="@Model.MunicipioSelecionado" data-cnaef="@cnaef">Listar Subclasse</a></div>
                                             <ul class="collection z-depth-1">
                                                 @foreach (var sc in d.ListaSubClasse)
                                                 {
                                                     string[] cnae = sc.Key.Split(" - ");
                                                     var codigo = cnae[0];
 
-                                                    <li class="collection-item"><a class="modal-trigger" href="#viewmodal" data-cnaei="@codigo" data-cnaef="@codigo" title="Ver empresas"><span class="new badge" data-badge-caption="">@sc.Value</span></a>@sc.Key</li>
+                                                    <li class="collection-item"><a class="modal-trigger" href="#viewmodal" data-cnaei="@codigo" data-cnaef="@codigo" data-munic="@Model.MunicipioSelecionado"  title="Ver empresas"><span class="new badge" data-badge-caption="">@sc.Value</span></a>@sc.Key</li>
                                                 }
                                             </ul>
                                         </div>
@@ -89,9 +89,8 @@
             $(".modal-trigger").click(function () {
                 var param0 = $(this).data('cnaei');
                 var param1 = $(this).data('cnaef');
-                var param2 = "6607";
+                var param2 = $(this).data('munic');;
                 var cont = 0;
-
                 var a = document.getElementById('btn-export');
                 a.href = `/SimBI/Empresas/Export?ci=${param0}&cf=${param1}&m=${param2}&a=Ativa`;
 

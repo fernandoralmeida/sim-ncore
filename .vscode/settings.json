@@ -1,6 +1,12 @@
 {
-    "css.styleSheets": [ 
-        "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css",
-        "/css/site.css"        
+    "css.styleSheets": [
+        "../..././../../wwwroot/lib/materialize/css/materialize.css",
+        "../../../../../wwwroot/css/site.css",
+        "../../../../wwwroot/lib/materialize/css/materialize.css",
+        "../../../../wwwroot/css/site.css",
+        "../../../wwwroot/lib/materialize/css/materialize.css",
+        "../../../wwwroot/css/site.css",
+        "../../wwwroot/lib/materialize/css/materialize.css",
+        "../../wwwroot/css/site.css"
     ]
 }
