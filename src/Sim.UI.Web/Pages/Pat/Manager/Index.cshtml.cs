@@ -17,6 +17,9 @@ namespace Sim.UI.Web.Pages.Pat.Manager
         [BindProperty(SupportsGet = true)]
         public InputModel Input { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string InclusivasSelecionadas { get; set; }
+
         public IndexModel(IAppServiceEmpregos appServiceEmpregos)
         {
             _appServiceEmpregos = appServiceEmpregos;
@@ -64,21 +67,24 @@ namespace Sim.UI.Web.Pages.Pat.Manager
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+            {
+                StatusMessage = "Alerta: Verifique se o formulário foi preenchido corretamente!";
                 return Page(); 
+            }               
 
-                await _appServiceEmpregos.UpdateAsync(new Empregos()
-                {
-                    Id = Input.Id,
-                    Data = Input.Data,
-                    Experiencia = Input.Experiencia,
-                    Vagas = Input.Vagas,
-                    Ocupacao = Input.Ocupacao,
-                    Pagamento = Input.Pagamento,
-                    Inclusivo = Input.Inclusiva,
-                    Genero = Input.Genero,
-                    Salario = Convert.ToDecimal(Input.Salario),
-                    Status = Input.Status
-                });
+            await _appServiceEmpregos.UpdateAsync(new Empregos()
+            {
+                Id = Input.Id,
+                Data = Input.Data,
+                Experiencia = Input.Experiencia,
+                Vagas = Input.Vagas,
+                Ocupacao = Input.Ocupacao,
+                Pagamento = Input.Pagamento,
+                Inclusivo = InclusivasSelecionadas,
+                Genero = Input.Genero,
+                Salario = Convert.ToDecimal(Input.Salario),
+                Status = Input.Status
+            });
 
             return RedirectToPage("/Pat/Index");
         }

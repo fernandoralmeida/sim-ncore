@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
 using AutoMapper;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Sim.UI.Web.Functions;
 
 namespace Sim.UI.Web.Pages.Pat.Add
 {
@@ -32,6 +32,9 @@ namespace Sim.UI.Web.Pages.Pat.Add
         public SelectList Setores { get; set; }
         public SelectList Canais { get; set; }
         public SelectList Servicos { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string InclusivasSelecionadas { get; set; }
 
         public IndexModel(IAppServiceEmpresa appServiceEmpresa,
             IAppServiceEmpregos appServiceEmpregos,
@@ -65,46 +68,28 @@ namespace Sim.UI.Web.Pages.Pat.Add
                                     null);
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            await LoadSelects();
-
             Input = new()
             {
                 Data = DateTime.Now,
-                Empresa = await _appServiceEmpresa.GetIdAsync(id),
                 Salario = "0,00"
             };
+            await LoadSelects();
 
-            var at_list = await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
+            var at = await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
 
-            if (at_list.Any())
+            if (at.Any())
             {
-                StatusMessage = "Um atendimento encontra-se ativo, finalize antes de iniciar outro atendimento.";                
-                var atendimento = new Domain.Entity.Atendimento();
-                foreach(var at in at_list)
-                { 
-                    atendimento = at;
-                } 
-                InputAtendimento.ID = atendimento.Id;               
+                StatusMessage = "Um atendimento encontra-se ativo, finalize antes de iniciar outro atendimento.";    
+                return RedirectToPage("/Atendimento/Novo/Index");         
             }
-            else
-            {
-                var atendimento = new Domain.Entity.Atendimento()
-                {                
-                    Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
-                    Data = DateTime.Now,
-                    Status = "Ativo",
-                    Setor = InputAtendimento.InputSetor,
-                    Ativo = true,
-                    Empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id),
-                    Owner_AppUser_Id = User.Identity.Name
-                };
-                await _appServiceAtendimento.AddAsync(atendimento);
-                var ret =  await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
-                InputAtendimento.ID = ret.SingleOrDefault().Id;
-            }
+            
             return Page();
+        }
+
+        public async Task<JsonResult> OnGetAddEmpresa(string cnpj){            
+            return new JsonResult(await _appServiceEmpresa.ConsultaCNPJAsync(cnpj.Mask("##.###.###/####-##")));
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -112,7 +97,10 @@ namespace Sim.UI.Web.Pages.Pat.Add
             try
             {
                 if (!ModelState.IsValid)
-                    return Page(); 
+                {
+                    StatusMessage = "Alerta: Verifique se o formulário foi preenchido corretamente!";
+                    return Page();
+                }                     
 
                 var _atendimento = await _appServiceAtendimento.GetIdAsync(InputAtendimento.ID);
                 _atendimento.DataF = DateTime.Now;
@@ -130,7 +118,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     Empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id),
                     Data = Input.Data,
                     Experiencia = Input.Experiencia,
-                    Inclusivo = Input.Inclusiva,
+                    Inclusivo = InclusivasSelecionadas,
                     Vagas = Input.Vagas,
                     Ocupacao = Input.Ocupacao,
                     Pagamento = Input.Pagamento,

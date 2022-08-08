@@ -8,7 +8,7 @@ namespace Sim.UI.Web.Pages.Pat
     public class InputModel
     {
         [Key]
-        [HiddenInput(DisplayValue = false)]
+        [HiddenInput(DisplayValue = true)]
         public Guid Id { get; set; }
 
         [DisplayName("Data")]

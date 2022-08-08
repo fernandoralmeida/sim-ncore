@@ -216,7 +216,6 @@ hr{
 .alpha-w-text-9{ color: rgba(255, 255, 255, 0.9);}
 .navbar-page-name {
     margin-left: 10px;
-    font-size:large;
 }
 /* materialize */
 .sidenav {
@@ -318,8 +317,16 @@ nav.navbar .brand-logo {
     color: rgba(0,0,0,0.6);
     margin: 0 5px 0 0;
 }
+nav .input-field label i {
+    color: rgba(0,0,0,0.5);
+    -webkit-transition: color .3s;
+    transition: color .3s;
+}
 /* End Sidenav  */
 @media only screen and (max-width: 992px) {
+    .navbar-page-name {
+        margin:0px;
+    }
     .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
         padding: 0 20px 0 20px;
     }
