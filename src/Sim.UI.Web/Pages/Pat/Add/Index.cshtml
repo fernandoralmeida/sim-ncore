@@ -11,56 +11,27 @@
     <section>
         <div class="card">
             <div class="card-header grey-text">Empresa</div>            
-            <div class="row no-padding">
+            <div id="div-add-cnpj" class="row no-padding">
                 <div class="col s12 m6 l6 input-field valign-wrapper">
                     <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ" />
                     <label>CNPJ</label>
                     <a id="addempresa" class="waves-effect waves-light btn"><i class="material-icons">add</i></a>
                 </div>
             </div>            
-            <input asp-for="Input.Empresa.Id"/>          
-            <table class="striped">
+            <input asp-for="Input.Empresa.Id" hidden/>          
+            <table id="tableview" class="striped" hidden>
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>CNPJ</th>
                         <th>Razão Social</th>
                         <th>Tel</th>
                         <th>Email</th>
                         <th>Cnae</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody class="showcollection"></tbody>
             </table>
-        </div>
-
-        <div class="card">
-            <div class="card-header grey-text">Cliente</div>
-            <div class="row">                
-                <div class="col s12" hidden>
-                    <label asp-for="Input.Empresa.Id"></label>
-                    <input asp-for="Input.Empresa.Id" />
-                </div>                    
-                <div class="input-field col s12 m6 l3 valign-wrapper">
-                    <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ">
-                    <label asp-for="Input.Empresa.CNPJ" for="inputCNPJ"></label>
-                </div>
-                                    
-                <div class="input-field col s12 m6 l9">
-                    <input asp-for="Input.Empresa.Nome_Empresarial" />
-                    <label>Empresa</label>
-                </div>
-                
-                <div class="input-field col s3 m3 l3">
-                    <input asp-for="Input.Empresa.CNAE_Principal" id="inputCNAE"/>
-                    <label for="inputCNAE">CNAE</label>
-                </div>
-
-                <div class="input-field col s9 m9 l9">
-                    <input asp-for="Input.Empresa.Atividade_Principal"/>
-                    <label>Atividade</label>
-                </div>  
-            </div>
         </div>
     </section>
     <section>
@@ -80,7 +51,7 @@
                     <label asp-for="Input.Experiencia"></label>  
                 </div>
                 <div class="input-field col s6 m6 l3">                            
-                    <select asp-for="Input.Inclusiva" multiple>
+                    <select asp-for="Input.Inclusiva">
                         <option selected>Normal</option>
                         <option>Deficiência Fisica</option>
                         <option>Deficiência Auditiva</option>
@@ -184,18 +155,24 @@
     <script>
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');
-        $(function() {   
+        $(function() {
             $("#addempresa").click(function () {
                 var p = document.getElementById("inputCNPJ").value;
                 var p0 = p.replace('.','');
                 var p1 = p0.replace('.','');
                 var p2 = p1.replace('/','');
                 var p3 = p2.replace('-','');
-                alert(p3);
                 $(".showcollection").empty();
                 $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
                 $.getJSON(`/Pat/Add?cnpj=${p3}&handler=AddEmpresa`, function (data) {
                     $(".loadingpage").empty();
+                    
+                    if(data !== null)
+                    {
+                        document.getElementById("div-add-cnpj").hidden = true;
+                        document.getElementById("tableview").hidden = false;
+                    }
+
                     $.each(data, function (i, item) {
 
                         document.getElementById("Input_Empresa_Id").value = item.id;
@@ -207,17 +184,24 @@
                         var v5 = item.atividade_Principal;
                         
                         $(".showcollection").append(                            
-                            `<tr>
-                            <td><a class="btn-small waves-effect waves-light" href="#"><i class="material-icons">schedule</i></a></td>
+                            `<tr>                            
                             <td>${v1}</td>
                             <td>${v2}</td>
                             <td>${v3}</td>
                             <td>${v4}</td>
                             <td>${v5}</td>
+                            <td><a id="btnremove" class="btn-small waves-effect waves-light red lighten-2"><i class="material-icons">remove</i></a></td>
                             </tr>`                        
                         );
                     });
                 });
+            });
+
+            $("#btnremove").click(function (){
+                $(".showcollection").empty();
+                document.getElementById("div-add-cnpj").hidden = false;
+                document.getElementById("tableview").hidden = true;
+                document.getElementById("Input_Empresa_Id").empty();
             });
 
             $("#onbtn").click(function () {
