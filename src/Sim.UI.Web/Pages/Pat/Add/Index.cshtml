@@ -6,32 +6,35 @@
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+<partial name="_PatNav" />
 
 <form method="post">
     <section>
         <div class="card">
-            <div class="card-header grey-text">Empresa</div>            
-            <div id="div-add-cnpj" class="row no-padding">
+            <div class="card-header grey-text">Empresa</div>                      
+            <div id="div-add-cnpj" class="row no-padding mgn-b-0">                
                 <div class="col s12 m6 l6 input-field valign-wrapper">
                     <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ" />
                     <label>CNPJ</label>
                     <a id="addempresa" class="waves-effect waves-light btn"><i class="material-icons">add</i></a>
                 </div>
             </div>            
-            <input asp-for="Input.Empresa.Id" hidden/>          
-            <table id="tableview" class="striped" hidden>
-                <thead>
-                    <tr>
-                        <th>CNPJ</th>
-                        <th>Razão Social</th>
-                        <th>Tel</th>
-                        <th>Email</th>
-                        <th>Cnae</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody class="showcollection"></tbody>
-            </table>
+            <input asp-for="Input.Empresa.Id" hidden/>     
+            <div id="divbtn" hidden><a id="btnremove" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">remove</i></a></div>     
+            <div style="overflow-x: auto;">
+                <table id="tableview" class="striped" hidden>
+                    <thead>
+                        <tr>
+                            <th>CNPJ</th>
+                            <th>Razão Social</th>
+                            <th>Tel</th>
+                            <th>Email</th>
+                            <th>Cnae</th>
+                        </tr>
+                    </thead>
+                    <tbody class="showcollection"></tbody>
+                </table>
+            </div>
         </div>
     </section>
     <section>
@@ -166,41 +169,42 @@
                 $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
                 $.getJSON(`/Pat/Add?cnpj=${p3}&handler=AddEmpresa`, function (data) {
                     $(".loadingpage").empty();
-                    
-                    if(data !== null)
-                    {
-                        document.getElementById("div-add-cnpj").hidden = true;
-                        document.getElementById("tableview").hidden = false;
-                    }
-
                     $.each(data, function (i, item) {
-
-                        document.getElementById("Input_Empresa_Id").value = item.id;
-
-                        var v1 = item.cnpj;                        
-                        var v2 = item.nome_Empresarial;
-                        var v3 = item.telefone != null? item.telefone: "";
-                        var v4 = item.email != null? item.email: "";
-                        var v5 = item.atividade_Principal;
-                        
-                        $(".showcollection").append(                            
-                            `<tr>                            
-                            <td>${v1}</td>
-                            <td>${v2}</td>
-                            <td>${v3}</td>
-                            <td>${v4}</td>
-                            <td>${v5}</td>
-                            <td><a id="btnremove" class="btn-small waves-effect waves-light red lighten-2"><i class="material-icons">remove</i></a></td>
-                            </tr>`                        
-                        );
+                        if(data === null)
+                        {
+                            alert("CNPJ não encontrado!");
+                        }
+                        if(data)                                            
+                        {
+                            document.getElementById("div-add-cnpj").hidden = true;
+                            document.getElementById("tableview").hidden = false;                            
+                            document.getElementById("Input_Empresa_Id").value = item.id;
+                            document.getElementById("divbtn").hidden = false;
+                            
+                            var v1 = item.cnpj;                        
+                            var v2 = item.nome_Empresarial;
+                            var v3 = item.telefone != null? item.telefone: "";
+                            var v4 = item.email != null? item.email: "";
+                            var v5 = item.atividade_Principal;
+                            
+                            $(".showcollection").append(                            
+                                `<tr>                            
+                                <td>${v1}</td>
+                                <td>${v2}</td>
+                                <td>${v3}</td>
+                                <td>${v4}</td>
+                                <td>${v5}</td>
+                                </tr>`                        
+                            );
+                        }
                     });
                 });
             });
 
-            $("#btnremove").click(function (){
-                $(".showcollection").empty();
+            $("#btnremove").click(function () {
                 document.getElementById("div-add-cnpj").hidden = false;
-                document.getElementById("tableview").hidden = true;
+                document.getElementById("tableview").hidden = true;    
+                document.getElementById("divbtn").hidden = true;                        
                 document.getElementById("Input_Empresa_Id").empty();
             });
 

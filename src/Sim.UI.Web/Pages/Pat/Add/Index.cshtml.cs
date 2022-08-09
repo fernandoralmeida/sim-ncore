@@ -70,8 +70,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Input = new()
-            {
+            Input = new() {
                 Data = DateTime.Now,
                 Salario = "0,00"
             };
@@ -79,8 +78,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
 
             var at = await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
 
-            if (at.Any())
-            {
+            if (at.Any()) {
                 StatusMessage = "Um atendimento encontra-se ativo, finalize antes de iniciar outro atendimento.";    
                 return RedirectToPage("/Atendimento/Novo/Index");         
             }
@@ -96,35 +94,42 @@ namespace Sim.UI.Web.Pages.Pat.Add
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
+                if (!ModelState.IsValid) {
                     StatusMessage = "Alerta: Verifique se o formulário foi preenchido corretamente!";
                     return Page();
-                }                     
+                } 
 
-                var _atendimento = await _appServiceAtendimento.GetIdAsync(InputAtendimento.ID);
-                _atendimento.DataF = DateTime.Now;
-                _atendimento.Setor = InputAtendimento.InputSetor;
-                _atendimento.Canal = InputAtendimento.InputCanal; 
-                _atendimento.Servicos = InputAtendimento.ServicosSelecionados; 
-                _atendimento.Descricao = InputAtendimento.Descricao;
-                _atendimento.Status = "Finalizado";
-                _atendimento.Ultima_Alteracao = DateTime.Now;
+                var emp = await _appServiceEmpresa.SingleIdAsync(Input.Empresa.Id);             
 
-                await _appServiceAtendimento.UpdateAsync(_atendimento);
+                var _atendimento = new Domain.Entity.Atendimento() {
+                    Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
+                    Data = DateTime.Now,
+                    DataF = DateTime.Now,
+                    Setor = InputAtendimento.InputSetor,
+                    Canal = InputAtendimento.InputCanal, 
+                    Servicos = InputAtendimento.ServicosSelecionados, 
+                    Descricao = InputAtendimento.Descricao,                
+                    Status = "Finalizado",
+                    Ultima_Alteracao = DateTime.Now,
+                    Ativo = true,
+                    Owner_AppUser_Id = User.Identity.Name,
+                    Empresa = emp,                
+                    Anonimo = false
+                };
 
-                var emprego = new Empregos()
-                {
-                    Empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id),
+                await _appServiceAtendimento.AddAsync(_atendimento);
+
+                var emprego = new Empregos() {                    
                     Data = Input.Data,
-                    Experiencia = Input.Experiencia,
-                    Inclusivo = InclusivasSelecionadas,
-                    Vagas = Input.Vagas,
                     Ocupacao = Input.Ocupacao,
-                    Pagamento = Input.Pagamento,
+                    Experiencia = Input.Experiencia,                    
                     Salario = Convert.ToDecimal(Input.Salario),
-                    Genero = Input.Genero,                    
-                    Status = Input.Status
+                    Vagas = Input.Vagas,
+                    Empresa = emp,
+                    Pagamento = Input.Pagamento,
+                    Status = Input.Status,                    
+                    Genero = Input.Genero,                                       
+                    Inclusivo = InclusivasSelecionadas
                 };
                 
                 await _appServiceEmpregos.AddAsync(emprego);

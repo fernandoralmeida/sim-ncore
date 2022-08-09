@@ -2,9 +2,11 @@
 @model Sim.UI.Web.Pages.Pat.Manager.IndexModel
 @{
     ViewData["Title"] = "Vagas";
+    ViewData["ActivePagePat"] = Web.Pages.Pat.PatNav.Novo;
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+<partial name="_PatNav" />
 
 <form method="post">
     <section>
@@ -57,7 +59,7 @@
                     <label asp-for="Input.Experiencia"></label>  
                 </div>
                 <div class="input-field col s6 m6 l3">                            
-                    <select asp-for="Input.Inclusiva" multiple>
+                    <select asp-for="Input.Inclusiva">
                         <option>Normal</option>
                         <option>Deficiência Fisica</option>
                         <option>Deficiência Auditiva</option>

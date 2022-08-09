@@ -1,12 +1,39 @@
-﻿@page
-@model Sim.UI.Web.Pages.Pat.IndexModel
+@page
+@model Sim.UI.Web.Pages.Pat.Consulta.IndexModel
 @{
-    ViewData["Title"] = "Lista";
-    ViewData["ActivePagePat"] = Web.Pages.Pat.PatNav.Inicio;
+    ViewData["Title"] = "Consulta";
+    ViewData["ActivePagePat"] = Web.Pages.Pat.PatNav.Consulta;
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<partial name="_PatNav" />
+
+<ul id="dropdownmenu" class="dropdown-content">
+  <li><a href="#!">Cnpj</a></li>
+  <li><a href="#!">Razão Social</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Vagas</a></li>
+</ul>
+<div class="row">
+    <nav class="navbar">
+        <div class="nav-wrapper">
+            <form>
+                <ul>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdownmenu">Consultar<i class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>                
+                <div class="input-field col">
+                    <input id="search" type="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+                <ul class="right">
+                    <li class="@PatNav.InicioNavClass(ViewContext)"><a asp-page="/Pat/Index"><i class="material-icons">list</i></a></li>
+                    <li class="@PatNav.NovoNavClass(ViewContext)"><a asp-page="/Pat/Add/Index"><i class="material-icons">add</i></a></li>
+                    <li class="@PatNav.ConsultaNavClass(ViewContext)"><a asp-page="/Pat/Consulta/Index"><i class="material-icons">search</i></a></li>          
+                </ul>
+            </form>            
+        </div>
+    </nav>
+</div>
 
 <div class="row">
     <div class="card">
