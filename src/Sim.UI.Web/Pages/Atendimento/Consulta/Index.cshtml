@@ -22,9 +22,12 @@
 
 <div class="card">
     <partial name="_AtendimentoList" model="Model.Input.ListaAtendimento" />
-    <div class="card-action">
-        <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
-    </div>
+    @if(Model.Input.ListaAtendimento.Any())
+    {   
+        <div class="card-action">
+            <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
+        </div>
+    }
 </div>
 
 @section scripts{
