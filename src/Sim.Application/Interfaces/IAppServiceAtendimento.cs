@@ -5,6 +5,7 @@ namespace Sim.Application.Interfaces
     public interface IAppServiceAtendimento : IAppServiceBase<Atendimento>
     {
         Task<Atendimento> GetAtendimentoAsync(Guid id);
+        Task<IEnumerable<Atendimento>> DoListAendimentosAsyncBy(string param);
         Task<IEnumerable<Atendimento>> ListPessoaAsync(string cpf);
         Task<IEnumerable<Atendimento>> ListEmpresaAsync(string cnpj);
         Task<IEnumerable<Atendimento>> ListSetorAsync(string setor);

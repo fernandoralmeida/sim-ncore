@@ -15,7 +15,7 @@ using OfficeOpenXml;
 namespace Sim.UI.Web.Pages.Atendimento.Consulta
 {
     [Authorize]
-    public class IndexModel : PageModel
+    public class AvancadaModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
         private readonly IAppServiceServico _appServiceServico;
@@ -23,9 +23,6 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
 
         [TempData]
         public string StatusMessage { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string Src { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public InputModel Input { get; set; }
@@ -64,7 +61,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
             public ICollection<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
         }
 
-        public IndexModel(IAppServiceAtendimento appServiceAtendimento,
+        public AvancadaModel(IAppServiceAtendimento appServiceAtendimento,
             IServiceUser appServiceUser,
             IAppServiceServico appServiceServico)
         {
@@ -75,10 +72,13 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
             GetParam = new();
         }
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            var lista = await _appServiceAtendimento.DoListAendimentosAsyncBy(Src);
-            Input.ListaAtendimento = lista.ToList();
+            Input.DataI = new DateTime(DateTime.Now.Year, 1, 1);
+            Input.DataF = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
+            LoadUsers().Wait();
+            LoadServicos().Wait();
         }
 
         private async Task LoadUsers()
@@ -168,7 +168,19 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         {
             try
             {
-                var lista = await _appServiceAtendimento.DoListAendimentosAsyncBy(Src);
+                var param = new List<object>() {
+                    Input.DataI.Value.Date,
+                    Input.DataF.Value.Date,
+                    Input.CPF,
+                    Input.Nome,
+                    Input.CNPJ,
+                    Input.RazaSocial,
+                    Input.CNAE,
+                    Input.Servico,
+                    Input.Atendente  };
+
+                var lista = await _appServiceAtendimento.ListParamAsync(param);
+
                 Input.ListaAtendimento = lista.ToList();
             }
             catch (Exception ex)
@@ -176,6 +188,9 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
                 StatusMessage = "Erro: " + ex.Message;
                 Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
             }
+
+            await LoadServicos();
+            await LoadUsers();
         }
 
         public async Task OnPostAtPendentesAsync()

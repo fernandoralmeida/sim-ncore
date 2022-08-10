@@ -11,6 +11,26 @@ namespace Sim.Data.Repository
             :base(dbContext)
         {   }
 
+        public async Task<IEnumerable<Atendimento>> DoListAendimentosAsyncBy(string param)
+        {
+            return await _db.Atendimento
+                        .Include(p => p.Pessoa)
+                        .Include(e => e.Empresa)
+                        .Include(s => s.Sebrae)
+                        //.Where(a => a.Data.Value.Date >= dataI && a.Data.Value.Date <= dataF)
+                        .Where(a => a.Status == "Finalizado" && a.Ativo == true)
+                        .Where(a => a.Pessoa.CPF.Contains(param) ||
+                        a.Pessoa.Nome.Contains(param) ||
+                        a.Empresa.CNPJ.Contains(param) ||
+                        a.Empresa.Nome_Empresarial.Contains(param) ||
+                        a.Empresa.CNAE_Principal.Contains(param) ||
+                        a.Servicos.Contains(param) ||
+                        a.Owner_AppUser_Id.Contains(param))
+                        .AsNoTracking()
+                        .OrderBy(o => o.Data)
+                        .ToListAsync();     
+        }
+
         public async Task<Atendimento> GetAtendimentoAsync(Guid id)
         {
             var ativo = Task.Run(() => _db.Atendimento

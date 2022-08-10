@@ -70,6 +70,12 @@
                 $(".progress").show();
             });
         });
+        function handle(e){
+        if(e.keyCode === 13){
+            $(".blackboxload").show();
+            $(".progress").show();
+        }
+    }
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

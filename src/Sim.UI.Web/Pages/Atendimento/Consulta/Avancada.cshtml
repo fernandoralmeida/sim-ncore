@@ -1,5 +1,5 @@
-@page
-@model Sim.UI.Web.Pages.Atendimento.Consulta.IndexModel
+﻿@page
+@model Sim.UI.Web.Pages.Atendimento.Consulta.AvancadaModel
 @{
 
     ViewData["Title"] = "Consultas por Periodos";
@@ -8,23 +8,71 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<form>
-    <nav class="row">
-        <div class="nav-wrapper">
-            <div class="input-field">
-                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Src" type="search" required>
-                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
+<form method="post">
+
+    <div class="row white z-depth-1-half rounded-default">
+        <div class="row mgn-b-0 pdn-10 right-align">
+            <!--<button class="btn btn-floating orange waves-effect waves-light left" asp-page-handler="AtPendentes">Pendentes</button>
+            <button class="btn btn-floating red waves-effect waves-light left" asp-page-handler="AtCancelados" title="Meus atendimentos cancelados"><i class="material-icons">cancel</i></button>-->
+            <button class="btn waves-effect waves-light submit">Pesquisar</button>
+            <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
+        </div>
+        <div class="divider"></div>
+        <div class="row mgn-b-0">
+            <div class="col s12 mgn-b-0">
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.DataI" />
+                    <label asp-for="Input.DataI"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.DataF" />
+                    <label asp-for="Input.DataF"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.CPF" id="inputCPF" />
+                    <label asp-for="Input.CPF"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.Nome" />
+                    <label asp-for="Input.Nome"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.CNPJ" id="inputCNPJ" />
+                    <label asp-for="Input.CNPJ"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.RazaSocial" />
+                    <label asp-for="Input.RazaSocial"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <input asp-for="Input.CNAE" id="inputCNAE" />
+                    <label asp-for="Input.CNAE"></label>
+                </div>
+                <div class="input-field col s6 m4 xl2">
+                    <select asp-for="Input.Servico" asp-items="@Model.ListaServicos">
+                        <option selected></option>
+                    </select>
+                    <label asp-for="Input.Servico"></label>
+                </div>
+                @{
+                    if (User.IsInRole("Administrador"))
+                    {
+                        <div class="input-field col s6 m4">
+                            <select asp-for="Input.Atendente" asp-items="@Model.ListaAtendentes">
+                                <option selected></option>
+                            </select>
+                            <label asp-for="Input.Atendente"></label>
+                        </div>
+                    }
+                }
             </div>
         </div>
-    </nav>
+    </div>
 </form>
+
 
 <div class="card">
     <partial name="_AtendimentoList" model="Model.Input.ListaAtendimento" />
-    <div class="card-action">
-        <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
-    </div>
 </div>
 
 @section scripts{
