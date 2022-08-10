@@ -180,20 +180,14 @@
                             document.getElementById("tableview").hidden = false;                            
                             document.getElementById("Input_Empresa_Id").value = item.id;
                             document.getElementById("divbtn").hidden = false;
-                            
-                            var v1 = item.cnpj;                        
-                            var v2 = item.nome_Empresarial;
-                            var v3 = item.telefone != null? item.telefone: "";
-                            var v4 = item.email != null? item.email: "";
-                            var v5 = item.atividade_Principal;
-                            
+                           
                             $(".showcollection").append(                            
                                 `<tr>                            
-                                <td>${v1}</td>
-                                <td>${v2}</td>
-                                <td>${v3}</td>
-                                <td>${v4}</td>
-                                <td>${v5}</td>
+                                <td>${item.cnpj}</td>
+                                <td>${item.nome_Empresarial}</td>
+                                <td>${item.telefone}</td>
+                                <td>${item.email}</td>
+                                <td>${item.atividade_Principal}</td>
                                 </tr>`                        
                             );
                         }

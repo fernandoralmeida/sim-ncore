@@ -26,7 +26,7 @@ namespace Sim.UI.Web.Pages.Pat.Manager
         }
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            var e = await _appServiceEmpregos.GetIdAsync(id);
+            var e = await _appServiceEmpregos.GetEmpregoByIdAsync(id);
             Input = new()
             {
                 Id = e.Id,

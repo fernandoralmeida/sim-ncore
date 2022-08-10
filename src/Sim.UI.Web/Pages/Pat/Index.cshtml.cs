@@ -28,7 +28,7 @@ namespace Sim.UI.Web.Pages.Pat
         }
         public async Task OnGet()
         {
-            ListaEmpregos = await appEmpregos.ListAllAsync();
+            ListaEmpregos = await appEmpregos.DoListEmpregosAsync();
         }
     }
 }

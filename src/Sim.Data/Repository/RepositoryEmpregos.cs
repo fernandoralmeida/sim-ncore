@@ -10,24 +10,28 @@ namespace Sim.Data.Repository
     {
         public RepositoryEmpregos(ApplicationContext applicationContext) : base(applicationContext) { }
 
-        public async Task<Empregos> GetIdAsync(Guid id)
-        {
-            return await _db.Emprego.Include(e => e.Empresa).Where(o=>o.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<Empregos>> ListAllAsync()
+        public async Task<IEnumerable<Empregos>> DoListEmpregosAsync()
         {
             return await _db.Emprego.Include(e => e.Empresa).ToListAsync();
         }
 
-        public async Task<IEnumerable<Empregos>> ListEmpregosAsync()
+        public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncBy(string param)
         {
-           return await _db.Emprego.Include(e => e.Empresa).ToListAsync();
+            return await _db.Emprego.Include(e => e.Empresa)
+                .Where(e => e.Empresa.CNPJ.Contains(param) ||
+                e.Empresa.Nome_Empresarial.Contains(param) ||
+                e.Empresa.Atividade_Principal.Contains(param) ||
+                e.Ocupacao.Contains(param) ||
+                e.Inclusivo.Contains(param) ||
+                e.Genero.Contains(param))
+                .AsNoTracking()
+                .OrderBy(o => o.Data)
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<Empregos>> ListEmpregosAsync(string cnpj)
+        public async Task<Empregos> GetEmpregoByIdAsync(Guid id)
         {
-            return await _db.Emprego.Include(e => e.Empresa).Where(s => s.Empresa.CNPJ == cnpj).ToListAsync();
+            return await _db.Emprego.Include(e => e.Empresa).Where(e => e.Id == id).SingleOrDefaultAsync();
         }
     }
 }

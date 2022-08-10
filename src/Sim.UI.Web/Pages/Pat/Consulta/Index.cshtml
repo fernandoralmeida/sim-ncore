@@ -7,23 +7,14 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<ul id="dropdownmenu" class="dropdown-content">
-  <li><a asp-page="/Pat/Consulta/Index" asp-route-id="cnpj" asp-route-src="@Model.InputSearch">CNPJ</a></li>
-  <li><a asp-page="/Pat/Consulta/Index" asp-route-id="rsocial" asp-route-src="@Model.InputSearch">Razão Social</a></li>
-  <li class="divider"></li>
-  <li><a asp-page="/Pat/Consulta/Index" asp-route-id="evagas" asp-route-src="@Model.InputSearch">Vagas</a></li>
-</ul>
 <div class="row">
     <nav class="navbar">
         <div class="nav-wrapper">
-            <form method="get" >
-                <ul>
-                    <li><a class="dropdown-trigger" href="#!" data-target="dropdownmenu">@Model.InputTipo<i class="material-icons right">arrow_drop_down</i></a></li>
-                </ul>             
-                <div class="input-field col">
-                    <input id="search" asp-for="InputSearch" type="search" required>
+            <form>        
+                <div class="input-field col s6 m6 l6">
+                    <input id="search" asp-for="InputSearch" type="search" placeholder="Digite aqui para pesquisar" required>
                     <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                    <i class="material-icons">close</i>
+                    <i id="clsinput" class="material-icons">close</i>
                 </div>
                 <ul class="right">
                     <li class="@PatNav.InicioNavClass(ViewContext)"><a asp-page="/Pat/Index"><i class="material-icons">list</i></a></li>
@@ -119,9 +110,11 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/jquery.mask.min.js"></script>
-    <script src="~/js/jquery.mask.min.js"></script>
     <script>
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');
+        $('#clsinput').click(function(){
+            $("input[id='search']").val('');
+        });
     </script>
 }

@@ -30,24 +30,12 @@ namespace Sim.UI.Web.Pages.Pat.Consulta{
 
         public IEnumerable<Empregos> ListaEmpregos { get; set; }
 
-        public async Task OnGetAsync(string? id, string? src) {            
-            InputTipo = id ?? "Consultar";            
-            if(id == "cnpj" && string.IsNullOrEmpty(src))
-                src = src.MaskRemove();
-                
-            InputSearch = src;
-            ListaEmpregos = await _appempregos.ListEmpregosAsync(InputSearch);
+        public async Task OnGetAsync() {            
+            ListaEmpregos = await _appempregos.DoListEmpregosAsyncBy(InputSearch);
         }
 
-        public async Task<IActionResult> OnPostAsync(string? id, string? src){
-            InputTipo = id;            
-            if(id == "cnpj" && string.IsNullOrEmpty(src))
-                src = src.MaskRemove();
-                
-            InputSearch = src;
-            ListaEmpregos = await _appempregos.ListEmpregosAsync(InputSearch);
-
-            return RedirectToPage("");
+        public async Task OnPostAsync(){
+            ListaEmpregos = await _appempregos.DoListEmpregosAsyncBy(InputSearch);
         }
     }
 }

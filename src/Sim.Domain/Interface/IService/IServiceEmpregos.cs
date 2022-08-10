@@ -2,10 +2,9 @@
 {
     using Entity;
     public interface IServiceEmpregos : IServiceBase<Empregos>
-    {
-        Task<IEnumerable<Empregos>> ListEmpregosAsync();
-        Task<IEnumerable<Empregos>> ListEmpregosAsync(string cnpj);
-        Task<Empregos> GetIdAsync(Guid id);
-        Task<IEnumerable<Empregos>> ListAllAsync();
+    {   
+        Task<Empregos> GetEmpregoByIdAsync(Guid id);
+        Task<IEnumerable<Empregos>> DoListEmpregosAsync();
+        Task<IEnumerable<Empregos>> DoListEmpregosAsyncBy(string param);
     }
 }
