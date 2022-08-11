@@ -25,6 +25,11 @@ namespace Sim.Application.Services
             return await _empresa.ConsultaRazaoSocialAsync(name);
         }
 
+        public async Task<IEnumerable<Empresas>> DoListAsyncBy(string param)
+        {
+            return await _empresa.DoListAsyncBy(param);
+        }
+
         public async Task<Empresas> GetIdAsync(Guid id)
         {
             return await _empresa.GetIdAsync(id);

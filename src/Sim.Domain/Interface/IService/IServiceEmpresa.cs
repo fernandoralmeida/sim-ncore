@@ -4,6 +4,7 @@
 
     public interface IServiceEmpresa : IServiceBase<Empresas>
     {
+        Task<IEnumerable<Empresas>> DoListAsyncBy(string param);
         Task<IEnumerable<Empresas>> ConsultaCNPJAsync(string cnpj);
         Task<IEnumerable<Empresas>> ConsultaRazaoSocialAsync(string name);
         Task<IEnumerable<Empresas>> ListTop20Async();

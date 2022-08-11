@@ -24,6 +24,7 @@ namespace Sim.Data.Repository
                         a.Empresa.CNPJ.Contains(param) ||
                         a.Empresa.Nome_Empresarial.Contains(param) ||
                         a.Empresa.CNAE_Principal.Contains(param) ||
+                        a.Empresa.Atividade_Principal.Contains(param) ||
                         a.Servicos.Contains(param) ||
                         a.Owner_AppUser_Id.Contains(param))
                         .AsNoTracking()

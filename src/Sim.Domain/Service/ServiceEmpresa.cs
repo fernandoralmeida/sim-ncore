@@ -24,6 +24,11 @@ namespace Sim.Domain.Service
             return await _repositoryEmpresa.ConsultaRazaoSocialAsync(name);
         }
 
+        public async Task<IEnumerable<Empresas>> DoListAsyncBy(string param)
+        {
+            return await _repositoryEmpresa.DoListAsyncBy(param);
+        }
+
         public async Task<Empresas> GetIdAsync(Guid id)
         {
             return await _repositoryEmpresa.GetIdAsync(id);

@@ -7,16 +7,10 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<form method="post">
+<!--
     <div class="row white z-depth-1-half rounded-default">
         <div class="row pdn-10 mgn-b-0 right-align">
-            @if (!Model.Input.ListaPessoas.Any())
-            {
-                if (Model.CpfValido)
-                {                    
-                    <a class="waves-effect waves-light btn blue" asp-page="/Cliente/Novo/Index" asp-route-id="@Model.Input.RouteCPF"><i class="material-icons">person add</i></a>
-                }
-            }
+            <a class="waves-effect waves-light btn blue" asp-page="/Cliente/Novo/Index" asp-route-id="@Model.Input.RouteCPF"><i class="material-icons">person add</i></a>
             <button class="btn waves-effect waves-light" asp-page-handler="View">Pesquisar</button>
         </div>
         <div class="divider"></div>
@@ -29,14 +23,38 @@
                 <div class="input-field col s9 m9 l9">
                     <input asp-for="Input.Nome"/>
                     <label asp-for="Input.Nome"></label>
-
                 </div>
             </div>
         </div>
     </div>
-</form>
+-->
+
+
+    <nav class="row">
+        <div class="nav-wrapper">
+            <ul class="col s1 m1 l1">
+                <li><a asp-page="/Cliente/Novo/Index"><i class="material-icons">person add</i></a></li>
+            </ul>
+            <form method="post">
+                <div class="input-field col s11 m11 l11">
+                    <input id="search" asp-for="Input.Nome" type="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+        </div>
+  </nav>
 
     <div class="card">
+        @if (!Model.Input.ListaPessoas.Any())
+        {
+            if (Model.CpfValido)
+            { 
+                <div class="card-header">
+                    <a class="waves-effect waves-light btn blue" asp-page="/Cliente/Novo/Index" asp-route-id="@Model.Input.RouteCPF"><i class="material-icons">person add</i></a>
+                </div>
+            }
+        }
         <table class="responsive-table striped">
             <thead>
                 <tr>

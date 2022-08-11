@@ -23,6 +23,11 @@ namespace Sim.Application.Services
             return await _pessoa.ConsultaNomeAsync(nome);
         }
 
+        public async Task<IEnumerable<Pessoa>> DoListAsyncBy(string param)
+        {
+            return await _pessoa.DoListAsyncBy(param);
+        }
+
         public async Task<Pessoa> GetIdAsync(Guid id)
         {
             return await _pessoa.GetIdAsync(id);

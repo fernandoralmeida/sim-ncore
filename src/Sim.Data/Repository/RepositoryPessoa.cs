@@ -23,6 +23,14 @@ namespace Sim.Data.Repository
             return await _db.Pessoa.Where(c => c.Nome.Contains(nome) || c.Nome_Social.Contains(nome)).OrderBy(c => c.Nome).ToListAsync();
         }
 
+        public async Task<IEnumerable<Pessoa>> DoListAsyncBy(string param)
+        {
+            return await _db.Pessoa.Where(c => c.CPF.Contains(param) ||
+                                        c.Nome.Contains(param) ||
+                                        c.Nome_Social.Contains(param))
+                                        .OrderBy(c => c.Nome).ToListAsync();
+        }
+
         public async Task<Pessoa> GetIdAsync(Guid id)
         {
             return await _db.Pessoa.Where(c => c.Id == id).FirstOrDefaultAsync();

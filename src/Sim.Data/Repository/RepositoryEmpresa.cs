@@ -22,6 +22,18 @@ namespace Sim.Data.Repository
             return await _db.Empresa.Where(p => p.Nome_Empresarial.Contains(name)).ToListAsync(); ;
         }
 
+        public async Task<IEnumerable<Empresas>> DoListAsyncBy(string param)
+        {
+            return await _db.Empresa.Where(s => s.CNPJ.Contains(param)||
+                s.Nome_Empresarial.Contains(param) ||
+                s.CNAE_Principal.Contains(param) ||
+                s.Logradouro.Contains(param) ||
+                s.Bairro.Contains(param))
+                .OrderByDescending(o => o.Data_Abertura)
+                .AsNoTracking()
+                .ToListAsync();  
+        }
+
         public async Task<Empresas> GetIdAsync(Guid id)
         {
             return await _db.Empresa

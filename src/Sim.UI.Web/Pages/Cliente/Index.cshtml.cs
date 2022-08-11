@@ -48,32 +48,8 @@ namespace Sim.UI.Web.Pages.Cliente
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    if (Input.CPF != null)
-                    {
-                        Input.RouteCPF = Input.CPF.MaskRemove();
-
-                        if (Validate.IsCpf(Input.CPF))
-                        {
-                            StatusMessage = "";
-                            CpfValido = true;
-                        }
-                        else
-                        {
-                            StatusMessage = "Erro: CPF inválido!";
-                            CpfValido = false;
-                        }
-
-                        Input.ListaPessoas = await _pessoaApp.ConsultaCPFAsync(Input.CPF);
-
-                        if(CpfValido && !Input.ListaPessoas.Any())
-                            StatusMessage = "Erro: Pessoa não cadastrada!";
-                    }
-                    else
-                        Input.ListaPessoas = await _pessoaApp.ConsultaNomeAsync(Input.Nome);
-
-                }                
+                Input.ListaPessoas = await _pessoaApp.DoListAsyncBy(Input.Nome);
+          
             }
             catch(Exception ex)
             {

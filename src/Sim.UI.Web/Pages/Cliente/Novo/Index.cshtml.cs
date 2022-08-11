@@ -27,9 +27,8 @@ namespace Sim.UI.Web.Pages.Cliente.Novo
         public InputModelPessoa Input { get; set; }
 
 
-        public IActionResult OnGet(string id)
-        {
-            
+        public IActionResult OnGet(string? id)
+        {            
             Input = new InputModelPessoa
             {
                 CPF = id,
@@ -39,14 +38,16 @@ namespace Sim.UI.Web.Pages.Cliente.Novo
             };
 
             StatusMessage = string.Empty;
+            
+            if(string.IsNullOrEmpty(id)) {
+                if(!Functions.Validate.IsCpf(id))
+                {
+                    StatusMessage = "Erro: CPF inv√°lido!";
+                    return RedirectToPage("/Cliente/Index");
+                }
+            };              
 
-            if(!Functions.Validate.IsCpf(id))
-            {
-                StatusMessage = "Erro: CPF inv·lido!";
-                return RedirectToPage("/Cliente/Index");
-            }
-            else                
-                return Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPost()
@@ -62,7 +63,7 @@ namespace Sim.UI.Web.Pages.Cliente.Novo
                 var pessoa = _mapper.Map<Pessoa>(Input);
 
                 if (Input.Fisica)
-                    pessoa.Deficiencia += "FÌsica;";
+                    pessoa.Deficiencia += "F√≠sica;";
 
                 if (Input.Visual)
                     pessoa.Deficiencia += "Visual;";
@@ -80,7 +81,7 @@ namespace Sim.UI.Web.Pages.Cliente.Novo
             }
             catch (Exception ex)
             {
-                StatusMessage = "Erro: " + "Verifique se o Cliente j· est· cadastrado ou contate o suporte! - " + ex.Message;
+                StatusMessage = "Erro: " + "Verifique se o Cliente j√° est√° cadastrado ou contate o suporte! - " + ex.Message;
                 return Page();
             }
 
