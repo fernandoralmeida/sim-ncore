@@ -33,14 +33,9 @@ namespace Sim.UI.Web.Pages.Cliente
             public IEnumerable<Pessoa> ListaPessoas { get; set; }
         }
 
-        private async Task Load()
-        {
-            Input.ListaPessoas = await _pessoaApp.ListTop10Async();
-        }
-
         public async Task< IActionResult> OnGetAsync()
         {
-            await Load();
+            Input.ListaPessoas = await _pessoaApp.ListTop10Async();
             return Page();
         }
 
@@ -48,8 +43,20 @@ namespace Sim.UI.Web.Pages.Cliente
         {
             try
             {
-                Input.ListaPessoas = await _pessoaApp.DoListAsyncBy(Input.Nome);
-          
+                if(!string.IsNullOrEmpty(Input.CPF))
+                    if (Validate.IsCpf(Input.CPF))
+                        CpfValido = true;
+                                    
+                Input.ListaPessoas = await _pessoaApp.ConsultaCPFAsync(Input.CPF);     
+                if (!Input.ListaPessoas.Any())
+                    StatusMessage = $"Alerta: CPF {Input.CPF} não cadastrado!";
+                
+                if(!CpfValido)
+                    StatusMessage = $"Erro: CNP {Input.CPF} inválido!";
+                
+                if(Input.CPF.Any())
+                    Input.RouteCPF = Input.CPF.MaskRemove();
+
             }
             catch(Exception ex)
             {

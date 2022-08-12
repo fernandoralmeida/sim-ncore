@@ -7,6 +7,9 @@
         "../../../wwwroot/lib/materialize/css/materialize.css",
         "../../../wwwroot/css/site.css",
         "../../wwwroot/lib/materialize/css/materialize.css",
-        "../../wwwroot/css/site.css"
+        "../../wwwroot/css/site.css",
+        "../wwwroot/lib/materialize/css/materialize.css",
+        "../wwwroot/css/site.css"
+        
     ]
 }

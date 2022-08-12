@@ -39,7 +39,7 @@ namespace Sim.UI.Web.Pages.Cliente.Novo
 
             StatusMessage = string.Empty;
             
-            if(string.IsNullOrEmpty(id)) {
+            if(!string.IsNullOrEmpty(id)) {
                 if(!Functions.Validate.IsCpf(id))
                 {
                     StatusMessage = "Erro: CPF inválido!";

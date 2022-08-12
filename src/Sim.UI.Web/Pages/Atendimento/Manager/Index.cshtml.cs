@@ -71,13 +71,13 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
 
             if(atendimemnto_ativio.Owner_AppUser_Id != User.Identity.Name)
             {
-                StatusMessage = "Erro : Atendimento pertence a outro atendente!";
+                StatusMessage = $"Erro: Atendimento pertence a { atendimemnto_ativio.Owner_AppUser_Id }!";
                 return RedirectToPage("/Atendimento/Index");
             }
 
             if (atendimemnto_ativio == null)
             {
-                StatusMessage = "Erro inesperado, tente novamente!";
+                StatusMessage = "Erro: Algo inesperado aconteceu, tente novamente!";
                 return RedirectToPage("/Atendimento/Index");
             }
 

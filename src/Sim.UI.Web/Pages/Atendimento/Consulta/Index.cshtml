@@ -2,7 +2,7 @@
 @model Sim.UI.Web.Pages.Atendimento.Consulta.IndexModel
 @{
 
-    ViewData["Title"] = "Consultas por Periodos";
+    ViewData["Title"] = "Consulta";
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.AtendimentoConsulta;
 }
 
@@ -10,12 +10,15 @@
 
 <form>
     <nav class="row">
-        <div class="nav-wrapper">
-            <div class="input-field">
+        <div class="nav-wrapper">             
+            <div class="input-field col s10 m10 l10">
                 <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Src" type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                 <i class="material-icons">close</i>
-            </div>
+            </div>            
+            <ul class="right">
+                <li><a asp-page="/Atendimento/Consulta/Avancada" title="Consulta Avançada!"><i class="material-icons">manage_search</i></a></li>
+            </ul>
         </div>
     </nav>
 </form>

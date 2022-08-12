@@ -26,6 +26,7 @@ namespace Sim.Data.Repository
                         a.Empresa.CNAE_Principal.Contains(param) ||
                         a.Empresa.Atividade_Principal.Contains(param) ||
                         a.Servicos.Contains(param) ||
+                        a.Setor.Contains(param) ||
                         a.Owner_AppUser_Id.Contains(param))
                         .AsNoTracking()
                         .OrderBy(o => o.Data)
