@@ -3,12 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sim.Domain.Entity;
 
+
 namespace Sim.Data.Context
 {   
 
     public class ApplicationContext : DbContext
     {
-        private static string _connectionstring;
+        private static string _connectionstring = @"Server=127.0.0.1,1433\\sql1;Database=Sim-Application-db20210001;User Id=sa;Password=sql@1234;";
         public ApplicationContext()
         { }
 

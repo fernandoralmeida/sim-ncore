@@ -5,10 +5,10 @@ using Sim.Identity.Entity;
 using Sim.Identity.Interfaces;
 using Sim.Identity.Repository;
 using Sim.IoC;
+using Sim.UI.Web.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Identity
 builder.Services.AddDbContext<IdentityContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityContextConnection"));
 });
@@ -34,9 +34,7 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
     options.Lockout.MaxFailedAccessAttempts = 5;
 });
-#endregion
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
 builder.Services.AddControllersWithViews()
@@ -44,16 +42,13 @@ builder.Services.AddControllersWithViews()
     op.SerializerSettings.ReferenceLoopHandling =
     Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-Container.RegisterDataContext(builder.Services, builder.Configuration, "App_____ContextConnection");
-Container.ApplicationContextServices(builder.Services);
+builder.Services.DataBaseConfig(builder.Configuration, "App_____ContextConnection");
+builder.Services.DataBaseConfigCNPJ(builder.Configuration, "RFB_____ContextConnection");
 
-ContainerCnpj.RegisterDataContext(builder.Services, builder.Configuration, "RFB_____ContextConnection");
-ContainerCnpj.ApplicationContextServices(builder.Services);
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-var _mapper = new AutoMapper.MapperConfiguration(config => config.AddProfile(new Sim.UI.Web.AutoMapper.AutoMapperProfile()));
-var mapper = _mapper.CreateMapper();
-builder.Services.AddSingleton(mapper);
-builder.Services.AddAutoMapper(typeof(WebApplication));
+builder.Services.RegisterServices();
+builder.Services.RegisterServicesCNPJ();
 
 var app = builder.Build();
 

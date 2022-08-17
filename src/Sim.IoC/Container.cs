@@ -20,35 +20,22 @@ using Sim.Data.Repository;
 
 namespace Sim.IoC
 {
-    public class Container
+    public static class Container
     {
-        public static void RegisterDataContext(IServiceCollection services, IConfiguration config, string connection)
+
+        public static void DataBaseConfig(this IServiceCollection services, IConfiguration config, string connection)
         {
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));
-            services.AddScoped<DbContext, ApplicationContext>();
-            services.AddScoped<IReceitaWS, ReceitaWS>();
-            ApplicationContext.GetConnection(config.GetConnectionString(connection));
-        }
-        public static void ApplicationContextServices(IServiceCollection services)
-        {
-            AddPessoaServices(services);
-            AddEmpresaServices(services);
-            AddAtendimentoServices(services);
-            AddSecretariaServices(services);
-            AddSetorServices(services);
-            AddServicoServices(services);
-            AddEventoServices(services);
-            AddCanalServices(services);
-            AddContadorServices(services);
-            AddTiposEventosServices(services);
-            AddTiposInscricaoEventosServices(services);
-            AddPlannerServices(services);
-            AddParceiroServices(services);
-            AddEmpregosServices(services);            
+            if (services == null) throw new ArgumentNullException(nameof(services));
+
+            ApplicationContext.GetConnection(config.GetConnectionString(connection));            
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));                        
         }
 
-        private static void AddPessoaServices(IServiceCollection services)
+        public static void RegisterServices(this IServiceCollection services)
         {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+           
+            //
             services.AddScoped<IAppServiceBase<Pessoa>, AppServiceBase<Pessoa>>();
             services.AddScoped<IAppServicePessoa, AppServicePessoa>();
 
@@ -57,11 +44,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Pessoa>, RepositoryBase<Pessoa>>();
             services.AddScoped<IRepositoryPessoa, RepositoryPessoa>();
-        }
 
-        private static void AddEmpresaServices(IServiceCollection services)
-        {
-            /**/
+            //
             services.AddScoped<IAppServiceBase<Empresas>, AppServiceBase<Empresas>>();
             services.AddScoped<IAppServiceEmpresa, AppServiceEmpresa>();
 
@@ -71,10 +55,6 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryBase<Empresas>, RepositoryBase<Empresas>>();
             services.AddScoped<IRepositoryEmpresa, RepositoryEmpresa>();
 
-        }
-
-        private static void AddAtendimentoServices(IServiceCollection services)
-        {
             //
             services.AddScoped<IAppServiceBase<Atendimento>, AppServiceBase<Atendimento>>();
             services.AddScoped<IAppServiceAtendimento, AppServiceAtendimento>();
@@ -94,10 +74,6 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<StatusAtendimento>, RepositoryBase<StatusAtendimento>>();
             services.AddScoped<IRepositoryStatusAtendimento, RepositoryStatusAtendimento>();
-        }
-
-        private static void AddSecretariaServices(IServiceCollection services)
-        {
             //
             services.AddScoped<IAppServiceBase<Secretaria>, AppServiceBase<Secretaria>>();
             services.AddScoped<IAppServiceSecretaria, AppServiceSecretaria>();
@@ -107,10 +83,7 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Secretaria>, RepositoryBase<Secretaria>>();
             services.AddScoped<IRepositorySecretaria, RepositorySecretaria>();
-        }
 
-        private static void AddSetorServices(IServiceCollection services)
-        {
             //
             services.AddScoped<IAppServiceBase<Setor>, AppServiceBase<Setor>>();
             services.AddScoped<IAppServiceSetor, AppServiceSetor>();
@@ -120,10 +93,7 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Setor>, RepositoryBase<Setor>>();
             services.AddScoped<IRepositorySetor, RepositorySetor>();
-        }
 
-        private static void AddServicoServices(IServiceCollection services)
-        {
             //
             services.AddScoped<IAppServiceBase<Servico>, AppServiceBase<Servico>>();
             services.AddScoped<IAppServiceServico, AppServiceServico>();
@@ -133,10 +103,7 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Servico>, RepositoryBase<Servico>>();
             services.AddScoped<IRepositoryServico, RepositoryServico>();
-        }
 
-        private static void AddEventoServices(IServiceCollection services)
-        {
             //
             services.AddScoped<IAppServiceBase<Evento>, AppServiceBase<Evento>>();
             services.AddScoped<IAppServiceEvento, AppServiceEvento>();
@@ -146,10 +113,7 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Evento>, RepositoryBase<Evento>>();
             services.AddScoped<IRepositoryEvento, RepositoryEvento>();
-        }
 
-        private static void AddCanalServices(IServiceCollection services)
-        {
             //
             services.AddScoped<IAppServiceBase<Canal>, AppServiceBase<Canal>>();
             services.AddScoped<IAppServiceCanal, AppServiceCanal>();
@@ -159,10 +123,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Canal>, RepositoryBase<Canal>>();
             services.AddScoped<IRepositoryCanal, RepositoryCanal>();
-        }
-
-        private static void AddContadorServices(IServiceCollection services)
-        {
+            
+            //
             services.AddScoped<IAppServiceBase<Contador>, AppServiceBase<Contador>>();
             services.AddScoped<IAppServiceContador, AppServiceContador>();
 
@@ -171,10 +133,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Contador>, RepositoryBase<Contador>>();
             services.AddScoped<IRepositoryContador, RepositoryContador>();
-        }
 
-        private static void AddTiposEventosServices(IServiceCollection services)
-        {
+            //
             services.AddScoped<IAppServiceBase<Tipo>, AppServiceBase<Tipo>>();
             services.AddScoped<IAppServiceTipo, AppServiceTipo>();
 
@@ -183,10 +143,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Tipo>, RepositoryBase<Tipo>>();
             services.AddScoped<IRepositoryTipo, RepositoryTipo>();
-        }
 
-        private static void AddTiposInscricaoEventosServices(IServiceCollection services)
-        {
+            //
             services.AddScoped<IAppServiceBase<Inscricao>, AppServiceBase<Inscricao>>();
             services.AddScoped<IAppServiceInscricao, AppServiceInscricao>();
 
@@ -195,10 +153,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Inscricao>, RepositoryBase<Inscricao>>();
             services.AddScoped<IRepositoryInscricao, RepositoryInscricao>();
-        }
 
-        private static void AddPlannerServices(IServiceCollection services)
-        {
+            //
             services.AddScoped<IAppServiceBase<Planner>, AppServiceBase<Planner>>();
             services.AddScoped<IAppServicePlaner, AppServicePlaner>();
 
@@ -207,10 +163,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Planner>, RepositoryBase<Planner>>();
             services.AddScoped<IRepositoryPlaner, RepositoryPlaner>();
-        }
 
-        private static void AddParceiroServices(IServiceCollection services)
-        {
+            //
             services.AddScoped<IAppServiceBase<Parceiro>, AppServiceBase<Parceiro>>();
             services.AddScoped<IAppServiceParceiro, AppServiceParceiro>();
 
@@ -219,10 +173,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Parceiro>, RepositoryBase<Parceiro>>();
             services.AddScoped<IRepositoryParceiro, RepositoryParceiro>();
-        }
 
-        private static void AddEmpregosServices(IServiceCollection services)
-        {
+            //
             services.AddScoped<IAppServiceBase<Empregos>, AppServiceBase<Empregos>>();
             services.AddScoped<IAppServiceEmpregos, AppServiceEmpregos>();
 
@@ -231,6 +183,12 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<Empregos>, RepositoryBase<Empregos>>();
             services.AddScoped<IRepositoryEmpregos, RepositoryEmpregos>();
+
+            //
+            services.AddScoped<IReceitaWS, ReceitaWS>();
+            //
+            services.AddScoped<ApplicationContext>();     
+
         }
     }
 }

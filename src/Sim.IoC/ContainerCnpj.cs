@@ -17,14 +17,13 @@ using Sim.Application.Cnpj.Services;
 
 namespace Sim.IoC
 {
-    public class ContainerCnpj
+    public static class ContainerCnpj
     {
-        public static void RegisterDataContext(IServiceCollection services, IConfiguration config, string connection)
+        public static void DataBaseConfigCNPJ(this IServiceCollection services, IConfiguration config, string connection)
         {
-            services.AddDbContext<ApplicationContextCnpj>(options => options.UseSqlServer(config.GetConnectionString(connection)));
-            services.AddScoped<DbContext, ApplicationContextCnpj>();
+            services.AddDbContext<ApplicationContextCnpj>(options => options.UseSqlServer(config.GetConnectionString(connection)));            
         }
-        public static void ApplicationContextServices(IServiceCollection services)
+        public static void RegisterServicesCNPJ(this IServiceCollection services)
         {
             services.AddScoped<IAppServiceBase<BaseReceitaFederal>, AppServiceBase<BaseReceitaFederal>>();
             services.AddScoped<IAppServiceCnpj, AppServiceCnpj>();
@@ -34,6 +33,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<BaseReceitaFederal>, RepositoryBase<BaseReceitaFederal>>();
             services.AddScoped<IRepositoryCnpj, RepositoryCnpj>();
+
+            services.AddScoped<ApplicationContextCnpj>();
         }
     }
 }
