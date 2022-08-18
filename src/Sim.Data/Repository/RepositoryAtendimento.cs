@@ -145,8 +145,13 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<Atendimento>> ListParamAsync(List<object> lparam)
         {
-            var dataI = (DateTime)lparam[0];
-            var dataF = (DateTime)lparam[1];
+            var d1 = lparam[0].ToString();
+            var d2 = lparam[1].ToString();
+            d1.Replace("-", "/");
+            d2.Replace("-", "/");
+
+            var dataI = Convert.ToDateTime(d1);
+            var dataF = Convert.ToDateTime(d2);
             var cpf = lparam[2] != null ? (string)lparam[2] : "";
             var nome = lparam[3] != null ? (string)lparam[3] : "";
             var cnpj = lparam[4] != null ? (string)lparam[4] : "";

@@ -73,6 +73,12 @@
 
 <div class="card">
     <partial name="_AtendimentoList" model="Model.Input.ListaAtendimento" />
+    @if(Model.Input.ListaAtendimento.Any())
+    {   
+        <div class="card-action">
+            <a asp-page="/Atendimento/Export/Index" asp-route-ss="-" asp-route-d="@Model.Route.datai" asp-route-f="@Model.Route.dataf" asp-route-c="@Model.Route.cpf" asp-route-n="@Model.Route.nome" asp-route-p="@Model.Route.cnpj" asp-route-r="@Model.Route.razaosocial" asp-route-e="@Model.Route.cnae" asp-route-s="@Model.Route.servico" asp-route-u="@Model.Route.atendente" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></a>
+        </div>
+    }
 </div>
 
 @section scripts{

@@ -28,7 +28,7 @@
     @if(Model.Input.ListaAtendimento.Any())
     {   
         <div class="card-action">
-            <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
+            <a asp-page="/Atendimento/Export/Index" asp-route-ss="@Model.Src" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></a>
         </div>
     }
 </div>

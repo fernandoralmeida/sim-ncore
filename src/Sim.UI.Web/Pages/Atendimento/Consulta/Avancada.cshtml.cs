@@ -33,6 +33,20 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
 
         public SelectList ListaServicos { get; set; }
 
+        public RouteID Route { get; set; }
+
+        public class RouteID{
+            public string datai{ get ; set; }
+            public string dataf{ get ; set; }
+            public string cpf{ get ; set; }
+            public string nome{ get ; set; }
+            public string cnpj{ get ; set; }
+            public string razaosocial{ get ; set; }
+            public string cnae{ get ; set; }
+            public string servico{ get ; set; }
+            public string atendente{ get ; set; }
+        }
+
         public class InputModel
         {
             [DisplayName("Data Inicial")]
@@ -69,6 +83,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
             _appIdentity = appServiceUser;
             _appServiceServico = appServiceServico;
             Input = new();
+            Route = new();
             GetParam = new();
         }
 
@@ -101,73 +116,20 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
             }
         }
 
-        public async Task<IActionResult> OnPostExport()
-        {
-            var stream = new MemoryStream();
-            var t = Task.Run(async () =>
-            {
-                var param = new List<object>() {
-                    Input.DataI.Value.Date,
-                    Input.DataF.Value.Date,
-                    Input.CPF,
-                    Input.Nome,
-                    Input.CNPJ,
-                    Input.RazaSocial,
-                    Input.CNAE,
-                    Input.Servico,
-                    Input.Atendente  };
-
-                var list = new List<ExportModel>();
-                var cont = 1;
-                foreach (var e in await _appServiceAtendimento.ListParamAsync(param))
-                {
-                    if (e.Empresa != null)
-                        list.Add(new ExportModel
-                        {
-                            N = cont++,
-                            Data = e.Data.Value.ToString("MMMyyyy"),
-                            Cliente = e.Pessoa.Nome,
-                            Empresa = e.Empresa.CNPJ,
-                            Atividade = e.Empresa.Atividade_Principal,
-                            Contato = e.Pessoa.Tel_Movel,
-                            Servico = e.Servicos,
-                            Descricao = e.Descricao,
-                            Setor = e.Setor
-                        });
-                    else
-                        list.Add(new ExportModel
-                        {
-                            N = cont++,
-                            Data = e.Data.Value.ToString("MMMyyyy"),
-                            Cliente = e.Pessoa.Nome,
-                            Empresa = "",
-                            Atividade = "",
-                            Contato = e.Pessoa.Tel_Movel,
-                            Servico = e.Servicos,
-                            Descricao = e.Descricao,
-                            Setor = e.Setor
-                        });
-                }
-                return list;
-            });
-
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-
-            using var epackage = new ExcelPackage(stream);
-            var worksheet = epackage.Workbook.Worksheets.Add("Lista");
-            worksheet.Cells.LoadFromCollection(await t, true);
-            await epackage.SaveAsync();
-
-            stream.Position = 0;
-            string excelname = $"lista-atend-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-
-            return File(stream, "application/vnd.openxmlformat-officedocument.spreadsheetml.sheet", excelname);
-        }
-
         public async Task OnPostAsync()
         {
             try
             {
+                Route.datai = Input.DataI.Value.ToString("dd-MM-yyyy");
+                Route.dataf = Input.DataF.Value.ToString("dd-MM-yyyy");
+                Route.cpf = Input.CPF != null ? Input.CPF : "";
+                Route.nome = Input.Nome != null ? Input.Nome : "";
+                Route.cnpj = Input.CNPJ != null ? Input.CNPJ : "";
+                Route.razaosocial = Input.RazaSocial != null ? Input.RazaSocial : "";
+                Route.cnae = Input.CNAE != null ? Input.CNAE : "";
+                Route.servico = Input.Servico != null ? Input.Servico : "";
+                Route.atendente = Input.Atendente != null ? Input.Atendente : "";
+             
                 var param = new List<object>() {
                     Input.DataI.Value.Date,
                     Input.DataF.Value.Date,
@@ -179,9 +141,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
                     Input.Servico,
                     Input.Atendente  };
 
-                var lista = await _appServiceAtendimento.ListParamAsync(param);
-
-                Input.ListaAtendimento = lista.ToList();
+                Input.ListaAtendimento = (ICollection<Sim.Domain.Entity.Atendimento>) await _appServiceAtendimento.ListParamAsync(param);
             }
             catch (Exception ex)
             {
@@ -197,7 +157,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         {
             try
             {
-                Input.ListaAtendimento = _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name).Result.ToList(); 
+                Input.ListaAtendimento = (ICollection<Sim.Domain.Entity.Atendimento>) await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name); 
                 await LoadServicos();
                 await LoadUsers();
             }
@@ -212,7 +172,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         {
             try
             {
-                Input.ListaAtendimento = _appServiceAtendimento.ListAtendimentosCanceladosAsync(User.Identity.Name).Result.ToList();
+                Input.ListaAtendimento = (ICollection<Sim.Domain.Entity.Atendimento>) await _appServiceAtendimento.ListAtendimentosCanceladosAsync(User.Identity.Name);
                 await LoadServicos();
                 await LoadUsers();
             }

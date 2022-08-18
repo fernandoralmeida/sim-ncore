@@ -1,4 +1,4 @@
-﻿namespace Sim.UI.Web.Pages.Atendimento
+﻿namespace Sim.UI.Web.Pages.Atendimento.Export
 {
     public class ExportModel
     {
