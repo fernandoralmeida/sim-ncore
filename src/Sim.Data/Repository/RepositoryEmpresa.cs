@@ -27,6 +27,8 @@ namespace Sim.Data.Repository
             return await _db.Empresa.Where(s => s.CNPJ.Contains(param)||
                 s.Nome_Empresarial.Contains(param) ||
                 s.CNAE_Principal.Contains(param) ||
+                s.Atividade_Principal.Contains(param) ||
+                s.Atividade_Secundarias.Contains(param) ||
                 s.Logradouro.Contains(param) ||
                 s.Bairro.Contains(param))
                 .OrderByDescending(o => o.Data_Abertura)

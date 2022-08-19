@@ -36,8 +36,8 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         public RouteID Route { get; set; }
 
         public class RouteID{
-            public string datai{ get ; set; }
-            public string dataf{ get ; set; }
+            public DateTime? datai{ get ; set; }
+            public DateTime? dataf{ get ; set; }
             public string cpf{ get ; set; }
             public string nome{ get ; set; }
             public string cnpj{ get ; set; }
@@ -120,8 +120,8 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         {
             try
             {
-                Route.datai = Input.DataI.Value.ToString("dd-MM-yyyy");
-                Route.dataf = Input.DataF.Value.ToString("dd-MM-yyyy");
+                Route.datai = Input.DataI.Value;
+                Route.dataf = Input.DataF.Value;
                 Route.cpf = Input.CPF != null ? Input.CPF : "";
                 Route.nome = Input.Nome != null ? Input.Nome : "";
                 Route.cnpj = Input.CNPJ != null ? Input.CNPJ : "";

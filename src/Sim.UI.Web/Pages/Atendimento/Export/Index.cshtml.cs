@@ -15,17 +15,24 @@ public class IndexModel : PageModel
         _appServiceAtendimento = appServiceAtendimento;
     }
 
-    public async Task<IActionResult> OnGetAsync(string ss, string? d, string? f
+    public async Task<IActionResult> OnGetAsync(string ss, DateTime d, DateTime f
         , string? c, string? n, string? p, string? r, string? e, string? s, string? u){
-        
-        //var stream = new MemoryStream();
+
+        c = c?? "";
+        n = n?? "";
+        p = p?? "";
+        r = r?? "";
+        e = e?? "";
+        s = s?? "";
+        u = u?? "";
+    
         var list = new List<ExportModel>();
         var _result = new List<Sim.Domain.Entity.Atendimento>();
 
         if(ss == "-") {   
             _result = (List<Sim.Domain.Entity.Atendimento>) 
                     await _appServiceAtendimento
-                    .ListParamAsync(new List<object>() { d, f, c, n, p, r, e, s, u });
+                    .ListParamAsync(new List<object>() { d.ToShortDateString(), f.ToShortDateString(), c, n, p, r, e, s, u });
         }
         else {            
             _result = (List<Sim.Domain.Entity.Atendimento>)
@@ -48,19 +55,10 @@ public class IndexModel : PageModel
             });
         }
 
-        //ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+        var _file = await new Functions.ExportFile().ToExcel(list, $"lista-atend-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}");
 
-        //using var epackage = new ExcelPackage(stream);
-        //var worksheet = epackage.Workbook.Worksheets.Add("Lista");
-        //worksheet.Cells.LoadFromCollection(list, true);
-        //await epackage.SaveAsync();
+        return File(_file.StremFile, _file.ContentType, _file.Name);
 
-        //stream.Position = 0;
-        //string excelname = $"lista-atend-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-
-        //return File(stream, "application/vnd.openxmlformat-officedocument.spreadsheetml.sheet", excelname);
-        var t = await new Functions.ExportFile().ToExcel(list, User.Identity.Name);
-        return File(t.StremFile, t.ContentType, t.Name);
     }
 
 }

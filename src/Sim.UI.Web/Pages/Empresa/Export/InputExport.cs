@@ -1,4 +1,4 @@
-﻿namespace Sim.UI.Web.Pages.Empresa
+﻿namespace Sim.UI.Web.Pages.Empresa.Export
 {
     public class InputExport
     {

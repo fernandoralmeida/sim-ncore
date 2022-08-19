@@ -8,56 +8,115 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-
-    <div class="card">
-
-        <div class="row">
+    <div class="row white rounded-default z-depth-1-half">
+        <div class="row mgn-b-0">
             <div class="col s12">
-
-                <div class="input-field col s6 m4 xl2">
+                <div class="input-field col s6 m3 xl3">
+                    <input asp-for="Input.CNPJ" id="inputCNPJ"/>
+                    <label asp-for="Input.CNPJ"></label>
+                </div>
+                <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.CNAE" id="inputCNAE" />
                     <label asp-for="Input.CNAE"></label>
                 </div>
-                <div class="input-field col s6 m4 xl2">
+                <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.Logradouro" />
                     <label asp-for="Input.Logradouro"></label>
                 </div>
-                <div class="input-field col s6 m4 xl2">
+                <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.Bairro" />
                     <label asp-for="Input.Bairro"></label>
                 </div>
+                <div class="input-field col s12 m12 x12 valign-wrapper">
+                    <input asp-for="Input.RazaoSocial" />
+                    <label asp-for="Input.RazaoSocial"></label>
+                    <button class="btn waves-effect waves-light submit">Pesquisar</button>
+                </div>
             </div>
         </div>
-        <div class="card-action">
-            <button class="btn orange waves-effect waves-light" asp-page-handler="AtPendentes">Pendentes</button>
-            <button class="btn red waves-effect waves-light" asp-page-handler="AtCancelados">Cancelados</button>
-
-            @{
-                if (User.IsInRole("Administrador"))
-                {
-                    if (Model.Input.ListaEmpresas != null)
-                    {
-                        if (Model.Input.ListaEmpresas.Count > 0)
-                        {
-                            <a class="btn waves-effect waves-light blue right" asp-page="/Atendimento/Consultas/Lista" asp-route-p1="0" asp-route-p2="0" asp-route-p3="0" asp-route-p4="0" asp-route-p5="0" asp-route-p6="0" asp-route-p7="0" asp-route-p8="0" asp-route-p9="0" target="_blank">Ver Lista</a>
-                        }
-
-                    }
-                }
-            }
-            <button class="btn waves-effect waves-light right" asp-page-handler="ListByData">Pesquisar</button>
-        </div>
-
     </div>
-
-
 </form>
 
+<div class="card" style="overflow-y:auto;">
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <!--<th>Ano</th>-->
+                <th>CNPJ</th>                
+                <th>Nome Empresarial</th>
+                <th>Tel</th>
+                <th>E-mail</th>
+                <!--<th>Situação</th>-->
+                <!--<th>Endereço</th>-->
+                <th>Município</th>
+                <th>Atividade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont = 1;
+                int t = (Model.PaginationEmpresas.PageIndex - 1) * Model.PaginationEmpresas.ItemsViews;
+            }
+            @if(Model.PaginationEmpresas != null)
+            {
 
-<div class="card">
-    <!--<partial name="_AtendimentoList" model="Model.Input.ListaEmpresas" />-->
+                @foreach (var item in Model.PaginationEmpresas)
+            {
+                    
+            <tr>
+                <td>@Functions.Extensions.Contador(cont++, t)
+                <!--
+                <td>
+                    @{ var ano = item.Data_Abertura.Value.Year; }
+                    @Html.DisplayFor(modelItem => ano)
+                </td>-->
+                <td>
+                    @Html.DisplayFor(modelItem => item.CNPJ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome_Empresarial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <!--
+                <td>
+                    @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
+                </td>
+                <td>
+                    @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
+                    @Html.DisplayFor(modelItem => end) 
+                </td>-->
+                <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Atividade_Principal)
+                </td>
+            </tr>
+            }
+            }
+            
+        </tbody>
+    </table>
+
+    @{
+        var prevDisabled = !Model.PaginationEmpresas.HasPreviusPage ? "disabled" : "";
+        var nextDisabled = !Model.PaginationEmpresas.HasNextPage ? "disabled" : "";
+    }
+
+    <div class="card-action right-align">
+        <span class="left teal-text">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
+        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+            <i class="material-icons">navigate_before</i>
+        </a>
+        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+            <i class="material-icons">navigate_next</i> 
+        </a>
+    </div>
 </div>
-
 
 @section scripts{
     <script src="~/js/jquery.mask.min.js"></script>

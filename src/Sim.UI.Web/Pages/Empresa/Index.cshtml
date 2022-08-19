@@ -9,59 +9,33 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form>
-
+    <nav class="row">
+        <div class="nav-wrapper">             
+            <div class="input-field col s6 m6 l6">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Src" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>            
+            <ul class="right">
+                <li><a asp-page="/Empresa/Novo/Index" title="Incluir Empresa!"><i class="material-icons">add</i></a></li>
+                <li><a asp-page="/Empresa/Consulta/Index" title="Consulta Avançada!"><i class="material-icons">manage_search</i></a></li>
+                <li><a asp-page="/Empresa/RFB/Index" title="Opções de consulta">RFB</a></li>
+            </ul>
+        </div>
+    </nav>
 </form>
 
-<form method="post">
-    <div class="row white rounded-default z-depth-1-half">
-        <div class="row pdn-10 mgn-b-0">
-            <a class="btn blue waves-effect waves-light left" asp-page="/Empresa/Novo/Index" title="Adicionar Empresa"><i class="material-icons">domain add</i></a>
-            <div class="right-align">
-                <button asp-page-handler="Export" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></button>
-                <a class="btn waves-effect waves-light" asp-page="/Empresa/RFB/Index" title="Opções de consulta" ><i class="material-icons left">manage_search</i>RFB</a>
-            </div>
-        </div>
-        <div class="divider"></div>
-        <div class="row mgn-b-0">
-            <div class="col s12">
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.CNPJ" id="inputCNPJ"/>
-                    <label asp-for="Input.CNPJ"></label>
-                </div>
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.CNAE" id="inputCNAE" />
-                    <label asp-for="Input.CNAE"></label>
-                </div>
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.Logradouro" />
-                    <label asp-for="Input.Logradouro"></label>
-                </div>
-                <div class="input-field col s6 m3 xl3">
-                    <input asp-for="Input.Bairro" />
-                    <label asp-for="Input.Bairro"></label>
-                </div>
-                <div class="input-field col s12 m12 x12 valign-wrapper">
-                    <input asp-for="Input.RazaoSocial" />
-                    <label asp-for="Input.RazaoSocial"></label>
-                    <button class="btn waves-effect waves-light submit">Pesquisar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<div class="card" style="overflow-y:auto;">
-    <table class="striped">
+<div class="card">
+    <table class="striped responsive-table">
         <thead>
             <tr>
                 <th>#</th>
-                <!--<th>Ano</th>-->
+                <th>Ano</th>
                 <th>CNPJ</th>                
                 <th>Nome Empresarial</th>
                 <th>Tel</th>
                 <th>E-mail</th>
-                <!--<th>Situação</th>-->
-                <!--<th>Endereço</th>-->
+                <th>Situação</th>
+                <th>Endereço</th>
                 <th>Município</th>
                 <th>Atividade</th>
             </tr>
@@ -75,41 +49,38 @@
             {
 
                 @foreach (var item in Model.PaginationEmpresas)
-            {
-                    
-            <tr>
-                <td>@Functions.Extensions.Contador(cont++, t)
-                <!--
-                <td>
-                    @{ var ano = item.Data_Abertura.Value.Year; }
-                    @Html.DisplayFor(modelItem => ano)
-                </td>-->
-                <td>
-                    @Html.DisplayFor(modelItem => item.CNPJ)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome_Empresarial)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <!--
-                <td>
-                    @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
-                </td>
-                <td>
-                    @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
-                    @Html.DisplayFor(modelItem => end) 
-                </td>-->
-                <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Atividade_Principal)
-                </td>
-            </tr>
-            }
+                {                    
+                    <tr>
+                        <td>@Functions.Extensions.Contador(cont++, t)
+                        <td>
+                            @{ var ano = item.Data_Abertura.Value.Year; }
+                            @Html.DisplayFor(modelItem => ano)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CNPJ)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome_Empresarial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
+                        </td>
+                        <td>
+                            @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
+                            @Html.DisplayFor(modelItem => end) 
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Atividade_Principal)
+                        </td>
+                    </tr>
+                }
             }
             
         </tbody>
@@ -122,12 +93,16 @@
 
     <div class="card-action right-align">
         <span class="left teal-text">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
-        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+        <a asp-page="./Index" asp-route-Src="@Model.Src" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
-        <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+        <a asp-page="./Index" asp-route-Src="@Model.Src" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
         </a>
+
+        @{ var _isdisabled = Model.PaginationEmpresas.Any() ? null : "disabled"; }
+
+        <a asp-page="/Empresa/Export/Index" asp-route-ss="@Model.Src" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
     </div>
 </div>
 
@@ -135,7 +110,40 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/jquery.mask.min.js"></script>
     <script>
-        $('#inputCNPJ').mask('00.000.000/0000-00');
-        $('#inputCNAE').mask('00.00-0-00');
+        $(function () {
+            $(".modal-trigger").click(function () {
+                var customerId = $(this).data('id');
+                $(".modal-content").empty();
+                $.getJSON(`/Atendimento?id=${customerId}&handler=Preview`, (data) => {
+                    $.each(data, function (i, item) {
+                        $(".modal-content").append(`<div>Protocolo: ${item.protocolo}</div>`);
+                        $(".modal-content").append(`<div>Data: ${item.data}</div>`);
+                        $(".modal-content").append(`<div>Setor: ${item.setor}</div>`);
+                        $(".modal-content").append(`<div>Canal: ${item.canal}</div>`);
+                        $(".modal-content").append(`<div>Serviços: ${item.servicos}</div>`);
+                        $(".modal-content").append(`<div>Descricao: ${item.descricao}</div>`);
+                        $(".modal-content").append(`<div class="divider"></div>`);
+                        $(".modal-content").append(`<div>Nome: ${item.pessoa.nome}</div>`);
+                        $(".modal-content").append(`<div>CPF: ${item.pessoa.cpf}</div>`);
+                        $(".modal-content").append(`<div>Data Nascimento: ${item.pessoa.data_Nascimento}</div>`);
+                        $(".modal-content").append(`<div>CEP: ${item.pessoa.cep}</div>`);
+                        $(".modal-content").append(`<div>${item.pessoa.logradouro} ${item.pessoa.numero}</div>`);
+                        $(".modal-content").append(`<div>${item.pessoa.bairro}, ${item.pessoa.cidade} - ${item.pessoa.uf}</div>`);
+                        $(".modal-content").append(`<div>Telefone: ${item.pessoa.tel_Movel}, E-mail: ${item.pessoa.email}</div>`);
+                        $(".modal-content").append(`<div class="divider"></div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cnpj} ${item.empresa.situacao_Cadastral}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.nome_Empresarial}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.nome_Fantasia}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.data_Abertura}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cnaE_Principal} ${item.empresa.atividade_Principal}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.atividade_Secundarias}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.cep} ${item.empresa.logradouro} ${item.empresa.numero}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.bairro} ${item.empresa.municipio} ${item.empresa.uf}</div>`);
+                        $(".modal-content").append(`<div>${item.empresa.telefone} ${item.empresa.email}</div>`);
+                    });
+                });
+
+            });
+        });
     </script>
 }
