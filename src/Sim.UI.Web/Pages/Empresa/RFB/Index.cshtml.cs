@@ -19,9 +19,6 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
         [BindProperty(SupportsGet = true)]
         public string Search{ get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public int? Tipo { get; set; }
-
         public Pagination<BaseReceitaFederal> Pagination { get; set; }
         public int RegCount { get; set; }
 
@@ -30,52 +27,22 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
             _appServiceCnpj = appServiceCnpj;
         }
 
-        private async Task<Pagination<BaseReceitaFederal>> DoListAsync(string c, int? t, int? p)
+        private async Task<Pagination<BaseReceitaFederal>> DoListAsync(string s, int? p)
         {
-            IEnumerable<BaseReceitaFederal> list;
-            switch(t)
-            {
-                case 1:
-                    list = await _appServiceCnpj.ListAllRazaoSocialAsync(c);
-                    break;
-                
-                case 2:
-                    list = await _appServiceCnpj.ListAllSocioAsync(c);
-                    break;
-
-                default:
-                    list = await _appServiceCnpj.ListAllMatrizFilialAsync(c);    
-                    break;
-            }
+            var list = await _appServiceCnpj.DoListBaseRazaoSociosAsync(s);
+            
             RegCount = list.Count();
             var pagesize = 10;
             var _empresas = list.AsQueryable();
             return Pagination<BaseReceitaFederal>.Create(_empresas.AsNoTracking(), p?? 1, pagesize);
         }
 
-        public async Task OnGetAsync(string s, int? t, int? p)
+        public async Task OnGetAsync(string s, int? p)
         { 
             try
             {
-                if(t == null)
-                    Tipo = 0;
-                else
-                    Tipo = t;     
-
                 Search = s;
-                Pagination = await DoListAsync(s, t, p);
-            }
-            catch(Exception ex)
-            {
-                StatusMessage = "Erro: " + ex.Message;
-            }
-        }
-
-        public async Task OnPostAsync(){
-
-            try
-            {
-                Pagination = await DoListAsync(Search.MaskRemove(), Tipo, 1);
+                Pagination = await DoListAsync(s, p);
             }
             catch(Exception ex)
             {

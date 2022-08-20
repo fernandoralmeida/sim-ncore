@@ -12,6 +12,11 @@ namespace Sim.Domain.Cnpj.Services
             _cnpj = cnpj;   
         }
 
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListBaseRazaoSociosAsync(string param)
+        {
+            return await _cnpj.DoListBaseRazaoSociosAsync(param);
+        }
+
         public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj)
         {
             return await _cnpj.GetCNPJAsync(cnpj);

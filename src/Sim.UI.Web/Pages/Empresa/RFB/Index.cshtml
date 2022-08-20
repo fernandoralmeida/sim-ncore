@@ -7,22 +7,18 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<form method="post">
-    <div class="row white rounded-default z-depth-1-half">
-        <div class="row mgn-b-0">
-            <div class="col s12">
-                <div class="input-field col s12 m12 x12 valign-wrapper">
-                    <select asp-for="Tipo">
-                        <option value="0">CNPJ Base</option>
-                        <option value="1">Razão Social</option>
-                        <option value="2">Sócios</option>
-                    </select>
-                    <input asp-for="Search" placeholder="Digite aqui"/>
-                    <button class="btn waves-effect waves-light submit">Pesquisar</button>
-                </div>
-            </div>
+<form>
+    <nav class="row">
+        <div class="nav-wrapper">             
+            <div class="input-field col s6 m6 l6">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Search" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>            
+            <ul class="right">
+                <li><a asp-page="/Empresa/Index" title="Voltar"><i class="material-icons">return</i></a></li>
+            </ul>
         </div>
-    </div>
+    </nav>
 </form>
 
 <div class="card" style="overflow-y:auto;">
@@ -42,46 +38,46 @@
             </tr>
         </thead>
         <tbody>
-            @{
-                int cont = 1;
-                int t = (Model.Pagination.PageIndex - 1) * Model.Pagination.ItemsViews;
-            }
+
             @if(Model.Pagination != null)
             {
+                
+                int cont = 1;
+                int t = (Model.Pagination.PageIndex - 1) * Model.Pagination.ItemsViews;               
 
                 @foreach (var item in Model.Pagination)
-            {
-                    
-            <tr>
-                <td>@Functions.Extensions.Contador(cont++, t)</td>
-                <td>                    
-                    @Html.DisplayFor(modelItem => item.Estabelecimento.DataInicioAtividade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CNPJ)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empresa.RazaoSocial)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estabelecimento.Telefone1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estabelecimento.CorreioEletronico)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estabelecimento.SituacaoCadastral)
-                </td>
-                <td>
-                    @{var end = string.Format("{0}, {1}",item.Estabelecimento.Logradouro, item.Estabelecimento.Numero);}
-                    @Html.DisplayFor(modelItem => end) 
-                </td>
-                <td>@Html.DisplayFor(modelItem => item.Cidade.Descricao)</td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AtividadePrincipal.Codigo) @Html.DisplayFor(modelItem => item.AtividadePrincipal.Descricao)
-                </td>
-            </tr>
-            }
+                {                        
+                    <tr>
+                        <td>@Functions.Extensions.Contador(cont++, t)</td>
+                        <td>                    
+                            @Html.DisplayFor(modelItem => item.Estabelecimento.DataInicioAtividade)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CNPJ)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Empresa.RazaoSocial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estabelecimento.Telefone1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estabelecimento.CorreioEletronico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estabelecimento.SituacaoCadastral)
+                        </td>
+                        <td>
+                            @{var end = string.Format("{0}, {1}",item.Estabelecimento.Logradouro, item.Estabelecimento.Numero);}
+                            @Html.DisplayFor(modelItem => end) 
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Cidade.Descricao)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AtividadePrincipal.Codigo) @Html.DisplayFor(modelItem => item.AtividadePrincipal.Descricao)
+                        </td>
+                    </tr>
+                }
+                
             }
             
         </tbody>
@@ -94,10 +90,10 @@
 
     <div class="card-action right-align">
         <span class="left teal-text">Página @Model.Pagination.PageIndex de @Model.Pagination.TotalPages - @Model.RegCount Reg.</span>
-        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-t="@Model.Tipo" asp-route-p="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-p="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
-        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-t="@Model.Tipo" asp-route-p="@(Model.Pagination.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-p="@(Model.Pagination.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
         </a>
     </div>

@@ -78,50 +78,6 @@ namespace Sim.UI.Web.Pages.Empresa.Consulta
             }
         }
 
-        public async Task<IActionResult> OnPostExport()
-        {
-            var stream = new MemoryStream();
-
-            var param = new List<object>() {
-                    Input.CNPJ,
-                    Input.RazaoSocial,
-                    Input.CNAE,
-                    Input.Logradouro,
-                    Input.Bairro
-                };
-
-            var list = new List<InputExport>();
-            var cont = 1;
-
-            foreach (var e in await _empresaApp.ListEmpresasAsync(param))
-            {
-                list.Add(new InputExport
-                {
-                    N = cont++,
-                    Ano = e.Data_Abertura.Value.Year,
-                    Cnpj = e.CNPJ,
-                    Empresa = e.Nome_Empresarial,
-                    Telefone = e.Telefone,
-                    Email = e.Email,
-                    Situacao = e.Situacao_Cadastral,
-                    Endereco = string.Format("{0}, {1}", e.Logradouro, e.Numero),
-                    Municipio = e.Municipio,
-                    Atividade = string.Format("{0} - {1}", e.CNAE_Principal, e.Atividade_Principal)
-                });
-            }
-
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-
-            using var epackage = new ExcelPackage(stream);
-            var worksheet = epackage.Workbook.Worksheets.Add("Lista");
-            worksheet.Cells.LoadFromCollection(list, true);
-            await epackage.SaveAsync();
-
-            stream.Position = 0;
-            string excelname = $"lista-emp-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-
-            return File(stream, "application/vnd.openxmlformat-officedocument.spreadsheetml.sheet", excelname);
-        }
 
         public async Task OnPostAsync()
         {

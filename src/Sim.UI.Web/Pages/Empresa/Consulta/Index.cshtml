@@ -42,13 +42,13 @@
         <thead>
             <tr>
                 <th>#</th>
-                <!--<th>Ano</th>-->
+                <th>Ano</th>
                 <th>CNPJ</th>                
                 <th>Nome Empresarial</th>
                 <th>Tel</th>
                 <th>E-mail</th>
-                <!--<th>Situação</th>-->
-                <!--<th>Endereço</th>-->
+                <th>Situação</th>
+                <th>Endereço</th>
                 <th>Município</th>
                 <th>Atividade</th>
             </tr>
@@ -62,41 +62,40 @@
             {
 
                 @foreach (var item in Model.PaginationEmpresas)
-            {
-                    
-            <tr>
-                <td>@Functions.Extensions.Contador(cont++, t)
-                <!--
-                <td>
-                    @{ var ano = item.Data_Abertura.Value.Year; }
-                    @Html.DisplayFor(modelItem => ano)
-                </td>-->
-                <td>
-                    @Html.DisplayFor(modelItem => item.CNPJ)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome_Empresarial)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <!--
-                <td>
-                    @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
-                </td>
-                <td>
-                    @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
-                    @Html.DisplayFor(modelItem => end) 
-                </td>-->
-                <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Atividade_Principal)
-                </td>
-            </tr>
-            }
+                {                            
+                    <tr>
+                        <td>@Functions.Extensions.Contador(cont++, t)
+                        <!---->
+                        <td>
+                            @{ var ano = item.Data_Abertura.Value.Year; }
+                            @Html.DisplayFor(modelItem => ano)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CNPJ)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome_Empresarial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <!---->
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Situacao_Cadastral)
+                        </td>
+                        <td>
+                            @{var end = string.Format("{0}, {1}",item.Logradouro, item.Numero);}
+                            @Html.DisplayFor(modelItem => end) 
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Municipio)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Atividade_Principal)
+                        </td>
+                    </tr>
+                }
             }
             
         </tbody>
@@ -115,6 +114,10 @@
         <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-ts="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
         </a>
+        @{ var _isdisabled = Model.PaginationEmpresas.Any()? null : "disabled"; } 
+
+        <a asp-page="/Empresa/Export/Index" asp-route-ss="-" asp-route-c="@Model.Input.CNPJ" asp-route-e="@Model.Input.CNAE" asp-route-l="@Model.Input.Logradouro" asp-route-b="@Model.Input.Bairro" asp-route-r="@Model.Input.RazaoSocial" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
+
     </div>
 </div>
 

@@ -14,6 +14,39 @@ namespace Sim.Data.Cnpj.Repository
 
         }
 
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListBaseRazaoSociosAsync(string param)
+        {
+            if(string.IsNullOrEmpty(param))
+                return null;
+
+            return await Task.Run(() =>
+            {
+                var brf = new List<BaseReceitaFederal>();
+
+                var qry = (from est in _db.Estabelecimentos
+                           from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
+                           from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                           //from sn in _db.Simples.Where(s=>s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
+                           from sc in _db.Socios.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
+                           select new { est, emp, atv, sc })
+                           .Where(s => s.est.CNPJBase.Contains(param) ||
+                           s.emp.RazaoSocial.Contains(param) ||
+                           s.sc.NomeRazaoSocio.Contains(param))
+                           .Distinct()
+                           .AsNoTracking();
+
+                foreach (var e in qry)
+                {
+                    var _cnpj = string.Format("{0}{1}{2}", e.est.CNPJBase, e.est.CNPJOrdem, e.est.CNPJDV);
+
+
+                    brf.Add(new BaseReceitaFederal(
+                        0, _cnpj, e.emp, e.est, null, null, e.atv, null, null, null, null, null));
+                }
+                return brf;
+            });
+        }
+
         public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj)
         {
             return await Task.Run(() =>

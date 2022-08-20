@@ -25,12 +25,10 @@
 
 <div class="card">
     <partial name="_AtendimentoList" model="Model.Input.ListaAtendimento" />
-    @if(Model.Input.ListaAtendimento.Any())
-    {   
-        <div class="card-action">
-            <a asp-page="/Atendimento/Export/Index" asp-route-ss="@Model.Src" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></a>
-        </div>
-    }
+    @{ var _isdisabled = Model.Input.ListaAtendimento.Any()? null : "disabled"; } 
+    <div class="card-action">
+        <a asp-page="/Atendimento/Export/Index" asp-route-ss="@Model.Src" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
+    </div>    
 </div>
 
 @section scripts{
