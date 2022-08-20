@@ -11,11 +11,13 @@
     <nav class="row">
         <div class="nav-wrapper">             
             <div class="input-field col s6 m6 l6">
-                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Search" type="search" required>
+                <input id="search" placeholder="Digite aqui Razão Social ou Nome Sócio para pesquisar!" asp-for="src" onkeypress="handle(event)" type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>            
             <ul class="right">
-                <li><a asp-page="/Empresa/Index" title="Voltar"><i class="material-icons">return</i></a></li>
+                <li><a asp-page="/Empresa/Novo/Index" title="Incluir Empresa!"><i class="material-icons">add</i></a></li>
+                <li><a asp-page="/Empresa/Consulta/Index" title="Consulta Avançada!"><i class="material-icons">manage_search</i></a></li>
+                <li><a asp-page="/Empresa/RFB/Index" title="Opções de consulta">RFB</a></li>
             </ul>
         </div>
     </nav>
@@ -38,13 +40,14 @@
             </tr>
         </thead>
         <tbody>
+            @{
+                int cont = 1;
+                int t = (Model.Pagination.PageIndex - 1) * Model.Pagination.ItemsViews;  
+            }
 
             @if(Model.Pagination != null)
             {
-                
-                int cont = 1;
-                int t = (Model.Pagination.PageIndex - 1) * Model.Pagination.ItemsViews;               
-
+                    
                 @foreach (var item in Model.Pagination)
                 {                        
                     <tr>
@@ -90,10 +93,10 @@
 
     <div class="card-action right-align">
         <span class="left teal-text">Página @Model.Pagination.PageIndex de @Model.Pagination.TotalPages - @Model.RegCount Reg.</span>
-        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-p="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+        <a asp-page="./Index" asp-route-src="@Model.src" asp-route-p="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
-        <a asp-page="./Index" asp-route-s="@Model.Search" asp-route-p="@(Model.Pagination.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+        <a asp-page="./Index" asp-route-src="@Model.src" asp-route-p="@(Model.Pagination.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
         </a>
     </div>

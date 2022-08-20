@@ -10,54 +10,52 @@
 
 <form method="post">
 
-    <div class="row white z-depth-1-half rounded-default">
-        <div class="row mgn-b-0">
-            <div class="col s12 mgn-b-0">
-                <div class="input-field col s6 m4 l2">
-                    <input asp-for="Input.DataI" />
-                    <label asp-for="Input.DataI"></label>
-                </div>
-                <div class="input-field col s6 m4 l2">
-                    <input asp-for="Input.DataF" />
-                    <label asp-for="Input.DataF"></label>
-                </div>
-                <div class="input-field col s6 m4 l2">
-                    <input asp-for="Input.CPF" id="inputCPF" />
-                    <label asp-for="Input.CPF"></label>
-                </div>
-                <div class="input-field col s6 m4 l2">
-                    <input asp-for="Input.Nome" />
-                    <label asp-for="Input.Nome"></label>
-                </div>
-                <div class="input-field col s6 m4 l2">
-                    <input asp-for="Input.CNPJ" id="inputCNPJ" />
-                    <label asp-for="Input.CNPJ"></label>
-                </div>
-                <div class="input-field col s6 m4 l2">
-                    <input asp-for="Input.RazaSocial" />
-                    <label asp-for="Input.RazaSocial"></label>
-                </div>
-                <div class="input-field col s6 m4 l2">
-                    <input asp-for="Input.CNAE" id="inputCNAE" />
-                    <label asp-for="Input.CNAE"></label>
-                </div>
-                <div class="input-field col s6 m4 l2">
-                    <select asp-for="Input.Servico" asp-items="@Model.ListaServicos">
-                        <option selected></option>
-                    </select>
-                    <label asp-for="Input.Servico"></label>
-                </div>
-                <div class="input-field col s6 m4">
-                    <select asp-for="Input.Atendente" asp-items="@Model.ListaAtendentes">
-                        <option selected></option>
-                    </select>
-                    <label asp-for="Input.Atendente"></label>
-                </div>
-                <div class="input-field col right">
-                    <button class="btn waves-effect waves-light submit">Pesquisar</button>
-                </div>
+    <div class="row white z-depth-1 rounded-default">
+        <div class="col s12 mgn-b-0">
+            <div class="input-field col s6 m4 l2">
+                <input asp-for="Input.DataI" />
+                <label asp-for="Input.DataI"></label>
             </div>
-        </div>
+            <div class="input-field col s6 m4 l2">
+                <input asp-for="Input.DataF" />
+                <label asp-for="Input.DataF"></label>
+            </div>
+            <div class="input-field col s6 m4 l2">
+                <input asp-for="Input.CPF" id="inputCPF" />
+                <label asp-for="Input.CPF"></label>
+            </div>
+            <div class="input-field col s6 m4 l2">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome"></label>
+            </div>
+            <div class="input-field col s6 m4 l2">
+                <input asp-for="Input.CNPJ" id="inputCNPJ" />
+                <label asp-for="Input.CNPJ"></label>
+            </div>
+            <div class="input-field col s6 m4 l2">
+                <input asp-for="Input.RazaSocial" />
+                <label asp-for="Input.RazaSocial"></label>
+            </div>
+            <div class="input-field col s6 m4 l2">
+                <input asp-for="Input.CNAE" id="inputCNAE" />
+                <label asp-for="Input.CNAE"></label>
+            </div>
+            <div class="input-field col s6 m4 l2">
+                <select asp-for="Input.Servico" asp-items="@Model.ListaServicos">
+                    <option selected></option>
+                </select>
+                <label asp-for="Input.Servico"></label>
+            </div>
+            <div class="input-field col s6 m4">
+                <select asp-for="Input.Atendente" asp-items="@Model.ListaAtendentes">
+                    <option selected></option>
+                </select>
+                <label asp-for="Input.Atendente"></label>
+            </div>
+            <div class="input-field col right">
+                <button class="btn waves-effect waves-light submit">Pesquisar</button>
+            </div>
+        </div>        
     </div>
 </form>
 

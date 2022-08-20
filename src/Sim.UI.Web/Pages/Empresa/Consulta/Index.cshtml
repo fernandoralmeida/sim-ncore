@@ -7,9 +7,18 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<form method="post">
-    <div class="row white rounded-default z-depth-1-half">
-        <div class="row mgn-b-0">
+<nav>
+    <div class="nav-wrapper white">
+        <ul class="right">
+            <li><a asp-page="/Empresa/Novo/Index" title="Incluir Empresa!"><i class="material-icons">add</i></a></li>
+            <li><a asp-page="/Empresa/Consulta/Index" title="Consulta Avançada!"><i class="material-icons">manage_search</i></a></li>
+            <li><a asp-page="/Empresa/RFB/Index" title="Opções de consulta">RFB</a></li>
+        </ul>
+    </div>
+</nav>
+<div>
+    <form method="post">
+        <div class="row z-depth-1 white rounded-b-2">
             <div class="col s12">
                 <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.CNPJ" id="inputCNPJ"/>
@@ -34,8 +43,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <div class="card" style="overflow-y:auto;">
     <table class="striped">

@@ -17,7 +17,7 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
         public string StatusMessage{ get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string Search{ get; set; }
+        public string src{ get; set; }
 
         public Pagination<BaseReceitaFederal> Pagination { get; set; }
         public int RegCount { get; set; }
@@ -27,26 +27,26 @@ namespace Sim.UI.Web.Pages.Empresa.RFB
             _appServiceCnpj = appServiceCnpj;
         }
 
-        private async Task<Pagination<BaseReceitaFederal>> DoListAsync(string s, int? p)
-        {
-            var list = await _appServiceCnpj.DoListBaseRazaoSociosAsync(s);
-            
-            RegCount = list.Count();
-            var pagesize = 10;
-            var _empresas = list.AsQueryable();
-            return Pagination<BaseReceitaFederal>.Create(_empresas.AsNoTracking(), p?? 1, pagesize);
-        }
-
-        public async Task OnGetAsync(string s, int? p)
+        public async Task OnGetAsync(string src, int? p)
         { 
             try
             {
-                Search = s;
-                Pagination = await DoListAsync(s, p);
+                if (p == null)
+                    p = 1;
+
+                var _list = await _appServiceCnpj.DoListBaseRazaoSociosAsync(src);
+                
+                RegCount = _list.Count();
+                
+                var pagesize = 10;
+
+                var _empresas = _list.AsQueryable();       
+
+                Pagination = Pagination<BaseReceitaFederal>.Create(_empresas.AsNoTracking(), p?? 1, pagesize);
             }
             catch(Exception ex)
             {
-                StatusMessage = "Erro: " + ex.Message;
+                StatusMessage ="Erro: " + ex.Message;
             }
         }
     }
