@@ -2,16 +2,16 @@
 @model Sim.UI.Web.Pages.Empresa.Consulta.IndexModel
 @{
     ViewData["Title"] = "Empresa/Consulta";
-    ViewData["ActivePage"] = EmpresaNavPages.Inicio;
+    ViewData["ActivePageEmp"] = EmpresaNavPages.Consulta;
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <nav>
-    <div class="nav-wrapper white">
+    <div class="nav-wrapper white rounded-t-2">
         <ul class="right">
             <li><a asp-page="/Empresa/Novo/Index" title="Incluir Empresa!"><i class="material-icons">add</i></a></li>
-            <li><a asp-page="/Empresa/Consulta/Index" title="Consulta Avançada!"><i class="material-icons">manage_search</i></a></li>
+            <li class="active"><a asp-page="/Empresa/Consulta/Index" title="Consulta Avançada!"><i class="material-icons">manage_search</i></a></li>
             <li><a asp-page="/Empresa/RFB/Index" title="Opções de consulta">RFB</a></li>
         </ul>
     </div>

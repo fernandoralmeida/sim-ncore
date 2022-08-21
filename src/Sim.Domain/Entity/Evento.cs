@@ -1,6 +1,6 @@
 ﻿
 namespace Sim.Domain.Entity
-{    
+{ 
     public class Evento
     {
         public enum ESituacao { Ativo = 1, Finalizado = 2, Cancelado = 3 }
@@ -29,20 +29,10 @@ namespace Sim.Domain.Entity
         {
             return Inscritos == null ? Lotacao : Lotacao - Inscritos.Count;
         }
-        
-        public bool EventosAtivos(Evento obj)
-        {
-            return obj.Situacao <= ESituacao.Ativo;
-        }
 
-        public bool EventosFinalizados(Evento obj)
+        public bool EventoBySituacao(Evento evento, ESituacao situacao)
         {
-            return obj.Situacao == ESituacao.Finalizado;
-        }
-
-        public bool EventosCancelados(Evento obj)
-        {
-            return obj.Situacao == ESituacao.Cancelado;
+            return evento.Situacao == situacao;
         }
     }
 }

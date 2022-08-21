@@ -13,9 +13,19 @@ namespace Sim.Application.Services
             _evento = evento;
         }
 
+        public async Task<IEnumerable<Evento>> DoListAsyncBy(string param)
+        {            
+            return await _evento.DoListAsyncBy(param);
+        }
+
         public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
         {
             return await _evento.DoListEventByParam(nome, tipo, setor, ano);
+        }
+
+        public async Task<IEnumerable<Evento>> DoListSituacaoAsyncBy(Evento.ESituacao situacao)
+        {
+            return await _evento.DoListSituacaoAsyncBy(await ListAllAsync(), situacao);
         }
 
         public async Task<Evento> GetCodigoAsync(int codigo)
@@ -46,21 +56,6 @@ namespace Sim.Application.Services
         public async Task<IEnumerable<Evento>> ListAllAsync()
         {
             return await _evento.ListAllAsync();
-        }
-
-        public async Task<IEnumerable<Evento>> ListEventosAtivosAsync(int ano)
-        {
-            return await _evento.ListEventosAtivosAsync(ListAllAsync().Result.Where(s => s.Data.Value.Year == ano));
-        }
-
-        public async Task<IEnumerable<Evento>> ListEventosCanceladosAsync(int ano)
-        {
-            return await _evento.ListEventosCanceladosAsync(ListAllAsync().Result.Where(s => s.Data.Value.Year == ano));
-        }
-
-        public async Task<IEnumerable<Evento>> ListEventosFinalizadosAsync(int ano)
-        {
-            return await _evento.ListEventosFinalizadosAsync(ListAllAsync().Result.Where(s => s.Data.Value.Year == ano));
         }
 
         public async Task<IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)>> ListEventosPorMesAsync(IEnumerable<Evento> eventos)

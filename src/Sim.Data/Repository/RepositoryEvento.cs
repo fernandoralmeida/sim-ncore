@@ -14,6 +14,21 @@ namespace Sim.Data.Repository
 
         }
 
+        public async Task<IEnumerable<Evento>> DoListAsyncBy(string param)
+        {
+            return await _db.Evento                
+                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
+                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)
+                .Where(s => s.Nome.Contains(param) ||
+                            s.Tipo.Contains(param) ||
+                            s.Owner == param ||
+                            s.Inscritos.Any(p => p.Participante.CPF == param ||
+                                                 p.Empresa.CNPJ == param))
+                .OrderBy(o => o.Data)
+                .AsNoTracking()
+                .ToListAsync();    
+        }
+
         public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
         {
             var n = nome ?? "";
@@ -85,7 +100,7 @@ namespace Sim.Data.Repository
         public async Task<IEnumerable<Evento>> ListAllAsync()
         {
             return await _db.Evento                
-                .Include(i => i.Inscritos)
+                .Include(i => i.Inscritos).OrderBy(o => o.Data)
                 .AsNoTracking()
                 .ToListAsync();
         }

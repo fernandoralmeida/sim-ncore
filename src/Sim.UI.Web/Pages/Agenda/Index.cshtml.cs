@@ -1,8 +1,6 @@
-using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
 
@@ -12,25 +10,13 @@ namespace Sim.UI.Web.Pages.Agenda
     public class IndexModel : PageModel
     {
         private readonly IAppServiceEvento _appServiceEvento;
-        private readonly IAppServiceSetor _appServiceSetor;
-        private readonly IAppServiceTipo _appServiceTipo;
 
         [BindProperty(SupportsGet = true)]
         public InputModelIndex Input { get; set; }
 
-        public SelectList Setores { get; set; }
-
-        public SelectList Tipos { get; set; }
-
         public class InputModelIndex
         {
-            [DisplayName("Evento")]
             public string Evento { get; set; }
-            public int Ano { get; set; }
-
-            [DisplayName("Setor")]
-            public string Owner { get; set; }
-            public string Tipo { get; set; }
             public IEnumerable<InputModelEvento> ListaEventos { get; set; }
             public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMes { get; set; }
         }
@@ -38,69 +24,42 @@ namespace Sim.UI.Web.Pages.Agenda
         [TempData]
         public string StatusMessage { get; set; }
 
-        public IndexModel(IAppServiceEvento appServiceEvento,
-            IAppServiceSetor appServiceSetor,
-            IAppServiceTipo appServiceTipo)
+        public IndexModel(IAppServiceEvento appServiceEvento)
         {
             _appServiceEvento = appServiceEvento;
-            _appServiceSetor = appServiceSetor;
-            _appServiceTipo = appServiceTipo;
         }
 
-        private async Task Onload()
+        public async Task Load(Evento.ESituacao situacao, string m)
         {
-            Setores = new SelectList(
-                await _appServiceSetor.ListAllAsync(),
-                nameof(Setor.Nome), nameof(Setor.Nome), null);
-
-            Tipos = new SelectList(
-                await _appServiceTipo.ListAllAsync(),
-                nameof(Tipo.Nome), nameof(Tipo.Nome), null);
-        }
-
-        public async Task OnGetAsync()
-        {
-            ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
-            await Onload();
-
-            Input.Ano = DateTime.Now.Year;
-
+            Evento.ESituacao sto = Evento.ESituacao.Ativo;
+            switch(m)
+            {
+                case "avl":
+                    ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
+                    sto = Evento.ESituacao.Ativo;
+                    break;
+                case "fzd":
+                    ViewData["ActivePageEvento"] = AgendaNavPages.EventoFinalizado;
+                    sto = Evento.ESituacao.Finalizado;
+                    break;
+                case "cld":
+                    ViewData["ActivePageEvento"] = AgendaNavPages.EventoCancelado;
+                    sto = Evento.ESituacao.Cancelado;
+                    break;
+            }
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosAtivosAsync(Input.Ano));
+                .ListEventosPorMesAsync(await _appServiceEvento.DoListSituacaoAsyncBy(sto));
         }
 
-        public async Task OnPostEventAsync()
-        {
-            await Onload();
-            Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.DoListEventByParam(Input.Evento, Input.Tipo, Input.Owner, Input.Ano));
+        public async Task OnGetAsync(string m)
+        {            
+            await Load(Evento.ESituacao.Ativo, m);
         }
 
-        public async Task OnPostAvailableAsync()
+        public async Task OnPostAsync()
         {
-            await Onload();
-            ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
-
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosAtivosAsync(Input.Ano));
-        }
-
-        public async Task OnPostFinalizedAsync()
-        {
-            await Onload();
-            ViewData["ActivePageEvento"] = AgendaNavPages.EventoFinalizado;
-
-            Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosFinalizadosAsync(Input.Ano));
-        }
-
-        public async Task OnPostCanceledAsync()
-        {
-            await Onload();
-            ViewData["ActivePageEvento"] = AgendaNavPages.EventoCancelado;
-
-            Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.ListEventosCanceladosAsync(Input.Ano));
+                .ListEventosPorMesAsync(await _appServiceEvento.DoListEventByParam(Input.Evento, "","",2022));
         }
 
         private int QuantosDiasFaltam(DateTime dataalvo)

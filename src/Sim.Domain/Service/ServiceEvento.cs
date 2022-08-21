@@ -13,32 +13,7 @@ namespace Sim.Domain.Service
         {
             _evento = repositoryEvento;
         }
-
-        public async Task<IEnumerable<Evento>> ListEventosAtivosAsync(IEnumerable<Evento> eventos)
-        {
-            var t = Task.Run(() => eventos.Where(s => s.EventosAtivos(s)).OrderBy(o => o.Data));
-
-            await t;
-
-            return t.Result;
-        }
-
-        public async Task<IEnumerable<Evento>> ListEventosCanceladosAsync(IEnumerable<Evento> eventos)
-        {
-            var t = Task.Run(() => eventos.Where(s => s.EventosCancelados(s)).OrderByDescending(o => o.Data));
-
-            await t;
-
-            return t.Result;
-        }
-        public async Task<IEnumerable<Evento>> ListEventosFinalizadosAsync(IEnumerable<Evento> eventos)
-        {
-            var t = Task.Run(() => eventos.Where(s => s.EventosFinalizados(s)).OrderByDescending(o => o.Data));
-
-            await t;
-
-            return t.Result;
-        }
+        
         public async Task<Evento> GetCodigoAsync(int codigo)
         {
             return await _evento.GetCodigoAsync(codigo);
@@ -73,27 +48,23 @@ namespace Sim.Domain.Service
         {
             try
             {
-                var t = Task.Run(() =>
+                return await Task.Run(() =>
                 {
                     var _lista_meses = new List<(string Mes, int Qtde, IEnumerable<Evento>)>();
-                    var _eventos = new List<Evento>();
-                    var _meses = new List<(string Mes, int Qtde)>();
-                    var _mes = new List<string>();
-
-                    for (int i = 1; i < 13; i++)
+                    var _eventos = new List<Evento>();                    
+                
+                    for(int a = 2020; a <= DateTime.Now.Year; a++ )
                     {
-                        _eventos = eventos.Where(s => s.Data.Value.Month == i).ToList();
-                        if(_eventos.Any())
-                            _lista_meses.Add((_eventos.FirstOrDefault().Data.Value.ToString("MMM"), _eventos.Count, _eventos));
-                    }
+                        for (int i = 1; i < 13; i++)
+                        {
+                            _eventos = eventos.Where(s => s.Data.Value.Month == i && s.Data.Value.Year == a).ToList();
+                            if(_eventos.Any())
+                                _lista_meses.Add((string.Format("{0}/{1}", _eventos.FirstOrDefault().Data.Value.ToString("MMM"), a), _eventos.Count, _eventos));
+                        }
 
+                    }
                     return _lista_meses;
                 });
-
-                await t;
-
-                return t.Result;
-
             }
             catch
             {
@@ -119,6 +90,16 @@ namespace Sim.Domain.Service
         public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
         {
             return await _evento.DoListEventByParam(nome, tipo, setor, ano);
+        }
+
+        public async Task<IEnumerable<Evento>> DoListAsyncBy(string param)
+        {
+            return await _evento.DoListAsyncBy(param);
+        }
+
+        public async Task<IEnumerable<Evento>> DoListSituacaoAsyncBy(IEnumerable<Evento> eventos, Evento.ESituacao situacao)
+        {
+            return await Task.Run(() => eventos.Where(s => s.EventoBySituacao(s, situacao)).OrderByDescending(o => o.Data));
         }
     }
 }

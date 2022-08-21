@@ -1,5 +1,7 @@
 ﻿@page
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.IndexModel
+@using Sim.UI.Web.Areas.SimBI.Pages.Empresas
+@inject Sim.Application.Cnpj.Interfaces.IAppServiceCnpj appServiceCnpj;
 
 @{
     Layout = "_Layout.cshtml";
@@ -7,29 +9,46 @@
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Empresa;
 }
 
-<partial name="_NavBar" model="@Model.Input.Municipio" />
+@{ var municipios = await appServiceCnpj.ToListMicroRegiaoJahuAsync();}
+
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  @foreach (var item in municipios)
+  {
+    <li><a class="submit" asp-route-m="@item.Codigo">@item.Descricao</a></li>
+  }
+</ul>
+<form method="post">
+    <nav>
+        <div class="row nav-wrapper">
+            <div class="input-field col s6 m6 l6">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Input.Ano" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>      
+            <ul class="right">
+            <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.Input.Municipio">Empresas</a></li>
+            <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.Input.Municipio">Cnaes</a></li>
+
+            @{var nome = municipios.Where(n=>n.Codigo.Contains(Model.Input.Municipio));}
+
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@nome.SingleOrDefault().Descricao<i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+        </div>
+    </nav>
+</form>
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <div class="row">
     @foreach (var emp in Model.ListEmpresas)
     {
-        <form method="post">
-            <div class="row">
-                <div class="col s6 l9 m9">
-                    <div class="alpha-text-4 font-size-12 truncate">
-                        <br />Informações extraidas da base de dados da RFB em 12-07-2022
-                        <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"              
-                    </div>
-                </div>
-                <div class="col s6 l3 m3 right mgn-t-12">
-                    <div class="input-field valign-wrapper white z-depth-1 hoverable rounded-default pdn-h-8" style="margin:0px;">
-                        <input asp-for="Input.Ano" />
-                        <button class="btn waves-effect waves-light submit"><i class="material-icons">refresh</i></button>
-                    </div>
-                </div>
+        
+        <div class="row">
+            <div class="alpha-text-4 font-size-12 truncate">
+                <br />Informações extraidas da base de dados da RFB em 12-07-2022
+                <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"              
             </div>
-        </form>
+        </div>        
 
         <div class="row">
             <div class="box-container-card">                    

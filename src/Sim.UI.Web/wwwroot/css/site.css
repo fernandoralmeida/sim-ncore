@@ -89,6 +89,9 @@ hr{
 .rounded-b-2 {
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
+}.rounded-t-2 {
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
 }
 .mgn-0 {
     margin: 0px 0px 0px 0px;
@@ -244,6 +247,7 @@ nav {
     color: #9e9e9e;
     background-color: white;
     width: 100%;
+    border-radius: 2px;
 }
 nav ul a {
     color: #9e9e9e;
@@ -318,12 +322,18 @@ nav.navbar .brand-logo {
     margin: 0 5px 0 0;
 }
 nav .input-field label i {
-    color: rgba(0,0,0,0.5);
+    color: rgba(0,0,0,0.4);
     -webkit-transition: color .3s;
     transition: color .3s;
 }
 nav .input-field label.active i{
     color: rgba(0, 0, 0, 0.5);
+}
+.card .card-action {
+    background-color: inherit;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    position: relative;
+    padding: 16px; /*24px;*/
 }
 /* End Sidenav  */
 @media only screen and (max-width: 992px) {
@@ -697,7 +707,7 @@ nav .input-field label.active i{
     padding: 10px;
 }.nav-wrapper .input-field input[type=search]{
     padding-left: 2.5rem;
-    width: calc(100% - 2.5rem);
+    width: calc(100% - 2.5rem);    
 }
 
 @media only screen and (max-width: 992px) {
