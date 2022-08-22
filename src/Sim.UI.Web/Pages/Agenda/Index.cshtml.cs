@@ -16,7 +16,7 @@ namespace Sim.UI.Web.Pages.Agenda
 
         public class InputModelIndex
         {
-            public string Evento { get; set; }
+            public string Search { get; set; }
             public IEnumerable<InputModelEvento> ListaEventos { get; set; }
             public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMes { get; set; }
         }
@@ -46,6 +46,9 @@ namespace Sim.UI.Web.Pages.Agenda
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoCancelado;
                     sto = Evento.ESituacao.Cancelado;
                     break;
+                default:
+                    ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
+                    break;
             }
             Input.ListaEventosMes = await _appServiceEvento
                 .ListEventosPorMesAsync(await _appServiceEvento.DoListSituacaoAsyncBy(sto));
@@ -59,7 +62,7 @@ namespace Sim.UI.Web.Pages.Agenda
         public async Task OnPostAsync()
         {
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.DoListEventByParam(Input.Evento, "","",2022));
+                .ListEventosPorMesAsync(await _appServiceEvento.DoListAsyncBy(Input.Search));
         }
 
         private int QuantosDiasFaltam(DateTime dataalvo)

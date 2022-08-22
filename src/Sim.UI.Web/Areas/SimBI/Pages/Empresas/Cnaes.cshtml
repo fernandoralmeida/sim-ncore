@@ -10,21 +10,17 @@
 <partial name="_NavBar" model="@Model.MunicipioSelecionado" />
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<div class="row alpha-text-4 font-size-12 mgn-t-10">
-    Informações extraidas da base de dados da RFB em 12-07-2022
-</div>
-
 <div class="row">
-    <ul class="collapsible white borderless rounded-4">
+    <ul class="collapsible white borderless rounded-default">
             @foreach (var emp in Model.ListCnaes)
             {
                 @foreach (var s in emp.ListaSecao)
                 {
                     <li>
                         <div class="collapsible-header">@s.Secao.Key<span class="new badge blue" data-badge-caption="">@s.Secao.Value</span></div>
-                        <div class="collapsible-body">
+                        <div class="collapsible-body pdn-10">
                             <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@s.FaixaInicial" data-cnaef="@s.FaixaFinal" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
-                            <ul class="collapsible z-depth-0">
+                            <ul class="collapsible z-depth-0 mgn-10">
                                 @foreach (var d in s.ListaClasse)
                                 {
 
@@ -54,7 +50,9 @@
             }        
     </ul>
 </div>
-
+<div class="row alpha-text-4 font-size-12 mgn-t-10">
+    Informações extraidas da base de dados da RFB em 12-07-2022
+</div>
 <!-- Modal Structure -->
 <div id="viewmodal" class="modal modal-fixed-footer">
     <div class="modal-content">

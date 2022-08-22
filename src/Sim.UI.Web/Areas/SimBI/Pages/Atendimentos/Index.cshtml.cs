@@ -15,7 +15,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
         private readonly IAppServiceSecretaria _appServiceSecretaria;
 
         [BindProperty(SupportsGet = true)]
-        public Secretaria Sec { get; set; } //Secretaria
+        public Secretaria Sec { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public IEnumerable<BIAtendimentos> Setores { get; set; }
@@ -30,7 +30,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
         public string StatusMessage { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int Ano { get; set; }
+        public string Ano { get; set; }
 
         public SelectList Secretarias { get; set; }
 
@@ -40,7 +40,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
         {
             _appAtendimento = appAtendimento;
             _appServiceSecretaria = appServiceSecretaria;
-            _appSetores = appsetores;  
+            _appSetores = appsetores;
         }
 
         private async Task LoadSecretaria()
@@ -53,22 +53,31 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
         }
 
         private async Task LoadAsync()
-        {            
-            var nperiodo = new DateTime(Ano, 1, 1);
-            Atendimentos_List  = await _appAtendimento.ToListBIAtendimentos(nperiodo);
-            var _list = new List<BIAtendimentos>();
-            var setores = await _appSetores.ListSetorOwnerAsync(Sec.Nome);
-            foreach(var s in setores)
+        { 
+            int n;
+            bool isNumeric = int.TryParse(Ano, out n);
+            if(isNumeric)
             {
-                _list.Add(await _appAtendimento.ToListBIAtendimentosSetor(nperiodo, s.Nome));
-            }
-            Setores = _list;
-            AppUsers = await _appAtendimento.ToListBIAtendimentosAppUser(nperiodo);
+                int _ano = Convert.ToInt32(Ano);
+                if(_ano > 0)
+                {
+                    var nperiodo = new DateTime(_ano, 1, 1);
+                    Atendimentos_List  = await _appAtendimento.ToListBIAtendimentos(nperiodo);
+                    var _list = new List<BIAtendimentos>();
+                    var setores = await _appSetores.ListSetorOwnerAsync(Sec.Nome);
+                    foreach(var s in setores)
+                    {
+                        _list.Add(await _appAtendimento.ToListBIAtendimentosSetor(nperiodo, s.Nome));
+                    }
+                    Setores = _list;
+                    AppUsers = await _appAtendimento.ToListBIAtendimentosAppUser(nperiodo);
+                }
+            }            
         }
 
         public async Task OnGetAsync()
         {
-            Ano = DateTime.Now.Year;
+            Ano = DateTime.Now.Year.ToString();
             await LoadSecretaria();
             await LoadAsync();
         }

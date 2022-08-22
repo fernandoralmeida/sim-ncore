@@ -10,28 +10,30 @@
 }
 
 @{ var municipios = await appServiceCnpj.ToListMicroRegiaoJahuAsync();}
-
-<!-- Dropdown Structure -->
-<ul id="dropdown1" class="dropdown-content">
+@{var nome = municipios.Where(n=>n.Codigo.Contains(Model.Input.Municipio));}
+<ul id='dropdown1' class='dropdown-content'>
   @foreach (var item in municipios)
   {
     <li><a class="submit" asp-route-m="@item.Codigo">@item.Descricao</a></li>
   }
 </ul>
+<ul id='mobile-demo' class='dropdown-content'>
+    <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.Input.Municipio">Empresas</a></li>
+    <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.Input.Municipio">Cnaes</a></li>
+    <li><a class='dropdown-trigger' href='#' data-target='dropdown1'><i class="material-icons">arrow_drop_down</i>@nome.SingleOrDefault().Descricao</a></li>
+</ul>
 <form method="post">
-    <nav>
+    <nav class="row">
         <div class="row nav-wrapper">
             <div class="input-field col s6 m6 l6">
                 <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Input.Ano" type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>      
-            <ul class="right">
-            <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.Input.Municipio">Empresas</a></li>
-            <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.Input.Municipio">Cnaes</a></li>
-
-            @{var nome = municipios.Where(n=>n.Codigo.Contains(Model.Input.Municipio));}
-
-            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@nome.SingleOrDefault().Descricao<i class="material-icons right">arrow_drop_down</i></a></li>
+            <a class='right dropdown-trigger hide-on-large-only' href='#' data-target='mobile-demo'><i class="material-icons alpha-text-5">menu arrow_drop_down</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.Input.Municipio">Empresas</a></li>
+                <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.Input.Municipio">Cnaes</a></li>
+                <li><a class='dropdown-trigger' href='#' data-target='dropdown1'>@nome.SingleOrDefault().Descricao<i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
         </div>
     </nav>
@@ -41,16 +43,8 @@
 
 <div class="row">
     @foreach (var emp in Model.ListEmpresas)
-    {
-        
-        <div class="row">
-            <div class="alpha-text-4 font-size-12 truncate">
-                <br />Informações extraidas da base de dados da RFB em 12-07-2022
-                <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"              
-            </div>
-        </div>        
-
-        <div class="row">
+    {      
+          <div class="row">
             <div class="box-container-card">                    
                 <div class="box-column-7">
                     <div class="box-column-row">
@@ -184,3 +178,9 @@
         </div>
     }
 </div>
+<div class="row">
+    <div class="alpha-text-4 font-size-12 truncate">
+        <br />Informações extraidas da base de dados da RFB em 12-07-2022
+        <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"              
+    </div>
+</div>    

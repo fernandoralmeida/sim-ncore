@@ -9,26 +9,30 @@ namespace Sim.UI.Web.Pages.Pat
     [Authorize(Roles = "Administrador,M_Pat")]
     public class IndexModel : PageModel
     {
-        private readonly IAppServiceEmpregos appEmpregos;
-        private readonly IAppServiceEmpresa appEmpresa;
+        private readonly IAppServiceEmpregos _appEmpregos;
 
         [TempData]
         public string StatusMessage { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string InputSearch { get; set; }
 
         [BindProperty]
         public string CNPJ { get; set; }
         public IEnumerable<Empregos> ListaEmpregos { get; set; }
         public IEnumerable<Empresas> ListaEmpresas { get; set; }
 
-        public IndexModel(IAppServiceEmpregos appServiceEmpregos,
-            IAppServiceEmpresa appServiceEmpresa)
+        public IndexModel(IAppServiceEmpregos appServiceEmpregos)
         {
-            appEmpregos = appServiceEmpregos;
-            appEmpresa = appServiceEmpresa;
+            _appEmpregos = appServiceEmpregos;
         }
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
-            ListaEmpregos = await appEmpregos.DoListEmpregosAsync();
+            ListaEmpregos = await _appEmpregos.DoListEmpregosAsync();
+        }
+
+        public async Task OnPostAsync(){
+            ListaEmpregos = await _appEmpregos.DoListEmpregosAsyncBy(InputSearch);
         }
     }
 }

@@ -6,7 +6,22 @@
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<partial name="_PatNav" />
+<div class="row">
+    <nav>
+        <div class="nav-wrapper">
+            <form method="post">        
+                <div class="input-field col s6 m6 l6">
+                    <input id="search" asp-for="InputSearch" type="search" placeholder="Digite aqui para pesquisar" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                </div>
+                <ul class="right">
+                    <li class="@PatNav.InicioNavClass(ViewContext)"><a asp-page="/Pat/Index"><i class="material-icons">list</i></a></li>
+                    <li class="@PatNav.NovoNavClass(ViewContext)"><a asp-page="/Pat/Add/Index"><i class="material-icons blue-text">add</i></a></li>       
+                </ul>
+            </form>            
+        </div>
+    </nav>
+</div>
 
 <div class="row">
     <div class="card">

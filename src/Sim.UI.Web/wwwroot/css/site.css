@@ -7,7 +7,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 html {
     /* fonte padrão Roboto 
-    font-family: Consolas,monaco,monospace;*/
+    font-family: Consolas,monaco,monospace;*/    
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 main{
@@ -54,7 +54,7 @@ hr{
     text-transform: uppercase;
 }
 .borderless{
-    border: 0px solid transparent;
+    border: 1px solid transparent;
 }
 .border-a{
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -94,7 +94,7 @@ hr{
     border-top-left-radius: 2px;
 }
 .mgn-0 {
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px !important;
 }
 .mgn-4 {
     margin: 4px 4px 4px 4px;
@@ -179,7 +179,7 @@ hr{
     padding: 8px;
 }
 .pdn-10 {
-    padding: 10px;
+    padding: 10px !important;
 }
 .navbar-extended{
     display:flex;
@@ -329,6 +329,11 @@ nav .input-field label i {
 nav .input-field label.active i{
     color: rgba(0, 0, 0, 0.5);
 }
+.card .card-image {
+    position: relative;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
 .card .card-action {
     background-color: inherit;
     border-top: 1px solid rgba(0,0,0,0.1);
@@ -445,143 +450,143 @@ nav .input-field label.active i{
         }
     }
 }
-        /***/
-        @media (max-width: 768px) {
-            .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
-                padding: 0 20px 0 20px;
-            }
-        }
-        button.accept-policy {
-            font-size: 1rem;
-            line-height: inherit;
-        }
-        /* Sticky footer styles
+/***/
+@media (max-width: 768px) {
+    .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
+        padding: 0 20px 0 20px;
+    }
+}
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+/* Sticky footer styles
 -------------------------------------------------- */
-        .bg-teal {
-            background-color: #20c997 !important;
-        }
-        .bg-silver {
-            background-color: #f8f8f8 !important;
-        }
-        /**/
-        .table {
-            font-size: 10.5pt;
-        }
-        .footer {            
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            white-space: wrap;
-            line-height: 50px;
-        }
-        /* Login style */
-        .form-signin {
-            width: 100%;
-            max-width: 330px;
-            padding: 15px;
-            margin: auto;
-        }
-            .form-signin .checkbox {
-                font-weight: 400;
-            }
+.bg-teal {
+    background-color: #20c997 !important;
+}
+.bg-silver {
+    background-color: #f8f8f8 !important;
+}
+/**/
+.table {
+    font-size: 10.5pt;
+}
+.footer {            
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: wrap;
+    line-height: 50px;
+}
+/* Login style */
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+    .form-signin .checkbox {
+        font-weight: 400;
+    }
 
-            .form-signin .form-floating:focus-within {
-                z-index: 2;
-            }
-            .form-signin input[type="text"] {
-                margin-bottom: -1px;
-                border-bottom-right-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-            .form-signin input[type="password"] {
-                margin-bottom: 10px;
-                border-top-left-radius: 0;
-                border-top-right-radius: 0;
-            }
-        .strip-bg {
-            margin: 0px 0px 0px 0px;
-            height: 20px;
-        }
-        /* faixa pontilhada */
-        .strip-dot {
-            margin: 0px 0px 0px 0px;
-            height: 20px;
-            background-image: url(imgs/dot.jpg);
-        }
-        .strip-dot-b4 {
-            margin: 0px 0px 0px 0px;
-            height: 6px;
-            background-image: url(imgs/dot.jpg);
-        }
-        /* Logo SIM */
-        .logo-sim-sm {
-            display: flex;
-            margin: 0px 0px 0px 0px;
-            background-image: url(imgs/sim-ico.ico);
-            background-size: 32px 32px;
-            height: 32px;
-            width: 32px;
-            image-rendering: optimizeQuality;
-        }
-        .logo-sim {
-            background-image: url(imgs/sim_logo_nb.png);
-            background-size: 40px 40px;
-            height: 40px;
-            width: 40px;
-        }
-        .logo-sim-lg {
-            margin: auto;
-            background-image: url(imgs/sim-ico.ico);
-            background-size: 64px 64px;
-            height: 64px;
-            width: 64px;
-            image-rendering: optimizeQuality;
-        }
-        .sedemp {
-            margin: 0px 0px 0px 0px;
-            background-image: url(imgs/n_logo_sedemp.jpeg);
-            image-rendering: optimizeQuality;
-        }
-        /**** Links ****/
+    .form-signin .form-floating:focus-within {
+        z-index: 2;
+    }
+    .form-signin input[type="text"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+.strip-bg {
+    margin: 0px 0px 0px 0px;
+    height: 20px;
+}
+/* faixa pontilhada */
+.strip-dot {
+    margin: 0px 0px 0px 0px;
+    height: 20px;
+    background-image: url(imgs/dot.jpg);
+}
+.strip-dot-b4 {
+    margin: 0px 0px 0px 0px;
+    height: 6px;
+    background-image: url(imgs/dot.jpg);
+}
+/* Logo SIM */
+.logo-sim-sm {
+    display: flex;
+    margin: 0px 0px 0px 0px;
+    background-image: url(imgs/sim-ico.ico);
+    background-size: 32px 32px;
+    height: 32px;
+    width: 32px;
+    image-rendering: optimizeQuality;
+}
+.logo-sim {
+    background-image: url(imgs/sim_logo_nb.png);
+    background-size: 40px 40px;
+    height: 40px;
+    width: 40px;
+}
+.logo-sim-lg {
+    margin: auto;
+    background-image: url(imgs/sim-ico.ico);
+    background-size: 64px 64px;
+    height: 64px;
+    width: 64px;
+    image-rendering: optimizeQuality;
+}
+.sedemp {
+    margin: 0px 0px 0px 0px;
+    background-image: url(imgs/n_logo_sedemp.jpeg);
+    image-rendering: optimizeQuality;
+}
+/**** Links ****/
 
-        /**** Modulos ****/
-        .l-btn /* estrutura principal */ {
-            display: inline-block;
-            margin: 5px;
-            height: 200px;
-            width: 200px;
-            color: #ffffff;
-            background-color: #20c997;
-            text-decoration: none;
-            border-radius: 0px;
-            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-            .l-btn:hover /* ao mover o mouse */ {
-                background-color: #26dca6;
-                color: #ffffff;
-                text-decoration: none;
-            }
-            .l-btn:active {
-                background-color: #20c997;
-            }
-        .div-modulos /* div das seções free-hand, digital paint, comp grafica e web-dev */ {
-            text-align: center; /*       
-            background-image: url(imgs/dot.jpg);*/
-        }
-        .agenda {
-            display: inline-block;
-            margin: 10px;
-            width: 300px;
-            background-color: #ffffff;
-            text-decoration: none;
-            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-        .agenda:hover /* ao mover o mouse */ {
-            background-color: #fafafa;
-        }
-        .agenda:active {
-            background-color: #fafafa;
-        }
+/**** Modulos ****/
+.l-btn /* estrutura principal */ {
+    display: inline-block;
+    margin: 5px;
+    height: 200px;
+    width: 200px;
+    color: #ffffff;
+    background-color: #20c997;
+    text-decoration: none;
+    border-radius: 0px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+    .l-btn:hover /* ao mover o mouse */ {
+        background-color: #26dca6;
+        color: #ffffff;
+        text-decoration: none;
+    }
+    .l-btn:active {
+        background-color: #20c997;
+    }
+.div-modulos /* div das seções free-hand, digital paint, comp grafica e web-dev */ {
+    text-align: center; /*       
+    background-image: url(imgs/dot.jpg);*/
+}
+.agenda {
+    display: inline-block;
+    margin: 10px;
+    width: 300px;
+    background-color: #ffffff;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.agenda:hover /* ao mover o mouse */ {
+    background-color: #fafafa;
+}
+.agenda:active {
+    background-color: #fafafa;
+}
 /* Font Size */
 .font-h1{
     font-size: 4.2rem;

@@ -9,16 +9,15 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-    <div class="row">
-        <div  class="col s6 l3 m3 right">
-            <div class="input-field valign-wrapper white z-depth-1 hoverable rounded-default pdn-h-8" style="margin:0px;">
-                <input asp-for="Ano" />
-                <button class="btn waves-effect waves-light submit"><i class="material-icons">refresh</i></button>
-            </div>
+    <nav class="row hoverable">
+        <div class="row nav-wrapper">
+            <div class="input-field col s6 m6 l6">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Ano" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>      
         </div>
-    </div>
+    </nav>
 </form>
-
 <div class="row">
 
 @if(Model.Atendimentos_List != null)
@@ -136,22 +135,26 @@
         }
     </div>    
 }
-    <div class="col s12 m3 l3">       
-                @if (Model.AppUsers != null)
-                {                
-                    <div id="carduser" class="card hoverable" style="overflow-x:auto;">
-                        <div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>
-                        @foreach(var m in Model.AppUsers.ListaAppUser)
-                        {
-                            <div class="font-size-12 center pdn-4">
-                                <p class="grey-text lighten-2 font-size-12">@m.Nome</p>
-                                <p class="blue-text font-size-14">@m.Atendimentos - <a class="green-text">@m.Servicos</a></p>
-                            </div>
-                            <div class="divider"></div>
-                        }
+
+<div class="col s12 m3 l3">       
+    @if (Model.AppUsers != null)
+    {                
+        <div id="carduser" class="card hoverable" style="overflow-x:auto;">
+            <div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>
+            @if(Model.AppUsers.ListaAppUser != null)
+            {
+                @foreach(var m in Model.AppUsers.ListaAppUser)
+                {
+                    <div class="font-size-12 center pdn-4">
+                        <p class="grey-text lighten-2 font-size-12">@m.Nome</p>
+                        <p class="blue-text font-size-14">@m.Atendimentos - <a class="green-text">@m.Servicos</a></p>
                     </div>
-                }  
-    </div>
+                    <div class="divider"></div>
+                }
+            }
+        </div>
+    }  
+</div>
 
 </div>
 

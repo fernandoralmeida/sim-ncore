@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 using Sim.Identity.IoC;
 using Sim.Identity.Entity;
 using Sim.Identity.Context;
@@ -6,6 +8,9 @@ using Sim.UI.Web.AutoMapper;
 using Sim.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLocalization();
+var cultureInfoBR = new[]{ new CultureInfo("pt-BR")};
 
 builder.Services.IdentityDataBase(builder.Configuration, "IdentityContextConnection");
 
@@ -40,6 +45,13 @@ if (!app.Environment.IsDevelopment())
 }
 else
     app.UseDeveloperExceptionPage();
+
+app.UseRequestLocalization(new RequestLocalizationOptions {
+    DefaultRequestCulture = new RequestCulture("pt-BR"),
+    SupportedCultures = cultureInfoBR,
+    FallBackToParentCultures= false
+});
+CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

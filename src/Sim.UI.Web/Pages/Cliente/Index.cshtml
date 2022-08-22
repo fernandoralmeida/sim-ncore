@@ -15,6 +15,15 @@
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>            
             <ul class="right">
+                @if (!Model.Input.ListaPessoas.Any())
+                {
+                    if (Model.CpfValido)
+                    { 
+                        <li>
+                            <a asp-page="/Cliente/Novo/Index" asp-route-id="@Model.Input.RouteCPF"><i class="material-icons blue-text">add</i></a>
+                        </li>
+                    }
+                }
                 <li><a asp-page="/Cliente/Consulta/Index"><i class="material-icons">person_search</i></a></li>
             </ul>            
         </div>
@@ -22,15 +31,6 @@
 </form>
 
 <div class="card">
-    @if (!Model.Input.ListaPessoas.Any())
-    {
-        if (Model.CpfValido)
-        { 
-            <div class="card-header">
-                <a class="waves-effect waves-light btn blue" asp-page="/Cliente/Novo/Index" asp-route-id="@Model.Input.RouteCPF"><i class="material-icons">person add</i></a>
-            </div>
-        }
-    }
     <table class="responsive-table striped">
         <thead>
             <tr>

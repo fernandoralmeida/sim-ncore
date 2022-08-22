@@ -11,7 +11,7 @@ $(document).ready(function () {
     $('.dropdown-trigger').dropdown(
         {
             hover:false,
-            restringirWidth:true,
+            restringirWidth:false,
             coverTrigger:true
         });
 
