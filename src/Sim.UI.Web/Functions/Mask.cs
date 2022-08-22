@@ -6,6 +6,12 @@ namespace Sim.UI.Web.Functions
 {
     public static class StringExtensions
     {
+
+		public static bool IsNumeric(this string valor)
+		{
+			int i;  
+			return int.TryParse(valor, out i);
+		}
         public static string Mask(this string value, string mask, char substituteChar = '#')
         {
             int valueIndex = 0;

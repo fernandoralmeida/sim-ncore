@@ -156,8 +156,8 @@
     <script src="~/js/jquery.mask.min.js"></script>
     <script src="~/js/fcurrency.js"></script>
     <script>
-        $('#inputCNPJ').mask('00.000.000/0000-00');
-        $('#inputCNAE').mask('00.00-0-00');
+        $('#inputCNPJ0').mask('00.000.000/0000-00');
+        $('#inputCNAE0').mask('00.00-0-00');
         $(function() {
             $("#addempresa").click(function () {
                 var p = document.getElementById("inputCNPJ").value;
@@ -167,7 +167,7 @@
                 var p3 = p2.replace('-','');
                 $(".showcollection").empty();
                 $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
-                $.getJSON(`/Pat/Add?cnpj=${p3}&handler=AddEmpresa`, function (data) {
+                $.getJSON(`/Pat/Add?cnpj=${p}&handler=AddEmpresa`, function (data) {
                     $(".loadingpage").empty();
                     $.each(data, function (i, item) {
                         if(data === null)
@@ -176,18 +176,25 @@
                         }
                         if(data)                                            
                         {
+                            string i2 = item.item1;
+                            string i2 = item.item2;
+                            string i3 = item.item3;
+                            string i4 = item.item4;
+                            string i5 = item.item5;
+                            string i6 = item.item6;
+
                             document.getElementById("div-add-cnpj").hidden = true;
                             document.getElementById("tableview").hidden = false;                            
-                            document.getElementById("Input_Empresa_Id").value = item.id;
+                            document.getElementById("Input_Empresa_Id").value = i1;
                             document.getElementById("divbtn").hidden = false;
                            
                             $(".showcollection").append(                            
                                 `<tr>                            
-                                <td>${item.cnpj}</td>
-                                <td>${item.nome_Empresarial}</td>
-                                <td>${item.telefone}</td>
-                                <td>${item.email}</td>
-                                <td>${item.atividade_Principal}</td>
+                                <td>${i2}</td>
+                                <td>${i3}</td>
+                                <td>${i4}</td>
+                                <td>${i5}</td>
+                                <td>${i6}</td>
                                 </tr>`                        
                             );
                         }

@@ -20,6 +20,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
         private readonly IAppServiceContador _appServiceContador;        
         private readonly IAppServiceEmpresa _appServiceEmpresa;
         private readonly IAppServiceEmpregos _appServiceEmpregos;
+        private readonly IAppServicePessoa _appServicePessoa;
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -43,6 +44,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
             IAppServiceCanal appServiceCanal,
             IAppServiceServico appServiceServico,
             IAppServiceContador appServiceContador,
+            IAppServicePessoa appServicePessoa,
             IMapper mapper) {        
             _appServiceEmpresa = appServiceEmpresa;
             _appServiceEmpregos = appServiceEmpregos;
@@ -51,6 +53,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
             _appServiceCanal = appServiceCanal;
             _appServiceServico = appServiceServico;
             _appServiceContador = appServiceContador;
+            _appServicePessoa = appServicePessoa;
             _mapper = mapper;
         }
 
@@ -86,8 +89,26 @@ namespace Sim.UI.Web.Pages.Pat.Add
             return Page();
         }
 
-        public async Task<JsonResult> OnGetAddEmpresa(string cnpj){            
-            return new JsonResult(await _appServiceEmpresa.ConsultaCNPJAsync(cnpj.Mask("##.###.###/####-##")));
+        public async Task<JsonResult> OnGetAddEmpresa(string cnpj){ 
+
+            var _result = new List<(Guid id, string doc, string nome, string tel, string email, string cnae)>();
+
+            if(cnpj.MaskRemove().Length == 11)
+            {
+                foreach(var p in await _appServicePessoa.ConsultaCPFAsync(cnpj))
+                {
+                    _result.Add((p.Id, p.CPF, p.Nome, p.Tel_Movel, p.Email, p.Nome_Social));
+                }
+            }
+            else
+            {
+                foreach(var e in await _appServiceEmpresa.ConsultaCNPJAsync(cnpj))
+                {   
+                    _result.Add((e.Id, e.CNPJ, e.Nome_Empresarial, e.Telefone, e.Email, e.Atividade_Principal));
+                }
+            }
+
+            return new JsonResult(_result);
         }
 
         public async Task<IActionResult> OnPostAsync()

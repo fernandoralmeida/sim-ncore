@@ -4,6 +4,14 @@
 @{
     ViewData["Title"] = "Clientes";
 }
+@{ string _isdesabled = "hidden"; }
+@if(Model.Input.ListaPessoas != null)
+{
+    @if (!Model.Input.ListaPessoas.Any())
+    {   
+        _isdesabled = Model.CpfValido ? null : "hidden";
+    }
+}   
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
@@ -11,20 +19,11 @@
     <nav class="row">
         <div class="nav-wrapper">            
             <div class="input-field col s6 m6 l6">
-                <input id="search" placeholder="Digite o CPF aqui para pesquisar!" onkeypress="handle(event)" asp-for="Input.CPF"  type="search" required>
+                <input id="search" placeholder="Digite o CPF ou Nome aqui para pesquisar!" onkeypress="handle(event)" asp-for="Input.Valor"  type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>            
-            <ul class="right">
-                @if (!Model.Input.ListaPessoas.Any())
-                {
-                    if (Model.CpfValido)
-                    { 
-                        <li>
-                            <a asp-page="/Cliente/Novo/Index" asp-route-id="@Model.Input.RouteCPF"><i class="material-icons blue-text">add</i></a>
-                        </li>
-                    }
-                }
-                <li><a asp-page="/Cliente/Consulta/Index"><i class="material-icons">person_search</i></a></li>
+            <ul @_isdesabled class="right">             
+                <li><a asp-page="/Cliente/Novo/Index" asp-route-id="@Model.Input.RouteCPF"><i class="material-icons blue-text">add</i></a></li>
             </ul>            
         </div>
     </nav>
@@ -99,6 +98,6 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/jquery.mask.min.js"></script>
     <script>
-        $('#search').mask('000.000.000-00');
+        $('#inputsearch').mask('000.000.000-00');
     </script>
 }

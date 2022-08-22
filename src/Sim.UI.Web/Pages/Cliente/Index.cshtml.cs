@@ -27,8 +27,7 @@ namespace Sim.UI.Web.Pages.Cliente
         public InputModel Input { get; set; }
         public class InputModel
         {                  
-            public string CPF { get; set; }
-            public string Nome { get; set; }
+            public string Valor { get; set; }
             public string RouteCPF { get; set; }
             public IEnumerable<Pessoa> ListaPessoas { get; set; }
         }
@@ -43,24 +42,43 @@ namespace Sim.UI.Web.Pages.Cliente
         {
             try
             {
-                if(!string.IsNullOrEmpty(Input.CPF))
-                    if (Validate.IsCpf(Input.CPF))
-                        CpfValido = true;
-                                    
-                Input.ListaPessoas = await _pessoaApp.ConsultaCPFAsync(Input.CPF);     
-                if (!Input.ListaPessoas.Any())
-                    StatusMessage = $"Alerta: CPF {Input.CPF} não cadastrado!";
-                
-                if(!CpfValido)
-                    StatusMessage = $"Erro: CNP {Input.CPF} inválido!";
-                
-                if(Input.CPF.Any())
-                    Input.RouteCPF = Input.CPF.MaskRemove();
 
+                if(Input.Valor.MaskRemove().All(char.IsDigit))
+                {
+                    if(Validate.IsCpf(Input.Valor))
+                    {
+                        CpfValido = true;
+
+                        var _valor = Input.Valor.MaskRemove();
+
+                        if(_valor.Length == 11)
+                            _valor = _valor.Mask("###.###.###-##");
+                        
+                        Input.ListaPessoas = await _pessoaApp.ConsultaCPFAsync(_valor);     
+                        
+                        if (!Input.ListaPessoas.Any())
+                        {
+                            Input.RouteCPF = Input.Valor.MaskRemove();
+                            throw new Exception($"Alerta: CPF {Input.Valor} não cadastrado!");
+                        }
+
+                    }
+                    else
+                    {
+                        throw new Exception($"Erro: CPF {Input.Valor} inválido!");
+                    }
+                }
+                else
+                {
+                    CpfValido = false;
+                    Input.ListaPessoas = await _pessoaApp.ConsultaNomeAsync(Input.Valor);     
+                    if (!Input.ListaPessoas.Any())
+                        throw new Exception($"Alerta: {Input.Valor} não cadastrado(a)!");
+                }
             }
             catch(Exception ex)
             {
-                StatusMessage = "Erro: " + ex.Message;
+                StatusMessage = ex.Message;
             }
             
             return Page();          
