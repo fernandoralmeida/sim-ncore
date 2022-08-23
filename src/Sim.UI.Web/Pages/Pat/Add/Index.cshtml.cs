@@ -29,6 +29,12 @@ namespace Sim.UI.Web.Pages.Pat.Add
         public InputModel Input { get; set; }
 
         [BindProperty(SupportsGet = true)]
+        public string InputSearch { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        public Guid InputID { get; set; }
+
+        [BindProperty(SupportsGet = true)]
         public InputModelAtendimento InputAtendimento { get; set; }
         public SelectList Setores { get; set; }
         public SelectList Canais { get; set; }
@@ -122,46 +128,72 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     return Page();
                 } 
 
-                var pess = new Pessoa();
-                var emp = await _appServiceEmpresa.SingleIdAsync(Input.Empresa.Id); 
+                var _atendimento = new Domain.Entity.Atendimento();
+                var _emprego = new Empregos();
 
-                if(emp == null)
-                    pess = await _appServicePessoa.SingleIdAsync(Input.Empresa.Id);           
+                if(InputSearch.MaskRemove().Length == 11) {
+                    var pess = await _appServicePessoa.SingleIdAsync(InputID);
+                    _atendimento = new Domain.Entity.Atendimento() {
+                        Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
+                        Data = DateTime.Now,
+                        DataF = DateTime.Now,
+                        Setor = InputAtendimento.InputSetor,
+                        Canal = InputAtendimento.InputCanal, 
+                        Servicos = InputAtendimento.ServicosSelecionados, 
+                        Descricao = InputAtendimento.Descricao,                
+                        Status = "Finalizado",
+                        Ultima_Alteracao = DateTime.Now,
+                        Ativo = true,
+                        Owner_AppUser_Id = User.Identity.Name,
+                        Pessoa = pess,                
+                        Anonimo = false
+                    };
+                    _emprego = new Empregos() {                    
+                        Data = Input.Data,
+                        Ocupacao = Input.Ocupacao,
+                        Experiencia = Input.Experiencia,                    
+                        Salario = Convert.ToDecimal(Input.Salario),
+                        Vagas = Input.Vagas,
+                        Pessoa = pess,
+                        Pagamento = Input.Pagamento,
+                        Status = Input.Status,                    
+                        Genero = Input.Genero,                                       
+                        Inclusivo = InclusivasSelecionadas
+                    };
+                }
+                else {
+                    var emp = await _appServiceEmpresa.SingleIdAsync(InputID);
+                    _atendimento = new Domain.Entity.Atendimento() {
+                        Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
+                        Data = DateTime.Now,
+                        DataF = DateTime.Now,
+                        Setor = InputAtendimento.InputSetor,
+                        Canal = InputAtendimento.InputCanal, 
+                        Servicos = InputAtendimento.ServicosSelecionados, 
+                        Descricao = InputAtendimento.Descricao,                
+                        Status = "Finalizado",
+                        Ultima_Alteracao = DateTime.Now,
+                        Ativo = true,
+                        Owner_AppUser_Id = User.Identity.Name,
+                        Empresa = emp,                
+                        Anonimo = false
+                    };
+                    _emprego = new Empregos() {                    
+                        Data = Input.Data,
+                        Ocupacao = Input.Ocupacao,
+                        Experiencia = Input.Experiencia,                    
+                        Salario = Convert.ToDecimal(Input.Salario),
+                        Vagas = Input.Vagas,
+                        Empresa = emp,
+                        Pagamento = Input.Pagamento,
+                        Status = Input.Status,                    
+                        Genero = Input.Genero,                                       
+                        Inclusivo = InclusivasSelecionadas
+                    };
+                }             
 
-                var _atendimento = new Domain.Entity.Atendimento() {
-                    Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
-                    Data = DateTime.Now,
-                    DataF = DateTime.Now,
-                    Setor = InputAtendimento.InputSetor,
-                    Canal = InputAtendimento.InputCanal, 
-                    Servicos = InputAtendimento.ServicosSelecionados, 
-                    Descricao = InputAtendimento.Descricao,                
-                    Status = "Finalizado",
-                    Ultima_Alteracao = DateTime.Now,
-                    Ativo = true,
-                    Owner_AppUser_Id = User.Identity.Name,
-                    Pessoa = pess,
-                    Empresa = emp,                
-                    Anonimo = false
-                };
-
-                await _appServiceAtendimento.AddAsync(_atendimento);
-
-                var emprego = new Empregos() {                    
-                    Data = Input.Data,
-                    Ocupacao = Input.Ocupacao,
-                    Experiencia = Input.Experiencia,                    
-                    Salario = Convert.ToDecimal(Input.Salario),
-                    Vagas = Input.Vagas,
-                    Empresa = emp,
-                    Pessoa = pess,
-                    Pagamento = Input.Pagamento,
-                    Status = Input.Status,                    
-                    Genero = Input.Genero,                                       
-                    Inclusivo = InclusivasSelecionadas
-                };
-                
-                await _appServiceEmpregos.AddAsync(emprego);
+                await _appServiceAtendimento.AddAsync(_atendimento);                
+                await _appServiceEmpregos.AddAsync(_emprego);
 
                 return RedirectToPage("/Pat/Index");
             }

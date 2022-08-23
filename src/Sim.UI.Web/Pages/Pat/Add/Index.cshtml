@@ -14,12 +14,12 @@
             <div class="card-header grey-text">Cliente</div>                      
             <div id="div-add-cnpj" class="row no-padding mgn-b-0">                
                 <div class="col s12 m6 l6 input-field valign-wrapper">
-                    <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ" />
+                    <input asp-for="InputSearch" id="inputCNPJ" />
                     <label>Documento</label>
                     <a id="addempresa" class="waves-effect waves-light btn"><i class="material-icons">add</i></a>
                 </div>
             </div>            
-            <input asp-for="Input.Empresa.Id" hidden/>     
+            <input asp-for="InputID" hidden/>     
             <div id="divbtn" hidden><a id="btnremove" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">remove</i></a></div>     
             <div style="overflow-x: auto;">
                 <table id="tableview" class="striped" hidden>
@@ -185,7 +185,7 @@
 
                             document.getElementById("div-add-cnpj").hidden = true;
                             document.getElementById("tableview").hidden = false;                            
-                            document.getElementById("Input_Empresa_Id").value = v1;
+                            document.getElementById("InputID").value = v1;
                             document.getElementById("divbtn").hidden = false;
                            
                             $(".showcollection").append(                            

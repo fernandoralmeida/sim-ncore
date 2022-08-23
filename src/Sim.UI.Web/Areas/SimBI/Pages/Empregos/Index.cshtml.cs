@@ -13,6 +13,7 @@ public class IndexModel : PageModel {
     [TempData]
     public string StatusMessage { get; set; }
 
+    [BindProperty]
     public string Ano {get; set;}
 
     public KeyValuePair<string, int> VagasAtivas { get; set; }
@@ -35,7 +36,6 @@ public class IndexModel : PageModel {
     }
 
     public async Task OnPostAsync() {
-
         if(Ano.All(char.IsDigit)) {
             if(Convert.ToInt32(Ano) > 0) {
                 VagasAtivas = await _appServiceBiEmpregos.DoEmpregosAtivos(Convert.ToInt32(Ano));
@@ -43,7 +43,7 @@ public class IndexModel : PageModel {
                 VagasAcumuladas = await _appServiceBiEmpregos.DoEmpregosAtivos(Convert.ToInt32(Ano));
                 VagasGeneros = await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(Convert.ToInt32(Ano));
                 VagasGenerosAcumuladas = await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(Convert.ToInt32(Ano));
-            }
+           }
         }
     }
 }
