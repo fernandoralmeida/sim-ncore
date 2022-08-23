@@ -11,11 +11,11 @@
 <form method="post">
     <section>
         <div class="card">
-            <div class="card-header grey-text">Empresa</div>                      
+            <div class="card-header grey-text">Cliente</div>                      
             <div id="div-add-cnpj" class="row no-padding mgn-b-0">                
                 <div class="col s12 m6 l6 input-field valign-wrapper">
                     <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ" />
-                    <label>CNPJ</label>
+                    <label>Documento</label>
                     <a id="addempresa" class="waves-effect waves-light btn"><i class="material-icons">add</i></a>
                 </div>
             </div>            
@@ -25,11 +25,11 @@
                 <table id="tableview" class="striped" hidden>
                     <thead>
                         <tr>
-                            <th>CNPJ</th>
-                            <th>Razão Social</th>
+                            <th>Doc</th>
+                            <th>Nome</th>
                             <th>Tel</th>
                             <th>Email</th>
-                            <th>Cnae</th>
+                            <th>Descrição</th>
                         </tr>
                     </thead>
                     <tbody class="showcollection"></tbody>
@@ -170,31 +170,31 @@
                 $.getJSON(`/Pat/Add?cnpj=${p}&handler=AddEmpresa`, function (data) {
                     $(".loadingpage").empty();
                     $.each(data, function (i, item) {
-                        if(data === null)
+                        if(item === null)
                         {
-                            alert("CNPJ não encontrado!");
+                            alert("Doc não encontrado!");
                         }
                         if(data)                                            
                         {
-                            string i2 = item.item1;
-                            string i2 = item.item2;
-                            string i3 = item.item3;
-                            string i4 = item.item4;
-                            string i5 = item.item5;
-                            string i6 = item.item6;
+                            let v1 = item.item1;
+                            let v2 = item.item2;
+                            let v3 = item.item3;
+                            let v4 = item.item4;
+                            let v5 = item.item5;
+                            let v6 = item.item6;
 
                             document.getElementById("div-add-cnpj").hidden = true;
                             document.getElementById("tableview").hidden = false;                            
-                            document.getElementById("Input_Empresa_Id").value = i1;
+                            document.getElementById("Input_Empresa_Id").value = v1;
                             document.getElementById("divbtn").hidden = false;
                            
                             $(".showcollection").append(                            
                                 `<tr>                            
-                                <td>${i2}</td>
-                                <td>${i3}</td>
-                                <td>${i4}</td>
-                                <td>${i5}</td>
-                                <td>${i6}</td>
+                                <td>${v2}</td>
+                                <td>${v3}</td>
+                                <td>${v4}</td>
+                                <td>${v5}</td>
+                                <td>${v6}</td>
                                 </tr>`                        
                             );
                         }

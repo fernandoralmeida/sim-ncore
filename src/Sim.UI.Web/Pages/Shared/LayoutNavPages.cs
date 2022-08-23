@@ -23,6 +23,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string AgendaEventos => "AgendaEventos";
         public static string AgendaPlanner => "AgendaPlanner";
         public static string PowerBI => "PowerBI";
+        public static string PowerBIEmpregos => "PowerBIEmpregos";
         public static string PowerBIAtendimento => "PowerBIAtendimento";
         public static string PowerBIEmpresas => "PowerBIEmpresas";
         public static string PowerBIPessoas => "PowerBIPessoas";
@@ -50,6 +51,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string AgendaEventosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AgendaEventos);
         public static string AgendaPlannerNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AgendaPlanner);
         public static string PowerBINavClass(ViewContext viewContext) => PageNavClass(viewContext, PowerBI);
+        public static string PowerBIEmpregrosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIEmpregos);
         public static string PowerBIAtendimentoNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIAtendimento);
         public static string PowerBIEmpresasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIEmpresas);
         public static string PowerBIPessoasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIPessoas);

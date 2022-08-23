@@ -15,5 +15,6 @@ namespace Sim.Domain.Entity
         public int Vagas { get; set; }      
         public string? Status { get;set; }
         public virtual Empresas? Empresa { get; set; }
+        public virtual Pessoa? Pessoa { get; set; }
     }
 }

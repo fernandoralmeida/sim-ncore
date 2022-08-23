@@ -9,14 +9,19 @@ namespace Sim.Application.Services
         private readonly IServiceEmpregos _db;
         public AppServiceEmpregos(IServiceEmpregos serviceEmpregos) : base(serviceEmpregos) { _db = serviceEmpregos; }
 
-        public Task<IEnumerable<Empregos>> DoListEmpregosAsync()
+        public async Task<IEnumerable<Empregos>> DoListEmpregosAsync()
         {
-            return _db.DoListEmpregosAsync();
+            return await _db.DoListEmpregosAsync();
         }
 
-        public Task<IEnumerable<Empregos>> DoListEmpregosAsyncBy(string param)
+        public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncBy(string param)
         {
-            return _db.DoListEmpregosAsyncBy(param);
+            return await _db.DoListEmpregosAsyncBy(param);
+        }
+
+        public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncByAno(int ano)
+        {
+           return await _db.DoListEmpregosAsyncByAno(ano);
         }
 
         public async Task<Empregos> GetEmpregoByIdAsync(Guid id)

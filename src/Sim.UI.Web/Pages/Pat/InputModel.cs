@@ -42,6 +42,7 @@ namespace Sim.UI.Web.Pages.Pat
         public string Status { get;set; }
         public string AppUserID { get; set; }
         public virtual Empresas Empresa { get; set; }
+        public virtual Pessoa Pessoa { get; set; }
     }
 
     public class InputModelAtendimento {        

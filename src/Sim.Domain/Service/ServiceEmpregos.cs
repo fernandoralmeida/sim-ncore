@@ -22,6 +22,11 @@ namespace Sim.Domain.Service
             return await _repositoryEmpregos.DoListEmpregosAsyncBy(param);
         }
 
+        public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncByAno(int ano)
+        {
+            return await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
+        }
+
         public async Task<Empregos> GetEmpregoByIdAsync(Guid id)
         {
             return await _repositoryEmpregos.GetEmpregoByIdAsync(id);

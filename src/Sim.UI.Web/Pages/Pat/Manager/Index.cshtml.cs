@@ -31,6 +31,7 @@ namespace Sim.UI.Web.Pages.Pat.Manager
             {
                 Id = e.Id,
                 Empresa = e.Empresa,
+                Pessoa = e.Pessoa,
                 Ocupacao = e.Ocupacao,
                 Vagas = e.Vagas,
                 Salario = e.Salario.ToString(),

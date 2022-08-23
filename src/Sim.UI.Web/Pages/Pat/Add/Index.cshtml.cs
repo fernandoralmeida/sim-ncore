@@ -95,14 +95,16 @@ namespace Sim.UI.Web.Pages.Pat.Add
 
             if(cnpj.MaskRemove().Length == 11)
             {
-                foreach(var p in await _appServicePessoa.ConsultaCPFAsync(cnpj))
+                var _con = cnpj.MaskRemove().Mask("###.###.###-##");
+                foreach(var p in await _appServicePessoa.ConsultaCPFAsync(_con))
                 {
                     _result.Add((p.Id, p.CPF, p.Nome, p.Tel_Movel, p.Email, p.Nome_Social));
                 }
             }
             else
             {
-                foreach(var e in await _appServiceEmpresa.ConsultaCNPJAsync(cnpj))
+                var _con = cnpj.MaskRemove().Mask("##.###.###/####-##");
+                foreach(var e in await _appServiceEmpresa.ConsultaCNPJAsync(_con))
                 {   
                     _result.Add((e.Id, e.CNPJ, e.Nome_Empresarial, e.Telefone, e.Email, e.Atividade_Principal));
                 }
@@ -120,7 +122,11 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     return Page();
                 } 
 
-                var emp = await _appServiceEmpresa.SingleIdAsync(Input.Empresa.Id);             
+                var pess = new Pessoa();
+                var emp = await _appServiceEmpresa.SingleIdAsync(Input.Empresa.Id); 
+
+                if(emp == null)
+                    pess = await _appServicePessoa.SingleIdAsync(Input.Empresa.Id);           
 
                 var _atendimento = new Domain.Entity.Atendimento() {
                     Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
@@ -134,6 +140,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     Ultima_Alteracao = DateTime.Now,
                     Ativo = true,
                     Owner_AppUser_Id = User.Identity.Name,
+                    Pessoa = pess,
                     Empresa = emp,                
                     Anonimo = false
                 };
@@ -147,6 +154,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     Salario = Convert.ToDecimal(Input.Salario),
                     Vagas = Input.Vagas,
                     Empresa = emp,
+                    Pessoa = pess,
                     Pagamento = Input.Pagamento,
                     Status = Input.Status,                    
                     Genero = Input.Genero,                                       

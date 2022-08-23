@@ -1,0 +1,136 @@
+@page
+@model Sim.UI.Web.Areas.Empregos.IndexModel;
+
+@{
+    Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Power BI";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<form method="post">
+    <nav class="row hoverable">
+        <div class="row nav-wrapper">
+            <div class="input-field col s12 m12 l2">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Ano" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>      
+        </div>
+    </nav>
+</form>
+
+<div class="row">
+    <div class="box-container-card">                    
+        <div class="box-column-7">
+            <div class="box-column-row">
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Vagas</div>
+                    <div class="box-stretch mgn-10">
+                        <div class="grey-text">
+                            <i class="material-icons">file_upload</i><span class="font-h4 blue-text">@Model.VagasAtivas.Value</span>
+                        </div>
+                        <div class="grey-text">
+                            <i class="material-icons">file_download</i><span class="font-h4 red-text">@Model.VagasFinalizadas.Value</span>
+                        </div>
+                    </div>                            
+                    <div class="box-card-action font-size-12">
+                        <div class="box-between">
+                            <div class="grey-text box-middle">Acumulado</div>
+                            <div class="grey-text box-middle">@Model.VagasAcumuladas.Value</div>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Gênero</div>
+                    <div class="box-around">                            
+                        @foreach (var gn in Model.VagasGeneros)
+                        {
+                            float v1 = gn.Value;
+                            float v2 = Model.VagasAtivas.Value;
+                            float r = (v1 / v2) * 100;
+                            <div class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@gn.Key</p>
+                                <p class="blue-text font-h5">@gn.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </div>
+                        }   
+                    </div>
+                </div>
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Genero Acumulado</div>
+                    <div class="box-around">
+                        @foreach (var gn in Model.VagasGenerosAcumuladas)
+                        {
+                            float v1 = gn.Value;
+                            float v2 = Model.VagasAcumuladas.Value;
+                            float r = (v1 / v2) * 100;
+                            <div class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@gn.Key</p>
+                                <p class="blue-text font-h5">@gn.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </div>
+                        }                               
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div  class="box-card hoverable">
+                    <div class="card-header grey-text">...</div>
+                    <div class="box-cell">
+                        @for (int i = 1; 1 < 13; i++)
+                        {
+                            float v1 = i;
+                            float v2 = Model.VagasAtivas.Value;
+                            float r = (v1 / v2) * 100;
+                            
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">...</p>
+                                <p class="blue-text font-h6">000</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">...</div>
+                    <div class="box-around">
+                        @for (int i = 1; 1 < 13; i++)
+                        {
+                            float v1 =i;
+                            float v2 = Model.VagasAcumuladas.Value;
+                            float r = (v1 / v2) * 100;
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">...</p>
+                                <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>000</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>   
+                        }                            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-column-3">
+            <div class="box-card hoverable" style="overflow-x:auto;">
+                <div class="card-header grey-text">Acupações</div>                            
+                @{int v = 0;}
+                @for (int i = 1; 1 < 13; i++)
+                {
+                    if (v < 10)
+                    {
+                        <div class="font-size-12 pdn-h-4 grey-text">
+                            <p class="truncate"><strong class="light-green-text">00</strong> - Vaga @i</p>
+                        </div>
+                        <div class="divider"></div>
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    v++;
+                }                            
+            </div>
+        </div>
+    </div>
+</div>

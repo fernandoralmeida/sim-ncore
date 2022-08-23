@@ -13,32 +13,48 @@
         <div class="card">
             <div class="card-header grey-text">Cliente</div>
             <div class="row">
+                @if(Model.Input.Empresa != null){
+                    <div class="input-field col s12" hidden>
+                        <label asp-for="Input.Id"></label>
+                        <input asp-for="Input.Id" />
+                    </div>
+                    
+                    <div class="input-field col s12 m6 l3 valign-wrapper">
+                        <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ">
+                        <label asp-for="Input.Empresa.CNPJ" for="inputCNPJ"></label>
+                    </div>
+                                        
+                    <div class="input-field col s12 m6 l9">
+                        <input asp-for="Input.Empresa.Nome_Empresarial" />
+                        <label>Empresa</label>
+                    </div>
+                    
+                    <div class="input-field col s3 m4 l3">
+                        <input asp-for="Input.Empresa.CNAE_Principal" id="inputCNAE"/>
+                        <label for="inputCNAE">CNAE</label>
+                    </div>
 
-                <div class="input-field col s12" hidden>
-                    <label asp-for="Input.Id"></label>
-                    <input asp-for="Input.Id" />
-                </div>
-                
-                <div class="input-field col s12 m6 l3 valign-wrapper">
-                    <input asp-for="Input.Empresa.CNPJ" id="inputCNPJ">
-                    <label asp-for="Input.Empresa.CNPJ" for="inputCNPJ"></label>
-                </div>
-                                    
-                <div class="input-field col s12 m6 l9">
-                    <input asp-for="Input.Empresa.Nome_Empresarial" />
-                    <label>Empresa</label>
-                </div>
-                
-                <div class="input-field col s3 m4 l3">
-                    <input asp-for="Input.Empresa.CNAE_Principal" id="inputCNAE"/>
-                    <label for="inputCNAE">CNAE</label>
-                </div>
-
-                <div class="input-field col s9 m8 l9">
-                    <input asp-for="Input.Empresa.Atividade_Principal"/>
-                    <label>Atividade</label>
-                </div>                    
-                
+                    <div class="input-field col s9 m8 l9">
+                        <input asp-for="Input.Empresa.Atividade_Principal"/>
+                        <label>Atividade</label>
+                    </div>      
+                }
+                else{
+                    <div class="input-field col s12" hidden>
+                        <label asp-for="Input.Id"></label>
+                        <input asp-for="Input.Id" />
+                    </div>
+                    
+                    <div class="input-field col s12 m6 l3 valign-wrapper">
+                        <input asp-for="Input.Pessoa.CPF">
+                        <label asp-for="Input.Pessoa.CPF"></label>
+                    </div>
+                                        
+                    <div class="input-field col s12 m6 l9">
+                        <input asp-for="Input.Pessoa.Nome" />
+                        <label>Nome</label>
+                    </div> 
+                }
             </div>
         </div>
     </section>

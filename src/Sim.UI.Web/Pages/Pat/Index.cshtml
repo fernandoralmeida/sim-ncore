@@ -70,8 +70,12 @@
                             }
                             @cont.ToString()
                         </td>
-                        <td>
-                            <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Empresa.Nome_Empresarial)</a>
+                        <td class="t-uppercase">                                                
+                            @{ 
+                                var _isempresa = item.Empresa != null ? item.Empresa.Nome_Empresarial : "Anônimo";
+                                var _isperson = item.Pessoa != null ? item.Pessoa.Nome : _isempresa;
+                            }
+                            <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => _isperson)</a>
                         </td>
                         <td>
                             @{
