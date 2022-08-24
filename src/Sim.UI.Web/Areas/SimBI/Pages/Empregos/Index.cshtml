@@ -27,31 +27,29 @@
                     <div class="box-column-row">
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">Vagas</div>
-                            <div class="box-stretch mgn-10">
-                                <div class="grey-text">
-                                    <i class="material-icons">file_upload</i><span class="font-h4 blue-text">@Model.VagasAtivas.Value</span>
-                                </div>
-                                <div class="grey-text">
-                                    <i class="material-icons">star</i><span class="font-h4 amber-text-text">@Model.VagasFinalizadas.Value</span>
-                                </div>
-                            </div>                            
-                            <div class="box-card-action font-size-12">
-                                <div class="box-between">
-                                    <div class="grey-text box-middle">Vagas Acumulada</div>
-                                    
-                                        <div class="grey-text box-middle">00</div>
-                                    
-                                </div>
+                            <div class="box-around">                            
+                                    @{
+                                        float va1 = Model.VagasAtivas.Value;
+                                        float va2 = Model.VagasAcumuladas.Value;
+                                        float ra = (va1 / va2) * 100;
+                                    }
+                                    <div class="box-cell-item-flex font-size-12">
+                                        <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.VagasAtivas.Value</p>
+                                        <p class="grey-text">(@ra.ToString("N2")%)</p>
+                                    </div>                                 
                             </div>
                         </div>
                         <div class="box-card hoverable">
-                            <div class="card-header grey-text">Acumulado</div>
+                            <div class="card-header grey-text">Finalizadas</div>
                             <div class="box-around">                            
-
+                                    @{
+                                        float vf1 = Model.VagasFinalizadas.Value;
+                                        float vf2 = Model.VagasAcumuladas.Value;
+                                        float rf = (vf1 / vf2) * 100;
+                                    }
                                     <div class="box-cell-item-flex font-size-12">
-                                        <p class="grey-text">...</p>
-                                        <p class="blue-text font-h5">@Model.VagasAcumuladas.Value</p>
-                                        <p class="grey-text">(00("N2")%)</p>
+                                        <p class="amber-text font-h4"><i class="material-icons">star</i>@Model.VagasFinalizadas.Value</p>
+                                        <p class="grey-text">(@rf.ToString("N2")%)</p>
                                     </div>
                                  
                             </div>
@@ -59,35 +57,67 @@
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">Genero</div>
                             <div class="box-around">
-                                <div class="box-cell-item-flex font-size-12">
-                                    <p class="grey-text">...</p>
-                                    <p class="blue-text font-h5">00</p>
-                                    <p class="grey-text">(0("N2")%)</p>
-                                </div>
-                                <div class="box-cell-item-flex font-size-12">
-                                    <p class="grey-text">...</p>
-                                    <p class="blue-text font-h5">00</p>
-                                    <p class="grey-text">(0("N2")%)</p>
-                                </div>
-                                <div class="box-cell-item-flex font-size-12">
-                                    <p class="grey-text">...</p>
-                                    <p class="blue-text font-h5">00</p>
-                                    <p class="grey-text">(0("N2")%)</p>
-                                </div>                                 
+                                @if(Model.VagasGeneros != null){
+                                    @foreach (var item in Model.VagasGeneros) {
+                                        float v1 = item.Value;
+                                        float v2 = Model.VagasAtivas.Value;
+                                        float r = (v1 / v2) * 100;
+                                        <div class="box-cell-item-flex font-size-12">
+                                            <p class="grey-text">@item.Key</p>
+                                            <p class="blue-text font-h5">@item.Value</p>
+                                            <p class="grey-text">(@r.ToString("N2")%)</p>
+                                        </div>
+                                    }                                    
+                                }                              
                             </div>
                         </div>
                     </div>
+
+                    <div class="box-column-row">
+                        <div class="box-card hoverable">
+                            <div class="card-header grey-text">Acumulado</div>
+                            <div class="box-around">                            
+                                    @{
+                                        float vc1 = Model.VagasAcumuladas.Value;
+                                        float vc2 = Model.VagasAcumuladas.Value;
+                                        float rc = (vc1 / vc2) * 100;
+                                    }
+                                    <div class="box-cell-item-flex font-size-12">
+                                        <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.VagasAcumuladas.Value</p>
+                                        <p class="grey-text">(@rc.ToString("N2")%)</p>
+                                    </div>                                 
+                            </div>
+                        </div>
+                        <div class="box-card hoverable">
+                            <div class="card-header grey-text">Acumulado</div>
+                            <div class="box-around">
+                                @if(Model.VagasGenerosAcumuladas != null){
+                                    @foreach (var item in Model.VagasGenerosAcumuladas) {
+                                        float v1 = item.Value;
+                                        float v2 = Model.VagasAcumuladas.Value;
+                                        float r = (v1 / v2) * 100;
+                                        <div class="box-cell-item-flex font-size-12">
+                                            <p class="grey-text">@item.Key</p>
+                                            <p class="blue-text font-h5">@item.Value</p>
+                                            <p class="grey-text">(@r.ToString("N2")%)</p>
+                                        </div>
+                                    }                                    
+                                }                              
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="box-column-row">
                         <div  class="box-card hoverable">
                             <div class="card-header grey-text">...</div>
                             <div class="box-cell">                               
-                                   
+                                @for (int m = 1; m < 5; m++) {
                                     <a class="box-cell-item-flex font-size-12">
                                         <p class="grey-text">...</p>
                                         <p class="blue-text font-h6">00</p>
                                         <p class="grey-text">(00("N2")%)</p>
                                     </a>
-                                
+                                }                                
                             </div>
                         </div>
                     </div>
@@ -95,13 +125,13 @@
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">...</div>
                             <div class="box-around">
-
+                                @for (int m = 1; m < 13; m++) {
                                     <a class="box-cell-item-flex font-size-12">
                                         <p class="grey-text">...</p>
                                         <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>00</p>
                                         <p class="grey-text">(00("N2")%)</p>
                                     </a>   
-                                                         
+                                }                      
                             </div>
                         </div>
                     </div>
@@ -109,22 +139,14 @@
                 <div class="box-column-3">
                     <div class="box-card hoverable" style="overflow-x:auto;">
                         <div class="card-header grey-text">Atividades</div>                            
-                        @{int v = 0;}
-                        @for (int a = 1; a < 11; a++)
-                        {
-                            if (v < 10)
-                            {
-                                <div class="font-size-12 pdn-h-4 grey-text">
-                                    <p class="truncate"><strong class="light-green-text">00</strong> - Vaga @a</p>
+                        @if(Model.ListaOcupacoes != null) {
+                            foreach (var item in Model.ListaOcupacoes) {
+                                <div class="font-size-12 pdn-h-4 pdn-v-10 grey-text">
+                                    <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Key</p>
                                 </div>
                                 <div class="divider"></div>
                             }
-                            else
-                            {
-                                break;
-                            }
-                            v++;
-                        }                            
+                        }                       
                     </div>
                 </div>
             </div>

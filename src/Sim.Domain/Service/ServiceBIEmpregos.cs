@@ -6,63 +6,66 @@ namespace Sim.Domain.Service;
 public class ServiceBIEmpregos : IServiceBIEmpregos
 {
     private readonly IRepositoryEmpregos _repositoryEmpregos; 
+    private IEnumerable<Empregos> _datalist;
     public ServiceBIEmpregos(IRepositoryEmpregos repositoryEmpregos) {
-        _repositoryEmpregos = repositoryEmpregos;        
+        _repositoryEmpregos = repositoryEmpregos;
     }
     public async Task<KeyValuePair<string, int>> DoEmpregosAtivos(int ano)
     {
-        return await Task.Run(async () => {
+        _datalist = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
+
+        return await Task.Run(() => {
             var vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
+            foreach(var item in _datalist)
             {
                 if(item.Status == "Ativo")
                     vagas += item.Vagas;               
             }
 
-            return new KeyValuePair<string, int>("Vaga(as) Disponível(eis)", vagas);
+            return new KeyValuePair<string, int>("Disponível", vagas);
           });
     }    
 
     public async Task<KeyValuePair<string, int>> DoEmpregosAtivosAcumulado(int ano)
     {
-        return await Task.Run(async () => {
+        return await Task.Run(() => {
             var vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
+            foreach(var item in _datalist)
             {
                 vagas += item.Vagas;               
             }
 
-            return new KeyValuePair<string, int>("Vaga(as) Acumulada(as)", vagas);
+            return new KeyValuePair<string, int>("Acumulado", vagas);
           });
     }
 
     public async Task<KeyValuePair<string, int>> DoEmpregosFinalizados(int ano)
     {
-        return await Task.Run(async () => {
+        return await Task.Run(() => {
             var vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
+            foreach(var item in _datalist)
             {
                 if(item.Status == "Finalizado")
                     vagas += item.Vagas;               
             }
 
-            return new KeyValuePair<string, int>("Vaga(as) Disponível(eis)", vagas);
+            return new KeyValuePair<string, int>("Completadas", vagas);
           });
     }
 
     public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByGenero(int ano)
     {
-        return await Task.Run(async () => {
+        return await Task.Run(() => {
             int vagas = 0;
             int vagas_f = 0;
             int vagas_m = 0;
 
             var _return = new List<KeyValuePair<string, int>>();
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
+            foreach(var item in _datalist)
             {
                 if(item.Status == "Ativo")
                     switch(item.Genero)
@@ -91,14 +94,14 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByGeneroAcumulado(int ano)
     {
-        return await Task.Run(async () => {
+        return await Task.Run(() => {
             int vagas = 0;
             int vagas_f = 0;
             int vagas_m = 0;
 
             var _return = new List<KeyValuePair<string, int>>();
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
+            foreach(var item in _datalist)
             {
                 switch(item.Genero)
                 {
@@ -162,5 +165,30 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
             return _return;
           });
+    }
+ 
+    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListOcupacoes(int ano)
+    {
+        return await Task.Run(() => {
+            var _return = new List<KeyValuePair<string, int>>();
+            var _list = new List<string>();
+
+            foreach(var item in _datalist) {  
+                for(int i = 0; i < item.Vagas; i++) {
+                    _list.Add(item.Ocupacao);
+                }         
+            }
+
+            foreach(var x in from a in _list
+                group a by a into g
+                let count = g.Count()
+                orderby count descending
+                select new { Servico = g.Key, Qtde = count })
+            {
+                _return.Add(new KeyValuePair<string, int> (x.Servico, x.Qtde));
+            }
+
+            return _return;
+        });
     }
 }

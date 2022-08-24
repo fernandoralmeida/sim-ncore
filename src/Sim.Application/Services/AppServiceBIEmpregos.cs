@@ -53,6 +53,11 @@ public class AppServiceBIEmpregos : IAppServiceBIEmpregos
 
     public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByTipoAcumulado(int ano)
     {
-       return await _serviceBI.DoListEmpregosAtivosByTipoAcumulado(ano);
+        return await _serviceBI.DoListEmpregosAtivosByTipoAcumulado(ano);
+    }
+
+    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListOcupacoes(int ano)
+    {
+        return await _serviceBI.DoListOcupacoes(ano);
     }
 }
