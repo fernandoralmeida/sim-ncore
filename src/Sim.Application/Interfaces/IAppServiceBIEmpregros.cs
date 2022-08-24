@@ -12,4 +12,6 @@ public interface IAppServiceBIEmpregos {
     Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByInclusao(int ano);
     Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByInclusaoAcumulado(int ano);
     Task<IEnumerable<KeyValuePair<string, int>>> DoListOcupacoes(int ano);
+    Task<IEnumerable<(string Setor, int Valor, string percent)>> DoListVagasBySetor(int ano);
+    Task<IEnumerable<(string month, int valor, string percent)>> DoListVagasByMonth(int ano);
 }

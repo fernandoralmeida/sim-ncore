@@ -60,4 +60,14 @@ public class AppServiceBIEmpregos : IAppServiceBIEmpregos
     {
         return await _serviceBI.DoListOcupacoes(ano);
     }
+
+    public async Task<IEnumerable<(string month, int valor, string percent)>> DoListVagasByMonth(int ano)
+    {
+        return await _serviceBI.DoListVagasByMonth(ano);
+    }
+
+    public async Task<IEnumerable<(string Setor, int Valor, string percent)>> DoListVagasBySetor(int ano)
+    {
+        return await _serviceBI.DoListVagasBySetor(ano);
+    }
 }

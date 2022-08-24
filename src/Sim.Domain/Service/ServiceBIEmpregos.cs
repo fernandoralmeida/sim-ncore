@@ -191,4 +191,38 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             return _return;
         });
     }
+
+    public async Task<IEnumerable<(string month, int valor, string percent)>> DoListVagasByMonth(int ano)
+    {
+
+        return await Task.Run(() => {
+
+            var _return = new List<(string month, int valor, string percent)>();
+            var _month = new List<string>();
+
+            foreach (var item in _datalist) {
+                for(int i = 0; i < item.Vagas; i++) {                    
+                    _month.Add(item.Data.Value.Month.ToString("MMM"));                    
+                }                
+            }
+
+            foreach(var x in from a in _month
+                group a by a into g
+                let count = g.Count()
+                orderby count descending
+                select new { Servico = g.Key, Qtde = count })
+            {
+                
+
+                _return.Add((x.Servico, x.Qtde, "" ));
+            }
+
+            return _return;
+        });
+    }
+
+    public Task<IEnumerable<(string setor, int valor, string percent)>> DoListVagasBySetor(int ano)
+    {
+        throw new NotImplementedException();
+    }
 }
