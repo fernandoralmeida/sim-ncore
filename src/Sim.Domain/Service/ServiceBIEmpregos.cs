@@ -234,7 +234,9 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                     if (item.Empresa.CNAE_Principal != null) {
                         string _cnae = item.Empresa.CNAE_Principal.Remove(2,8);
                         if (_cnae.All(char.IsDigit)) {
-                            _setor.Add(DoSetores(Convert.ToInt32(_cnae)));
+                            for (int i = 0; i < item.Vagas; i++) {
+                                _setor.Add(DoSetores(Convert.ToInt32(_cnae)));
+                            }                            
                         }                        
                     }
                 }
