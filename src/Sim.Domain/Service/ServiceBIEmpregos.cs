@@ -194,15 +194,14 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<(string month, int valor, string percent)>> DoListVagasByMonth(int ano)
     {
-
         return await Task.Run(() => {
 
             var _return = new List<(string month, int valor, string percent)>();
             var _month = new List<string>();
 
-            foreach (var item in _datalist) {
-                for(int i = 0; i < item.Vagas; i++) {                    
-                    _month.Add(item.Data.Value.Month.ToString("MMM"));                    
+            foreach (var item in _datalist.Where(o => o.Data != null)) {
+                for(int i = 0; i < item.Vagas; i++) {     
+                    _month.Add(item.Data.Value.Date.ToString("MMM"));                    
                 }                
             }
 
@@ -210,19 +209,90 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 group a by a into g
                 let count = g.Count()
                 orderby count descending
-                select new { Servico = g.Key, Qtde = count })
+                select new { Meses = g.Key, Valor = count })
             {
-                
 
-                _return.Add((x.Servico, x.Qtde, "" ));
+                float p = x.Valor;
+                float p1 = _month.Count();
+                float r = (p / p1) * 100;          
+                _return.Add((x.Meses, x.Valor, r.ToString("N2")+"%"));
             }
 
             return _return;
         });
     }
 
-    public Task<IEnumerable<(string setor, int valor, string percent)>> DoListVagasBySetor(int ano)
+    public async Task<IEnumerable<(string setor, int valor, string percent)>> DoListVagasBySetor(int ano)
     {
-        throw new NotImplementedException();
+        return await Task.Run(() => {
+
+            var _return = new List<(string setor, int valor, string percent)>();
+            var _setor = new List<string>();
+
+            foreach (var item in _datalist) {
+                if (item.Empresa != null) {
+                    if (item.Empresa.CNAE_Principal != null) {
+                        string _cnae = item.Empresa.CNAE_Principal.Remove(2,8);
+                        if (_cnae.All(char.IsDigit)) {
+                            _setor.Add(DoSetores(Convert.ToInt32(_cnae)));
+                        }                        
+                    }
+                }
+                else {
+                    if(item.Pessoa != null)
+                        _setor.Add("CPF");
+                }                               
+            }
+
+            foreach(var x in from a in _setor
+                group a by a into g
+                let count = g.Count()
+                orderby count descending
+                select new { Setores = g.Key, Valor = count })
+            {
+
+                float p = x.Valor;
+                float p1 = _setor.Count();
+                float r = (p / p1) * 100;          
+                _return.Add((x.Setores, x.Valor, r.ToString("N2")+"%"));
+            }
+
+            return _return;
+        });
+    }
+
+    private string DoSetores(int cnae) {               
+        if (cnae >= 1 && cnae <= 3) {
+            return "Agropecuária";
+        }
+        else if (cnae >= 45 && cnae <= 47) {
+           return "Comércio";
+        }
+        else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33) {
+           return "Indústria";
+        }
+        else if (cnae >= 41 & cnae <= 43) {
+           return "Construção";
+        }
+        else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
+            || (cnae >= 49 && cnae <= 53)
+            || (cnae >= 55 && cnae <= 56)
+            || (cnae >= 58 && cnae <= 63)
+            || (cnae >= 64 && cnae <= 66)
+            || (cnae == 68)
+            || (cnae >= 69 && cnae <= 75)
+            || (cnae >= 77 && cnae <= 82)
+            || (cnae == 85)
+            || (cnae >= 86 && cnae <= 88)
+            || (cnae >= 86 && cnae <= 88)
+            || (cnae >= 90 && cnae <= 93)
+            || (cnae >= 94 && cnae <= 96)
+            || (cnae == 97)
+            || (cnae == 99)) {
+            return "Serviços";
+        }
+        else {
+            return "PF";
+        }
     }
 }

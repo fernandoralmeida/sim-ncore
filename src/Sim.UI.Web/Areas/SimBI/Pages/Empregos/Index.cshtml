@@ -110,14 +110,16 @@
                     <div class="box-column-row">
                         <div  class="box-card hoverable">
                             <div class="card-header grey-text">Setores</div>
-                            <div class="box-cell">                               
-                                @for (int m = 1; m < 6; m++) {
-                                    <a class="box-cell-item-flex font-size-12">
-                                        <p class="grey-text">...</p>
-                                        <p class="blue-text font-h6">00</p>
-                                        <p class="grey-text">(00("N2")%)</p>
-                                    </a>
-                                }                                
+                            <div class="box-around">                               
+                                @if(Model.ListVagasBySetor != null) {
+                                    @foreach (var item in Model.ListVagasBySetor) {
+                                        <a class="box-cell-item-flex font-size-12">
+                                            <p class="grey-text">@item.setor</p>
+                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.valor</p>
+                                            <p class="grey-text">(@item.percent)</p>
+                                        </a>   
+                                    }
+                                }                                  
                             </div>
                         </div>
                     </div>
@@ -125,13 +127,15 @@
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">Meses</div>
                             <div class="box-around">
-                                @for (int m = 1; m < 13; m++) {
-                                    <a class="box-cell-item-flex font-size-12">
-                                        <p class="grey-text">...</p>
-                                        <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>00</p>
-                                        <p class="grey-text">(00("N2")%)</p>
-                                    </a>   
-                                }                      
+                                @if(Model.ListVagasByMonth != null) {
+                                    @foreach (var item in Model.ListVagasByMonth) {
+                                        <a class="box-cell-item-flex font-size-12">
+                                            <p class="grey-text">@item.month</p>
+                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.valor</p>
+                                            <p class="grey-text">(@item.percent)</p>
+                                        </a>   
+                                    }
+                                }                    
                             </div>
                         </div>
                     </div>
@@ -141,7 +145,7 @@
                         <div class="card-header grey-text">Atividades</div>                            
                         @if(Model.ListaOcupacoes != null) {
                             foreach (var item in Model.ListaOcupacoes) {
-                                <div class="font-size-12 pdn-h-4 pdn-v-10 grey-text">
+                                <div class="font-size-12 pdn-10 grey-text">
                                     <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Key</p>
                                 </div>
                                 <div class="divider"></div>

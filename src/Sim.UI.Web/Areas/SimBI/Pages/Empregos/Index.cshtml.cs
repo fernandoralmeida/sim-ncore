@@ -22,6 +22,8 @@ public class IndexModel : PageModel {
     public IEnumerable<KeyValuePair<string, int>> VagasGeneros { get; set; }
     public IEnumerable<KeyValuePair<string, int>> VagasGenerosAcumuladas { get; set; }
     public IEnumerable<KeyValuePair<string, int>> ListaOcupacoes { get; set; }
+    public IEnumerable<(string month, int valor, string percent)> ListVagasByMonth { get; set; }
+    public IEnumerable<(string setor, int valor, string percent)> ListVagasBySetor { get; set; }
 
     public IndexModel(IAppServiceBIEmpregos appServiceBiEmpregos){
         _appServiceBiEmpregos = appServiceBiEmpregos;
@@ -35,6 +37,8 @@ public class IndexModel : PageModel {
         VagasGeneros = await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(DateTime.Now.Year);
         VagasGenerosAcumuladas = await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(DateTime.Now.Year);
         ListaOcupacoes = await _appServiceBiEmpregos.DoListOcupacoes(DateTime.Now.Year);
+        ListVagasByMonth = await _appServiceBiEmpregos.DoListVagasByMonth(DateTime.Now.Year);
+        ListVagasBySetor = await _appServiceBiEmpregos.DoListVagasBySetor(DateTime.Now.Year);
     }
 
     public async Task OnPostAsync() {
@@ -46,6 +50,8 @@ public class IndexModel : PageModel {
                 VagasGeneros = await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(Convert.ToInt32(Ano));
                 VagasGenerosAcumuladas = await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(Convert.ToInt32(Ano));
                 ListaOcupacoes = await _appServiceBiEmpregos.DoListOcupacoes(Convert.ToInt32(Ano));
+                ListVagasByMonth = await _appServiceBiEmpregos.DoListVagasByMonth(DateTime.Now.Year);
+                ListVagasBySetor = await _appServiceBiEmpregos.DoListVagasBySetor(DateTime.Now.Year);
            }
         }
     }

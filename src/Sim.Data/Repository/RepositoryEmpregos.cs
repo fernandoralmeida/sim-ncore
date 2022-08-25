@@ -13,7 +13,10 @@ namespace Sim.Data.Repository
         public async Task<IEnumerable<Empregos>> DoListEmpregosAsync()
         {
             return await _db.Emprego.Include(e => e.Empresa)
-                                    .Include(p => p.Pessoa).ToListAsync();
+                                    .Include(p => p.Pessoa)
+                            .Where(s => s.Status == "Ativo")
+                            .AsNoTracking()
+                            .ToListAsync();
         }
 
         public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncBy(string param)
@@ -27,6 +30,7 @@ namespace Sim.Data.Repository
                             e.Pessoa.Nome.Contains(param) ||
                             e.Ocupacao.Contains(param) ||
                             e.Inclusivo.Contains(param) ||
+                            e.Status.Contains(param) ||
                             e.Genero.Contains(param))
                 .AsNoTracking()
                 .OrderBy(o => o.Data)

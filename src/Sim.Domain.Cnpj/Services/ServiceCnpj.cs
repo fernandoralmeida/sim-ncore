@@ -1839,7 +1839,7 @@ namespace Sim.Domain.Cnpj.Services
                                     group x by x into g
                                     let count = g.Count()
                                     orderby g.Key ascending
-                                    select new { Value = g.Key.Remove(0, 2), Count = count };
+                                    select new { Value = g.Key.Remove(0,2), Count = count };
 
                     var l_var_mes = new List<KeyValuePair<string, int>>();
                     foreach (var x in c_var_mes)
