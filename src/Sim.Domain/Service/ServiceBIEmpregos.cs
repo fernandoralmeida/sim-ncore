@@ -242,7 +242,9 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 }
                 else {
                     if(item.Pessoa != null)
-                        _setor.Add("CPF");
+                        for (int i = 0; i < item.Vagas; i++) {
+                            _setor.Add("CPF");
+                        }  
                 }                               
             }
 
