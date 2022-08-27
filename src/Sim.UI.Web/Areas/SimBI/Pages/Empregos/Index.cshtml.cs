@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.Interfaces;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Areas.Empregos;
 
@@ -16,14 +17,14 @@ public class IndexModel : PageModel {
     [BindProperty]
     public string Ano {get; set;}
 
-    public KeyValuePair<string, int> VagasAtivas { get; set; }
-    public KeyValuePair<string, int> VagasAcumuladas { get; set; }
-    public KeyValuePair<string, int> VagasFinalizadas { get; set; }
-    public IEnumerable<KeyValuePair<string, int>> VagasGeneros { get; set; }
-    public IEnumerable<KeyValuePair<string, int>> VagasGenerosAcumuladas { get; set; }
-    public IEnumerable<KeyValuePair<string, int>> ListaOcupacoes { get; set; }
-    public IEnumerable<(string month, int valor, string percent)> ListVagasByMonth { get; set; }
-    public IEnumerable<(string setor, int valor, string percent)> ListVagasBySetor { get; set; }
+    public EChart VagasAtivas { get; set; }
+    public EChart VagasAcumuladas { get; set; }
+    public EChart VagasFinalizadas { get; set; }
+    public IEnumerable<EChart> VagasGeneros { get; set; }
+    public IEnumerable<EChart> VagasGenerosAcumuladas { get; set; }
+    public IEnumerable<EChart> ListaOcupacoes { get; set; }
+    public IEnumerable<EChart> ListVagasByMonth { get; set; }
+    public IEnumerable<EChart> ListVagasBySetor { get; set; }
 
     public IndexModel(IAppServiceBIEmpregos appServiceBiEmpregos){
         _appServiceBiEmpregos = appServiceBiEmpregos;
@@ -54,5 +55,10 @@ public class IndexModel : PageModel {
                 ListVagasBySetor = await _appServiceBiEmpregos.DoListVagasBySetor(DateTime.Now.Year);
            }
         }
+    }
+
+    public async Task<JsonResult> OnGetEmpregosAtivosByGeneroAsync(){
+        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(DateTime.Now.Year));        
     }
 }

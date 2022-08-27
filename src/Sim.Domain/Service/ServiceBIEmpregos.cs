@@ -10,24 +10,26 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
     public ServiceBIEmpregos(IRepositoryEmpregos repositoryEmpregos) {
         _repositoryEmpregos = repositoryEmpregos;
     }
-    public async Task<KeyValuePair<string, int>> DoEmpregosAtivos(int ano)
+    public async Task<EChart> DoEmpregosAtivos(int ano)
     {
         _datalist = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
         return await Task.Run(() => {
             var vagas = 0;
+            var t_vagas = 0;
 
             foreach(var item in _datalist)
             {
+                t_vagas += item.Vagas;
                 if(item.Status == "Ativo")
                     vagas += item.Vagas;               
             }
-
-            return new KeyValuePair<string, int>("Disponível", vagas);
+            float r = ((float)vagas / (float)t_vagas) * 100;
+            return new EChart("Disponível", vagas, r.ToString("N2")+"%");
           });
     }    
 
-    public async Task<KeyValuePair<string, int>> DoEmpregosAtivosAcumulado(int ano)
+    public async Task<EChart> DoEmpregosAtivosAcumulado(int ano)
     {
         return await Task.Run(() => {
             var vagas = 0;
@@ -37,36 +39,48 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 vagas += item.Vagas;               
             }
 
-            return new KeyValuePair<string, int>("Acumulado", vagas);
+            float r = ((float)vagas / (float)vagas) * 100;
+
+            return new EChart("Acumulado", vagas, r.ToString("N2")+"%");
           });
     }
 
-    public async Task<KeyValuePair<string, int>> DoEmpregosFinalizados(int ano)
+    public async Task<EChart> DoEmpregosFinalizados(int ano)
     {
         return await Task.Run(() => {
             var vagas = 0;
+            var t_vagas = 0;
 
             foreach(var item in _datalist)
             {
+                t_vagas += item.Vagas;
                 if(item.Status == "Finalizado")
                     vagas += item.Vagas;               
             }
 
-            return new KeyValuePair<string, int>("Completadas", vagas);
+            float r = ((float)vagas / (float)t_vagas) * 100;
+
+            return new EChart("Completadas", vagas, r.ToString("N2")+"%");
           });
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByGenero(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByGenero(int ano)
     {
         return await Task.Run(() => {
+            int t_vagas = 0;
+            float vn = 0.0f;
+            float vm = 0.0f;
+            float vf = 0.0f;    
+            
             int vagas = 0;
             int vagas_f = 0;
             int vagas_m = 0;
 
-            var _return = new List<KeyValuePair<string, int>>();
+            var _return = new List<EChart>();
 
             foreach(var item in _datalist)
             {
+                t_vagas += item.Vagas;
                 if(item.Status == "Ativo")
                     switch(item.Genero)
                     {
@@ -83,29 +97,37 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                             break;
                     }            
             }
-
-            _return.Add(new KeyValuePair<string, int>("Neutro", vagas));
-            _return.Add(new KeyValuePair<string, int>("Masculino", vagas_m));
-            _return.Add(new KeyValuePair<string, int>("Feminino", vagas_f));
+            vn = ((float)vagas / (float)t_vagas) * 100;
+            vm = ((float)vagas_m / (float)t_vagas) * 100;
+            vf = ((float)vagas_f / (float)t_vagas) * 100;
+            _return.Add(new EChart("Neutro", vagas, vn.ToString("N2")+"%"));
+            _return.Add(new EChart("Masculino", vagas_m, vm.ToString("N2")+"%"));
+            _return.Add(new EChart("Feminino", vagas_f, vf.ToString("N2")+"%"));
 
             return _return.OrderBy(o => o.Value);
           });
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByGeneroAcumulado(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByGeneroAcumulado(int ano)
     {
         return await Task.Run(() => {
+            float vn = 0.0f;
+            float vm = 0.0f;
+            float vf = 0.0f;
+
             int vagas = 0;
             int vagas_f = 0;
             int vagas_m = 0;
 
-            var _return = new List<KeyValuePair<string, int>>();
+            int t_vagas = 0;
+            var _return = new List<EChart>();
 
             foreach(var item in _datalist)
             {
+                t_vagas += item.Vagas;
                 switch(item.Genero)
                 {
-                    case("Neutro"):
+                    case("Neutro"):                        
                         vagas += item.Vagas;
                         break;
 
@@ -119,61 +141,67 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 }            
             }
 
-            _return.Add(new KeyValuePair<string, int>("Neutro", vagas));
-            _return.Add(new KeyValuePair<string, int>("Masculino", vagas_m));
-            _return.Add(new KeyValuePair<string, int>("Feminino", vagas_f));
+            vn = ((float)vagas / (float)t_vagas) * 100;
+            vm = ((float)vagas_m / (float)t_vagas) * 100;
+            vf = ((float)vagas_f / (float)t_vagas) * 100;
+
+            _return.Add(new EChart("Neutro", vagas, vn.ToString("N2")+"%"));
+            _return.Add(new EChart("Masculino", vagas_m, vm.ToString("N2")+"%"));
+            _return.Add(new EChart("Feminino", vagas_f, vf.ToString("N2")+"%"));
 
             return _return.OrderBy(o => o.Value);
           });
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByInclusao(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByInclusao(int ano)
     {
         return await Task.Run(() => {
-            var _return = new List<KeyValuePair<string, int>>();
+            var _return = new List<EChart>();
 
 
             return _return;
           });
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByInclusaoAcumulado(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByInclusaoAcumulado(int ano)
     {
         return await Task.Run(() => {
-            var _return = new List<KeyValuePair<string, int>>();
+            var _return = new List<EChart>();
 
 
             return _return;
           });
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByTipo(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByTipo(int ano)
     {
         return await Task.Run(() => {
-            var _return = new List<KeyValuePair<string, int>>();
+            var _return = new List<EChart>();
 
 
             return _return;
           });
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByTipoAcumulado(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByTipoAcumulado(int ano)
     {
         return await Task.Run(() => {
-            var _return = new List<KeyValuePair<string, int>>();
+            var _return = new List<EChart>();
 
 
             return _return;
           });
     }
  
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListOcupacoes(int ano)
+    public async Task<IEnumerable<EChart>> DoListOcupacoes(int ano)
     {
         return await Task.Run(() => {
-            var _return = new List<KeyValuePair<string, int>>();
+            var _return = new List<EChart>();
             var _list = new List<string>();
+            var t_vagas = 0;
 
             foreach(var item in _datalist) {  
+                t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {
                     _list.Add(item.Ocupacao);
                 }         
@@ -185,21 +213,26 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 orderby count descending
                 select new { Servico = g.Key, Qtde = count })
             {
-                _return.Add(new KeyValuePair<string, int> (x.Servico, x.Qtde));
+                float v1 = x.Qtde;
+                float v2 = t_vagas;
+                float r = (v1 / v2) * 100;
+                _return.Add(new EChart(x.Servico, x.Qtde, r.ToString("N2")+"%"));
             }
 
             return _return;
         });
     }
 
-    public async Task<IEnumerable<(string month, int valor, string percent)>> DoListVagasByMonth(int ano)
+    public async Task<IEnumerable<EChart>> DoListVagasByMonth(int ano)
     {
         return await Task.Run(() => {
 
-            var _return = new List<(string month, int valor, string percent)>();
+            var _return = new List<EChart>();
             var _month = new List<string>();
+            var t_vagas = 0;
 
             foreach (var item in _datalist.Where(o => o.Data != null)) {
+                t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {     
                     _month.Add(item.Data.Value.Date.ToString("MMM"));                    
                 }                
@@ -213,23 +246,25 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             {
 
                 float p = x.Valor;
-                float p1 = _month.Count();
+                float p1 = t_vagas;
                 float r = (p / p1) * 100;          
-                _return.Add((x.Meses, x.Valor, r.ToString("N2")+"%"));
+                _return.Add(new EChart(x.Meses, x.Valor, r.ToString("N2")+"%"));
             }
 
             return _return;
         });
     }
 
-    public async Task<IEnumerable<(string setor, int valor, string percent)>> DoListVagasBySetor(int ano)
+    public async Task<IEnumerable<EChart>> DoListVagasBySetor(int ano)
     {
         return await Task.Run(() => {
 
-            var _return = new List<(string setor, int valor, string percent)>();
+            var _return = new List<EChart>();
             var _setor = new List<string>();
+            var t_vagas = 0;
 
             foreach (var item in _datalist) {
+                t_vagas += item.Vagas;
                 if (item.Empresa != null) {
                     if (item.Empresa.CNAE_Principal != null) {
                         string _cnae = item.Empresa.CNAE_Principal.Remove(2,8);
@@ -256,9 +291,9 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             {
 
                 float p = x.Valor;
-                float p1 = _setor.Count();
+                float p1 = t_vagas;
                 float r = (p / p1) * 100;          
-                _return.Add((x.Setores, x.Valor, r.ToString("N2")+"%"));
+                _return.Add(new EChart(x.Setores, x.Valor, r.ToString("N2")+"%"));
             }
 
             return _return;

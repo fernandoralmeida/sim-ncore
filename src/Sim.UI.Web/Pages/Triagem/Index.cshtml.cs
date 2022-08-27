@@ -64,20 +64,20 @@ namespace Sim.UI.Web.Pages.Triagem
                             list.Add(new InputModelIndex() { Atendente = s.Name, Status = "Em Atendimento" });
 
                         else
-                            list.Add(new InputModelIndex() { Atendente = s.Name, Status = "Disponível" });
+                            list.Add(new InputModelIndex() { Atendente = s.Name, Status = "DisponÃ­vel" });
                     }
             }
 
             return list;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
-            ListaPAT = await ListUsersAsync("M_Pat");
-            ListaBPP = await ListUsersAsync("M_BancoPovo");
-            ListaSA = await ListUsersAsync("M_Sebrae");
-            ListaSE = await ListUsersAsync("M_SalaEmpreendedor");
-            return Page();
+            //ListaPAT = await ListUsersAsync("M_Pat");
+            //ListaBPP = await ListUsersAsync("M_BancoPovo");
+            //ListaSA = await ListUsersAsync("M_Sebrae");
+            //ListaSE = await ListUsersAsync("M_SalaEmpreendedor");
+            return RedirectToPage("/Panorama/Index");
         }
     }
 }

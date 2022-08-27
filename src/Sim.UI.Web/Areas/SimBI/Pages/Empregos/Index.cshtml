@@ -4,7 +4,10 @@
 @{
     Layout = "_Layout.cshtml";
     ViewData["Title"] = "Power BI";
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 }
+
+
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
@@ -28,64 +31,44 @@
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">Vagas</div>
                             <div class="box-around">                            
-                                    @{
-                                        float va1 = Model.VagasAtivas.Value;
-                                        float va2 = Model.VagasAcumuladas.Value;
-                                        float ra = (va1 / va2) * 100;
-                                    }
                                     <div class="box-cell-item-flex font-size-12">
                                         <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.VagasAtivas.Value</p>
-                                        <p class="grey-text">(@ra.ToString("N2")%)</p>
+                                        <p class="grey-text">(@Model.VagasAtivas.Percent)</p>
                                     </div>                                 
                             </div>
                         </div>
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">Finalizadas</div>
                             <div class="box-around">                            
-                                    @{
-                                        float vf1 = Model.VagasFinalizadas.Value;
-                                        float vf2 = Model.VagasAcumuladas.Value;
-                                        float rf = (vf1 / vf2) * 100;
-                                    }
                                     <div class="box-cell-item-flex font-size-12">
                                         <p class="amber-text font-h4"><i class="material-icons">star</i>@Model.VagasFinalizadas.Value</p>
-                                        <p class="grey-text">(@rf.ToString("N2")%)</p>
-                                    </div>
-                                 
+                                        <p class="grey-text">(@Model.VagasFinalizadas.Percent)</p>
+                                    </div>                                 
                             </div>
                         </div>
+                        <div class="box-card hoverable">
+                            <div class="card-header grey-text">Acumulado</div>
+                            <div class="box-around">                            
+                                    <div class="box-cell-item-flex font-size-12">
+                                        <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.VagasAcumuladas.Value</p>
+                                        <p class="grey-text">(@Model.VagasAcumuladas.Percent)</p>
+                                    </div>                                 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-column-row">
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">Genero</div>
                             <div class="box-around">
                                 @if(Model.VagasGeneros != null){
                                     @foreach (var item in Model.VagasGeneros) {
-                                        float v1 = item.Value;
-                                        float v2 = Model.VagasAtivas.Value;
-                                        float r = (v1 / v2) * 100;
                                         <div class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.Key</p>
+                                            <p class="grey-text">@item.Label</p>
                                             <p class="blue-text font-h5">@item.Value</p>
-                                            <p class="grey-text">(@r.ToString("N2")%)</p>
+                                            <p class="grey-text">(@item.Percent)</p>
                                         </div>
                                     }                                    
                                 }                              
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="box-column-row">
-                        <div class="box-card hoverable">
-                            <div class="card-header grey-text">Acumulado</div>
-                            <div class="box-around">                            
-                                    @{
-                                        float vc1 = Model.VagasAcumuladas.Value;
-                                        float vc2 = Model.VagasAcumuladas.Value;
-                                        float rc = (vc1 / vc2) * 100;
-                                    }
-                                    <div class="box-cell-item-flex font-size-12">
-                                        <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.VagasAcumuladas.Value</p>
-                                        <p class="grey-text">(@rc.ToString("N2")%)</p>
-                                    </div>                                 
                             </div>
                         </div>
                         <div class="box-card hoverable">
@@ -97,9 +80,9 @@
                                         float v2 = Model.VagasAcumuladas.Value;
                                         float r = (v1 / v2) * 100;
                                         <div class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.Key</p>
+                                            <p class="grey-text">@item.Label</p>
                                             <p class="blue-text font-h5">@item.Value</p>
-                                            <p class="grey-text">(@r.ToString("N2")%)</p>
+                                            <p class="grey-text">(@item.Percent)</p>
                                         </div>
                                     }                                    
                                 }                              
@@ -114,9 +97,9 @@
                                 @if(Model.ListVagasBySetor != null) {
                                     @foreach (var item in Model.ListVagasBySetor) {
                                         <a class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.setor</p>
-                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.valor</p>
-                                            <p class="grey-text">(@item.percent)</p>
+                                            <p class="grey-text">@item.Label</p>
+                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
+                                            <p class="grey-text">(@item.Percent)</p>
                                         </a>   
                                     }
                                 }                                  
@@ -130,9 +113,9 @@
                                 @if(Model.ListVagasByMonth != null) {
                                     @foreach (var item in Model.ListVagasByMonth) {
                                         <a class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.month</p>
-                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.valor</p>
-                                            <p class="grey-text">(@item.percent)</p>
+                                            <p class="grey-text">@item.Label</p>
+                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
+                                            <p class="grey-text">(@item.Percent)</p>
                                         </a>   
                                     }
                                 }                    
@@ -144,9 +127,9 @@
                     <div class="box-card hoverable" style="overflow-x:auto;">
                         <div class="card-header grey-text">Atividades</div>                            
                         @if(Model.ListaOcupacoes != null) {
-                            foreach (var item in Model.ListaOcupacoes) {
+                            foreach (var item in Model.ListaOcupacoes.Take(10)) {
                                 <div class="font-size-12 pdn-10 grey-text">
-                                    <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Key</p>
+                                    <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Label</p>
                                 </div>
                                 <div class="divider"></div>
                             }
@@ -157,3 +140,42 @@
         </div>
 
 </div>
+
+<div class="borderless rounded-default z-depth-1 white" id="chart_div" style="min-width: 300px; min-height: 300px;"></div>
+
+@section scripts{
+    <script type="text/javascript">  
+    google.charts.load('current', {packages: ['corechart']});  
+    google.charts.setOnLoadCallback(DoListData);
+    function DoListData() {  
+        $.ajax({  
+            url: '/SimBI/Empregos/?handler=EmpregosAtivosByGenero',  
+            dataType: "json",  
+            type: "GET",  
+            error: function(xhr, status, error) {  
+                var err = eval("(" + xhr.responseText + ")");  
+                toastr.error(err.message);  
+            },  
+            success: function(data) {  
+                DoChartBy(data);  
+                return false;  
+            }  
+        });  
+        return false;  
+    }  
+    function DoChartBy(data) {  
+        var dataArray = [['','','']];  
+        $.each(data, function(i, item) {  
+            dataArray.push([item.label, item.value, item.percent]);  
+        });  
+        var data = google.visualization.arrayToDataTable(dataArray);  
+        var options = {  
+            title: 'Vagas de Emprego por Gênero',  
+            pieHole: 0.5 
+        };  
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));  
+        chart.draw(data, options);  
+        return false;  
+    }  
+    </script>     
+}

@@ -11,62 +11,62 @@ public class AppServiceBIEmpregos : IAppServiceBIEmpregos
         _serviceBI = serviceBIEmpregos;
     }
 
-    public async Task<KeyValuePair<string, int>> DoEmpregosAtivos(int ano)
+    public async Task<EChart> DoEmpregosAtivos(int ano)
     {
         return await _serviceBI.DoEmpregosAtivos(ano);
     }
 
-    public async Task<KeyValuePair<string, int>> DoEmpregosAtivosAcumulado(int ano)
+    public async Task<EChart> DoEmpregosAtivosAcumulado(int ano)
     {
         return await _serviceBI.DoEmpregosAtivosAcumulado(ano);
     }
 
-    public async Task<KeyValuePair<string, int>> DoEmpregosFinalizados(int ano)
+    public async Task<EChart> DoEmpregosFinalizados(int ano)
     {
         return await _serviceBI.DoEmpregosFinalizados(ano);
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByGenero(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByGenero(int ano)
     {
         return await _serviceBI.DoListEmpregosAtivosByGenero(ano);
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByGeneroAcumulado(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByGeneroAcumulado(int ano)
     {
         return await _serviceBI.DoListEmpregosAtivosByGeneroAcumulado(ano);
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByInclusao(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByInclusao(int ano)
     {
         return await _serviceBI.DoListEmpregosAtivosByInclusao(ano);
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByInclusaoAcumulado(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByInclusaoAcumulado(int ano)
     {
         return await _serviceBI.DoListEmpregosAtivosByInclusaoAcumulado(ano);
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByTipo(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByTipo(int ano)
     {
         return await _serviceBI.DoListEmpregosAtivosByTipo(ano);
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListEmpregosAtivosByTipoAcumulado(int ano)
+    public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByTipoAcumulado(int ano)
     {
         return await _serviceBI.DoListEmpregosAtivosByTipoAcumulado(ano);
     }
 
-    public async Task<IEnumerable<KeyValuePair<string, int>>> DoListOcupacoes(int ano)
+    public async Task<IEnumerable<EChart>> DoListOcupacoes(int ano)
     {
         return await _serviceBI.DoListOcupacoes(ano);
     }
 
-    public async Task<IEnumerable<(string month, int valor, string percent)>> DoListVagasByMonth(int ano)
+    public async Task<IEnumerable<EChart>> DoListVagasByMonth(int ano)
     {
         return await _serviceBI.DoListVagasByMonth(ano);
     }
 
-    public async Task<IEnumerable<(string Setor, int Valor, string percent)>> DoListVagasBySetor(int ano)
+    public async Task<IEnumerable<EChart>> DoListVagasBySetor(int ano)
     {
         return await _serviceBI.DoListVagasBySetor(ano);
     }
