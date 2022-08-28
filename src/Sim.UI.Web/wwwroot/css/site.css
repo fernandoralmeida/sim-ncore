@@ -340,122 +340,6 @@ nav .input-field label.active i{
     position: relative;
     padding: 16px; /*24px;*/
 }
-/* End Sidenav  */
-@media only screen and (max-width: 992px) {
-    .navbar-page-name {
-        margin:0px;
-    }
-    .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
-        padding: 0 20px 0 20px;
-    }
-    .has-fixed-sidenav .fixed-chart {
-        left: 0
-    }
-    .navbar-extended{
-        width:100vw;
-    }
-    .blackboxload{
-        display:flex;
-        position:absolute;
-        margin-top:0px;
-        z-index:997;
-        height:calc(100% - 56px);
-        width:100%;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-    .box-container-card{
-        display: flex;
-        flex-direction: column;   
-        gap:20px 20px;
-    }
-    .box-column-7{
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 20px 20px;   
-        width: 100%;  
-    }.box-column-3{
-        width: 100%;  
-    }
-}
-@media only screen and (min-width: 993px) {
-    body.has-fixed-sidenav {
-        padding-left: 250px
-    }
-    @media only screen and (min-width: 993px) {
-        body.has-fixed-sidenav {
-            padding-left: 250px
-        }
-        @media only screen and (min-width: 993px) {
-            .has-fixed-sidenav .navbar-fixed nav.navbar {
-                width: calc(100% - 250px);
-                left: 250px
-            }
-            body:not(.has-fixed-sidenav) nav a.sidenav-trigger {
-                display: block
-            }
-            body:not(.has-fixed-sidenav) nav.navbar .brand-logo {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%)
-            }
-        }
-        ul.collapsible-accordion {
-            background-color: transparent /*#FFF*/
-        }
-        ul.sidenav.sidenav-fixed ul.collapsible-accordion a.collapsible-header {
-            padding: 0 15px
-        }
-        ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
-            font-weight: 400;
-            padding: 0 20px 0 20px
-        }
-        ul.sidenav.sidenav-fixed:hover {
-            overflow-y: auto
-        }
-        .search-wrapper {
-            color: #777;
-            margin-top: -1px;
-            border-top: 1px solid rgba(0,0,0,0.14);
-            -webkit-transition: margin .25s ease;
-            transition: margin .25s ease
-        }
-        #nav-mobile li.search .search-wrapper.focused .search-results:not(:empty) {
-            border-bottom: 1px solid rgba(0,0,0,0.14)
-        }
-        #nav-mobile li.search .search-wrapper input#search {
-            color: #777;
-            display: block;
-            font-size: 16px;
-            font-weight: 300;
-            width: 100%;
-            height: 62px;
-            margin: 0;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            padding: 0 45px 0 30px;
-            border: 0
-        }
-            #nav-mobile li.search .search-wrapper input#search:focus {
-                outline: none;
-                -webkit-box-shadow: none;
-                box-shadow: none
-            }
-        #nav-mobile li.search .search-wrapper i.material-icons {
-            position: absolute;
-            top: 21px;
-            right: 10px;
-            cursor: pointer
-        }
-    }
-}
-/***/
-@media (max-width: 768px) {
-    .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
-        padding: 0 20px 0 20px;
-    }
-}
 button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
@@ -714,6 +598,162 @@ button.accept-policy {
     padding-left: 2.5rem;
     width: calc(100% - 2.5rem);    
 }
+.card-chart {
+    overflow: hidden;
+    height: 300px;
+    width: 500px;   
+}
+/* End Sidenav  */
+@media only screen and (max-width: 1697px){
+    .card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 450px;   
+    }
+}
+@media only screen and (max-width: 1562px){
+    .card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 400px;   
+    }
+}
+@media only screen and (max-width: 1430px){
+    .card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 370px;   
+    }
+}
+@media only screen and (max-width: 1349px){
+    .card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 300px;   
+    }
+}
+@media only screen and (max-width: 1024px){
+    .card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 500px;   
+    }
+}
+@media only screen and (max-width: 992px) {
+    .navbar-page-name {
+        margin:0px;
+    }
+    .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
+        padding: 0 20px 0 20px;
+    }
+    .has-fixed-sidenav .fixed-chart {
+        left: 0
+    }
+    .navbar-extended{
+        width:100vw;
+    }
+    .blackboxload{
+        display:flex;
+        position:absolute;
+        margin-top:0px;
+        z-index:997;
+        height:calc(100% - 56px);
+        width:100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .box-container-card{
+        display: flex;
+        flex-direction: column;   
+        gap:20px 20px;
+    }
+    .box-column-7{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px 20px;   
+        width: 100%;  
+    }.box-column-3{
+        width: 100%;  
+    }
+    .card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 450px;  
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    body.has-fixed-sidenav {
+        padding-left: 250px
+    }
+    @media only screen and (min-width: 993px) {
+        body.has-fixed-sidenav {
+            padding-left: 250px
+        }
+        @media only screen and (min-width: 993px) {
+            .has-fixed-sidenav .navbar-fixed nav.navbar {
+                width: calc(100% - 250px);
+                left: 250px
+            }
+            body:not(.has-fixed-sidenav) nav a.sidenav-trigger {
+                display: block
+            }
+            body:not(.has-fixed-sidenav) nav.navbar .brand-logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%)
+            }
+        }
+        ul.collapsible-accordion {
+            background-color: transparent /*#FFF*/
+        }
+        ul.sidenav.sidenav-fixed ul.collapsible-accordion a.collapsible-header {
+            padding: 0 15px
+        }
+        ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
+            font-weight: 400;
+            padding: 0 20px 0 20px
+        }
+        ul.sidenav.sidenav-fixed:hover {
+            overflow-y: auto
+        }
+        .search-wrapper {
+            color: #777;
+            margin-top: -1px;
+            border-top: 1px solid rgba(0,0,0,0.14);
+            -webkit-transition: margin .25s ease;
+            transition: margin .25s ease
+        }
+        #nav-mobile li.search .search-wrapper.focused .search-results:not(:empty) {
+            border-bottom: 1px solid rgba(0,0,0,0.14)
+        }
+        #nav-mobile li.search .search-wrapper input#search {
+            color: #777;
+            display: block;
+            font-size: 16px;
+            font-weight: 300;
+            width: 100%;
+            height: 62px;
+            margin: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0 45px 0 30px;
+            border: 0
+        }
+            #nav-mobile li.search .search-wrapper input#search:focus {
+                outline: none;
+                -webkit-box-shadow: none;
+                box-shadow: none
+            }
+        #nav-mobile li.search .search-wrapper i.material-icons {
+            position: absolute;
+            top: 21px;
+            right: 10px;
+            cursor: pointer
+        }
+    }
+}
 
 @media only screen and (max-width: 992px) {
     .box-container-card{
@@ -734,8 +774,38 @@ button.accept-policy {
     }
 }
 
-@media only screen and (max-width: 400px) {
+/***/
+@media (max-width: 768px) {
+    .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
+        padding: 0 20px 0 20px;
+    }
+}
+
+@media only screen and (max-width: 510) {
+    .card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 450px;  
+    }
+    
+}
+
+@media only screen and (max-width: 415px) {
     .box-cell-item-flex{
         padding: 1px;
-    }
+    }.card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 250px;  
+    } 
+}
+
+@media only screen and (max-width: 280px) {
+    .box-cell-item-flex{
+        padding: 1px;
+    }.card-chart {
+        overflow: hidden;
+        height: 300px;
+        width: 200px;  
+    } 
 }

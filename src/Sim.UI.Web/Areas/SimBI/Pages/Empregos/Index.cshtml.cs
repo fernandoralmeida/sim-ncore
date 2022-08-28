@@ -35,11 +35,7 @@ public class IndexModel : PageModel {
         VagasAtivas = await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
         VagasFinalizadas = await _appServiceBiEmpregos.DoEmpregosFinalizados(DateTime.Now.Year);
         VagasAcumuladas = await _appServiceBiEmpregos.DoEmpregosAtivosAcumulado(DateTime.Now.Year);
-        VagasGeneros = await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(DateTime.Now.Year);
-        VagasGenerosAcumuladas = await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(DateTime.Now.Year);
         ListaOcupacoes = await _appServiceBiEmpregos.DoListOcupacoes(DateTime.Now.Year);
-        ListVagasByMonth = await _appServiceBiEmpregos.DoListVagasByMonth(DateTime.Now.Year);
-        ListVagasBySetor = await _appServiceBiEmpregos.DoListVagasBySetor(DateTime.Now.Year);
     }
 
     public async Task OnPostAsync() {
@@ -48,11 +44,7 @@ public class IndexModel : PageModel {
                 VagasAtivas = await _appServiceBiEmpregos.DoEmpregosAtivos(Convert.ToInt32(Ano));
                 VagasFinalizadas = await _appServiceBiEmpregos.DoEmpregosFinalizados(DateTime.Now.Year);
                 VagasAcumuladas = await _appServiceBiEmpregos.DoEmpregosAtivosAcumulado(Convert.ToInt32(Ano));
-                VagasGeneros = await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(Convert.ToInt32(Ano));
-                VagasGenerosAcumuladas = await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(Convert.ToInt32(Ano));
                 ListaOcupacoes = await _appServiceBiEmpregos.DoListOcupacoes(Convert.ToInt32(Ano));
-                ListVagasByMonth = await _appServiceBiEmpregos.DoListVagasByMonth(DateTime.Now.Year);
-                ListVagasBySetor = await _appServiceBiEmpregos.DoListVagasBySetor(DateTime.Now.Year);
            }
         }
     }
@@ -60,5 +52,19 @@ public class IndexModel : PageModel {
     public async Task<JsonResult> OnGetEmpregosAtivosByGeneroAsync(){
         await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
         return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(DateTime.Now.Year));        
+    }
+
+    public async Task<JsonResult> OnGetEmpregosAtivosByGeneroAcAsync(){
+        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(DateTime.Now.Year));        
+    }
+
+    public async Task<JsonResult> OnGetAnualAsync(){
+        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
+        return new JsonResult(await _appServiceBiEmpregos.DoListVagasByMonth(DateTime.Now.Year));        
+    }
+    public async Task<JsonResult> OnGetSetoresAsync(){
+        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
+        return new JsonResult(await _appServiceBiEmpregos.DoListVagasBySetor(DateTime.Now.Year));        
     }
 }

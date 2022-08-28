@@ -4,7 +4,6 @@
 @{
     Layout = "_Layout.cshtml";
     ViewData["Title"] = "Power BI";
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 }
 
 
@@ -41,7 +40,7 @@
                             <div class="card-header grey-text">Finalizadas</div>
                             <div class="box-around">                            
                                     <div class="box-cell-item-flex font-size-12">
-                                        <p class="amber-text font-h4"><i class="material-icons">star</i>@Model.VagasFinalizadas.Value</p>
+                                        <p class="light-green-text font-h4"><i class="material-icons">check</i>@Model.VagasFinalizadas.Value</p>
                                         <p class="grey-text">(@Model.VagasFinalizadas.Percent)</p>
                                     </div>                                 
                             </div>
@@ -58,8 +57,10 @@
                     </div>
                     <div class="box-column-row">
                         <div class="box-card hoverable">
-                            <div class="card-header grey-text">Genero</div>
+                            <div class="card-header grey-text">Vagas</div>
                             <div class="box-around">
+                                <div id="chart_genero" class="card-chart"></div>
+                                <!--
                                 @if(Model.VagasGeneros != null){
                                     @foreach (var item in Model.VagasGeneros) {
                                         <div class="box-cell-item-flex font-size-12">
@@ -68,12 +69,14 @@
                                             <p class="grey-text">(@item.Percent)</p>
                                         </div>
                                     }                                    
-                                }                              
+                                } -->                             
                             </div>
                         </div>
                         <div class="box-card hoverable">
-                            <div class="card-header grey-text">Acumulado</div>
+                            <div class="card-header grey-text">Vagas</div>
                             <div class="box-around">
+                                <div id="chart_generoAc" class="card-chart"></div> 
+                                <!--
                                 @if(Model.VagasGenerosAcumuladas != null){
                                     @foreach (var item in Model.VagasGenerosAcumuladas) {
                                         float v1 = item.Value;
@@ -85,7 +88,7 @@
                                             <p class="grey-text">(@item.Percent)</p>
                                         </div>
                                     }                                    
-                                }                              
+                                } -->                             
                             </div>
                         </div>
                     </div>
@@ -93,7 +96,9 @@
                     <div class="box-column-row">
                         <div  class="box-card hoverable">
                             <div class="card-header grey-text">Setores</div>
-                            <div class="box-around">                               
+                            <div class="box-around">    
+                                <div id="piechart_setores" class="card-chart"></div>
+                                <!--                          
                                 @if(Model.ListVagasBySetor != null) {
                                     @foreach (var item in Model.ListVagasBySetor) {
                                         <a class="box-cell-item-flex font-size-12">
@@ -102,14 +107,17 @@
                                             <p class="grey-text">(@item.Percent)</p>
                                         </a>   
                                     }
-                                }                                  
+                                } -->                                 
                             </div>
                         </div>
+                    <!--
                     </div>
-                    <div class="box-column-row">
+                    <div class="box-column-row">-->
                         <div class="box-card hoverable">
                             <div class="card-header grey-text">Meses</div>
                             <div class="box-around">
+                                <div id="chart_month" class="card-chart"></div>
+                                <!--
                                 @if(Model.ListVagasByMonth != null) {
                                     @foreach (var item in Model.ListVagasByMonth) {
                                         <a class="box-cell-item-flex font-size-12">
@@ -118,16 +126,16 @@
                                             <p class="grey-text">(@item.Percent)</p>
                                         </a>   
                                     }
-                                }                    
+                                } -->                   
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="box-column-3">
-                    <div class="box-card hoverable" style="overflow-x:auto;">
+                    <div class="box-card hoverable">
                         <div class="card-header grey-text">Atividades</div>                            
                         @if(Model.ListaOcupacoes != null) {
-                            foreach (var item in Model.ListaOcupacoes.Take(10)) {
+                            foreach (var item in Model.ListaOcupacoes.Take(20)) {
                                 <div class="font-size-12 pdn-10 grey-text">
                                     <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Label</p>
                                 </div>
@@ -141,41 +149,81 @@
 
 </div>
 
-<div class="borderless rounded-default z-depth-1 white" id="chart_div" style="min-width: 300px; min-height: 300px;"></div>
 
 @section scripts{
-    <script type="text/javascript">  
-    google.charts.load('current', {packages: ['corechart']});  
-    google.charts.setOnLoadCallback(DoListData);
-    function DoListData() {  
-        $.ajax({  
-            url: '/SimBI/Empregos/?handler=EmpregosAtivosByGenero',  
-            dataType: "json",  
-            type: "GET",  
-            error: function(xhr, status, error) {  
-                var err = eval("(" + xhr.responseText + ")");  
-                toastr.error(err.message);  
-            },  
-            success: function(data) {  
-                DoChartBy(data);  
-                return false;  
-            }  
-        });  
-        return false;  
-    }  
-    function DoChartBy(data) {  
-        var dataArray = [['','','']];  
-        $.each(data, function(i, item) {  
-            dataArray.push([item.label, item.value, item.percent]);  
-        });  
-        var data = google.visualization.arrayToDataTable(dataArray);  
-        var options = {  
-            title: 'Vagas de Emprego por Gênero',  
-            pieHole: 0.5 
-        };  
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));  
-        chart.draw(data, options);  
-        return false;  
-    }  
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript"> 
+        
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(DoPieChart);
+        
+        function DoPieChart() {     
+            $.getJSON('/SimBI/Empregos/?handler=EmpregosAtivosByGeneroAc', (data) => {
+                var dataArray = [['Rotulo','Valor','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {       
+                    title:"Acumulado",
+                    //legend: 'none',
+                    pieHole:0.4                     
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('chart_generoAc'));  
+                chart.draw(data, options);
+            });      
+            $.getJSON('/SimBI/Empregos/?handler=EmpregosAtivosByGenero', (data) => {
+                var dataArray = [['Rotulo','Valor','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    title:"Ativos",   
+                    //legend: 'none',    
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('chart_genero'));  
+                chart.draw(data, options);
+            });
+            $.getJSON('/SimBI/Empregos/?handler=Setores', (data) => {
+                var dataArray = [['Rotulo','Valor','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    title:"Distribuição",
+                    //legend: 'none',      
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('piechart_setores'));  
+                chart.draw(data, options);
+            });
+            $.getJSON('/SimBI/Empregos/?handler=Anual', (data) => {
+                var dataArray = [['Rotulo','Valor']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = { 
+                    title:"Variação mensal",
+                    chartArea: {  
+                        width: '50%'  
+                    },
+                    hAxis: {  
+                        minValue: 0  
+                    },  
+                    vAxis: {  
+                        title: 'Vagas'  
+                    },
+                    colors: ['#008080'],
+                    legend: { position: 'bottom' }
+                };  
+                var chart = new google.visualization.LineChart(document.getElementById('chart_month'));  
+                chart.draw(data, options);
+            });     
+        }  
+
     </script>     
 }

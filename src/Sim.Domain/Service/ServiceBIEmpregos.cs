@@ -231,7 +231,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var _month = new List<string>();
             var t_vagas = 0;
 
-            foreach (var item in _datalist.Where(o => o.Data != null)) {
+            foreach (var item in _datalist.Where(o => o.Data != null).OrderBy(o => o.Data)) {
                 t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {     
                     _month.Add(item.Data.Value.Date.ToString("MMM"));                    
@@ -241,7 +241,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             foreach(var x in from a in _month
                 group a by a into g
                 let count = g.Count()
-                orderby count descending
+                //orderby count descending
                 select new { Meses = g.Key, Valor = count })
             {
 
