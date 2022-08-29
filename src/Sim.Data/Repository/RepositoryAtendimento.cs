@@ -39,7 +39,9 @@ namespace Sim.Data.Repository
                         .Include(p => p.Pessoa)
                         .Include(e => e.Empresa)
                         .Include(s => s.Sebrae)
-                        .Where(a => a.Data.Value.Date.Year == ano)
+                        .Where(a => a.Data.Value.Date.Year == ano &&
+                                    a.Status == "Finalizado" && 
+                                    a.Ativo == true)
                         .AsNoTracking()
                         .OrderBy(o => o.Data)
                         .ToListAsync();

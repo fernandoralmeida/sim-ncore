@@ -187,7 +187,9 @@ namespace Sim.IoC
             //
             services.AddScoped<IAppServiceBIEmpregos, AppServiceBIEmpregos>();
             services.AddScoped<IServiceBIEmpregos, ServiceBIEmpregos>();
-            //
+
+            services.AddScoped<IAppServiceBIAtendimento, AppServiceBIAtendimento>();
+            services.AddScoped<IServiceBIAtendimento, ServiceBIAtendimento>();
 
             //
             services.AddScoped<IReceitaWS, ReceitaWS>();

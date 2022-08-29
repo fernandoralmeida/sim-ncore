@@ -1,6 +1,7 @@
 using Sim.Domain.Entity;
 using Sim.Domain.Interface.IService;
 using Sim.Domain.Interface.IRepository;
+using Sim.Domain.Validations;
 
 namespace Sim.Domain.Service;
 public class ServiceBIEmpregos : IServiceBIEmpregos
@@ -201,7 +202,8 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {  
                 t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {
-                    _list.Add(item.Ocupacao);
+                    if(item.Ocupacao != null)
+                        _list.Add(item.Ocupacao.NormalizeText().ToUpper());
                 }         
             }
 

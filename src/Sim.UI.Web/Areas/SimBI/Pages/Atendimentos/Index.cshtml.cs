@@ -10,6 +10,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
     [Authorize]
     public class IndexModel : PageModel
     {
+        private readonly IAppServiceBIAtendimento _biantendimento;
         private readonly IAppServiceAtendimento _appAtendimento;
         private readonly IAppServiceSetor _appSetores;
         private readonly IAppServiceSecretaria _appServiceSecretaria;
