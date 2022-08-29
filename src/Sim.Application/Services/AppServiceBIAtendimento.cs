@@ -10,28 +10,28 @@ public class AppServiceBIAtendimento : IAppServiceBIAtendimento
     public AppServiceBIAtendimento(IServiceBIAtendimento serviceBIAtendimento) {
         _atendimento = serviceBIAtendimento;        
     }
-    public async Task<EChartDual> DoListByAnoAsync(int ano)
+    public async Task<EChartDual> DoAsync(int ano)
     {
-        return await _atendimento.DoListByAnoAsync(ano);
+        return await _atendimento.DoAsync(ano);
     }
 
-    public async Task<IEnumerable<EChart>> DoListByClienteAsync(int ano)
+    public async Task<IEnumerable<EChart>> DoListClientesAsync(int ano)
     {
-        return await _atendimento.DoListByClienteAsync(ano);
+        return await _atendimento.DoListClientesAsync(ano);
     }
 
-    public async Task<IEnumerable<EChart>> DoListByService(int ano)
+    public async Task<IEnumerable<EChartDual>> DoListSetorAsync(int ano)
     {
-        return await _atendimento.DoListByService(ano);
+        return await _atendimento.DoListSetorAsync(ano);
     }
 
-    public async Task<IEnumerable<EChart>> DoListBySetorAsync(int ano)
+    public async Task<IEnumerable<EChartDual>> DoListUserAsync(int ano)
     {
-        return await _atendimento.DoListBySetorAsync(ano);
+        return await _atendimento.DoListUserAsync(ano);
     }
 
-    public async Task<IEnumerable<EChart>> DoListByUserAsync(int ano)
+    public async Task<IEnumerable<EChart>> DoListServiceAsync(int ano)
     {
-        return await _atendimento.DoListByUserAsync(ano);
+        return await _atendimento.DoListServiceAsync(ano);
     }
 }

@@ -4,10 +4,10 @@ namespace Sim.Domain.Interface.IService;
 
 public interface IServiceBIAtendimento {
 
-    Task<EChartDual> DoListByAnoAsync(int ano);
-    Task<IEnumerable<EChart>> DoListByClienteAsync(int ano);
-    Task<IEnumerable<EChart>> DoListBySetorAsync(int ano);
-    Task<IEnumerable<EChart>> DoListByUserAsync(int ano);
-    Task<IEnumerable<EChart>> DoListByService(int ano);
+    Task<EChartDual> DoAsync(int ano);
+    Task<IEnumerable<EChart>> DoListClientesAsync(int ano);
+    Task<IEnumerable<EChartDual>> DoListSetorAsync(int ano);
+    Task<IEnumerable<EChartDual>> DoListUserAsync(int ano);
+    Task<IEnumerable<EChart>> DoListServiceAsync(int ano);
     
 }

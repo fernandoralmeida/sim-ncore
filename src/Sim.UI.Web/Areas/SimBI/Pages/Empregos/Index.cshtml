@@ -20,135 +20,130 @@
         </div>
     </nav>
 </form>
-
-<div class="row">
       
-        <div class="row">
-            <div class="box-container-card">                    
-                <div class="box-column-7">
-                    <div class="box-column-row">
-                        <div class="box-card hoverable">
-                            <div class="card-header grey-text">Vagas</div>
-                            <div class="box-around">                            
-                                    <div class="box-cell-item-flex font-size-12">
-                                        <p class="blue-text font-h4"><i class="material-icons">playlist_add</i>@Model.VagasAtivas.Value</p>
-                                        <p class="grey-text">(@Model.VagasAtivas.Percent)</p>
-                                    </div>                                 
-                            </div>
-                        </div>
-                        <div class="box-card hoverable">
-                            <div class="card-header grey-text">Finalizadas</div>
-                            <div class="box-around">                            
-                                    <div class="box-cell-item-flex font-size-12">
-                                        <p class="light-green-text font-h4"><i class="material-icons">check</i>@Model.VagasFinalizadas.Value</p>
-                                        <p class="grey-text">(@Model.VagasFinalizadas.Percent)</p>
-                                    </div>                                 
-                            </div>
-                        </div>
-                        <div class="box-card hoverable">
-                            <div class="card-header grey-text">Acumulado</div>
-                            <div class="box-around">                            
-                                    <div class="box-cell-item-flex font-size-12">
-                                        <p class="blue-text font-h4"><i class="material-icons">playlist_add_check</i>@Model.VagasAcumuladas.Value</p>
-                                        <p class="grey-text">(@Model.VagasAcumuladas.Percent)</p>
-                                    </div>                                 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-column-row">
-                        <div class="box-card hoverable">
-                            <div class="card-header grey-text">Vagas</div>
-                            <div class="box-around">
-                                <div id="chart_genero" class="card-chart"></div>
-                                <!--
-                                @if(Model.VagasGeneros != null){
-                                    @foreach (var item in Model.VagasGeneros) {
-                                        <div class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.Label</p>
-                                            <p class="blue-text font-h5">@item.Value</p>
-                                            <p class="grey-text">(@item.Percent)</p>
-                                        </div>
-                                    }                                    
-                                } -->                             
-                            </div>
-                        </div>
-                        <div class="box-card hoverable">
-                            <div class="card-header grey-text">Vagas</div>
-                            <div class="box-around">
-                                <div id="chart_generoAc" class="card-chart"></div> 
-                                <!--
-                                @if(Model.VagasGenerosAcumuladas != null){
-                                    @foreach (var item in Model.VagasGenerosAcumuladas) {
-                                        float v1 = item.Value;
-                                        float v2 = Model.VagasAcumuladas.Value;
-                                        float r = (v1 / v2) * 100;
-                                        <div class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.Label</p>
-                                            <p class="blue-text font-h5">@item.Value</p>
-                                            <p class="grey-text">(@item.Percent)</p>
-                                        </div>
-                                    }                                    
-                                } -->                             
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="box-column-row">
-                        <div  class="box-card hoverable">
-                            <div class="card-header grey-text">Setores</div>
-                            <div class="box-around">    
-                                <div id="piechart_setores" class="card-chart"></div>
-                                <!--                          
-                                @if(Model.ListVagasBySetor != null) {
-                                    @foreach (var item in Model.ListVagasBySetor) {
-                                        <a class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.Label</p>
-                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
-                                            <p class="grey-text">(@item.Percent)</p>
-                                        </a>   
-                                    }
-                                } -->                                 
-                            </div>
-                        </div>
-                    <!--
-                    </div>
-                    <div class="box-column-row">-->
-                        <div class="box-card hoverable">
-                            <div class="card-header grey-text">Meses</div>
-                            <div class="box-around">
-                                <div id="chart_month" class="card-chart"></div>
-                                <!--
-                                @if(Model.ListVagasByMonth != null) {
-                                    @foreach (var item in Model.ListVagasByMonth) {
-                                        <a class="box-cell-item-flex font-size-12">
-                                            <p class="grey-text">@item.Label</p>
-                                            <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
-                                            <p class="grey-text">(@item.Percent)</p>
-                                        </a>   
-                                    }
-                                } -->                   
-                            </div>
-                        </div>
+<div class="row">
+    <div class="box-container-card">                    
+        <div class="box-column-7">
+            <div class="box-column-row">
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Vagas</div>
+                    <div class="box-around">                            
+                            <div class="box-cell-item-flex font-size-12">
+                                <p class="blue-text font-h4"><i class="material-icons">playlist_add</i>@Model.VagasAtivas.Value</p>
+                                <p class="grey-text">(@Model.VagasAtivas.Percent)</p>
+                            </div>                                 
                     </div>
                 </div>
-                <div class="box-column-3">
-                    <div class="box-card hoverable">
-                        <div class="card-header grey-text">Atividades</div>                            
-                        @if(Model.ListaOcupacoes != null) {
-                            foreach (var item in Model.ListaOcupacoes.Take(20)) {
-                                <div class="font-size-12 pdn-10 grey-text">
-                                    <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Label</p>
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Finalizadas</div>
+                    <div class="box-around">                            
+                            <div class="box-cell-item-flex font-size-12">
+                                <p class="light-green-text font-h4"><i class="material-icons">check</i>@Model.VagasFinalizadas.Value</p>
+                                <p class="grey-text">(@Model.VagasFinalizadas.Percent)</p>
+                            </div>                                 
+                    </div>
+                </div>
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Acumulado</div>
+                    <div class="box-around">                            
+                            <div class="box-cell-item-flex font-size-12">
+                                <p class="blue-text font-h4"><i class="material-icons">playlist_add_check</i>@Model.VagasAcumuladas.Value</p>
+                                <p class="grey-text">(@Model.VagasAcumuladas.Percent)</p>
+                            </div>                                 
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Vagas</div>
+                    <div class="box-around">
+                        <div id="chart_genero" class="card-chart"></div>
+                        <!--
+                        @if(Model.VagasGeneros != null){
+                            @foreach (var item in Model.VagasGeneros) {
+                                <div class="box-cell-item-flex font-size-12">
+                                    <p class="grey-text">@item.Label</p>
+                                    <p class="blue-text font-h5">@item.Value</p>
+                                    <p class="grey-text">(@item.Percent)</p>
                                 </div>
-                                <div class="divider"></div>
+                            }                                    
+                        } -->                             
+                    </div>
+                </div>
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Vagas</div>
+                    <div class="box-around">
+                        <div id="chart_generoAc" class="card-chart"></div> 
+                        <!--
+                        @if(Model.VagasGenerosAcumuladas != null){
+                            @foreach (var item in Model.VagasGenerosAcumuladas) {
+                                float v1 = item.Value;
+                                float v2 = Model.VagasAcumuladas.Value;
+                                float r = (v1 / v2) * 100;
+                                <div class="box-cell-item-flex font-size-12">
+                                    <p class="grey-text">@item.Label</p>
+                                    <p class="blue-text font-h5">@item.Value</p>
+                                    <p class="grey-text">(@item.Percent)</p>
+                                </div>
+                            }                                    
+                        } -->                             
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-column-row">
+                <div  class="box-card hoverable">
+                    <div class="card-header grey-text">Setores</div>
+                    <div class="box-around">    
+                        <div id="piechart_setores" class="card-chart"></div>
+                        <!--                          
+                        @if(Model.ListVagasBySetor != null) {
+                            @foreach (var item in Model.ListVagasBySetor) {
+                                <a class="box-cell-item-flex font-size-12">
+                                    <p class="grey-text">@item.Label</p>
+                                    <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
+                                    <p class="grey-text">(@item.Percent)</p>
+                                </a>   
                             }
-                        }                       
+                        } -->                                 
+                    </div>
+                </div>
+            <!--
+            </div>
+            <div class="box-column-row">-->
+                <div class="box-card hoverable">
+                    <div class="card-header grey-text">Meses</div>
+                    <div class="box-around">
+                        <div id="chart_month" class="card-chart"></div>
+                        <!--
+                        @if(Model.ListVagasByMonth != null) {
+                            @foreach (var item in Model.ListVagasByMonth) {
+                                <a class="box-cell-item-flex font-size-12">
+                                    <p class="grey-text">@item.Label</p>
+                                    <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
+                                    <p class="grey-text">(@item.Percent)</p>
+                                </a>   
+                            }
+                        } -->                   
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="box-column-3">
+            <div class="box-card hoverable">
+                <div class="card-header grey-text">Atividades</div>                            
+                @if(Model.ListaOcupacoes != null) {
+                    foreach (var item in Model.ListaOcupacoes.Take(20)) {
+                        <div class="font-size-12 pdn-10 grey-text">
+                            <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Label</p>
+                        </div>
+                        <div class="divider"></div>
+                    }
+                }                       
+            </div>
+        </div>
+    </div>
 </div>
-
 
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
