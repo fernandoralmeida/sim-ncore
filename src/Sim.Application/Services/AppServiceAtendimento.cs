@@ -19,6 +19,11 @@ namespace Sim.Application.Services
             return await _atendimento.DoListAendimentosAsyncBy(param);
         }
 
+        public async Task<IEnumerable<Atendimento>> DoListByAnoAsync(int ano)
+        {
+            return await _atendimento.DoListByAnoAsync(ano);
+        }
+
         public async Task<Atendimento> GetAtendimentoAsync(Guid id)
         {
             return await _atendimento.GetAtendimentoAsync(id);

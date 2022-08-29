@@ -599,45 +599,10 @@ button.accept-policy {
     width: calc(100% - 2.5rem);    
 }
 .card-chart {
+    display: block;
+    margin: 0 auto;
     overflow: hidden;
-    height: 300px;
-    width: 500px;   
-}
-/* End Sidenav  */
-@media only screen and (max-width: 1697px){
-    .card-chart {
-        overflow: hidden;
-        height: 300px;
-        width: 450px;   
-    }
-}
-@media only screen and (max-width: 1562px){
-    .card-chart {
-        overflow: hidden;
-        height: 300px;
-        width: 400px;   
-    }
-}
-@media only screen and (max-width: 1430px){
-    .card-chart {
-        overflow: hidden;
-        height: 300px;
-        width: 370px;   
-    }
-}
-@media only screen and (max-width: 1349px){
-    .card-chart {
-        overflow: hidden;
-        height: 300px;
-        width: 300px;   
-    }
-}
-@media only screen and (max-width: 1024px){
-    .card-chart {
-        overflow: hidden;
-        height: 300px;
-        width: 500px;   
-    }
+    height: 300px; 
 }
 @media only screen and (max-width: 992px) {
     .navbar-page-name {
@@ -677,9 +642,11 @@ button.accept-policy {
         width: 100%;  
     }
     .card-chart {
+        display: block;
+        margin: 0 auto;
         overflow: hidden;
-        height: 300px;
-        width: 450px;  
+        height: 300px; 
+        width: 400px;
     }
 }
 
@@ -779,33 +746,11 @@ button.accept-policy {
     .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
         padding: 0 20px 0 20px;
     }
-}
-
-@media only screen and (max-width: 510) {
     .card-chart {
+        display: block;
+        margin: 0 auto;
         overflow: hidden;
-        height: 300px;
-        width: 450px;  
+        height: 300px; 
+        width: 270px;
     }
-    
-}
-
-@media only screen and (max-width: 415px) {
-    .box-cell-item-flex{
-        padding: 1px;
-    }.card-chart {
-        overflow: hidden;
-        height: 300px;
-        width: 250px;  
-    } 
-}
-
-@media only screen and (max-width: 280px) {
-    .box-cell-item-flex{
-        padding: 1px;
-    }.card-chart {
-        overflow: hidden;
-        height: 300px;
-        width: 200px;  
-    } 
 }

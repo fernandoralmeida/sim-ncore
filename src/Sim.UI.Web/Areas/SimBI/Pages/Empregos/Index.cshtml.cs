@@ -42,29 +42,25 @@ public class IndexModel : PageModel {
         if(Ano.All(char.IsDigit)) {
             if(Convert.ToInt32(Ano) > 0) {
                 VagasAtivas = await _appServiceBiEmpregos.DoEmpregosAtivos(Convert.ToInt32(Ano));
-                VagasFinalizadas = await _appServiceBiEmpregos.DoEmpregosFinalizados(DateTime.Now.Year);
+                VagasFinalizadas = await _appServiceBiEmpregos.DoEmpregosFinalizados(Convert.ToInt32(Ano));
                 VagasAcumuladas = await _appServiceBiEmpregos.DoEmpregosAtivosAcumulado(Convert.ToInt32(Ano));
                 ListaOcupacoes = await _appServiceBiEmpregos.DoListOcupacoes(Convert.ToInt32(Ano));
            }
         }
     }
 
-    public async Task<JsonResult> OnGetEmpregosAtivosByGeneroAsync(){
-        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
-        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(DateTime.Now.Year));        
+    public async Task<JsonResult> OnGetEmpregosAtivosByGeneroAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByGenero(ano));        
     }
 
-    public async Task<JsonResult> OnGetEmpregosAtivosByGeneroAcAsync(){
-        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
-        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(DateTime.Now.Year));        
+    public async Task<JsonResult> OnGetEmpregosAtivosByGeneroAcAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByGeneroAcumulado(ano));        
     }
 
-    public async Task<JsonResult> OnGetAnualAsync(){
-        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
-        return new JsonResult(await _appServiceBiEmpregos.DoListVagasByMonth(DateTime.Now.Year));        
+    public async Task<JsonResult> OnGetAnualAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListVagasByMonth(ano));        
     }
-    public async Task<JsonResult> OnGetSetoresAsync(){
-        await _appServiceBiEmpregos.DoEmpregosAtivos(DateTime.Now.Year);
-        return new JsonResult(await _appServiceBiEmpregos.DoListVagasBySetor(DateTime.Now.Year));        
+    public async Task<JsonResult> OnGetSetoresAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListVagasBySetor(ano));        
     }
 }

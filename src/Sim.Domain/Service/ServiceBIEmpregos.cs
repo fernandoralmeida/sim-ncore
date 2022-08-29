@@ -6,19 +6,17 @@ namespace Sim.Domain.Service;
 public class ServiceBIEmpregos : IServiceBIEmpregos
 {
     private readonly IRepositoryEmpregos _repositoryEmpregos; 
-    private IEnumerable<Empregos> _datalist;
+
     public ServiceBIEmpregos(IRepositoryEmpregos repositoryEmpregos) {
         _repositoryEmpregos = repositoryEmpregos;
     }
     public async Task<EChart> DoEmpregosAtivos(int ano)
     {
-        _datalist = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
-
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var vagas = 0;
             var t_vagas = 0;
 
-            foreach(var item in _datalist)
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
             {
                 t_vagas += item.Vagas;
                 if(item.Status == "Ativo")
@@ -31,10 +29,10 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<EChart> DoEmpregosAtivosAcumulado(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var vagas = 0;
 
-            foreach(var item in _datalist)
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
             {
                 vagas += item.Vagas;               
             }
@@ -47,11 +45,11 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<EChart> DoEmpregosFinalizados(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var vagas = 0;
             var t_vagas = 0;
 
-            foreach(var item in _datalist)
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
             {
                 t_vagas += item.Vagas;
                 if(item.Status == "Finalizado")
@@ -66,7 +64,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByGenero(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             int t_vagas = 0;
             float vn = 0.0f;
             float vm = 0.0f;
@@ -78,7 +76,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
             var _return = new List<EChart>();
 
-            foreach(var item in _datalist)
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
             {
                 t_vagas += item.Vagas;
                 if(item.Status == "Ativo")
@@ -110,7 +108,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByGeneroAcumulado(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             float vn = 0.0f;
             float vm = 0.0f;
             float vf = 0.0f;
@@ -122,7 +120,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             int t_vagas = 0;
             var _return = new List<EChart>();
 
-            foreach(var item in _datalist)
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
             {
                 t_vagas += item.Vagas;
                 switch(item.Genero)
@@ -195,12 +193,12 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
  
     public async Task<IEnumerable<EChart>> DoListOcupacoes(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var _return = new List<EChart>();
             var _list = new List<string>();
             var t_vagas = 0;
 
-            foreach(var item in _datalist) {  
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {  
                 t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {
                     _list.Add(item.Ocupacao);
@@ -225,13 +223,13 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListVagasByMonth(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
 
             var _return = new List<EChart>();
             var _month = new List<string>();
             var t_vagas = 0;
 
-            foreach (var item in _datalist.Where(o => o.Data != null).OrderBy(o => o.Data)) {
+            foreach (var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {     
                     _month.Add(item.Data.Value.Date.ToString("MMM"));                    
@@ -257,13 +255,13 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListVagasBySetor(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
 
             var _return = new List<EChart>();
             var _setor = new List<string>();
             var t_vagas = 0;
 
-            foreach (var item in _datalist) {
+            foreach (var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 t_vagas += item.Vagas;
                 if (item.Empresa != null) {
                     if (item.Empresa.CNAE_Principal != null) {

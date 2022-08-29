@@ -31,7 +31,7 @@
                             <div class="card-header grey-text">Vagas</div>
                             <div class="box-around">                            
                                     <div class="box-cell-item-flex font-size-12">
-                                        <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.VagasAtivas.Value</p>
+                                        <p class="blue-text font-h4"><i class="material-icons">playlist_add</i>@Model.VagasAtivas.Value</p>
                                         <p class="grey-text">(@Model.VagasAtivas.Percent)</p>
                                     </div>                                 
                             </div>
@@ -49,7 +49,7 @@
                             <div class="card-header grey-text">Acumulado</div>
                             <div class="box-around">                            
                                     <div class="box-cell-item-flex font-size-12">
-                                        <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.VagasAcumuladas.Value</p>
+                                        <p class="blue-text font-h4"><i class="material-icons">playlist_add_check</i>@Model.VagasAcumuladas.Value</p>
                                         <p class="grey-text">(@Model.VagasAcumuladas.Percent)</p>
                                     </div>                                 
                             </div>
@@ -157,8 +157,9 @@
         google.charts.load('current', {packages: ['corechart']});
         google.charts.setOnLoadCallback(DoPieChart);
         
-        function DoPieChart() {     
-            $.getJSON('/SimBI/Empregos/?handler=EmpregosAtivosByGeneroAc', (data) => {
+        function DoPieChart() {    
+            var y = document.getElementById('search').value; 
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=EmpregosAtivosByGeneroAc`, (data) => {
                 var dataArray = [['Rotulo','Valor','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -166,27 +167,37 @@
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {       
                     title:"Acumulado",
+                    legend:'left',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
                     //legend: 'none',
                     pieHole:0.4                     
                 };  
                 var chart = new google.visualization.PieChart(document.getElementById('chart_generoAc'));  
                 chart.draw(data, options);
             });      
-            $.getJSON('/SimBI/Empregos/?handler=EmpregosAtivosByGenero', (data) => {
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=EmpregosAtivosByGenero`, (data) => {
                 var dataArray = [['Rotulo','Valor','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
-                    title:"Ativos",   
+                    title:"Ativos",  
+                    legend:'left', 
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
                     //legend: 'none',    
                     pieHole:0.4 
                 };  
                 var chart = new google.visualization.PieChart(document.getElementById('chart_genero'));  
                 chart.draw(data, options);
             });
-            $.getJSON('/SimBI/Empregos/?handler=Setores', (data) => {
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Setores`, (data) => {
                 var dataArray = [['Rotulo','Valor','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -194,13 +205,18 @@
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
                     title:"Distribuição",
+                    legend:'left',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
                     //legend: 'none',      
                     pieHole:0.4 
                 };  
                 var chart = new google.visualization.PieChart(document.getElementById('piechart_setores'));  
                 chart.draw(data, options);
             });
-            $.getJSON('/SimBI/Empregos/?handler=Anual', (data) => {
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Anual`, (data) => {
                 var dataArray = [['Rotulo','Valor']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
@@ -209,18 +225,22 @@
                 var options = { 
                     title:"Variação mensal",
                     chartArea: {  
-                        width: '50%'  
+                        width: '90%'  
                     },
                     hAxis: {  
-                        minValue: 0  
+                        minValue: 0
                     },  
                     vAxis: {  
                         title: 'Vagas'  
                     },
-                    colors: ['#008080'],
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    colors: ['#20b2aa'],
                     legend: { position: 'bottom' }
                 };  
-                var chart = new google.visualization.LineChart(document.getElementById('chart_month'));  
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_month'));  
                 chart.draw(data, options);
             });     
         }  

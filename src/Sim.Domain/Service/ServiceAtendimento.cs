@@ -349,5 +349,10 @@ namespace Sim.Domain.Service
         {
             return await _atendimento.DoListAendimentosAsyncBy(param);
         }
+
+        public async Task<IEnumerable<Atendimento>> DoListByAnoAsync(int ano)
+        {
+            return await _atendimento.DoListByAnoAsync(ano);
+        }
     }
 }

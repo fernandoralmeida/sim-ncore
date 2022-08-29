@@ -33,6 +33,18 @@ namespace Sim.Data.Repository
                         .ToListAsync();     
         }
 
+        public async Task<IEnumerable<Atendimento>> DoListByAnoAsync(int ano)
+        {
+            return await _db.Atendimento
+                        .Include(p => p.Pessoa)
+                        .Include(e => e.Empresa)
+                        .Include(s => s.Sebrae)
+                        .Where(a => a.Data.Value.Date.Year == ano)
+                        .AsNoTracking()
+                        .OrderBy(o => o.Data)
+                        .ToListAsync();
+        }
+
         public async Task<Atendimento> GetAtendimentoAsync(Guid id)
         {
             var ativo = Task.Run(() => _db.Atendimento

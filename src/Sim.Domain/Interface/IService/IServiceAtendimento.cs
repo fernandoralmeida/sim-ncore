@@ -4,6 +4,7 @@
     public interface IServiceAtendimento : IServiceBase<Atendimento>
     {
         Task<Atendimento> GetAtendimentoAsync(Guid id);
+        Task<IEnumerable<Atendimento>> DoListByAnoAsync(int ano);
         Task<IEnumerable<Atendimento>> DoListAendimentosAsyncBy(string param);
         Task<IEnumerable<Atendimento>> ListPessoaAsync(string cpf);
         Task<IEnumerable<Atendimento>> ListEmpresaAsync(string cnpj);
