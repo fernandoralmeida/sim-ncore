@@ -34,4 +34,24 @@ public class AppServiceBIAtendimento : IAppServiceBIAtendimento
     {
         return await _atendimento.DoListServiceAsync(ano);
     }
+
+    public async Task<IEnumerable<EChart>> DoListSetorPercentAsync(int ano)
+    {
+        return await _atendimento.DoListSetorPercentAsync(ano);
+    }
+
+    public async Task<IEnumerable<EChartDual>> DoListMonthAsync(int ano)
+    {
+        return await _atendimento.DoListMonthAsync(ano);
+    }
+
+    public async Task<IEnumerable<EChartDual>> DoListCanalAsync(int ano)
+    {
+        return await _atendimento.DoListCanalAsync(ano);
+    }
+
+    public async Task<IEnumerable<EChart>> DoListCanalPercentAsync(int ano)
+    {
+        return await _atendimento.DoListCanalPercentAsync(ano);
+    }
 }

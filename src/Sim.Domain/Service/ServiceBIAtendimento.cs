@@ -29,6 +29,50 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
         });
     }
 
+    public async Task<IEnumerable<EChartDual>> DoListCanalAsync(int ano)
+    {
+        return await Task.Run(async () => {
+            var _list = new List<EChartDual>();
+            var _count_at = new List<string>();
+            var _count_sv = new List<string>();
+            var _at = await _atendimento.DoListByAnoAsync(ano);
+
+            foreach(var item in _at.Where(s => s.Servicos != null && s.Canal != null)) {
+                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
+                    _count_sv.Add(item.Canal);
+                } 
+                _count_at.Add(item.Canal);  
+            }
+
+            foreach(var x in from a in _count_at
+                                group a by a into g
+                                let count = g.Count()
+                                orderby count descending
+                                select new { Name = g.Key, Value = count })
+            {
+                _list.Add(new EChartDual(x.Name, x.Value, _count_sv.Where(s => s.Contains(x.Name)).Count()));
+            }
+            
+            return _list;
+        });
+    }
+
+    public async Task<IEnumerable<EChart>> DoListCanalPercentAsync(int ano)
+    {
+        return await Task.Run(async () => {
+            var _list = new List<EChart>();
+            var _at = await _atendimento.DoListByAnoAsync(ano);
+
+            foreach(var item in _at.Where(s => s.Servicos != null)
+                                    .GroupBy(s => s.Canal)
+                                    .OrderByDescending(s => s.Count())) {
+                _list.Add(new EChart(item.Key, item.Count(), string.Empty));              
+            }
+
+            return _list;
+        });
+    }
+
     public async Task<IEnumerable<EChart>> DoListClientesAsync(int ano)
     {
         return await Task.Run(async () => {
@@ -46,6 +90,11 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
 
             return _list;
         });
+    }
+
+    public Task<IEnumerable<EChartDual>> DoListMonthAsync(int ano)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<IEnumerable<EChart>> DoListServiceAsync(int ano)
@@ -78,13 +127,75 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
         });
     }
 
-    public Task<IEnumerable<EChartDual>> DoListSetorAsync(int ano)
+    public async Task<IEnumerable<EChartDual>> DoListSetorAsync(int ano)
     {
-        throw new NotImplementedException();
+        return await Task.Run(async () => {
+            var _list = new List<EChartDual>();
+            var _count_at = new List<string>();
+            var _count_sv = new List<string>();
+            var _at = await _atendimento.DoListByAnoAsync(ano);
+
+            foreach(var item in _at.Where(s => s.Servicos != null)) {
+                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
+                    _count_sv.Add(item.Setor);
+                } 
+                _count_at.Add(item.Setor);  
+            }
+
+            foreach(var x in from a in _count_at
+                                group a by a into g
+                                let count = g.Count()
+                                orderby count descending
+                                select new { Name = g.Key, Value = count })
+            {
+                _list.Add(new EChartDual(x.Name, x.Value, _count_sv.Where(s => s.Contains(x.Name)).Count()));
+            }
+            
+            return _list;
+        });
     }
 
-    public Task<IEnumerable<EChartDual>> DoListUserAsync(int ano)
+    public async Task<IEnumerable<EChart>> DoListSetorPercentAsync(int ano)
     {
-        throw new NotImplementedException();
+        return await Task.Run(async () => {
+            var _list = new List<EChart>();
+            var _at = await _atendimento.DoListByAnoAsync(ano);
+
+            foreach(var item in _at.Where(s => s.Servicos != null)
+                                    .GroupBy(s => s.Setor)
+                                    .OrderByDescending(s => s.Count())) {
+                _list.Add(new EChart(item.Key, item.Count(), string.Empty));              
+            }
+
+            return _list;
+        });
+    }
+
+    public async Task<IEnumerable<EChartDual>> DoListUserAsync(int ano)
+    {
+        return await Task.Run(async () => {
+            var _list = new List<EChartDual>();
+            var _count_at = new List<string>();
+            var _count_sv = new List<string>();
+            var _at = await _atendimento.DoListByAnoAsync(ano);
+
+            foreach(var item in _at.Where(s => s.Servicos != null)) {                        
+                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
+                    _count_sv.Add(item.Owner_AppUser_Id);
+                } 
+                _count_at.Add(item.Owner_AppUser_Id);              
+            }
+
+            foreach(var x in from a in _count_at
+                                group a by a into g
+                                let count = g.Count()
+                                orderby count descending
+                                select new { User = g.Key, Atend = count })
+            {
+                _list.Add(new EChartDual(x.User, x.Atend, _count_sv.Where(s => s.Contains(x.User)).Count()));
+            }
+
+            return _list;
+        });
     }
 }

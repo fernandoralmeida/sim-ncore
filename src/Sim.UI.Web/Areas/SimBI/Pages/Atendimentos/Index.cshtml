@@ -9,7 +9,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-    <nav class="row hoverable">
+    <nav class="row">
         <div class="row nav-wrapper">
             <div class="input-field col s6 m6 l6">
                 <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Ano" type="search" required>
@@ -22,40 +22,40 @@
     <div class="box-container-card">
         <div class="box-column-7">
             <div class="box-column-row">
-                <div class="box-card hoverable">
+                <div class="box-card">
                     <div class="card-header grey-text">Atendimentos<i class="material-icons left">timelapse</i></div>
-                    <div class="box-around">                            
-                        <div class="box-cell-item-flex font-size-12">
-                            <p class="blue-text font-h4"><i class="material-icons">file_upload</i>@Model.Atendimentos.Value1</p>
-                        </div>                                 
-                    </div>
-                </div>
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Serviços<i class="material-icons left">construction</i></div>
-                    <div class="box-around">                            
-                        <div class="box-cell-item-flex font-size-12">
-                            <p class="light-green-text font-h4"><i class="material-icons">star</i>@Model.Atendimentos.Value2</p>
-                        </div>                                 
-                    </div>
-                </div>
-            </div>
-            <div class="box-column-row">
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Clientes<i class="material-icons left">person factory</i></div>
                     <div class="box-around">                            
                         <div id="chart_cliente" class="card-chart"></div>                               
                     </div>
                 </div>
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Meses<i class="material-icons left">calendar</i></div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
                     <div class="box-around">                            
-                        <div id="chart_cliente_l" class="card-chart"></div>                              
+                        <div id="piechart_canal_p" class="card-chart"></div>                              
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_canal" class="card-chart"></div>                              
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
+                    <div class="box-around">                            
+                        <div id="piechart_setores_p" class="card-chart"></div>                              
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_setores" class="card-chart"></div>                              
                     </div>
                 </div>
             </div>
         </div>
         <div class="box-column-3">
-            <div class="box-card hoverable">
+            <div class="box-card">
                 <div class="card-header grey-text">Serviços<i class="material-icons left">list</i></div>                            
                 @if(Model.Servicos != null) {
                     foreach (var item in Model.Servicos) {
@@ -69,6 +69,28 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="box-container-card">
+        <div class="box-column-7">
+
+        </div>
+        <div class="box-column-3">
+            <div class="box-card">
+                <div class="card-header grey-text">Usuários<i class="material-icons left">list</i></div>                            
+                @if(Model.Users != null) {
+                    foreach (var item in Model.Users) {
+                        <div class="font-size-12 pdn-10 grey-text">
+                            <p class="truncate"> @item.Label</p>
+                            <p class="truncate"><strong class="blue-text">@item.Value1</strong> - <strong class="light-green-text">@item.Value2</strong></p>
+                        </div>
+                        <div class="divider"></div>
+                    }
+                }                       
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -76,10 +98,10 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript"> 
         
-        google.charts.load('current', {packages: ['corechart']});
-        google.charts.setOnLoadCallback(DoPieChart);
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(DoCharts);
         
-        function DoPieChart() {    
+        function DoCharts() {    
             var y = document.getElementById('search').value; 
             $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Clientes`, (data) => {
                 var dataArray = [['Rotulo','Valor']];
@@ -88,56 +110,102 @@
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {       
-                    title:"Acumulado",
-                    legend:'left',
+                    legend:'top',
                     animation: {
                         duration: 1000,
                         easing: 'out'
                     },
-                    //legend: 'none',
                     pieHole:0.4                     
                 };  
                 var chart = new google.visualization.PieChart(document.getElementById('chart_cliente'));  
                 chart.draw(data, options);
-            });      
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=ClientesMeses`, (data) => {
-                var dataArray = [['Rotulo','Valor']];
-                $.each(data, function (i, item) {
-                    dataArray.push([item.label, item.value]); 
-                });
-                var data = google.visualization.arrayToDataTable(dataArray);  
-                var options = {
-                    title:"Ativos",  
-                    legend:'left', 
-                    animation: {
-                        duration: 1000,
-                        easing: 'out'
-                    },
-                    //legend: 'none',    
-                    pieHole:0.4 
-                };  
-                var chart = new google.visualization.PieChart(document.getElementById('chart_genero'));  
-                chart.draw(data, options);
             });
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Setores`, (data) => {
-                var dataArray = [['Rotulo','Valor','Percent']];
+            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=CanalPercent`, (data) => {
+                var dataArray = [['Setor','Valor','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
                 });
-                var data = google.visualization.arrayToDataTable(dataArray);  
+                var mdata = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
-                    title:"Distribuição",
-                    legend:'left',
+                    legend:'top',
                     animation: {
                         duration: 1000,
                         easing: 'out'
-                    },
-                    //legend: 'none',      
+                    },    
                     pieHole:0.4 
                 };  
-                var chart = new google.visualization.PieChart(document.getElementById('piechart_setores'));  
+                var chart = new google.visualization.PieChart(document.getElementById('piechart_canal_p'));  
+                chart.draw(mdata, options);
+            }); 
+            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Canal`, (data) => {
+                var dataArray = [['Setor','Atendimento','Servico']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value1, item.value2]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    chartArea: {  
+                        width: '80%'  
+                    },
+                    seriesType: 'bars',                    
+                    legend:'top'
+                };
+                var chart = new google.visualization.ComboChart(document.getElementById('chart_canal'));  
                 chart.draw(data, options);
             });
+
+            /*
+            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Setores`, (data) => {
+                var dataArray = [['Setor','Atendimento','Servico']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value1, item.value2]); 
+                });
+                var mdata = google.visualization.arrayToDataTable(dataArray);  
+                var materialOptions = {
+                    chart: {
+                        title: 'Por Setor',
+                        subtitle: 'atendimentos realizados'
+                    },
+                    bars: 'vertical'
+                };
+                var materialChart = new google.charts.Bar(document.getElementById('chart_setores'));
+                materialChart.draw(mdata, materialOptions);
+            });
+            */   
+            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=SetoresPercent`, (data) => {
+                var dataArray = [['Setor','Valor','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var mdata = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    legend:'top',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },    
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('piechart_setores_p'));  
+                chart.draw(mdata, options);
+            });  
+            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Setores`, (data) => {
+                var dataArray = [['Setor','Atendimento','Servico']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value1, item.value2]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    chartArea: {  
+                        width: '80%'  
+                    },
+                    seriesType: 'bars',                    
+                    legend:'top'
+                };
+                var chart = new google.visualization.ComboChart(document.getElementById('chart_setores'));  
+                chart.draw(data, options);
+            });
+            /*
             $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Anual`, (data) => {
                 var dataArray = [['Rotulo','Valor']];
                 $.each(data, function (i, item) {
@@ -164,8 +232,7 @@
                 };  
                 var chart = new google.visualization.AreaChart(document.getElementById('chart_month'));  
                 chart.draw(data, options);
-            });     
-        }  
-
+            }); */    
+        }
     </script>     
 }
