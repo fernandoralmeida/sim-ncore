@@ -26,14 +26,14 @@
                     <div class="card-header grey-text">Panorama Geral<i class="material-icons left">view_module</i></div>
                     <div class="box-around">                            
                         @if(Model.Panorama != null) {                   
-                            <div class="box-cell-item-flex font-size-12">                            
-                                <p class="light-blue-text font-h6">@Model.Panorama.Value1<i class="material-icons left">timelapse</i></p>
-                                <p class="grey-text">(Atendimentos)</p>
-                            </div>       
-                            <div class="box-cell-item-flex font-size-12">
-                                <p class="light-green-text font-h6">@Model.Panorama.Value2<i class="material-icons left">construction</i></p>
-                                <p class="grey-text">(Serviços)</p>
-                            </div>
+                            <a class="box-cell-item-flex font-size-12">                            
+                                <p class="light-blue-text font-h5">@Model.Panorama.Value1</p>
+                                <p class="grey-text">(<i class="material-icons">timelapse</i>)</p>
+                            </a>       
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="light-green-text font-h5">@Model.Panorama.Value2</p>
+                                <p class="grey-text">(<i class="material-icons">construction</i>)</p>
+                            </a>
                         }                        
                     </div>
                 </div>
@@ -43,6 +43,12 @@
                     <div class="card-header grey-text">Atendimentos<i class="material-icons left">timelapse</i></div>
                     <div class="box-around">                            
                         <div id="chart_cliente" class="card-chart"></div>                               
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Serviços<i class="material-icons left">construction</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_services" class="card-chart"></div>                              
                     </div>
                 </div>
                 <div class="box-card">
@@ -67,12 +73,6 @@
                     <div class="card-header grey-text">Setores Serviços<i class="material-icons left">local_offer</i></div>
                     <div class="box-around">                            
                         <div id="chart_setores" class="card-chart"></div>                              
-                    </div>
-                </div>
-                <div class="box-card">
-                    <div class="card-header grey-text">Serviços<i class="material-icons left">construction</i></div>
-                    <div class="box-around">                            
-                        <div id="chart_services" class="card-chart"></div>                              
                     </div>
                 </div>
             </div>
@@ -226,8 +226,7 @@
                         width: '80%'  
                     },
                     seriesType: 'bars',  
-                    colors: ['#2196f3','#20b2aa'],                  
-                    legend:'top'
+                    colors: ['#20b2aa']
                 };
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_services'));  
                 chart.draw(data, options);
