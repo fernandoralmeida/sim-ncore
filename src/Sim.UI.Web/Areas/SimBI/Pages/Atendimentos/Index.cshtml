@@ -23,6 +23,23 @@
         <div class="box-column-7">
             <div class="box-column-row">
                 <div class="box-card">
+                    <div class="card-header grey-text">Panorama Geral<i class="material-icons left">view_module</i></div>
+                    <div class="box-around">                            
+                        @if(Model.Panorama != null) {                   
+                            <div class="box-cell-item-flex font-size-12">                            
+                                <p class="light-blue-text font-h6">@Model.Panorama.Value1<i class="material-icons left">timelapse</i></p>
+                                <p class="grey-text">(Atendimentos)</p>
+                            </div>       
+                            <div class="box-cell-item-flex font-size-12">
+                                <p class="light-green-text font-h6">@Model.Panorama.Value2<i class="material-icons left">construction</i></p>
+                                <p class="grey-text">(Serviços)</p>
+                            </div>
+                        }                        
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card">
                     <div class="card-header grey-text">Atendimentos<i class="material-icons left">timelapse</i></div>
                     <div class="box-around">                            
                         <div id="chart_cliente" class="card-chart"></div>                               
@@ -63,7 +80,7 @@
                 <div class="box-card">
                     <div class="card-header grey-text">Variação Mensal<i class="material-icons left">calendar_month</i></div>
                     <div class="box-around">                            
-                        <div id="chart_month" class="card-chart"></div>                              
+                        <div id="chart_month" class="card-chart-m"></div>                              
                     </div>
                 </div>
             </div>

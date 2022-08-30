@@ -603,6 +603,12 @@ button.accept-policy {
     margin: 0 auto;
     overflow: hidden;
     height: 300px; 
+}.card-chart-m {
+    display: block;
+    margin: 0 auto;
+    overflow: hidden;
+    height: 300px; 
+    width: 700px;
 }
 @media only screen and (max-width: 992px) {
     .navbar-page-name {
@@ -647,6 +653,13 @@ button.accept-policy {
         overflow: hidden;
         height: 300px; 
         width: 400px;
+    }
+    .card-chart-m {
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        height: 300px; 
+        width: 600px;
     }
 }
 
@@ -747,6 +760,13 @@ button.accept-policy {
         padding: 0 20px 0 20px;
     }
     .card-chart {
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        height: 300px; 
+        width: 270px;
+    }
+    .card-chart-m {
         display: block;
         margin: 0 auto;
         overflow: hidden;

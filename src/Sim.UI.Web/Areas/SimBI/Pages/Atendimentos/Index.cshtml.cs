@@ -17,7 +17,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
 
         [BindProperty(SupportsGet = true)]
         public string Ano { get; set; }
-
+        public EChartDual Panorama { get; set; }
         public IEnumerable<EChart> Clientes { get; set; }
         public IEnumerable<EChartThree> ClientesMonths { get; set; }
         public IEnumerable<EChart> Servicos { get; set; }
@@ -28,6 +28,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
         }
         public async Task OnGetAsync() {
             Ano = DateTime.Now.Year.ToString();
+            Panorama = await _biantendimento.DoAsync(Convert.ToInt32(Ano));
             Users = await _biantendimento.DoListUserAsync(Convert.ToInt32(Ano));
         }
 
@@ -61,6 +62,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
         public async Task OnPostAsync() {
             if(Ano.All(char.IsDigit)) {
                 if(Convert.ToInt32(Ano) > 0) {
+                    Panorama = await _biantendimento.DoAsync(Convert.ToInt32(Ano));
                     Users = await _biantendimento.DoListUserAsync(Convert.ToInt32(Ano));
                 }
             }
