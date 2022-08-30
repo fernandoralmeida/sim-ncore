@@ -13,7 +13,7 @@
 <form method="post">
     <nav class="row hoverable">
         <div class="row nav-wrapper">
-            <div class="input-field col s12 m12 l2">
+            <div class="input-field col s12 m12 l12">
                 <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Ano" type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>      
@@ -25,113 +25,94 @@
     <div class="box-container-card">                    
         <div class="box-column-7">
             <div class="box-column-row">
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Vagas</div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Vagas<i class="material-icons left">playlist_add</i></div>
                     <div class="box-around">                            
                             <div class="box-cell-item-flex font-size-12">
-                                <p class="blue-text font-h4"><i class="material-icons">playlist_add</i>@Model.VagasAtivas.Value</p>
+                                <p class="blue-text font-h4">@Model.VagasAtivas.Value</p>
                                 <p class="grey-text">(@Model.VagasAtivas.Percent)</p>
                             </div>                                 
                     </div>
                 </div>
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Finalizadas</div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Finalizadas<i class="material-icons left">check</i></div>
                     <div class="box-around">                            
                             <div class="box-cell-item-flex font-size-12">
-                                <p class="light-green-text font-h4"><i class="material-icons">check</i>@Model.VagasFinalizadas.Value</p>
+                                <p class="light-green-text font-h4">@Model.VagasFinalizadas.Value</p>
                                 <p class="grey-text">(@Model.VagasFinalizadas.Percent)</p>
                             </div>                                 
                     </div>
                 </div>
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Acumulado</div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Acumulado<i class="material-icons left">playlist_add_check</i></div>
                     <div class="box-around">                            
                             <div class="box-cell-item-flex font-size-12">
-                                <p class="blue-text font-h4"><i class="material-icons">playlist_add_check</i>@Model.VagasAcumuladas.Value</p>
+                                <p class="blue-text font-h4">@Model.VagasAcumuladas.Value</p>
                                 <p class="grey-text">(@Model.VagasAcumuladas.Percent)</p>
                             </div>                                 
                     </div>
                 </div>
             </div>
             <div class="box-column-row">
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Vagas</div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Experiência<i class="material-icons left">military_tech</i></div>
                     <div class="box-around">
-                        <div id="chart_genero" class="card-chart"></div>
-                        <!--
-                        @if(Model.VagasGeneros != null){
-                            @foreach (var item in Model.VagasGeneros) {
-                                <div class="box-cell-item-flex font-size-12">
-                                    <p class="grey-text">@item.Label</p>
-                                    <p class="blue-text font-h5">@item.Value</p>
-                                    <p class="grey-text">(@item.Percent)</p>
-                                </div>
-                            }                                    
-                        } -->                             
+                        <div id="chart_exp" class="card-chart"></div>                           
                     </div>
                 </div>
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Vagas</div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Acumulado<i class="material-icons left">workspaces</i></div>
                     <div class="box-around">
-                        <div id="chart_generoAc" class="card-chart"></div> 
-                        <!--
-                        @if(Model.VagasGenerosAcumuladas != null){
-                            @foreach (var item in Model.VagasGenerosAcumuladas) {
-                                float v1 = item.Value;
-                                float v2 = Model.VagasAcumuladas.Value;
-                                float r = (v1 / v2) * 100;
-                                <div class="box-cell-item-flex font-size-12">
-                                    <p class="grey-text">@item.Label</p>
-                                    <p class="blue-text font-h5">@item.Value</p>
-                                    <p class="grey-text">(@item.Percent)</p>
-                                </div>
-                            }                                    
-                        } -->                             
+                        <div id="chart_expAc" class="card-chart"></div>                          
                     </div>
                 </div>
             </div>
-
             <div class="box-column-row">
-                <div  class="box-card hoverable">
-                    <div class="card-header grey-text">Setores</div>
-                    <div class="box-around">    
-                        <div id="piechart_setores" class="card-chart"></div>
-                        <!--                          
-                        @if(Model.ListVagasBySetor != null) {
-                            @foreach (var item in Model.ListVagasBySetor) {
-                                <a class="box-cell-item-flex font-size-12">
-                                    <p class="grey-text">@item.Label</p>
-                                    <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
-                                    <p class="grey-text">(@item.Percent)</p>
-                                </a>   
-                            }
-                        } -->                                 
+                <div class="box-card">
+                    <div class="card-header grey-text">Gênero<i class="material-icons left">all_inclusive</i></div>
+                    <div class="box-around">
+                        <div id="chart_genero" class="card-chart"></div>                           
                     </div>
                 </div>
-            <!--
-            </div>
-            <div class="box-column-row">-->
-                <div class="box-card hoverable">
-                    <div class="card-header grey-text">Meses</div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Acumulado<i class="material-icons left">workspaces</i></div>
                     <div class="box-around">
-                        <div id="chart_month" class="card-chart"></div>
-                        <!--
-                        @if(Model.ListVagasByMonth != null) {
-                            @foreach (var item in Model.ListVagasByMonth) {
-                                <a class="box-cell-item-flex font-size-12">
-                                    <p class="grey-text">@item.Label</p>
-                                    <p class="blue-text font-h6"><i class="tiny material-icons">file_upload</i>@item.Value</p>
-                                    <p class="grey-text">(@item.Percent)</p>
-                                </a>   
-                            }
-                        } -->                   
+                        <div id="chart_generoAc" class="card-chart"></div>                          
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Inclusivas<i class="material-icons left">accessible_forward</i></div>
+                    <div class="box-around">
+                        <div id="chart_inclusao" class="card-chart"></div>                           
+                    </div>
+                </div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Acumulado<i class="material-icons left">workspaces</i></div>
+                    <div class="box-around">
+                        <div id="chart_inclusaoAc" class="card-chart"></div>                          
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div  class="box-card">
+                    <div class="card-header grey-text">Setores<i class="material-icons left">location_on</i></div>
+                    <div class="box-around">    
+                        <div id="piechart_setores" class="card-chart"></div>                             
+                    </div>
+                </div>
+                    <div class="box-card">
+                    <div class="card-header grey-text">Variação Mensal<i class="material-icons left">calendar_month</i></div>
+                    <div class="box-around">
+                        <div id="chart_month" class="card-chart"></div>                
                     </div>
                 </div>
             </div>
         </div>
         <div class="box-column-3">
-            <div class="box-card hoverable">
-                <div class="card-header grey-text">Atividades</div>                            
+            <div class="box-card">
+                <div class="card-header grey-text">Atividades<i class="material-icons left">list</i></div>                            
                 @if(Model.ListaOcupacoes != null) {
                     foreach (var item in Model.ListaOcupacoes.Take(20)) {
                         <div class="font-size-12 pdn-10 grey-text">
@@ -154,14 +135,85 @@
         
         function DoPieChart() {    
             var y = document.getElementById('search').value; 
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=EmpregosAtivosByGeneroAc`, (data) => {
-                var dataArray = [['Rotulo','Valor','Percent']];
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Experiencia`, (data) => {
+                var dataArray = [['Experiência','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
-                var options = {       
-                    title:"Acumulado",
+                var options = { 
+                    legend:'left', 
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    //legend: 'none',    
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('chart_exp'));  
+                chart.draw(data, options);
+            });
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=ExperienciaAc`, (data) => {
+                var dataArray = [['Experiência','Vagas','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    legend:'left',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    //legend: 'none',      
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('chart_expAc'));  
+                chart.draw(data, options);
+            });   
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Inclusao`, (data) => {
+                var dataArray = [['Inclusica','Vagas','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = { 
+                    legend:'left', 
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    //legend: 'none',    
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('chart_inclusao'));  
+                chart.draw(data, options);
+            });
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=InclusaoAc`, (data) => {
+                var dataArray = [['Gênero','Vagas','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    legend:'left',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    //legend: 'none',      
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('chart_inclusaoAc'));  
+                chart.draw(data, options);
+            });   
+            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=EmpregosAtivosByGeneroAc`, (data) => {
+                var dataArray = [['Gênero','Vagas','Percent']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = { 
                     legend:'left',
                     animation: {
                         duration: 1000,
@@ -172,15 +224,14 @@
                 };  
                 var chart = new google.visualization.PieChart(document.getElementById('chart_generoAc'));  
                 chart.draw(data, options);
-            });      
+            });  
             $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=EmpregosAtivosByGenero`, (data) => {
-                var dataArray = [['Rotulo','Valor','Percent']];
+                var dataArray = [['Gênero','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
-                    title:"Ativos",  
                     legend:'left', 
                     animation: {
                         duration: 1000,
@@ -193,13 +244,12 @@
                 chart.draw(data, options);
             });
             $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Setores`, (data) => {
-                var dataArray = [['Rotulo','Valor','Percent']];
+                var dataArray = [['Setor','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
-                    title:"Distribuição",
                     legend:'left',
                     animation: {
                         duration: 1000,
@@ -212,22 +262,18 @@
                 chart.draw(data, options);
             });
             $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Anual`, (data) => {
-                var dataArray = [['Rotulo','Valor']];
+                var dataArray = [['Mês','Vagas']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = { 
-                    title:"Variação mensal",
                     chartArea: {  
                         width: '90%'  
                     },
                     hAxis: {  
                         minValue: 0
                     },  
-                    vAxis: {  
-                        title: 'Vagas'  
-                    },
                     animation: {
                         duration: 1000,
                         easing: 'out'

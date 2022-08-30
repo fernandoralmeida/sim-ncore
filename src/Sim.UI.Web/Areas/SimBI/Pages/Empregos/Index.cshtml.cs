@@ -63,4 +63,17 @@ public class IndexModel : PageModel {
     public async Task<JsonResult> OnGetSetoresAsync(int ano){
         return new JsonResult(await _appServiceBiEmpregos.DoListVagasBySetor(ano));        
     }
+
+    public async Task<JsonResult> OnGetInclusaoAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByInclusao(ano));        
+    }
+    public async Task<JsonResult> OnGetInclusaoAcAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByInclusaoAcumulado(ano));        
+    }
+    public async Task<JsonResult> OnGetExperienciaAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByTipo(ano));        
+    }
+    public async Task<JsonResult> OnGetExperienciaAcAsync(int ano){
+        return new JsonResult(await _appServiceBiEmpregos.DoListEmpregosAtivosByTipoAcumulado(ano));        
+    }
 }

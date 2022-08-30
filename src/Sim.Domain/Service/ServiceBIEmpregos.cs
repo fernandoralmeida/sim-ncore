@@ -154,9 +154,15 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByInclusao(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
+            foreach(var item in _rp.Where(s => s.Status == "Ativo")
+                                    .GroupBy(g => g.Inclusivo)
+                                    .OrderByDescending(o => o.Count())) {
+                _return.Add(new EChart(item.Key, item.Count(), string.Empty));
+            }
 
             return _return;
           });
@@ -164,9 +170,15 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByInclusaoAcumulado(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
+            foreach(var item in _rp.Where(s => s.Status != "Cancelado")
+                                    .GroupBy(g => g.Inclusivo)
+                                    .OrderByDescending(o => o.Count())) {
+                _return.Add(new EChart(item.Key, item.Count(), string.Empty));
+            }
 
             return _return;
           });
@@ -174,9 +186,15 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByTipo(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
+            foreach(var item in _rp.Where(s => s.Status == "Ativo")
+                                    .GroupBy(g => g.Experiencia)
+                                    .OrderByDescending(o => o.Count())) {
+                _return.Add(new EChart(item.Key, item.Count(), string.Empty));
+            }
 
             return _return;
           });
@@ -184,9 +202,15 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByTipoAcumulado(int ano)
     {
-        return await Task.Run(() => {
+        return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
+            foreach(var item in _rp.Where(s => s.Status != "Cancelado")
+                                    .GroupBy(g => g.Experiencia)
+                                    .OrderByDescending(o => o.Count())) {
+                _return.Add(new EChart(item.Key, item.Count(), string.Empty));
+            }
 
             return _return;
           });

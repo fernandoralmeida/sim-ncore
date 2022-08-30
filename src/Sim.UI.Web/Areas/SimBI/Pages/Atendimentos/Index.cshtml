@@ -11,7 +11,7 @@
 <form method="post">
     <nav class="row">
         <div class="row nav-wrapper">
-            <div class="input-field col s6 m6 l6">
+            <div class="input-field col s12 m12 l12">
                 <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Ano" type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>      
@@ -58,19 +58,19 @@
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Canal Serviços<i class="material-icons left">chat_bubble</i></div>
+                    <div class="card-header grey-text">Canal Serviços<i class="material-icons left">workspaces</i></div>
                     <div class="box-around">                            
                         <div id="chart_canal" class="card-chart"></div>                              
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
+                    <div class="card-header grey-text">Setores<i class="material-icons left">location_on</i></div>
                     <div class="box-around">                            
                         <div id="piechart_setores_p" class="card-chart"></div>                              
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Setores Serviços<i class="material-icons left">local_offer</i></div>
+                    <div class="card-header grey-text">Setores Serviços<i class="material-icons left">workspaces</i></div>
                     <div class="box-around">                            
                         <div id="chart_setores" class="card-chart"></div>                              
                     </div>
@@ -87,13 +87,13 @@
         </div>
         <div class="box-column-3">
             <div class="box-card">
-                <div class="card-header grey-text">Usuários<i class="material-icons left">list</i></div>                            
+                <div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>                            
                 @if(Model.Users != null) {
                     foreach (var item in Model.Users) {
-                        <div class="font-size-12 pdn-10 grey-text">
+                        <div class="font-size-12 pdn-10 grey-text center">                            
                             <p class="truncate"> @item.Label</p>
-                            <p class="truncate"><strong class="blue-text">@item.Value1</strong> - <strong class="light-green-text">@item.Value2</strong></p>
-                        </div>
+                            <p class="truncate"><strong class="blue-text">@item.Value1</strong> - <strong class="light-green-text">@item.Value2</strong></p>                            
+                       </div>
                         <div class="divider"></div>
                     }
                 }                       

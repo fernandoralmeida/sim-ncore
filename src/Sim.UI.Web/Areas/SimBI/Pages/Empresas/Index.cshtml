@@ -48,7 +48,7 @@
             <div class="box-container-card">                    
                 <div class="box-column-7">
                     <div class="box-column-row">
-                        <div class="box-card hoverable">
+                        <div class="box-card">
                             <div class="card-header grey-text">Empresas @Model.Input.Ano</div>
                             <div class="box-stretch mgn-10">
                                 <div class="grey-text">
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-card hoverable">
+                        <div class="box-card">
                             <div class="card-header grey-text">Porte</div>
                             <div class="box-around">                            
                                 @foreach (var op in emp.Porte)
@@ -84,7 +84,7 @@
                                 }   
                             </div>
                         </div>
-                        <div class="box-card hoverable">
+                        <div class="box-card">
                             <div class="card-header grey-text">Fiscal</div>
                             <div class="box-around">
                                 @{
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <div class="box-column-row">
-                        <div  class="box-card hoverable">
+                        <div  class="box-card">
                             <div class="card-header grey-text">Setores</div>
                             <div class="box-around">
                                 @foreach (var st in emp.ListaSetores)
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                     <div class="box-column-row">
-                        <div class="box-card hoverable">
+                        <div class="box-card">
                             <div class="card-header grey-text">Novas Empresas</div>
                             <div class="box-around">
                                 @foreach (var op in emp.ListaMensal)
@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 <div class="box-column-3">
-                    <div class="box-card hoverable" style="overflow-x:auto;">
+                    <div class="box-card" style="overflow-x:auto;">
                         <div class="card-header grey-text">Atividades</div>                            
                         @{int v = 0;}
                         @foreach (var op in emp.ListaAtividades)
