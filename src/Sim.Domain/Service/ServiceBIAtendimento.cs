@@ -92,9 +92,32 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
         });
     }
 
-    public Task<IEnumerable<EChartDual>> DoListMonthAsync(int ano)
+    public async Task<IEnumerable<EChartDual>> DoListMonthAsync(int ano)
     {
-        throw new NotImplementedException();
+        return await Task.Run(async () => {
+
+            var _return = new List<EChartDual>();
+            var _atcount = new List<string>();
+            var _svcount = new List<string>();
+
+            var _at =  await _atendimento.DoListByAnoAsync(ano);
+
+            foreach (var item in _at.Where(s => s.Servicos != null)) {
+                _atcount.Add(item.Data.Value.Date.ToString("MMM"));
+                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
+                    _svcount.Add(item.Data.Value.Date.ToString("MMM"));
+                }               
+            }
+
+            foreach(var x in from a in _atcount
+                group a by a into g
+                let count = g.Count()
+                select new { Mes = g.Key, Valor = count }) {       
+                _return.Add(new EChartDual(x.Mes, x.Valor, _svcount.Where(s => s.Contains(x.Mes)).Count()));
+            }
+
+            return _return;
+        });
     }
 
     public async Task<IEnumerable<EChart>> DoListServiceAsync(int ano)
@@ -123,7 +146,7 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
                 _total.Add(new EChart(x.Servico, x.Qtde, string.Empty));
             }
 
-            return _total;
+            return _total.Take(20);
         });
     }
 

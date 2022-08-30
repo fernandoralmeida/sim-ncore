@@ -28,7 +28,6 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
         }
         public async Task OnGetAsync() {
             Ano = DateTime.Now.Year.ToString();
-            Servicos = await _biantendimento.DoListServiceAsync(Convert.ToInt32(Ano));
             Users = await _biantendimento.DoListUserAsync(Convert.ToInt32(Ano));
         }
 
@@ -52,10 +51,16 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Atendimentos
             return new JsonResult(await _biantendimento.DoListCanalPercentAsync(ano));        
         }
 
+        public async Task<JsonResult> OnGetServicosAsync(int ano) {
+            return new JsonResult(await _biantendimento.DoListServiceAsync(ano));        
+        }
+        public async Task<JsonResult> OnGetAnualAsync(int ano) {
+            return new JsonResult(await _biantendimento.DoListMonthAsync(ano));        
+        }
+
         public async Task OnPostAsync() {
             if(Ano.All(char.IsDigit)) {
                 if(Convert.ToInt32(Ano) > 0) {
-                    Servicos = await _biantendimento.DoListServiceAsync(Convert.ToInt32(Ano));
                     Users = await _biantendimento.DoListUserAsync(Convert.ToInt32(Ano));
                 }
             }

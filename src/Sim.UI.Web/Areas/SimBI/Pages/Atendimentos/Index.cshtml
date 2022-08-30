@@ -29,13 +29,13 @@
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
+                    <div class="card-header grey-text">Canal<i class="material-icons left">chat_bubble</i></div>
                     <div class="box-around">                            
                         <div id="piechart_canal_p" class="card-chart"></div>                              
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
+                    <div class="card-header grey-text">Canal Serviços<i class="material-icons left">chat_bubble</i></div>
                     <div class="box-around">                            
                         <div id="chart_canal" class="card-chart"></div>                              
                     </div>
@@ -47,32 +47,26 @@
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Setores<i class="material-icons left">local_offer</i></div>
+                    <div class="card-header grey-text">Setores Serviços<i class="material-icons left">local_offer</i></div>
                     <div class="box-around">                            
                         <div id="chart_setores" class="card-chart"></div>                              
                     </div>
                 </div>
+                <div class="box-card">
+                    <div class="card-header grey-text">Serviços<i class="material-icons left">construction</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_services" class="card-chart"></div>                              
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="box-column-3">
-            <div class="box-card">
-                <div class="card-header grey-text">Serviços<i class="material-icons left">list</i></div>                            
-                @if(Model.Servicos != null) {
-                    foreach (var item in Model.Servicos) {
-                        <div class="font-size-12 pdn-10 grey-text">
-                            <p class="truncate"><strong class="light-green-text">@item.Value</strong> - @item.Label</p>
-                        </div>
-                        <div class="divider"></div>
-                    }
-                }                       
+            <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Variação Mensal<i class="material-icons left">calendar_month</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_month" class="card-chart"></div>                              
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="box-container-card">
-        <div class="box-column-7">
-
         </div>
         <div class="box-column-3">
             <div class="box-card">
@@ -91,9 +85,6 @@
     </div>
 </div>
 
-
-
-
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript"> 
@@ -104,13 +95,13 @@
         function DoCharts() {    
             var y = document.getElementById('search').value; 
             $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Clientes`, (data) => {
-                var dataArray = [['Rotulo','Valor']];
+                var dataArray = [['Cliente','Aten.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {       
-                    legend:'top',
+                    legend:'left',
                     animation: {
                         duration: 1000,
                         easing: 'out'
@@ -121,13 +112,13 @@
                 chart.draw(data, options);
             });
             $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=CanalPercent`, (data) => {
-                var dataArray = [['Setor','Valor','Percent']];
+                var dataArray = [['Canal','Aten.','Perc.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
                 });
                 var mdata = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
-                    legend:'top',
+                    legend:'left',
                     animation: {
                         duration: 1000,
                         easing: 'out'
@@ -138,7 +129,7 @@
                 chart.draw(mdata, options);
             }); 
             $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Canal`, (data) => {
-                var dataArray = [['Setor','Atendimento','Servico']];
+                var dataArray = [['Canal','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
                 });
@@ -147,7 +138,8 @@
                     chartArea: {  
                         width: '80%'  
                     },
-                    seriesType: 'bars',                    
+                    seriesType: 'bars', 
+                    colors: ['#2196f3','#20b2aa'],                   
                     legend:'top'
                 };
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_canal'));  
@@ -173,13 +165,13 @@
             });
             */   
             $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=SetoresPercent`, (data) => {
-                var dataArray = [['Setor','Valor','Percent']];
+                var dataArray = [['Setor','Aten.','Perc.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
                 });
                 var mdata = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
-                    legend:'top',
+                    legend:'left',
                     animation: {
                         duration: 1000,
                         easing: 'out'
@@ -190,7 +182,7 @@
                 chart.draw(mdata, options);
             });  
             $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Setores`, (data) => {
-                var dataArray = [['Setor','Atendimento','Servico']];
+                var dataArray = [['Setor','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
                 });
@@ -199,40 +191,54 @@
                     chartArea: {  
                         width: '80%'  
                     },
-                    seriesType: 'bars',                    
+                    seriesType: 'bars',
+                    colors: ['#2196f3','#20b2aa'],                    
                     legend:'top'
                 };
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_setores'));  
                 chart.draw(data, options);
             });
-            /*
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Anual`, (data) => {
-                var dataArray = [['Rotulo','Valor']];
+            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Servicos`, (data) => {
+                var dataArray = [['Serviço','Valor']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
                 });
                 var data = google.visualization.arrayToDataTable(dataArray);  
-                var options = { 
-                    title:"Variação mensal",
+                var options = {
                     chartArea: {  
-                        width: '90%'  
+                        width: '80%'  
+                    },
+                    seriesType: 'bars',  
+                    colors: ['#2196f3','#20b2aa'],                  
+                    legend:'top'
+                };
+                var chart = new google.visualization.ComboChart(document.getElementById('chart_services'));  
+                chart.draw(data, options);
+            });
+            /**/
+            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Anual`, (data) => {
+                var dataArray = [['Mês','Aten.','Serv.']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value1, item.value2]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = { 
+                    chartArea: {  
+                        width: '85%'  
                     },
                     hAxis: {  
                         minValue: 0
                     },  
-                    vAxis: {  
-                        title: 'Vagas'  
-                    },
                     animation: {
                         duration: 1000,
                         easing: 'out'
                     },
-                    colors: ['#20b2aa'],
+                    colors: ['#2196f3','#20b2aa'],
                     legend: { position: 'bottom' }
                 };  
                 var chart = new google.visualization.AreaChart(document.getElementById('chart_month'));  
                 chart.draw(data, options);
-            }); */    
+            });     
         }
     </script>     
 }
