@@ -105,6 +105,30 @@ hr{
 .mgn-10 {
     margin: 10px 10px 10px 10px;
 }
+.mgn-l-0 {
+    margin-left: 0px !important;
+}
+.mgn-l-4 {
+    margin-left: 4px;
+}
+.mgn-l-8 {
+    margin-left: 8px;
+}
+.mgn-l-10 {
+    margin-left: 10px;
+}
+.mgn-r-0 {
+    margin-right: 0px !important;
+}
+.mgn-r-4 {
+    margin-right: 4px;
+}
+.mgn-r-8 {
+    margin-right: 8px;
+}
+.mgn-r-10 {
+    margin-right: 10px;
+}
 .mgn-t-4{
     margin-top:4px;
 }
@@ -566,14 +590,26 @@ button.accept-policy {
 .box-column-7{
     display: flex;
     flex-direction: column;
-    width: 75%;  
+    width: 70%;  
     row-gap: 20px;
 }.box-column-3{
     display: flex;
     flex-direction: column;
-    width: 25%;  
+    width: 30%;  
     row-gap: 20px;
-}.box-column-row{
+}
+.box-column-8{
+    display: flex;
+    flex-direction: column;
+    width: 80%;  
+    row-gap: 20px;
+}.box-column-2{
+    display: flex;
+    flex-direction: column;
+    width: 20%;  
+    row-gap: 20px;
+}
+.box-column-row{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;

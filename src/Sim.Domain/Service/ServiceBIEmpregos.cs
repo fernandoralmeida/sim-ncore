@@ -17,14 +17,12 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var vagas = 0;
             var t_vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
-            {
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 t_vagas += item.Vagas;
                 if(item.Status == "Ativo")
                     vagas += item.Vagas;               
             }
-            float r = ((float)vagas / (float)t_vagas) * 100;
-            return new EChart("Disponível", vagas, r.ToString("N2")+"%");
+            return new EChart("Disponível", vagas, string.Empty);
           });
     }    
 
@@ -33,14 +31,10 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
         return await Task.Run(async () => {
             var vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
-            {
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 vagas += item.Vagas;               
             }
-
-            float r = ((float)vagas / (float)vagas) * 100;
-
-            return new EChart("Acumulado", vagas, r.ToString("N2")+"%");
+            return new EChart("Acumulado", vagas, string.Empty);
           });
     }
 
@@ -50,16 +44,12 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var vagas = 0;
             var t_vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
-            {
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 t_vagas += item.Vagas;
                 if(item.Status == "Finalizado")
                     vagas += item.Vagas;               
             }
-
-            float r = ((float)vagas / (float)t_vagas) * 100;
-
-            return new EChart("Completadas", vagas, r.ToString("N2")+"%");
+            return new EChart("Completadas", vagas, string.Empty);
           });
     }
 
@@ -77,8 +67,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
             var _return = new List<EChart>();
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
-            {
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 t_vagas += item.Vagas;
                 if(item.Status == "Ativo")
                     switch(item.Genero)
@@ -121,8 +110,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             int t_vagas = 0;
             var _return = new List<EChart>();
 
-            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano))
-            {
+            foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 t_vagas += item.Vagas;
                 switch(item.Genero)
                 {
@@ -156,42 +144,57 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
     {
         return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _inc = new List<string>();
             var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
-            foreach(var item in _rp.Where(s => s.Status == "Ativo")
-                                    .GroupBy(g => g.Inclusivo)
+            foreach(var item in _rp.Where(s => s.Status == "Ativo")) {
+                for(int i = 0; i < item.Vagas; i++)
+                    _inc.Add(item.Inclusivo);
+            }
+
+            foreach(var item in _inc.GroupBy(g => g)
                                     .OrderByDescending(o => o.Count())) {
                 _return.Add(new EChart(item.Key, item.Count(), string.Empty));
             }
 
             return _return;
-          });
+        });
     }
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByInclusaoAcumulado(int ano)
     {
         return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _inc = new List<string>();
             var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
-            foreach(var item in _rp.Where(s => s.Status != "Cancelado")
-                                    .GroupBy(g => g.Inclusivo)
+            foreach(var item in _rp.Where(s => s.Status != "Cancelado")) {
+                for(int i = 0; i < item.Vagas; i++)
+                    _inc.Add(item.Inclusivo);
+            }
+
+            foreach(var item in _inc.GroupBy(g => g)
                                     .OrderByDescending(o => o.Count())) {
                 _return.Add(new EChart(item.Key, item.Count(), string.Empty));
             }
 
             return _return;
-          });
+        });
     }
 
     public async Task<IEnumerable<EChart>> DoListEmpregosAtivosByTipo(int ano)
     {
         return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _exp = new List<string>();
             var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
-            foreach(var item in _rp.Where(s => s.Status == "Ativo")
-                                    .GroupBy(g => g.Experiencia)
+            foreach(var item in _rp.Where(s => s.Status == "Ativo")) {
+                for(int i = 0; i < item.Vagas; i++)
+                    _exp.Add(item.Experiencia);
+            }
+
+            foreach(var item in _exp.GroupBy(g => g)
                                     .OrderByDescending(o => o.Count())) {
                 _return.Add(new EChart(item.Key, item.Count(), string.Empty));
             }
@@ -204,10 +207,15 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
     {
         return await Task.Run(async () => {
             var _return = new List<EChart>();
+            var _exp = new List<string>();
             var _rp = await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
 
-            foreach(var item in _rp.Where(s => s.Status != "Cancelado")
-                                    .GroupBy(g => g.Experiencia)
+            foreach(var item in _rp.Where(s => s.Status != "Cancelado")) {
+                for(int i = 0; i < item.Vagas; i++)
+                    _exp.Add(item.Experiencia);
+            }
+
+            foreach(var item in _exp.GroupBy(g => g)
                                     .OrderByDescending(o => o.Count())) {
                 _return.Add(new EChart(item.Key, item.Count(), string.Empty));
             }
@@ -235,12 +243,8 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 group a by a into g
                 let count = g.Count()
                 orderby count descending
-                select new { Servico = g.Key, Qtde = count })
-            {
-                float v1 = x.Qtde;
-                float v2 = t_vagas;
-                float r = (v1 / v2) * 100;
-                _return.Add(new EChart(x.Servico, x.Qtde, r.ToString("N2")+"%"));
+                select new { Servico = g.Key, Qtde = count }) {
+                _return.Add(new EChart(x.Servico, x.Qtde, string.Empty));
             }
 
             return _return;
@@ -265,14 +269,9 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             foreach(var x in from a in _month
                 group a by a into g
                 let count = g.Count()
-                //orderby count descending
                 select new { Meses = g.Key, Valor = count })
             {
-
-                float p = x.Valor;
-                float p1 = t_vagas;
-                float r = (p / p1) * 100;          
-                _return.Add(new EChart(x.Meses, x.Valor, r.ToString("N2")+"%"));
+                _return.Add(new EChart(x.Meses, x.Valor, string.Empty));
             }
 
             return _return;
@@ -311,13 +310,8 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 group a by a into g
                 let count = g.Count()
                 orderby count descending
-                select new { Setores = g.Key, Valor = count })
-            {
-
-                float p = x.Valor;
-                float p1 = t_vagas;
-                float r = (p / p1) * 100;          
-                _return.Add(new EChart(x.Setores, x.Valor, r.ToString("N2")+"%"));
+                select new { Setores = g.Key, Valor = count }) {      
+                _return.Add(new EChart(x.Setores, x.Valor, string.Empty));
             }
 
             return _return;
