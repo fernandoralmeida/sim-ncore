@@ -27,25 +27,9 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         [BindProperty(SupportsGet = true)]
         public InputModel Input { get; set; }
 
-        public ParamModel GetParam { get; set; }
-
         public SelectList ListaAtendentes { get; set; }
 
         public SelectList ListaServicos { get; set; }
-
-        public RouteID Route { get; set; }
-
-        public class RouteID{
-            public DateTime? datai{ get ; set; }
-            public DateTime? dataf{ get ; set; }
-            public string cpf{ get ; set; }
-            public string nome{ get ; set; }
-            public string cnpj{ get ; set; }
-            public string razaosocial{ get ; set; }
-            public string cnae{ get ; set; }
-            public string servico{ get ; set; }
-            public string atendente{ get ; set; }
-        }
 
         public class InputModel
         {
@@ -83,53 +67,32 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
             _appIdentity = appServiceUser;
             _appServiceServico = appServiceServico;
             Input = new();
-            Route = new();
-            GetParam = new();
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
             Input.DataI = new DateTime(DateTime.Now.Year, 1, 1);
             Input.DataF = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
-            LoadUsers().Wait();
-            LoadServicos().Wait();
+            await LoadUsers();
+            await LoadServicos();
         }
 
         private async Task LoadUsers()
         {
-            var t = await _appIdentity.ListAllAsync();
-
-            if (t != null)
-            {
-                ListaAtendentes = new SelectList(t, nameof(ApplicationUser.UserName), nameof(ApplicationUser.UserName), null);
-            }
+            ListaAtendentes = new SelectList(await _appIdentity.ListAllAsync(), nameof(ApplicationUser.UserName), nameof(ApplicationUser.UserName), null);            
         }
 
         private async Task LoadServicos()
         {
-            var t = await _appServiceServico.ListAllAsync();
-
-            if (t != null)
-            {
-                ListaServicos = new SelectList(t, nameof(Servico.Nome), nameof(Servico.Nome), null);
-            }
+            ListaServicos = new SelectList(await _appServiceServico.ListAllAsync(), nameof(Servico.Nome), nameof(Servico.Nome), null);           
         }
 
         public async Task OnPostAsync()
         {
             try
             {
-                Route.datai = Input.DataI.Value;
-                Route.dataf = Input.DataF.Value;
-                Route.cpf = Input.CPF != null ? Input.CPF : "";
-                Route.nome = Input.Nome != null ? Input.Nome : "";
-                Route.cnpj = Input.CNPJ != null ? Input.CNPJ : "";
-                Route.razaosocial = Input.RazaSocial != null ? Input.RazaSocial : "";
-                Route.cnae = Input.CNAE != null ? Input.CNAE : "";
-                Route.servico = Input.Servico != null ? Input.Servico : "";
-                Route.atendente = Input.Atendente != null ? Input.Atendente : "";
-             
+            
                 var param = new List<object>() {
                     Input.DataI.Value.Date,
                     Input.DataF.Value.Date,
@@ -151,37 +114,6 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
 
             await LoadServicos();
             await LoadUsers();
-        }
-
-        public async Task OnPostAtPendentesAsync()
-        {
-            try
-            {
-                Input.ListaAtendimento = (ICollection<Sim.Domain.Entity.Atendimento>) await _appServiceAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name); 
-                await LoadServicos();
-                await LoadUsers();
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = "Erro: " + ex.Message;
-                Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
-            }
-        }
-
-        public async Task OnPostAtCanceladosAsync()
-        {
-            try
-            {
-                Input.ListaAtendimento = (ICollection<Sim.Domain.Entity.Atendimento>) await _appServiceAtendimento.ListAtendimentosCanceladosAsync(User.Identity.Name);
-                await LoadServicos();
-                await LoadUsers();
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = "Erro: " + ex.Message;
-                Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
-            }
-
         }
     }
 }

@@ -15,43 +15,49 @@ public class IndexModel : PageModel
         _appServiceAtendimento = appServiceAtendimento;
     }
 
-    public async Task<IActionResult> OnGetAsync(string ss, DateTime d, DateTime f
-        , string? c, string? n, string? p, string? r, string? e, string? s, string? u){
-
-        c = c?? "";
-        n = n?? "";
-        p = p?? "";
-        r = r?? "";
-        e = e?? "";
-        s = s?? "";
-        u = u?? "";
+    public async Task<IActionResult> OnGetAsync(string src, DateTime? d1, DateTime? d2, string cpf,
+        string nome, string cnpj, string rsocial, string cnae, string svc, string user){
     
         var list = new List<ExportModel>();
         var _result = new List<Sim.Domain.Entity.Atendimento>();
 
-        if(ss == "-") {   
+        if(string.IsNullOrEmpty(src)) {  
+
+            cpf = cpf ?? "";
+            nome = nome ?? "";
+            cnpj = cnpj ?? "";
+            rsocial = rsocial ?? "";
+            cnae =  cnae ?? "";
+            svc = src ?? "";
+            user = user ?? "";
+
             _result = (List<Sim.Domain.Entity.Atendimento>) 
                     await _appServiceAtendimento
-                    .ListParamAsync(new List<object>() { d.ToShortDateString(), f.ToShortDateString(), c, n, p, r, e, s, u });
+                    .ListParamAsync(new List<object>() { d1, d2, cpf, nome, cnpj, rsocial, cnae, svc, user });
         }
         else {            
             _result = (List<Sim.Domain.Entity.Atendimento>)
-                    await _appServiceAtendimento.DoListAendimentosAsyncBy(ss);
+                    await _appServiceAtendimento.DoListAendimentosAsyncBy(src);
         }
 
         var cont = 1;
         foreach (var at in _result){
+
+            var _pj = at.Empresa != null ? at.Empresa.Nome_Empresarial: "Anônimo";
+            var _cliente = at.Pessoa != null ? at.Pessoa.Nome : _pj;    
+
             list.Add(new ExportModel
             {
                 N = cont++,
                 Data = at.Data.Value.ToString("MMM-yyyy"),
-                Cliente = at.Pessoa.Nome,
+                Cliente = _cliente,
                 Empresa = at.Empresa != null ? at.Empresa.CNPJ : "",
                 Atividade = at.Empresa != null ? at.Empresa.Atividade_Principal : "", 
-                Contato = at.Pessoa.Tel_Movel,
-                Servico = at.Servicos,
-                Descricao = at.Descricao,
-                Setor = at.Setor
+                Contato = at.Pessoa != null ? at.Pessoa.Tel_Movel: "",
+                Servico = at.Servicos != null ? at.Servicos: "",
+                Descricao = at.Descricao != null ? at.Descricao: "",
+                Setor = at.Setor != null ? at.Setor: "",
+                Atendente = at.Owner_AppUser_Id
             });
         }
 

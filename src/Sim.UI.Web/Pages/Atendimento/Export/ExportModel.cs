@@ -11,5 +11,6 @@
         public string Servico { get; set; }
         public string Descricao { get; set; }
         public string Setor { get; set; }
+        public string Atendente { get; set; }
     }
 }

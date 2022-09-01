@@ -4,6 +4,9 @@
 
     ViewData["Title"] = "Consultas por Periodos";
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.AtendimentoConsulta;
+
+    var data1 = Model.Input.DataI.Value.ToString("MM-dd-yyyy");
+    var data2 = Model.Input.DataF.Value.ToString("MM-dd-yyyy");
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -66,7 +69,7 @@
     @{ var _isdisabled = Model.Input.ListaAtendimento.Any()? null : "disabled"; }    
 
     <div class="card-action">
-        <a asp-page="/Atendimento/Export/Index" asp-route-ss="-" asp-route-d="@Model.Route.datai" asp-route-f="@Model.Route.dataf" asp-route-c="@Model.Route.cpf" asp-route-n="@Model.Route.nome" asp-route-p="@Model.Route.cnpj" asp-route-r="@Model.Route.razaosocial" asp-route-e="@Model.Route.cnae" asp-route-s="@Model.Route.servico" asp-route-u="@Model.Route.atendente" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
+        <a asp-page="/Atendimento/Export/Index" asp-route-src="" asp-route-d1="@data1" asp-route-d2="@data2" asp-route-cpf="@Model.Input.CPF" asp-route-nome="@Model.Input.Nome" asp-route-cnpj="@Model.Input.CNPJ" asp-route-rsocial="@Model.Input.RazaSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-svc="@Model.Input.Servico" asp-route-user="@Model.Input.Atendente" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
     </div>
     
 </div>
