@@ -12,30 +12,15 @@ public class IndexModel : PageModel
     private readonly IAppServiceAtendimento _appAtendimento;
     private readonly IAppServiceStatusAtendimento _appServiceStatusAtendimento;
     private readonly IAppServiceBIAtendimento _biantendimento;
+    private readonly IAppServiceSetor _appSetores;
 
     public EChartDual Panorama { get; set; }
-    public IEnumerable<EChart> Clientes { get; set; }
-    public IEnumerable<EChartThree> ClientesMonths { get; set; }
-    public IEnumerable<EChart> Servicos { get; set; }
-    public IEnumerable<EChartDual> Users { get; set; }
 
-    [BindProperty(SupportsGet = true)]
-    public InputModelIndex Input { get; set; }
-
-    [BindProperty(SupportsGet = true)]
-    public IEnumerable<InputModelIndex> ListaPAT { get; set; }
-
-    [BindProperty(SupportsGet = true)]
-    public IEnumerable<InputModelIndex> ListaBPP { get; set; }
-
-    [BindProperty(SupportsGet = true)]
-    public IEnumerable<InputModelIndex> ListaSA { get; set; }
-
-    [BindProperty(SupportsGet = true)]
-    public IEnumerable<InputModelIndex> ListaSE { get; set; }
-
-    public class InputModelIndex
-    {
+    public class InputSetor {
+        public string Setor { get; set; }
+        public IEnumerable<InputUser> Lista { get; set; }
+    }    
+    public class InputUser {
         public string Atendente { get; set; }
         public string Status { get; set; }
     }
@@ -46,46 +31,24 @@ public class IndexModel : PageModel
     public IndexModel(UserManager<ApplicationUser> userManager,
         IAppServiceAtendimento appAtendimento,
         IAppServiceStatusAtendimento appServiceStatusAtendimento,
-        IAppServiceBIAtendimento appServiceBIAtendimento)
+        IAppServiceBIAtendimento appServiceBIAtendimento,
+        IAppServiceSetor appServiceSetor)
     {
         _userManager = userManager;
         _appAtendimento = appAtendimento;
         _appServiceStatusAtendimento = appServiceStatusAtendimento;
         _biantendimento = appServiceBIAtendimento;
+        _appSetores = appServiceSetor;
     }
 
-    private async Task<IEnumerable<InputModelIndex>> ListUsersAsync(string setor)
-    {
-        var list = new List<InputModelIndex>();
-        var users = await _userManager.GetUsersInRoleAsync(setor);
-
-        foreach (ApplicationUser s in users)
-        {
-            var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
-
-            if(t.Any())
-                if (t.FirstOrDefault().Online)
-                {
-                    var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
-
-                    if (ativo.Any())
-                        list.Add(new InputModelIndex() { Atendente = s.Name, Status = "Em Atendimento" });
-
-                    else
-                        list.Add(new InputModelIndex() { Atendente = s.Name, Status = "Disponível" });
-                }
-        }
-
-        return list;
-    }
-
-    private async Task<IEnumerable<IEnumerable<InputModelIndex>>> DoListUsersAsync() {
+    private async Task<IEnumerable<InputSetor>> DoListUsersAsync() {
         return await Task.Run(async () => { 
-            var _list = new List<IEnumerable<InputModelIndex>>();
+            var _list = new List<InputSetor>();
+            var _setores = await _appSetores.ListAllAsync();
 
             foreach(var _roles in new string[]{"M_Pat", "M_BancoPovo", "M_Sebrae", "M_SalaEmpreendedor"}) {
 
-                var _innerlist = new List<InputModelIndex>();
+                var _innerlist = new List<InputUser>();
                 var users = await _userManager.GetUsersInRoleAsync(_roles);
 
                 foreach (ApplicationUser s in users)
@@ -98,28 +61,21 @@ public class IndexModel : PageModel
                             var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
                             if (ativo.Any())
-                                _innerlist.Add(new InputModelIndex() { Atendente = s.Name, Status = "Em Atendimento" });
+                                _innerlist.Add(new InputUser() { Atendente = s.Name, Status = "Em Atendimento"});
 
                             else
-                                _innerlist.Add(new InputModelIndex() { Atendente = s.Name, Status = "Disponível" });
+                                _innerlist.Add(new InputUser() { Atendente = s.Name, Status = "Disponível" });
                         }
                 }
 
-                _list.Add(_innerlist);
+                _list.Add(new InputSetor(){ Setor = _roles.Replace("M_",""), Lista = _innerlist }) ;
             }
             return _list;
         });
     }
     
-    public async Task OnGet()
-    {
-        //ListaPAT = await ListUsersAsync("M_Pat");
-        //ListaBPP = await ListUsersAsync("M_BancoPovo");
-        //ListaSA = await ListUsersAsync("M_Sebrae");
-        //ListaSE = await ListUsersAsync("M_SalaEmpreendedor");
-        //Panorama = await _biantendimento.DoAsync(DateTime.Now.Year);
-        //Users = await _biantendimento.DoListUserAsync(DateTime.Now.Year);
-    }
+    public void OnGet()
+    {   }
 
     public async Task<JsonResult> OnGetAtendimentosAsync() {
         return new JsonResult(await _biantendimento.DoAsync(DateTime.Now.Year));        

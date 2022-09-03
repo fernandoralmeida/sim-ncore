@@ -97,8 +97,7 @@
             google.charts.load('current', {packages: ['corechart', 'bar']});
             google.charts.setOnLoadCallback(DoCharts);
         }, 60000);
-    </script>
-    <script type="text/javascript">
+
         function DoAtendimentos() {
             $.getJSON(`/Panorama/?handler=Atendimentos`, (data) => {
                 $('#_atendimentos').empty();
@@ -107,8 +106,7 @@
                 $('#_servicos').append(data.value2);
             });
         }
-    </script>
-    <script type="text/javascript"> 
+
         function DoCharts() { 
             $.getJSON(`/Panorama/?handler=Clientes`, (data) => {
                 var dataArray = [['Cliente','Aten.']];
@@ -255,16 +253,15 @@
                 chart.draw(data, options);
             });     
         }
-    </script>   
-    <script type="text/javascript">
+
         function DoUserList() {
             $.getJSON(`/Panorama/?handler=Users`, (data) => {
                 $('#cardcontainer').empty();
                 $('#cardcontainer').append('<div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>');
                 $.each(data, function (i, item) {                   
                     $('#cardcontainer').append(`<div id="container${i}" class="font-size-12 pdn-10 mgn-l-10 grey-text">`);
-                    //$(`#container${i}`).append('<p class="truncate">PAT</p>');
-                    $.each(item, function (x, xitem) {
+                    $(`#container${i}`).append(`<p class="truncate">${item.setor}</p>`);
+                    $.each(item.lista, function (x, xitem) {
                         let _icon = xitem.status === "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
                         let _user_on = xitem.status === "Em Atendimento" ? "orange-text" : "green-text";
                         $(`#container${i}`).append(`<p title="${xitem.status}">${xitem.atendente}<i class="tiny material-icons left ${_user_on} mgn-t-2">${_icon}</i></p>`);
