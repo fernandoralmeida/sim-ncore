@@ -78,15 +78,54 @@ public class IndexModel : PageModel
 
         return list;
     }
+
+    private async Task<IEnumerable<IEnumerable<InputModelIndex>>> DoListUsersAsync() {
+        return await Task.Run(async () => { 
+            var _list = new List<IEnumerable<InputModelIndex>>();
+
+            foreach(var _roles in new string[]{"M_Pat", "M_BancoPovo", "M_Sebrae", "M_SalaEmpreendedor"}) {
+
+                var _innerlist = new List<InputModelIndex>();
+                var users = await _userManager.GetUsersInRoleAsync(_roles);
+
+                foreach (ApplicationUser s in users)
+                {
+                    var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
+
+                    if(t.Any())
+                        if (t.FirstOrDefault().Online)
+                        {
+                            var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
+
+                            if (ativo.Any())
+                                _innerlist.Add(new InputModelIndex() { Atendente = s.Name, Status = "Em Atendimento" });
+
+                            else
+                                _innerlist.Add(new InputModelIndex() { Atendente = s.Name, Status = "Disponível" });
+                        }
+                }
+
+                _list.Add(_innerlist);
+            }
+            return _list;
+        });
+    }
     
     public async Task OnGet()
     {
-        ListaPAT = await ListUsersAsync("M_Pat");
-        ListaBPP = await ListUsersAsync("M_BancoPovo");
-        ListaSA = await ListUsersAsync("M_Sebrae");
-        ListaSE = await ListUsersAsync("M_SalaEmpreendedor");
-        Panorama = await _biantendimento.DoAsync(DateTime.Now.Year);
-        Users = await _biantendimento.DoListUserAsync(DateTime.Now.Year);
+        //ListaPAT = await ListUsersAsync("M_Pat");
+        //ListaBPP = await ListUsersAsync("M_BancoPovo");
+        //ListaSA = await ListUsersAsync("M_Sebrae");
+        //ListaSE = await ListUsersAsync("M_SalaEmpreendedor");
+        //Panorama = await _biantendimento.DoAsync(DateTime.Now.Year);
+        //Users = await _biantendimento.DoListUserAsync(DateTime.Now.Year);
+    }
+
+    public async Task<JsonResult> OnGetAtendimentosAsync() {
+        return new JsonResult(await _biantendimento.DoAsync(DateTime.Now.Year));        
+    }
+    public async Task<JsonResult> OnGetUsersAsync() {
+        return new JsonResult(await DoListUsersAsync());        
     }
 
     public async Task<JsonResult> OnGetClientesAsync() {

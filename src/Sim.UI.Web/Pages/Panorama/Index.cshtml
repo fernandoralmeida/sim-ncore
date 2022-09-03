@@ -14,75 +14,22 @@
 <div class="row">
     <div class="box-container-card">
         <div class="box-column-2">
-            <div class="box-card z-depth-0 border-a">
-                <div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>
-                <div class="font-size-12 pdn-10 mgn-l-10 grey-text">                            
-                    <p class="truncate">PAT</p>
-                    @foreach(var luser in Model.ListaPAT)
-                    {
-                        var _icon = luser.Status == "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
-                        var _user_on = luser.Status == "Em Atendimento" ? "orange-text" : "green-text";
-                        <p title="@luser.Status">@luser.Atendente<i class="tiny material-icons left @_user_on mgn-t-2">@_icon</i></p>
-                    }                        
-                </div>
-                <div class="divider"></div>
-                <div class="font-size-12 pdn-10 mgn-l-10 grey-text">                            
-                    <p class="truncate">Banco do Povo</p>
-                    @foreach(var luser in Model.ListaBPP)
-                    {
-                        var _icon = luser.Status == "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
-                        var _user_on = luser.Status == "Em Atendimento" ? "orange-text" : "green-text";
-                        <p title="@luser.Status">@luser.Atendente<i class="tiny material-icons left @_user_on mgn-t-2">@_icon</i></p>
-                    }                        
-                </div>
-                <div class="divider"></div>
-                <div class="font-size-12 pdn-10 mgn-l-10 grey-text">                            
-                    <p class="truncate">Sebrae Aqui</p>
-                    @foreach(var luser in Model.ListaSA)
-                    {
-                        var _icon = luser.Status == "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
-                        var _user_on = luser.Status == "Em Atendimento" ? "orange-text" : "green-text";
-                        <p title="@luser.Status">@luser.Atendente<i class="tiny material-icons left @_user_on mgn-t-2">@_icon</i></p>
-                    }                        
-                </div>
-                <div class="divider"></div>
-                <div class="font-size-12 pdn-10 mgn-l-10 grey-text">                            
-                    <p class="truncate">Sebrae Aqui</p>
-                    @foreach(var luser in Model.ListaSA)
-                    {
-                        var _icon = luser.Status == "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
-                        var _user_on = luser.Status == "Em Atendimento" ? "orange-text" : "green-text";
-                        <p title="@luser.Status">@luser.Atendente<i class="tiny material-icons left @_user_on mgn-t-2">@_icon</i></p>
-                    }                        
-                </div>
-                <div class="divider"></div>
-                <div class="font-size-12 pdn-10 mgn-l-10 grey-text">                            
-                    <p class="truncate">Ambulantes</p>
-                    @foreach(var luser in Model.ListaSE)
-                    {
-                        var _icon = luser.Status == "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
-                        var _user_on = luser.Status == "Em Atendimento" ? "orange-text" : "green-text";
-                        <p title="@luser.Status">@luser.Atendente<i class="tiny material-icons left @_user_on mgn-t-2">@_icon</i></p>
-                    }                        
-                </div>   
-                <div class="divider"></div>         
+            <div id="cardcontainer" class="box-card z-depth-0 border-a">
             </div>
         </div>
         <div class="box-column-8">
             <div class="box-column-row">
                 <div class="box-card z-depth-0 border-a">
                     <div class="card-header grey-text">Panorama Geral<i class="material-icons left">view_module</i></div>
-                    <div class="box-around">                            
-                        @if(Model.Panorama != null) {                   
-                            <a class="box-cell-item-flex font-size-12 white">                            
-                                <p class="light-blue-text font-h5">@Model.Panorama.Value1</p>
-                                <p class="grey-text">(atendimentos)</p>
-                            </a>       
-                            <a class="box-cell-item-flex font-size-12 white">
-                                <p class="light-green-text font-h5">@Model.Panorama.Value2</p>
-                                <p class="grey-text">(serviços)</p>
-                            </a>
-                        }                        
+                    <div class="box-around">
+                        <a class="box-cell-item-flex font-size-12 white">                            
+                            <p id="_atendimentos" class="light-blue-text font-h5"></p>
+                            <p class="grey-text">(atendimentos)</p>
+                        </a>       
+                        <a class="box-cell-item-flex font-size-12 white">
+                            <p id="_servicos" class="light-green-text font-h5"></p>
+                            <p class="grey-text">(serviços)</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -138,17 +85,30 @@
 
 @section scripts
 {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script language="javascript">
         setInterval(function () {
-            window.location.reload(1);
+            DoUserList();
+        }, 15000);
+        setInterval(function () {
+            DoAtendimentos();
         }, 30000);
+        setInterval(function () {
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(DoCharts);
+        }, 60000);
     </script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        function DoAtendimentos() {
+            $.getJSON(`/Panorama/?handler=Atendimentos`, (data) => {
+                $('#_atendimentos').empty();
+                $('#_servicos').empty();
+                $('#_atendimentos').append(data.value1);
+                $('#_servicos').append(data.value2);
+            });
+        }
+    </script>
     <script type="text/javascript"> 
-        
-        google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(DoCharts);
-        
         function DoCharts() { 
             $.getJSON(`/Panorama/?handler=Clientes`, (data) => {
                 var dataArray = [['Cliente','Aten.']];
@@ -296,6 +256,25 @@
             });     
         }
     </script>   
+    <script type="text/javascript">
+        function DoUserList() {
+            $.getJSON(`/Panorama/?handler=Users`, (data) => {
+                $('#cardcontainer').empty();
+                $('#cardcontainer').append('<div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>');
+                $.each(data, function (i, item) {                   
+                    $('#cardcontainer').append(`<div id="container${i}" class="font-size-12 pdn-10 mgn-l-10 grey-text">`);
+                    //$(`#container${i}`).append('<p class="truncate">PAT</p>');
+                    $.each(item, function (x, xitem) {
+                        let _icon = xitem.status === "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
+                        let _user_on = xitem.status === "Em Atendimento" ? "orange-text" : "green-text";
+                        $(`#container${i}`).append(`<p title="${xitem.status}">${xitem.atendente}<i class="tiny material-icons left ${_user_on} mgn-t-2">${_icon}</i></p>`);
+                    });
+                    $('#cardcontainer').append('</div>');
+                    $('#cardcontainer').append('<div class="divider"></div>');
+                });                               
+            });
+        };
+    </script>
 }
 
 
