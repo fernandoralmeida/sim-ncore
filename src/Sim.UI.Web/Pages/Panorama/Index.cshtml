@@ -159,25 +159,6 @@
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_canal'));  
                 chart.draw(data, options);
             });
-
-            /*
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Setores`, (data) => {
-                var dataArray = [['Setor','Atendimento','Servico']];
-                $.each(data, function (i, item) {
-                    dataArray.push([item.label, item.value1, item.value2]); 
-                });
-                var mdata = google.visualization.arrayToDataTable(dataArray);  
-                var materialOptions = {
-                    chart: {
-                        title: 'Por Setor',
-                        subtitle: 'atendimentos realizados'
-                    },
-                    bars: 'vertical'
-                };
-                var materialChart = new google.charts.Bar(document.getElementById('chart_setores'));
-                materialChart.draw(mdata, materialOptions);
-            });
-            */   
             $.getJSON(`/Panorama/?handler=SetoresPercent`, (data) => {
                 var dataArray = [['Setor','Aten.','Perc.']];
                 $.each(data, function (i, item) {

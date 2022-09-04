@@ -21,20 +21,18 @@
             </div>            
             <input asp-for="InputID" hidden/>     
             <div id="divbtn" hidden><a id="btnremove" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">remove</i></a></div>     
-            <div style="overflow-x: auto;">
-                <table id="tableview" class="striped" hidden>
-                    <thead>
-                        <tr>
-                            <th>Doc</th>
-                            <th>Nome</th>
-                            <th>Tel</th>
-                            <th>Email</th>
-                            <th>Descrição</th>
-                        </tr>
-                    </thead>
-                    <tbody class="showcollection"></tbody>
-                </table>
-            </div>
+            <table id="tableview" class="striped" hidden>
+                <thead>
+                    <tr>
+                        <th>Doc</th>
+                        <th>Nome</th>
+                        <th>Tel</th>
+                        <th>Email</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody class="showcollection"></tbody>
+            </table>            
         </div>
     </section>
     <section>
@@ -161,44 +159,33 @@
         $(function() {
             $("#addempresa").click(function () {
                 var p = document.getElementById("inputCNPJ").value;
-                var p0 = p.replace('.','');
-                var p1 = p0.replace('.','');
-                var p2 = p1.replace('/','');
-                var p3 = p2.replace('-','');
                 $(".showcollection").empty();
                 $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
                 $.getJSON(`/Pat/Add?cnpj=${p}&handler=AddEmpresa`, function (data) {
-                    $(".loadingpage").empty();
-                    $.each(data, function (i, item) {
-                        if(item === null)
-                        {
-                            alert("Doc não encontrado!");
-                        }
-                        if(data)                                            
-                        {
-                            let v1 = item.item1;
-                            let v2 = item.item2;
-                            let v3 = item.item3;
-                            let v4 = item.item4;
-                            let v5 = item.item5;
-                            let v6 = item.item6;
+                    $(".loadingpage").empty();                    
+                    $.each(data, function (i, item) {      
+                        let v1 = item.item1;
+                        let v2 = item.item2;
+                        let v3 = item.item3;
+                        let v4 = item.item4;
+                        let v5 = item.item5;
+                        let v6 = item.item6;
 
-                            document.getElementById("div-add-cnpj").hidden = true;
-                            document.getElementById("tableview").hidden = false;                            
-                            document.getElementById("InputID").value = v1;
-                            document.getElementById("divbtn").hidden = false;
-                           
-                            $(".showcollection").append(                            
-                                `<tr>                            
+                        document.getElementById("div-add-cnpj").hidden = true;
+                        document.getElementById("tableview").hidden = false;                            
+                        document.getElementById("InputID").value = v1;
+                        document.getElementById("divbtn").hidden = false;
+                    
+                        $(".showcollection").append(                            
+                            `<tr>                            
                                 <td>${v2}</td>
                                 <td>${v3}</td>
                                 <td>${v4}</td>
                                 <td>${v5}</td>
                                 <td>${v6}</td>
-                                </tr>`                        
-                            );
-                        }
-                    });
+                            </tr>`                        
+                        );                           
+                    });                
                 });
             });
 
@@ -210,6 +197,11 @@
             });
 
             $("#onbtn").click(function () {
+                var _vagas = document.getElementById("Input_Vagas").value;
+                if(_vagas <= 0) {
+                    alert("O número de vagas não pode ser menor ou igual a 0");
+                    return false;
+                }
                 var selected_inclusivas = [];
                 $("#Input_Inclusiva :selected").each(function () {
                     selected_inclusivas.push($(this).val());
