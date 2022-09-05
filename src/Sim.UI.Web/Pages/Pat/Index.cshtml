@@ -74,8 +74,11 @@
                             @{ 
                                 var _isempresa = item.Empresa != null ? item.Empresa.Nome_Empresarial : "Anônimo";
                                 var _isperson = item.Pessoa != null ? item.Pessoa.Nome : _isempresa;
+                                
+                                var _empID = item.Empresa != null ? item.Empresa.Id.ToString() : new Guid().ToString();
+                                var _clientID = item.Pessoa != null ? item.Pessoa.Id.ToString() : _empID;
                             }
-                            <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => _isperson)</a>
+                            <a class="modal-trigger" href="#viewmodal" data-id="@_clientID">@Html.DisplayFor(modelItem => _isperson)</a>
                         </td>
                         <td>
                             @{
@@ -106,7 +109,14 @@
             </tbody>
         </table>
     </div>
-</section>
+</div>
+
+<div id="viewmodal" class="modal modal-footer">
+    <div class="modal-content"></div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -115,5 +125,21 @@
     <script>
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');
+        $(function () {
+            $(".modal-trigger").click(function () {
+                var customerId = $(this).data('id');
+                $(".modal-content").empty();
+                $.getJSON(`/Pat?id=${customerId}&handler=Cliente`, (data) => {
+                    $(".modal-content").append(`<div class="mgn-10">`);
+                    $(".modal-content").append(`<p>Cliente</p><div class="divider"></div>`);                    
+                    $(".modal-content").append(`<p>CNPJ/CPF: <strong>${data.cnpj ?? data.cpf}</strong></p>`);  
+                    $(".modal-content").append(`<p>Cliente: <strong>${data.nome_Empresarial ?? data.nome}</strong></p>`);  
+                    $(".modal-content").append(`<p>Contato: <strong>${data.telefone ?? data.tel_Movel}</strong></p>`);  
+                    $(".modal-content").append(`<p>E-mail: <strong>${data.email ?? data.email}</strong></p>`);  
+                    $(".modal-content").append(`<p>Descricao: <strong>${data.atividade_Principal ?? data.nome}</strong></p>`);  
+                    $(".modal-content").append(`</div>`);
+                });
+            });
+        });
     </script>
 }

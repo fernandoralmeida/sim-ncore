@@ -96,7 +96,6 @@ namespace Sim.UI.Web.Pages.Pat.Add
         }
 
         public async Task<JsonResult> OnGetAddEmpresa(string cnpj){ 
-
             var _result = new List<(Guid id, string doc, string nome, string tel, string email, string cnae)>();
 
             if(cnpj.MaskRemove().Length == 11)
