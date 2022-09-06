@@ -153,8 +153,13 @@
     <script>
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');
-        $(function() {                      
+        $(function() {    
             $("#onbtn").click(function () {
+                var _vagas = document.getElementById("Input_Vagas").value;
+                if(_vagas <= 0) {
+                    alert("O número de vagas não pode ser menor ou igual a 0");
+                    return false;
+                }
                 var selected_inclusivas = [];
                 $("#Input_Inclusiva :selected").each(function () {
                     selected_inclusivas.push($(this).val());

@@ -96,7 +96,6 @@ namespace Sim.UI.Web.Pages.Pat.Add
         }
 
         public async Task<JsonResult> OnGetAddEmpresa(string cnpj){ 
-
             var _result = new List<(Guid id, string doc, string nome, string tel, string email, string cnae)>();
 
             if(cnpj.MaskRemove().Length == 11)
@@ -107,7 +106,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     _result.Add((p.Id, p.CPF, p.Nome, p.Tel_Movel, p.Email, p.Nome_Social));
                 }
             }
-            else
+            else if (cnpj.MaskRemove().Length == 14)
             {
                 var _con = cnpj.MaskRemove().Mask("##.###.###/####-##");
                 foreach(var e in await _appServiceEmpresa.ConsultaCNPJAsync(_con))
@@ -123,6 +122,12 @@ namespace Sim.UI.Web.Pages.Pat.Add
         {
             try
             {
+                await LoadSelects();
+                if(Input.Vagas <= 0) {
+                    StatusMessage = "Alerta: A quantidade de vagas não pode ser menor ou igual a 0";
+                    return Page();
+                }
+
                 if (!ModelState.IsValid) {
                     StatusMessage = "Alerta: Verifique se o formulário foi preenchido corretamente!";
                     return Page();
@@ -190,7 +195,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
                         Genero = Input.Genero,                                       
                         Inclusivo = InclusivasSelecionadas
                     };
-                }             
+                } 
 
                 await _appServiceAtendimento.AddAsync(_atendimento);                
                 await _appServiceEmpregos.AddAsync(_emprego);

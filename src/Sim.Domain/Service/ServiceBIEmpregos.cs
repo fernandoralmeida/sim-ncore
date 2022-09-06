@@ -16,13 +16,16 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
         return await Task.Run(async () => {
             var vagas = 0;
             var t_vagas = 0;
+            
 
             foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 t_vagas += item.Vagas;
                 if(item.Status == "Ativo")
-                    vagas += item.Vagas;               
+                    vagas += item.Vagas;                                              
             }
-            return new EChart("Disponível", vagas, string.Empty);
+            float _percent = 0.0f;
+            _percent = ((float)vagas / (float)t_vagas) * 100;
+            return new EChart("Disponível", vagas, _percent.ToString("N2")+"%");
           });
     }    
 
@@ -34,7 +37,10 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             foreach(var item in await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano)) {
                 vagas += item.Vagas;               
             }
-            return new EChart("Acumulado", vagas, string.Empty);
+
+            float _percent = 0.0f;
+            _percent = ((float)vagas / (float)vagas) * 100;
+            return new EChart("Acumulado", vagas, _percent.ToString("N2")+"%");
           });
     }
 
@@ -49,7 +55,9 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
                 if(item.Status == "Finalizado")
                     vagas += item.Vagas;               
             }
-            return new EChart("Completadas", vagas, string.Empty);
+            float _percent = 0.0f;
+            _percent = ((float)vagas / (float)t_vagas) * 100;
+            return new EChart("Completadas", vagas, _percent.ToString("N2")+"%");
           });
     }
 

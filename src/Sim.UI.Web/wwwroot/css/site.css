@@ -129,6 +129,12 @@ hr{
 .mgn-r-10 {
     margin-right: 10px;
 }
+.mgn-t-0{
+    margin-top:0px !important;
+}
+.mgn-t-2{
+    margin-top:2px !important;
+}
 .mgn-t-4{
     margin-top:4px;
 }

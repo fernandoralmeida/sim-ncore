@@ -1,16 +1,258 @@
 ﻿@page
 @model Sim.UI.Web.Pages.Panorama.IndexModel;
+@using Microsoft.AspNetCore.Identity
+@using Sim.Identity.Entity
+
+@inject UserManager<ApplicationUser> UserManager
+
 @{
+    ViewData["Title"] = "Painel de Informações dos Atendentes";
 }
 
-<div class="navbar navbar-fixed">
-    <nav>
-        <div class="nav-wrapper">
-            <!--<a href="#" data-target="sidenav-left" class="sidenav-trigger grey-text"><i class="material-icons">menu</i></a>-->
-            <a class="navbar-page-name grey-text">Equipes de Atendimento</a>
-            <ul class="right">
-                <li class="blue lighten-1 waves-effect waves-light"><a asp-area="" asp-page="./Index">Atualizar Pagina</a></li>
-            </ul>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row">
+    <div class="box-container-card">
+        <div class="box-column-2">
+            <div id="cardcontainer" class="box-card z-depth-0 border-a">
+            </div>
         </div>
-    </nav>
+        <div class="box-column-8">
+            <div class="box-column-row">
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Panorama Geral<i class="material-icons left">view_module</i></div>
+                    <div class="box-around">
+                        <a class="box-cell-item-flex font-size-12 white">                            
+                            <p id="_atendimentos" class="light-blue-text font-h5"></p>
+                            <p class="grey-text">(atendimentos)</p>
+                        </a>       
+                        <a class="box-cell-item-flex font-size-12 white">
+                            <p id="_servicos" class="light-green-text font-h5"></p>
+                            <p class="grey-text">(serviços)</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Atendimentos<i class="material-icons left">timelapse</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_cliente" class="card-chart"></div>                               
+                    </div>
+                </div>
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Serviços<i class="material-icons left">construction</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_services" class="card-chart"></div>                              
+                    </div>
+                </div>
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Canal<i class="material-icons left">chat_bubble</i></div>
+                    <div class="box-around">                            
+                        <div id="piechart_canal_p" class="card-chart"></div>                              
+                    </div>
+                </div>
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Canal Serviços<i class="material-icons left">workspaces</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_canal" class="card-chart"></div>                              
+                    </div>
+                </div>
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Setores<i class="material-icons left">location_on</i></div>
+                    <div class="box-around">                            
+                        <div id="piechart_setores_p" class="card-chart"></div>                              
+                    </div>
+                </div>
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Setores Serviços<i class="material-icons left">workspaces</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_setores" class="card-chart"></div>                              
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card z-depth-0 border-a">
+                    <div class="card-header grey-text">Variação Mensal<i class="material-icons left">calendar_month</i></div>
+                    <div class="box-around">                            
+                        <div id="chart_month" class="card-chart-m"></div>                              
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script language="javascript">
+        setInterval(function () {
+            DoUserList();
+        }, 15000);
+        setInterval(function () {
+            DoAtendimentos();
+        }, 30000);
+        setInterval(function () {
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(DoCharts);
+        }, 60000);
+
+        function DoAtendimentos() {
+            $.getJSON(`/Panorama/?handler=Atendimentos`, (data) => {
+                $('#_atendimentos').empty();
+                $('#_servicos').empty();
+                $('#_atendimentos').append(data.value1);
+                $('#_servicos').append(data.value2);
+            });
+        }
+
+        function DoCharts() { 
+            $.getJSON(`/Panorama/?handler=Clientes`, (data) => {
+                var dataArray = [['Cliente','Aten.']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {       
+                    legend:'left',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    pieHole:0.4                     
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('chart_cliente'));  
+                chart.draw(data, options);
+            });
+            $.getJSON(`/Panorama/?handler=CanalPercent`, (data) => {
+                var dataArray = [['Canal','Aten.','Perc.']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var mdata = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    legend:'left',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },    
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('piechart_canal_p'));  
+                chart.draw(mdata, options);
+            }); 
+            $.getJSON(`/Panorama/?handler=Canal`, (data) => {
+                var dataArray = [['Canal','Aten.','Serv.']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value1, item.value2]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    chartArea: {  
+                        width: '80%'  
+                    },
+                    seriesType: 'bars', 
+                    colors: ['#2196f3','#20b2aa'],                   
+                    legend:'top'
+                };
+                var chart = new google.visualization.ComboChart(document.getElementById('chart_canal'));  
+                chart.draw(data, options);
+            });
+            $.getJSON(`/Panorama/?handler=SetoresPercent`, (data) => {
+                var dataArray = [['Setor','Aten.','Perc.']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value, item.percent]); 
+                });
+                var mdata = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    legend:'left',
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },    
+                    pieHole:0.4 
+                };  
+                var chart = new google.visualization.PieChart(document.getElementById('piechart_setores_p'));  
+                chart.draw(mdata, options);
+            });  
+            $.getJSON(`/Panorama/?handler=Setores`, (data) => {
+                var dataArray = [['Setor','Aten.','Serv.']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value1, item.value2]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    chartArea: {  
+                        width: '80%'  
+                    },
+                    seriesType: 'bars',
+                    colors: ['#2196f3','#20b2aa'],                    
+                    legend:'top'
+                };
+                var chart = new google.visualization.ComboChart(document.getElementById('chart_setores'));  
+                chart.draw(data, options);
+            });
+            $.getJSON(`/Panorama/?handler=Servicos`, (data) => {
+                var dataArray = [['Serviço','Valor']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = {
+                    chartArea: {  
+                        width: '80%'  
+                    },
+                    seriesType: 'bars',  
+                    colors: ['#20b2aa']
+                };
+                var chart = new google.visualization.ComboChart(document.getElementById('chart_services'));  
+                chart.draw(data, options);
+            });
+            /**/
+            $.getJSON(`/Panorama/?handler=Anual`, (data) => {
+                var dataArray = [['Mês','Aten.','Serv.']];
+                $.each(data, function (i, item) {
+                    dataArray.push([item.label, item.value1, item.value2]); 
+                });
+                var data = google.visualization.arrayToDataTable(dataArray);  
+                var options = { 
+                    chartArea: {  
+                        width: '85%'  
+                    },
+                    hAxis: {  
+                        minValue: 0
+                    },  
+                    animation: {
+                        duration: 1000,
+                        easing: 'out'
+                    },
+                    colors: ['#2196f3','#20b2aa'],
+                    legend: { position: 'bottom' }
+                };  
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_month'));  
+                chart.draw(data, options);
+            });     
+        }
+
+        function DoUserList() {
+            $.getJSON(`/Panorama/?handler=Users`, (data) => {
+                $('#cardcontainer').empty();
+                $('#cardcontainer').append('<div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>');
+                $.each(data, function (i, item) {                   
+                    $('#cardcontainer').append(`<div id="container${i}" class="font-size-12 pdn-10 mgn-l-10 grey-text">`);
+                    $(`#container${i}`).append(`<p class="truncate">${item.setor}</p>`);
+                    $.each(item.lista, function (x, xitem) {
+                        let _icon = xitem.status === "Em Atendimento" ? "do_not_disturb_on" : "check_circle";
+                        let _user_on = xitem.status === "Em Atendimento" ? "orange-text" : "green-text";
+                        $(`#container${i}`).append(`<p title="${xitem.status}">${xitem.atendente}<i class="tiny material-icons left ${_user_on} mgn-t-2">${_icon}</i></p>`);
+                    });
+                    $('#cardcontainer').append('</div>');
+                    $('#cardcontainer').append('<div class="divider"></div>');
+                });                               
+            });
+        };
+    </script>
+}
+
+
