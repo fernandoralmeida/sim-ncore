@@ -8,8 +8,11 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
     {
         public static string Empresa => "Empresas";
         public static string Cnae => "Cnae";
+
+        public static string Mapa => "Mapa";
         public static string EmpNavClass(ViewContext viewContext) => PageNavClass(viewContext, Empresa);
         public static string CnaeNavClass(ViewContext viewContext) => PageNavClass(viewContext, Cnae);
+        public static string MappNavClass(ViewContext viewContext) => PageNavClass(viewContext, Mapa);
         private static string PageNavClass(ViewContext viewContext, string page)
         {
             var activePage = viewContext.ViewData["BIActivePage"] as string

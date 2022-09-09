@@ -48,6 +48,29 @@ namespace Sim.Data.Cnpj.Repository
             });
         }
 
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByAsync(string municipio) => 
+            await Task.Run(() =>
+            {
+                var brf = new List<BaseReceitaFederal>();
+
+                var qry = (from est in _db.Estabelecimentos.Where(s => s.Municipio == municipio)                           
+                           from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
+                           from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                           from sn in _db.Simples.Where(s=>s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
+                           select new { est, emp, atv, sn }) 
+                           .Distinct()
+                           .AsNoTracking();
+
+                foreach (var e in qry)
+                {
+                    var _cnpj = string.Format("{0}{1}{2}", e.est.CNPJBase, e.est.CNPJOrdem, e.est.CNPJDV);
+
+                    brf.Add(new BaseReceitaFederal(
+                        0, _cnpj, e.emp, e.est, null, e.sn, e.atv, null, null, null, null, null));
+                }
+                return brf;
+            });
+
         public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj)
         {
             return await Task.Run(() =>

@@ -16,7 +16,7 @@
     <ul class="right">
       <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model">Empresas</a></li>
       <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model">Cnaes</a></li>
-
+      <li class="@EmpNavPages.MappNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Mapping" asp-route-m="@Model">Mapeamento</a></li>
       @{var nome = municipios.Where(n=>n.Codigo.Contains(Model));}
 
       <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@nome.SingleOrDefault().Descricao<i class="material-icons right">arrow_drop_down</i></a></li>

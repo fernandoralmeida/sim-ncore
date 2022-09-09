@@ -21,5 +21,6 @@ namespace Sim.Application.Cnpj.Interfaces
         Task<IEnumerable<BICnae>> ToListBICnaeAsync(string municipio);
         Task<IEnumerable<BIEmpresas>> ToListBIEmpresasAsync(string municipio, string situacao, string ano, string mes);
         Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> ToListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao);
+        Task<IEnumerable<EMapping>> DoListMapping(string municipio);
     }
 }

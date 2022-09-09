@@ -17,6 +17,37 @@ namespace Sim.Domain.Cnpj.Services
             return await _cnpj.DoListBaseRazaoSociosAsync(param);
         }
 
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByAsync(string municipio) =>
+            await _cnpj.DoListByAsync(municipio);
+
+        public async Task<IEnumerable<EMapping>> DoListMapping(string municipio) =>
+            await Task.Run(async () => {
+
+                var _list_bairro = new List<string>();
+                var _list = new List<EMapping>();
+                var _list_ruas = new List<KeyValuePair<string, int>>();
+                var _empresas = await _cnpj.DoListByAsync(municipio);
+                
+                foreach(var _bairro in _empresas.Where(s => s.Estabelecimento.SituacaoCadastral.Contains("Ativa") && s.Estabelecimento.Bairro.Contains("INDUSTRIAL"))
+                                            .GroupBy(g => g.Estabelecimento.Bairro)
+                                            .OrderByDescending(g => g.Count())) {
+                    _list_bairro.Add(_bairro.Key);            
+                }   
+
+                foreach(var _ruas in _list_bairro) {                    
+ 
+                    var _r = _empresas.Where(s => s.Estabelecimento.Bairro == _ruas).GroupBy(s => s.Estabelecimento.Logradouro).OrderByDescending(o => o.Count());
+
+                    foreach(var r in _r) {
+                        _list_ruas.Add(new KeyValuePair<string, int>(key: r.Key, value: r.Count()));
+                    }
+
+                    _list.Add(new EMapping(bairro: _ruas, ruas: _list_ruas));
+                } 
+
+                return _list;
+            });
+
         public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj)
         {
             return await _cnpj.GetCNPJAsync(cnpj);

@@ -20,6 +20,7 @@
 <ul id='mobile-demo' class='dropdown-content'>
     <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.Input.Municipio">Empresas</a></li>
     <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.Input.Municipio">Cnaes</a></li>
+    <li class="@EmpNavPages.MappNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Mapping" asp-route-m="@Model.Input.Municipio">Mapeamento</a></li>
     <li><a class='dropdown-trigger' href='#' data-target='dropdown1'><i class="material-icons">arrow_drop_down</i>@nome.SingleOrDefault().Descricao</a></li>
 </ul>
 <form method="post">
@@ -33,6 +34,7 @@
             <ul class="right hide-on-med-and-down">
                 <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.Input.Municipio">Empresas</a></li>
                 <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.Input.Municipio">Cnaes</a></li>
+                <li class="@EmpNavPages.MappNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Mapping" asp-route-m="@Model.Input.Municipio">Mapeamento</a></li>
                 <li><a class='dropdown-trigger' href='#' data-target='dropdown1'>@nome.SingleOrDefault().Descricao<i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
         </div>

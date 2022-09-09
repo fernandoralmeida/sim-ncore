@@ -1,0 +1,33 @@
+@page
+@model Sim.UI.Web.Areas.SimBI.Pages.Empresas.MappingModel
+
+@{
+     Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Power BI";
+    ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Mapa;
+}
+
+<partial name="_NavBar" model="@Model.MunicipioSelecionado" />
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row">
+    <ul class="collapsible white borderless rounded-default">
+        @foreach (var emp in Model.ListasEmpresas)
+        {
+            <li>
+                <div class="collapsible-header">@emp.Bairro<span class="new badge blue" data-badge-caption="">@emp.Ruas.Count()</span></div>
+                <div class="collapsible-body pdn-10">
+                    <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="" data-cnaef="" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
+                    <ul class="collection z-depth-0 mgn-10">
+                        @foreach (var d in emp.Ruas) {
+                            <li class="collection-item"><a class="modal-trigger" href="#viewmodal" data-cnaei="" data-cnaef="" data-munic="@Model.MunicipioSelecionado"  title="Ver empresas"><span class="new badge" data-badge-caption="">@d.Value</span></a>@d.Key</li>
+                        }
+                    </ul>
+                </div>
+            </li>                
+        }        
+    </ul>
+</div>
+<div class="row alpha-text-4 font-size-12 mgn-t-10">
+    Informações extraidas da base de dados da RFB em 13-08-2022
+</div>

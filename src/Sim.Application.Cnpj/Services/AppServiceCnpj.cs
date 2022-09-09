@@ -18,6 +18,9 @@ namespace Sim.Application.Cnpj.Services
             return await _cnpj.DoListBaseRazaoSociosAsync(param);
         }
 
+        public async Task<IEnumerable<EMapping>> DoListMapping(string municipio) =>
+            await _cnpj.DoListMapping(municipio);
+
         public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj)
         {
             return await _cnpj.GetCNPJAsync(cnpj);
