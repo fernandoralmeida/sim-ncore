@@ -33,12 +33,12 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
             else
                 MunicipioSelecionado = m;
                 
-            ListCnaes = await _appEmpresa.ToListBICnaeAsync(m);
+            ListCnaes = await _appEmpresa.DoListBICnaeAsync(m);
         }
 
         public async Task<JsonResult> OnGetPreview(string ci, string cf, string m, string a)
         {
-            return new JsonResult(await _appEmpresa.ToListCnaeEmpresasJsonAsync(ci, cf, m, a));
+            return new JsonResult(await _appEmpresa.DoListCnaeEmpresasJsonAsync(ci, cf, m, a));
         }
     }
 }

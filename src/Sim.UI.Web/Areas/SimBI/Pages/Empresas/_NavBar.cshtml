@@ -2,7 +2,7 @@
 @inject Sim.Application.Cnpj.Interfaces.IAppServiceCnpj appServiceCnpj;
 @model string
 
-@{ var municipios = await appServiceCnpj.ToListMicroRegiaoJahuAsync();}
+@{ var municipios = await appServiceCnpj.DoListMicroRegiaoJahuAsync();}
 
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">

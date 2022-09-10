@@ -9,7 +9,7 @@
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Empresa;
 }
 
-@{ var municipios = await appServiceCnpj.ToListMicroRegiaoJahuAsync();}
+@{ var municipios = await appServiceCnpj.DoListMicroRegiaoJahuAsync();}
 @{var nome = municipios.Where(n=>n.Codigo.Contains(Model.Input.Municipio));}
 <ul id='dropdown1' class='dropdown-content'>
   @foreach (var item in municipios)

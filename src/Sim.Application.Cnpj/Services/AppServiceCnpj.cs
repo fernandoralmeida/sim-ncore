@@ -13,86 +13,28 @@ namespace Sim.Application.Cnpj.Services
             _cnpj = cnpj;   
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> DoListBaseRazaoSociosAsync(string param)
-        {
-            return await _cnpj.DoListBaseRazaoSociosAsync(param);
-        }
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListBaseRazaoSociosAsync(string param) =>
+            await _cnpj.DoListBaseRazaoSociosAsync(param);
 
-        public async Task<IEnumerable<EMapping>> DoListMapping(string municipio) =>
-            await _cnpj.DoListMapping(municipio);
+        public async Task<IEnumerable<BICnae>> DoListBICnaeAsync(string municipio) =>
+            await _cnpj.DoListBICnaeAsync(municipio);
 
-        public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj)
-        {
-            return await _cnpj.GetCNPJAsync(cnpj);
-        }
+        public async Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes) =>
+            await _cnpj.DoListBIEmpresasAsync(municipio, situacao, ano, mes);
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string bairro, string endereco, string cnae, string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListAllAsync(bairro, endereco, cnae, municipio, situacaocadastral);
-        }
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio) =>
+            await _cnpj.DoListEmpresasAsync(municipio);
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio)
-        {
-            return await _cnpj.ListAllAsync(municipio);
-        }
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListAllAsync(municipio, situacaocadastral);
-        }
+        public async Task<IEnumerable<EMapping>> DoListMappingEmpresasAsync(string municipio) =>
+            await _cnpj.DoListMappingEmpresasAsync(await DoListEmpresasAsync(municipio));
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllMatrizFilialAsync(string cnpjbase)
-        {
-            return await _cnpj.ListAllMatrizFilialAsync(cnpjbase);
-        }
+        public async Task<IEnumerable<Municipio>> DoListMicroRegiaoJahuAsync() =>
+            await _cnpj.DoListMicroRegiaoJahuAsync();
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllRazaoSocialAsync(string razaosocial)
-        {
-            return await _cnpj.ListAllRazaoSocialAsync(razaosocial);
-        }
+        public async Task<IEnumerable<Municipio>> DoListMinicipiosAsync() =>
+            await _cnpj.DoListMinicipiosAsync();
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllSocioAsync(string nomesocio)
-        {
-            return await _cnpj.ListAllSocioAsync(nomesocio);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListOptantesSimplesNacionalAsync(string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListOptantesSimplesNacionalAsync(municipio, situacaocadastral);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListOptantesSimplesNacionalAsync(string endereco, string cnae, string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListOptantesSimplesNacionalAsync(endereco, cnae, municipio, situacaocadastral);
-        }
-
-        public async Task<IEnumerable<BICnae>> ToListBICnaeAsync(string municipio)
-        {
-            return await _cnpj.ToListBICnaeAsync(municipio);
-        }
-
-        public async Task<IEnumerable<BIEmpresas>> ToListBIEmpresasAsync(string municipio, string situacao, string ano, string mes)
-        {
-            return await _cnpj.ToListBIEmpresasAsync(municipio, situacao, ano, mes);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividadei, string atividadef, string municipio)
-        {
-            return await _cnpj.ToListByCnaeAsync(atividadei, atividadef, municipio);
-        }
-
-        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> ToListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao)
-        {
-            return await _cnpj.ToListCnaeEmpresasJsonAsync(cnaei, cnaef, municipio, situacao);
-        }
-
-        public async Task<IEnumerable<Municipio>> ToListMicroRegiaoJahuAsync()
-        {
-            return await _cnpj.ToListMicroRegiaoJahuAsync();
-        }
-
-        public async Task<IEnumerable<Municipio>> ToListMinicipiosAsync()
-        {
-            return await _cnpj.ToListMinicipiosAsync();
-        }
+        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> DoListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao) =>
+            await _cnpj.DoListCnaeEmpresasJsonAsync(cnaei, cnaef, municipio, situacao);
     }
 }

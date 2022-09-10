@@ -17,34 +17,32 @@ namespace Sim.Domain.Cnpj.Services
             return await _cnpj.DoListBaseRazaoSociosAsync(param);
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> DoListByAsync(string municipio) =>
-            await _cnpj.DoListByAsync(municipio);
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio) =>
+            await _cnpj.DoListEmpresasAsync(municipio);
 
-        public async Task<IEnumerable<EMapping>> DoListMapping(string municipio) =>
-            await Task.Run(async () => {
+        public async Task<IEnumerable<EMapping>> DoListMappingEmpresasAsync(IEnumerable<BaseReceitaFederal> obj) =>
+            await Task.Run(() => {
 
                 var _list_bairro = new List<string>();
-                var _list = new List<EMapping>();
-                var _list_ruas = new List<KeyValuePair<string, int>>();
-                var _empresas = await _cnpj.DoListByAsync(municipio);
-                
-                foreach(var _bairro in _empresas.Where(s => s.Estabelecimento.SituacaoCadastral.Contains("Ativa") && s.Estabelecimento.Bairro.Contains("INDUSTRIAL"))
-                                            .GroupBy(g => g.Estabelecimento.Bairro)
-                                            .OrderByDescending(g => g.Count())) {
-                    _list_bairro.Add(_bairro.Key);            
-                }   
+                var _list = new List<EMapping>(); 
 
-                foreach(var _ruas in _list_bairro) {                    
- 
-                    var _r = _empresas.Where(s => s.Estabelecimento.Bairro == _ruas).GroupBy(s => s.Estabelecimento.Logradouro).OrderByDescending(o => o.Count());
-
-                    foreach(var r in _r) {
-                        _list_ruas.Add(new KeyValuePair<string, int>(key: r.Key, value: r.Count()));
-                    }
-
-                    _list.Add(new EMapping(bairro: _ruas, ruas: _list_ruas));
-                } 
-
+                foreach(var _bairro in obj
+                                        .Where(s => s.Estabelecimento.SituacaoCadastral == "Ativa")
+                                        .OrderBy(o => o.Estabelecimento.Bairro)
+                                        .GroupBy(g => g.Estabelecimento.Bairro)) {   
+                    
+                    var _list_ruas = new List<KeyValuePair<string, int>>();
+                    var _nemp = 0;
+                    
+                    foreach(var nome in _bairro
+                                        .OrderBy(o => o.Estabelecimento.TipoLogradouro + " " + o.Estabelecimento.Logradouro)
+                                        .GroupBy(g => g.Estabelecimento.TipoLogradouro + " " + g.Estabelecimento.Logradouro)) {                       
+                        _list_ruas.Add(new KeyValuePair<string, int>(key: nome.Key, value: nome.Count()));
+                        _nemp += nome.Count();
+                    }                    
+                    
+                    _list.Add(new EMapping(bairro: _bairro.Key, nempresas: _nemp, ruas: _list_ruas));
+                }  
                 return _list;
             });
 
@@ -53,49 +51,10 @@ namespace Sim.Domain.Cnpj.Services
             return await _cnpj.GetCNPJAsync(cnpj);
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string bairro, string endereco, string cnae, string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListAllAsync(bairro, endereco, cnae, municipio, situacaocadastral);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio)
-        {
-            return await _cnpj.ListAllAsync(municipio);
-        }
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllAsync(string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListAllAsync(municipio, situacaocadastral);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllMatrizFilialAsync(string cnpjbase)
-        {
-            return await _cnpj.ListAllMatrizFilialAsync(cnpjbase);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllRazaoSocialAsync(string razaosocial)
-        {
-            return await _cnpj.ListAllRazaoSocialAsync(razaosocial);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListAllSocioAsync(string nomesocio)
-        {
-            return await _cnpj.ListAllSocioAsync(nomesocio);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListOptantesSimplesNacionalAsync(string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListOptantesSimplesNacionalAsync(municipio, situacaocadastral);
-        }
-
-        public async Task<IEnumerable<BaseReceitaFederal>> ListOptantesSimplesNacionalAsync(string endereco, string cnae, string municipio, string situacaocadastral)
-        {
-            return await _cnpj.ListOptantesSimplesNacionalAsync(endereco, cnae, municipio, situacaocadastral);
-        }
-
-        public async Task<IEnumerable<BICnae>> ToListBICnaeAsync(string municipio)
+        public async Task<IEnumerable<BICnae>> DoListBICnaeAsync(string municipio)
         {
 
-            var emp = await _cnpj.ToListByCnaeAsync("0000000","9999999", municipio);
+            var emp = await _cnpj.DoListByCnaeAsync("0000000","9999999", municipio);
 
             return await Task.Run(() => {
 
@@ -1385,9 +1344,9 @@ namespace Sim.Domain.Cnpj.Services
             });
         }
 
-        public async Task<IEnumerable<BIEmpresas>> ToListBIEmpresasAsync(string municipio, string situacao, string ano, string mes)
+        public async Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes)
         {
-            var t = await _cnpj.ListAllAsync("", "", "", municipio, "");            
+            var t = await _cnpj.DoListEmpresasAsync(municipio);            
 
             return await Task.Run(() => {
                 
@@ -1913,14 +1872,14 @@ namespace Sim.Domain.Cnpj.Services
             });
         }
 
-        public async Task<IEnumerable<BaseReceitaFederal>> ToListByCnaeAsync(string atividadei, string atividadef, string municipio)
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByCnaeAsync(string atividadei, string atividadef, string municipio)
         {
-            return await _cnpj.ToListByCnaeAsync(atividadei, atividadef, municipio);
+            return await _cnpj.DoListByCnaeAsync(atividadei, atividadef, municipio);
         }
 
-        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> ToListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao)
+        public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> DoListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao)
         {
-            var emp = await ToListByCnaeAsync(cnaei, cnaef, municipio);
+            var emp = await DoListByCnaeAsync(cnaei, cnaef, municipio);
 
             return await Task.Run(() =>
             {
@@ -1942,15 +1901,15 @@ namespace Sim.Domain.Cnpj.Services
             });
         }
 
-        public async Task<IEnumerable<Municipio>> ToListMicroRegiaoJahuAsync()
+        public async Task<IEnumerable<Municipio>> DoListMicroRegiaoJahuAsync()
         {
-            var list = await ToListMinicipiosAsync();
+            var list = await DoListMinicipiosAsync();
             return list.Where(s => s.MicroRegiaoJahu(s));
         }
 
-        public async Task<IEnumerable<Municipio>> ToListMinicipiosAsync()
+        public async Task<IEnumerable<Municipio>> DoListMinicipiosAsync()
         {
-            return await _cnpj.ToListMinicipiosAsync();
+            return await _cnpj.DoListMinicipiosAsync();
         }
     }
 }

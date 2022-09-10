@@ -25,7 +25,7 @@ public class MappingModel : PageModel {
             MunicipioSelecionado ="6607";
         else
             MunicipioSelecionado = m;
-        ListasEmpresas = await _appEmpresa.DoListMapping(MunicipioSelecionado); 
+        ListasEmpresas = await _appEmpresa.DoListMappingEmpresasAsync(MunicipioSelecionado); 
     }
     
 }

@@ -15,7 +15,7 @@
         @foreach (var emp in Model.ListasEmpresas)
         {
             <li>
-                <div class="collapsible-header">@emp.Bairro<span class="new badge blue" data-badge-caption="">@emp.Ruas.Count()</span></div>
+                <div class="collapsible-header">@emp.Bairro<span class="new badge blue" data-badge-caption="">@emp.NEmpresas</span></div>
                 <div class="collapsible-body pdn-10">
                     <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="" data-cnaef="" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
                     <ul class="collection z-depth-0 mgn-10">

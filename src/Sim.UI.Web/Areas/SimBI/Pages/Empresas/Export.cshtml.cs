@@ -22,7 +22,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
             var list = new List<InputExport>();
             var cont = 1;
 
-            foreach ((string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae) in await _appEmpresa.ToListCnaeEmpresasJsonAsync(ci, cf, m, a))
+            foreach ((string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae) in await _appEmpresa.DoListCnaeEmpresasJsonAsync(ci, cf, m, a))
             {
                 list.Add(new()
                 {

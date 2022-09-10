@@ -42,7 +42,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 
             Input.Ano= DateTime.Today.Year.ToString();
             
-            ListEmpresas = await _appEmpresa.ToListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano, "00");
+            ListEmpresas = await _appEmpresa.DoListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano, "00");
         }
 
         public async Task OnPostAsync(string m)
@@ -52,7 +52,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
             else
                 Input.Municipio = m;
                 
-            ListEmpresas = await _appEmpresa.ToListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano, "00");
+            ListEmpresas = await _appEmpresa.DoListBIEmpresasAsync(Input.Municipio, "Ativa", Input.Ano, "00");
         }
     }
 }

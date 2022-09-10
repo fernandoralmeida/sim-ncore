@@ -88,5 +88,8 @@
             return obj.SimplesNacional != null && obj.SimplesNacional.DataExclusaoMEI != "0000-00-00";
         }
 
+        public bool EmpresasPorRuas(BaseReceitaFederal obj, string rua) =>
+            obj.Estabelecimento.Logradouro == rua;
+
     }
 }
