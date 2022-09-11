@@ -9,6 +9,8 @@ namespace Sim.Domain.Cnpj.Interfaces
         Task<IEnumerable<BaseReceitaFederal>> DoListBaseRazaoSociosAsync(string param);
         Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio);
         Task<IEnumerable<BaseReceitaFederal>> DoListByCnaeAsync(string atividadei, string atividadef, string municipio);
+        Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio);
+        Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio);
 
     }
 }

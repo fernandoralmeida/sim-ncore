@@ -20,29 +20,31 @@ namespace Sim.Domain.Cnpj.Services
         public async Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio) =>
             await _cnpj.DoListEmpresasAsync(municipio);
 
-        public async Task<IEnumerable<EMapping>> DoListMappingEmpresasAsync(IEnumerable<BaseReceitaFederal> obj) =>
+        public async Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(IEnumerable<BaseReceitaFederal> obj) =>
             await Task.Run(() => {
 
-                var _list_bairro = new List<string>();
-                var _list = new List<EMapping>(); 
+                var _list = new List<KeyValuePair<string, int>>();
 
-                foreach(var _bairro in obj
-                                        .Where(s => s.Estabelecimento.SituacaoCadastral == "Ativa")
-                                        .OrderBy(o => o.Estabelecimento.Bairro)
-                                        .GroupBy(g => g.Estabelecimento.Bairro)) {   
-                    
-                    var _list_ruas = new List<KeyValuePair<string, int>>();
-                    var _nemp = 0;
-                    
-                    foreach(var nome in _bairro
+                    foreach(var nome in obj
                                         .OrderBy(o => o.Estabelecimento.TipoLogradouro + " " + o.Estabelecimento.Logradouro)
                                         .GroupBy(g => g.Estabelecimento.TipoLogradouro + " " + g.Estabelecimento.Logradouro)) {                       
-                        _list_ruas.Add(new KeyValuePair<string, int>(key: nome.Key, value: nome.Count()));
-                        _nemp += nome.Count();
-                    }                    
+                        _list.Add(new KeyValuePair<string, int>(key: nome.Key, value: nome.Count()));
+                    }                  
                     
-                    _list.Add(new EMapping(bairro: _bairro.Key, nempresas: _nemp, ruas: _list_ruas));
-                }  
+                return _list;
+            });
+        
+        public async Task<IEnumerable<string>> DoListMappingZonasAsync(IEnumerable<BaseReceitaFederal> obj) =>
+            await Task.Run(() => {
+
+                var _list = new List<string>();
+
+                    foreach(var nome in obj
+                                        .OrderBy(o => o.Estabelecimento.Bairro)
+                                        .GroupBy(g => g.Estabelecimento.Bairro)) {                       
+                        _list.Add(nome.Key);
+                    }                  
+                    
                 return _list;
             });
 
@@ -1911,5 +1913,44 @@ namespace Sim.Domain.Cnpj.Services
         {
             return await _cnpj.DoListMinicipiosAsync();
         }
+
+        public async Task<IEnumerable<ELocalizacao>> DoListZonaJsonAsync(string zona, string municipio, string situacao) =>
+            await Task.Run(async () => {
+                var emp = await DoListByZonaAsync(zona, municipio);
+
+                var lista = new List<ELocalizacao>();
+
+                foreach (var s in emp.Where(s => s.Estabelecimento.SituacaoCadastral == situacao).OrderBy(s => s.AtividadePrincipal.Codigo))
+                {
+                    lista.Add(new ELocalizacao(
+                        zona: s.Estabelecimento.Bairro,
+                        rua: String.Format("{0} {1}", s.Estabelecimento.TipoLogradouro, s.Estabelecimento.Logradouro),
+                        numero: s.Estabelecimento.Numero
+                    ));
+                }
+                return lista;
+            });
+        
+        public async Task<IEnumerable<ELocalizacao>> DoListLogradouroJsonAsync(string logradouro, string municipio, string situacao) =>
+            await Task.Run(async () => {
+                var emp = await DoListByLogradouroAsync(logradouro, municipio);
+
+                var lista = new List<ELocalizacao>();
+
+                foreach (var s in emp.Where(s => s.Estabelecimento.SituacaoCadastral == situacao).OrderBy(s => s.AtividadePrincipal.Codigo))
+                {
+                    lista.Add(new ELocalizacao(
+                        zona: s.Estabelecimento.Bairro,
+                        rua: String.Format("{0} {1}", s.Estabelecimento.TipoLogradouro, s.Estabelecimento.Logradouro),
+                        numero: s.Estabelecimento.Numero
+                    ));
+                }
+                return lista;
+            });   
+
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio) =>
+            await _cnpj.DoListByZonaAsync(zona, municipio);
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio) =>
+            await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
     }
 }

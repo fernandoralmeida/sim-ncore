@@ -10,24 +10,152 @@
 <partial name="_NavBar" model="@Model.MunicipioSelecionado" />
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
+<script type='text/javascript'>  
+    function loadMapScenario() {  
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
+            credentials: "AlXdA1VRF-rK-z0FQtFy5cAcfQgSy2rF9EQRdIeIaMWFddCAOgF3CsdTULcdR7_9",  
+            mapTypeId: Microsoft.Maps.MapTypeId.road,  
+            zoom: 5  
+        });  
+  
+        // Create the infobox for the pushpin  
+        var infobox = null;  
+  
+        //declare addMarker function  
+        function addMarker(latitude, longitude, title, description, pid)  
+        {  
+            var marker = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), { color: 'green' });  
+  
+            infobox = new Microsoft.Maps.Infobox(marker.getLocation(), {  
+                visible : false  
+            });  
+  
+            marker.metadata = {  
+                id: pid,  
+                title: title,  
+                description: description  
+            };  
+  
+            Microsoft.Maps.Events.addHandler(marker, 'mouseout', hideInfobox);  
+            Microsoft.Maps.Events.addHandler(marker, 'mouseover', showInfobox);  
+  
+            infobox.setMap(map);  
+            map.entities.push(marker);  
+            marker.setOptions({ enableHoverStyle: true });  
+        };  
+  
+        function showInfobox(e) {  
+            if (e.target.metadata) {  
+                infobox.setOptions({  
+                    location: e.target.getLocation(),  
+                    title: e.target.metadata.title,  
+                    description: e.target.metadata.description,  
+                    visible: true  
+                });  
+            }  
+        }  
+  
+        function hideInfobox(e) {  
+            infobox.setOptions({ visible: false });  
+        }  
+  
+        //add markers to map  
+        @if (Model.LocationList != null)  
+        {  
+            foreach (var item in Model.LocationList)  
+            {  
+                @:addMarker(@item.Latitude, @item.Longitude, '@item.Title', '@item.Description', @item.LocationId);  
+            }  
+        }  
+    }  
+</script>  
+<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>  
+
 <div class="row">
-    <ul class="collapsible white borderless rounded-default">
-        @foreach (var emp in Model.ListasEmpresas)
-        {
-            <li>
-                <div class="collapsible-header">@emp.Bairro<span class="new badge blue" data-badge-caption="">@emp.NEmpresas</span></div>
-                <div class="collapsible-body pdn-10">
-                    <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="" data-cnaef="" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
-                    <ul class="collection z-depth-0 mgn-10">
-                        @foreach (var d in emp.Ruas) {
-                            <li class="collection-item"><a class="modal-trigger" href="#viewmodal" data-cnaei="" data-cnaef="" data-munic="@Model.MunicipioSelecionado"  title="Ver empresas"><span class="new badge" data-badge-caption="">@d.Value</span></a>@d.Key</li>
-                        }
-                    </ul>
+    <div class="box-container-card">                    
+        <div class="box-column-7">
+            <div class="box-card">
+                <div class="card-header grey-text">Mapa<i class="material-icons left">map</i></div>
+                <div id="myMap" style="width: 100%; min-height:500px;"></div>
+            </div>
+        </div>
+        <div class="box-column-3">
+            <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Zonas<i class="material-icons left">location_on</i></div>
+                    <div class="pdn-h-10">
+                        <input id="id_mcp" asp-for="MunicipioSelecionado" hidden>
+                        <select id="input_zona" asp-for="ZonaSelecionada" asp-items="Model.Zonas"></select>
+                    </div>                
                 </div>
-            </li>                
-        }        
-    </ul>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Logradouros<i class="material-icons left">expand_more</i></div>
+                    <div id="idcellboxcontent" style="max-height: 500px; overflow: auto;">                 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 <div class="row alpha-text-4 font-size-12 mgn-t-10">
     Informações extraidas da base de dados da RFB em 13-08-2022
 </div>
+
+<!-- Modal Structure -->
+<div id="viewmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="loadingpage"></div>
+        <table class="striped" style="font-size:12px;">
+        <thead>
+          <tr>
+              <th>#</th>
+              <th>CNPJ</th>
+              <th>Razão Social</th>
+              <th>Tel</th>
+              <th>Email</th>
+              <th>Cnae</th>
+          </tr>
+        </thead>
+        <tbody class="showcollection"></tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+        <a id="btn-export" href="" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></a>
+        <a href="#!" class="modal-close btn waves-effect">Fechar</a>
+    </div>
+</div>
+
+@section scripts{
+    <script>        
+        $(function () {
+
+            document.querySelector('#input_zona').addEventListener("change", function() {
+                var param0 = $("#input_zona").val(); 
+                var param1 = $("#id_mcp").val(); 
+                $("#idcellboxcontent").empty();
+                $("#idcellboxcontent").append('<p class="mgn-l-10 grey-text">...carregando!</p>');
+                $.getJSON(`/SimBI/Empresas/Mapping?bro=${param0}&mcp=${param1}&a=Ativa&handler=LAgrupados`, (data) => {
+                    $("#idcellboxcontent").empty();
+                    data.forEach(function(item) {                          
+                        $("#idcellboxcontent").append(
+                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="#">                           
+                                ${item.key}<strong class="light-green-text"> ${item.value} </strong>-Empresa                         
+                            </a>
+                            <div class="divider"></div>`
+                        );
+                    });
+                });
+                $.getJSON(`/SimBI/Empresas/Mapping?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
+                    data.forEach(function(item) {
+                        
+                    });
+                    
+                });
+            }); 
+        });
+    </script>
+}

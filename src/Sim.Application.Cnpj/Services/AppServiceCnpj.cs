@@ -25,8 +25,15 @@ namespace Sim.Application.Cnpj.Services
         public async Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio) =>
             await _cnpj.DoListEmpresasAsync(municipio);
 
-        public async Task<IEnumerable<EMapping>> DoListMappingEmpresasAsync(string municipio) =>
-            await _cnpj.DoListMappingEmpresasAsync(await DoListEmpresasAsync(municipio));
+        public async Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(string zona, string municipio, string situacao) {
+            var _r = await DoListEmpresasAsync(municipio);            
+            return await _cnpj.DoListMappingLogradourosAsync(_r.Where(s => s.Estabelecimento.Bairro == zona && s.Estabelecimento.SituacaoCadastral == situacao));
+        }      
+
+        public async Task<IEnumerable<string>> DoListMappingZonasAsync(string municipio, string situacao) {            
+            var _r = await DoListEmpresasAsync(municipio);            
+            return await _cnpj.DoListMappingZonasAsync(_r.Where(s => s.Estabelecimento.SituacaoCadastral == situacao));  
+        }          
 
         public async Task<IEnumerable<Municipio>> DoListMicroRegiaoJahuAsync() =>
             await _cnpj.DoListMicroRegiaoJahuAsync();
@@ -36,5 +43,16 @@ namespace Sim.Application.Cnpj.Services
 
         public async Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> DoListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao) =>
             await _cnpj.DoListCnaeEmpresasJsonAsync(cnaei, cnaef, municipio, situacao);
+
+        public async Task<IEnumerable<ELocalizacao>> DoListZonaJsonAsync(string zona, string municipio, string situacao) =>
+            await _cnpj.DoListZonaJsonAsync(zona, municipio, situacao);
+        public async Task<IEnumerable<ELocalizacao>> DoListLogradouroJsonAsync(string logradouro, string municipio, string situacao) =>
+            await _cnpj.DoListLogradouroJsonAsync(logradouro, municipio, situacao);
+
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio, string situacao) => 
+            await _cnpj.DoListByZonaAsync(zona, municipio);
+        
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio, string situacao) => 
+            await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
     }
 }

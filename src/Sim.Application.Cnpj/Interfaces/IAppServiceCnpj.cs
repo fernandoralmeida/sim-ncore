@@ -10,8 +10,13 @@ namespace Sim.Application.Cnpj.Interfaces
         Task<IEnumerable<Municipio>> DoListMicroRegiaoJahuAsync();
         Task<IEnumerable<BICnae>> DoListBICnaeAsync(string municipio);
         Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes);
+        Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio, string situacao);
+        Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio, string situacao);
         Task<IEnumerable<(string Cnpj, string RazaoSocial, string Tel, string Email, string Cnae)>> DoListCnaeEmpresasJsonAsync(string cnaei, string cnaef, string municipio, string situacao);
-        Task<IEnumerable<EMapping>> DoListMappingEmpresasAsync(string municipio);
+        Task<IEnumerable<ELocalizacao>> DoListZonaJsonAsync(string zona, string municipio, string situacao);
+        Task<IEnumerable<ELocalizacao>> DoListLogradouroJsonAsync(string logradouro, string municipio, string situacao);
+        Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(string zona, string municipio, string situacao);
+        Task<IEnumerable<string>> DoListMappingZonasAsync(string municipio, string situacao);
 
     }
 }
