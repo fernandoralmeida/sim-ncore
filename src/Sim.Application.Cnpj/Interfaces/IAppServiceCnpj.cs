@@ -17,6 +17,6 @@ namespace Sim.Application.Cnpj.Interfaces
         Task<IEnumerable<ELocalizacao>> DoListLogradouroJsonAsync(string logradouro, string municipio, string situacao);
         Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(string zona, string municipio, string situacao);
         Task<IEnumerable<string>> DoListMappingZonasAsync(string municipio, string situacao);
-
+        Task<IEnumerable<EExport>> DoListExport(string municipio);
     }
 }

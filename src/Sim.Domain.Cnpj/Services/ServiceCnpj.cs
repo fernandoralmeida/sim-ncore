@@ -1952,5 +1952,31 @@ namespace Sim.Domain.Cnpj.Services
             await _cnpj.DoListByZonaAsync(zona, municipio);
         public async Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio) =>
             await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
+
+        public async Task<IEnumerable<EExport>> DoListExport(IEnumerable<BaseReceitaFederal> obj) =>
+            await Task.Run(() => {
+                var _list = new List<EExport>();
+                var cont = 0;
+                foreach (var item in obj) {
+                    _list.Add(new EExport(
+                        contador: cont++,
+                        cnpj: item.CNPJ,
+                        razaosocial: item.Empresa.RazaoSocial,
+                        matriz: item.Estabelecimento.IdentificadorMatrizFilial,
+                        abertura: item.Estabelecimento.DataInicioAtividade,
+                        situacao: item.Estabelecimento.SituacaoCadastral,
+                        zona: item.Estabelecimento.Bairro,
+                        endereco: string.Format("{0} {1}, {2}", item.Estabelecimento.TipoLogradouro, item.Estabelecimento.Logradouro, item.Estabelecimento.Numero),
+                        municipio: item.Cidade.Descricao,
+                        cnae: item.AtividadePrincipal.Codigo,
+                        atividade: item.AtividadePrincipal.Descricao,
+                        porte: item.Empresa.PorteEmpresa,
+                        regimefiscal: item.SimplesNacional.RegimeFiscal,
+                        setor: item.Estabelecimento.SetorProdutivo
+                    ));
+                }
+
+                return _list;
+            });
     }
 }

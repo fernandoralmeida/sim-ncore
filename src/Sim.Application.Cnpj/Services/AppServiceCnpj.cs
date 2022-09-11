@@ -54,5 +54,8 @@ namespace Sim.Application.Cnpj.Services
         
         public async Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio, string situacao) => 
             await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
+
+        public async Task<IEnumerable<EExport>> DoListExport(string municipio) =>
+            await _cnpj.DoListExport(await DoListEmpresasAsync(municipio));
     }
 }
