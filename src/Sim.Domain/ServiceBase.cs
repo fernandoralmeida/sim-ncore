@@ -1,4 +1,6 @@
-﻿namespace Sim.Domain
+﻿using System.Linq.Expressions;
+
+namespace Sim.Domain
 {
     
     public class ServiceBase<TEntity> : IServiceBase<TEntity> where TEntity : class
@@ -14,6 +16,9 @@
         {
              await _repositoryBase.AddAsync(obj);
         }
+
+        public async Task<IEnumerable<TEntity>> DoList(Expression<Func<TEntity, bool>>? filter = null) =>
+            await _repositoryBase.DoList(filter);
 
         public async Task RemoveAsync(TEntity obj)
         {

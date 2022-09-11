@@ -42,6 +42,7 @@
             CorreioEletronico = correioeletronico;
             SituacaoEspecial = situacaoespecial;
             DataSitucaoEspecial = datasituacaoespecial;
+            SetorProdutivo = cnaeprimario;
         }
 
         public string CNPJBase { get; private set; }
@@ -105,6 +106,12 @@
         public string CorreioEletronico { get; private set; }
         public string SituacaoEspecial { get; private set; }
         public string DataSitucaoEspecial { get; private set; }
+        private string _getsetor = string.Empty;
+        public string SetorProdutivo { 
+            get { return GetSetor(_getsetor); } 
+            
+            private set { _getsetor = value;  }
+        }
 
         private string MatrizFilial(string valor)
         {
@@ -145,6 +152,46 @@
             valor = valor.Insert(4, "-");
             valor = valor.Insert(7, "-");
             return valor;
+        }
+
+        private string GetSetor(string valor) {
+            try {
+                var cnae = Convert.ToInt32(valor.Remove(2, 5));
+
+                if (cnae >= 1 && cnae <= 3)
+                    return "Agro";
+
+                else if (cnae >= 45 && cnae <= 47)
+                    return "Comércio";
+
+                else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
+                    return "Indústria";
+
+                else if (cnae >= 41 & cnae <= 43)
+                    return "Construção";
+
+                else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
+                    || (cnae >= 49 && cnae <= 53)
+                    || (cnae >= 55 && cnae <= 56)
+                    || (cnae >= 58 && cnae <= 63)
+                    || (cnae >= 64 && cnae <= 66)
+                    || (cnae == 68)
+                    || (cnae >= 69 && cnae <= 75)
+                    || (cnae >= 77 && cnae <= 82)
+                    || (cnae == 85)
+                    || (cnae >= 86 && cnae <= 88)
+                    || (cnae >= 86 && cnae <= 88)
+                    || (cnae >= 90 && cnae <= 93)
+                    || (cnae >= 94 && cnae <= 96)
+                    || (cnae == 97)
+                    || (cnae == 99))
+                    return "Serviços";
+                else
+                    return "*";
+            }
+            catch(Exception ex) {
+                return ex.Message;
+            }            
         }
     }
 }

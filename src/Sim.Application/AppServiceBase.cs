@@ -1,4 +1,5 @@
-﻿using Sim.Domain;
+﻿using System.Linq.Expressions;
+using Sim.Domain;
 
 namespace Sim.Application
 {
@@ -14,6 +15,9 @@ namespace Sim.Application
         {
             await _serviceBase.AddAsync(obj);
         }
+
+        public async Task<IEnumerable<TEntity>> DoList(Expression<Func<TEntity, bool>> filter = null) =>
+            await _serviceBase.DoList(filter);
 
         public async Task RemoveAsync(TEntity obj)
         {

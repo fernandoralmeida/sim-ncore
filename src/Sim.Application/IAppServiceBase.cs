@@ -1,11 +1,12 @@
-﻿
-namespace Sim.Application
+﻿using System.Linq.Expressions;
+
+namespace Sim.Application;
+public interface IAppServiceBase<TEntity> where TEntity : class
 {
-    public interface IAppServiceBase<TEntity> where TEntity : class
-    {
-        Task AddAsync(TEntity obj);
-        Task UpdateAsync(TEntity obj);
-        Task RemoveAsync(TEntity obj);
-        Task<TEntity> SingleIdAsync(Guid id);
-    }
+    Task AddAsync(TEntity obj);
+    Task UpdateAsync(TEntity obj);
+    Task RemoveAsync(TEntity obj);
+    Task<TEntity> SingleIdAsync(Guid id);
+    Task<IEnumerable<TEntity>> DoList(Expression<Func<TEntity, bool>> filter = null);
 }
+

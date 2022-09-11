@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Sim.Data.Context;
 using Sim.Domain;
 
@@ -35,6 +36,18 @@ namespace Sim.Data
         public async Task<TEntity> SingleIdAsync(Guid id)
         {
             return await _db.Set<TEntity>().FindAsync(id);
+        }
+
+        public async Task<IEnumerable<TEntity>> DoList(Expression<Func<TEntity, bool>> filter = null)
+        {
+            var _query = _db.Set<TEntity>().AsQueryable();
+
+            if(filter != null)
+                _query = _query
+                    .Where(filter)
+                    .AsNoTracking();
+
+            return await _query.ToListAsync();
         }
     }
 }
