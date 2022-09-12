@@ -1,5 +1,6 @@
 ﻿using Sim.Domain.Cnpj.Entity;
 using Sim.Domain.Cnpj.Interfaces;
+using Sim.Domain.Cnpj.Extensions;
 
 namespace Sim.Domain.Cnpj.Services
 {
@@ -1960,19 +1961,20 @@ namespace Sim.Domain.Cnpj.Services
                 foreach (var item in obj) {
                     _list.Add(new EExport(
                         contador: cont++,
-                        cnpj: item.CNPJ,
+                        cnpj: item.CNPJ.Mask("##.###.###/####-##"),
                         razaosocial: item.Empresa.RazaoSocial,
                         matriz: item.Estabelecimento.IdentificadorMatrizFilial,
                         abertura: item.Estabelecimento.DataInicioAtividade,
                         situacao: item.Estabelecimento.SituacaoCadastral,
                         zona: item.Estabelecimento.Bairro,
-                        endereco: string.Format("{0} {1}, {2}", item.Estabelecimento.TipoLogradouro, item.Estabelecimento.Logradouro, item.Estabelecimento.Numero),
+                        logradouro: string.Format("{0} {1}", item.Estabelecimento.TipoLogradouro, item.Estabelecimento.Logradouro),
+                        localizacao: string.Format("{0} {1}, {2}, {3}-{4}", item.Estabelecimento.TipoLogradouro, item.Estabelecimento.Logradouro, item.Estabelecimento.Numero, item.Cidade.Descricao, item.Estabelecimento.UF),
                         municipio: item.Cidade.Descricao,
-                        cnae: item.AtividadePrincipal.Codigo,
+                        cnae: item.AtividadePrincipal.Codigo.Mask("##.##-#/##"),
                         atividade: item.AtividadePrincipal.Descricao,
                         porte: item.Empresa.PorteEmpresa,
-                        regimefiscal: item.SimplesNacional.RegimeFiscal,
-                        setor: item.Estabelecimento.SetorProdutivo
+                        regimefiscal: item.SimplesNacional == null ? item.Empresa.RegimeFiscal("","") : item.Empresa.RegimeFiscal(item.SimplesNacional.OpcaoSimples, item.SimplesNacional.OpcaoMEI),
+                        setor: item.Estabelecimento.SetorProdutivo(item.AtividadePrincipal.Codigo)
                     ));
                 }
 

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 using Sim.Application.Cnpj.Interfaces;
 using OfficeOpenXml;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
 {
@@ -40,6 +40,25 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
             using var epackage = new ExcelPackage(stream);
             var worksheet = epackage.Workbook.Worksheets.Add("Lista");
             worksheet.Cells.LoadFromCollection(list, true);
+            await epackage.SaveAsync();
+
+            stream.Position = 0;
+            string excelname = $"lista-emp-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+
+            return File(stream, "application/vnd.openxmlformat-officedocument.spreadsheetml.sheet", excelname);
+        }
+
+        public async Task<IActionResult> OnGetExportDataAsync(string municipio)
+        {
+            var stream = new MemoryStream();
+
+            var _list = await _appEmpresa.DoListExport(municipio);
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using var epackage = new ExcelPackage(stream);
+            var worksheet = epackage.Workbook.Worksheets.Add("Lista");
+            worksheet.Cells.LoadFromCollection(_list, true);
             await epackage.SaveAsync();
 
             stream.Position = 0;

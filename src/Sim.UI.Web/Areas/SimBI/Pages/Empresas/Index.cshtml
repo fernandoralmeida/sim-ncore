@@ -182,7 +182,17 @@
 </div>
 <div class="row">
     <div class="alpha-text-4 font-size-12 truncate">
-        <br />Informações extraidas da base de dados da RFB em 13-08-2022 <a>Exportar</a> 
-        <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"              
+        <br />Informações extraidas da base de dados da RFB em 13-08-2022 
+        <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"      
     </div>
+    <a href="" id="btn-export" class="light-blue-text pdn-v-10" title="Exportar"><i class="material-icons mgn-t-10">file_download</i></a>    
 </div>    
+
+@section scripts{
+    <script>    
+        $(window).on('load', function () { 
+            var a = document.getElementById('btn-export');
+            a.href = `/SimBI/Empresas/Export?municipio=${@Model.Input.Municipio}&handler=ExportData`; 
+        });
+    </script>
+}

@@ -51,5 +51,13 @@
             else
                 return valor;
         }
+        public string RegimeFiscal(string valorSN, string valorMEI) {
+            var _ret = "LRP ou Próprio";           
+
+            var v1 = valorSN == "Sim" ? "Optante SN" : "LRP ou Próprio";
+            _ret = valorMEI == "Sim" ? "Optante SN MEI" : v1;
+                        
+            return _ret;
+        }
     }
 }

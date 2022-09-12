@@ -25,9 +25,9 @@ public class MappingModel : PageModel {
     public async Task OnGetAsync(string? m) {        
 
         LocationList = new List<Locations>() {  
-                new Locations(1, "Bhubaneswar","Bhubaneswar, Odisha", 20.296059, 85.824539),  
-                new Locations(2, "Hyderabad","Hyderabad, Telengana", 17.387140, 78.491684),  
-                new Locations(3, "Bengaluru","Bengaluru, Karnataka", 12.972442, 77.580643)  
+                new Locations(1, "SEDEMPI", "Jau-SP", "Rua Treze de Maio, 347, Jau-SP"),  
+                new Locations(1, "Prefeitura", "Jau-SP", "Rua Paisasndu, 444, Jau-SP"), 
+                new Locations(1, "Igreja Matriz", "Jau-SP", "Rua Visconde do Rio Branco, 333, Jau-SP"), 
             }; 
 
         StatusMessage = ""; 
@@ -51,16 +51,14 @@ public class MappingModel : PageModel {
         public int LocationId { get; set; }  
         public string Title { get; set; }  
         public string Description { get; set; }  
-        public double Latitude { get; set; }  
-        public double Longitude { get; set; }  
+        public string Location { get; set; }
   
-        public Locations(int locid, string title, string desc, double latitude, double longitude)  
+        public Locations(int locid, string title, string desc, string location)  
         {  
             this.LocationId = locid;  
             this.Title = title;  
             this.Description = desc;  
-            this.Latitude = latitude;  
-            this.Longitude = longitude;  
+            this.Location = location; 
         }  
     }  
 }

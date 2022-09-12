@@ -57,7 +57,7 @@ namespace Sim.Data.Cnpj.Repository
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
                            from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                            from mpo in _db.Municipios.Where(s => s.Codigo == est.Municipio)
-                           from sn in _db.Simples.Where(s=>s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
+                           from sn in _db.Simples.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
                            select new { est, emp, atv, sn, mpo }) 
                            .Distinct()
                            .AsNoTracking();

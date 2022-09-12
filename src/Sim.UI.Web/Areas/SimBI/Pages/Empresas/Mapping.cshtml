@@ -11,65 +11,68 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <script type='text/javascript'>  
+    var map;
+    var lat;// = -22.2990589;
+    var lgt;// = -48.5575769;
     function loadMapScenario() {  
-        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
-            credentials: "AlXdA1VRF-rK-z0FQtFy5cAcfQgSy2rF9EQRdIeIaMWFddCAOgF3CsdTULcdR7_9",  
-            mapTypeId: Microsoft.Maps.MapTypeId.road,  
-            zoom: 5  
+        map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
+            credentials: 'AlXdA1VRF-rK-z0FQtFy5cAcfQgSy2rF9EQRdIeIaMWFddCAOgF3CsdTULcdR7_9',  
+            mapTypeId: Microsoft.Maps.MapTypeId.aerial,  
+            location: 'Jau-SP',
+            zoom: 15  
         });  
-  
-        // Create the infobox for the pushpin  
-        var infobox = null;  
-  
-        //declare addMarker function  
-        function addMarker(latitude, longitude, title, description, pid)  
-        {  
-            var marker = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), { color: 'green' });  
-  
-            infobox = new Microsoft.Maps.Infobox(marker.getLocation(), {  
-                visible : false  
-            });  
-  
-            marker.metadata = {  
-                id: pid,  
-                title: title,  
-                description: description  
-            };  
-  
-            Microsoft.Maps.Events.addHandler(marker, 'mouseout', hideInfobox);  
-            Microsoft.Maps.Events.addHandler(marker, 'mouseover', showInfobox);  
-  
-            infobox.setMap(map);  
-            map.entities.push(marker);  
-            marker.setOptions({ enableHoverStyle: true });  
-        };  
-  
-        function showInfobox(e) {  
-            if (e.target.metadata) {  
-                infobox.setOptions({  
-                    location: e.target.getLocation(),  
-                    title: e.target.metadata.title,  
-                    description: e.target.metadata.description,  
-                    visible: true  
-                });  
-            }  
+
+        function addMarker(localizacao, titulo, descricao) {  
+           
+            var geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations?query=" + localizacao + "&jsonp=GeocodeCallback&key=AlXdA1VRF-rK-z0FQtFy5cAcfQgSy2rF9EQRdIeIaMWFddCAOgF3CsdTULcdR7_9"; 
+            /*
+            $.getJSON(`http://dev.virtualearth.net/REST/v1/Locations?query=${localizacao}&key=AlXdA1VRF-rK-z0FQtFy5cAcfQgSy2rF9EQRdIeIaMWFddCAOgF3CsdTULcdR7_9`, function(response) {
+                var results = response.resourceSets[0].resources;
+                lat = results[0].point.coordinates[0];
+                lgt = results[0].point.coordinates[1];
+            });
+            */
+            CallRestService(geocodeRequest, GeocodeCallback);
+
+            var _location = new Microsoft.Maps.Location(lat, lgt);
+
+            var marker = new Microsoft.Maps.Pushpin(_location, {
+                color: 'green',
+                title: titulo,
+                subTitle: descricao
+                }); 
+
+            map.entities.push(marker); 
         }  
-  
-        function hideInfobox(e) {  
-            infobox.setOptions({ visible: false });  
-        }  
-  
-        //add markers to map  
+
         @if (Model.LocationList != null)  
         {  
             foreach (var item in Model.LocationList)  
             {  
-                @:addMarker(@item.Latitude, @item.Longitude, '@item.Title', '@item.Description', @item.LocationId);  
+                @:addMarker('@item.Location', '@item.Title', '@item.Description');  
             }  
-        }  
-    }  
+        }
+    } 
+    /* */
+    function GeocodeCallback(response) {
+        if (response &&
+            response.resourceSets &&
+            response.resourceSets.length > 0 &&
+            response.resourceSets[0].resources) {
+            var results = response.resourceSets[0].resources;
+            
+            lat = results[0].point.coordinates[0];
+            lgt = results[0].point.coordinates[1];
+        } 
+    }
+    function CallRestService(request) {
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("src", request);
+        document.body.appendChild(script);
+    }
 </script>  
-<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>  
+<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?branch=release&setLang=pt-BR&callback=loadMapScenario' async defer></script>  
 
 <div class="row">
     <div class="box-container-card">                    

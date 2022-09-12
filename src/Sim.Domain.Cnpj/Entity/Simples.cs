@@ -16,7 +16,6 @@
             OpcaoMEI = opcmei;
             DataOpcaoMEI = dataopcmei;
             DataExclusaoMEI = dataexcmei;
-            RegimeFiscal = GetRegimeFiscal(opcsimples, opcmei);
         }
         public string CNPJBase { get; private set; }
 
@@ -67,8 +66,6 @@
             private set { _excmei = value; }
 
         }
-        public string RegimeFiscal { get; private set; }
-
         private string GetSimples(string valor)
         {
             if (valor.ToLower() == "S".ToLower())
@@ -92,15 +89,6 @@
             valor = valor.Insert(4, "-");
             valor = valor.Insert(7, "-");
             return valor;
-        }
-
-        private string GetRegimeFiscal(string valorSN, string valorMEI){
-            var _ret = "LRP ou Próprio";
-            if (valorSN != null && valorMEI != null) {
-                var v1 = valorSN == "Sim" ? "Optante SN" : "LRP ou Próprio";
-                _ret = valorMEI == "Sim" ? "Optante SN MEI" : v1;
-            }
-            return _ret;
         }
     }
 }
