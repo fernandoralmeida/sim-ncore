@@ -1968,6 +1968,7 @@ namespace Sim.Domain.Cnpj.Services
                         situacao: item.Estabelecimento.SituacaoCadastral,
                         zona: item.Estabelecimento.Bairro,
                         logradouro: string.Format("{0} {1}", item.Estabelecimento.TipoLogradouro, item.Estabelecimento.Logradouro),
+                        numero: item.Estabelecimento.Numero,
                         localizacao: string.Format("{0} {1}, {2}, {3}-{4}", item.Estabelecimento.TipoLogradouro, item.Estabelecimento.Logradouro, item.Estabelecimento.Numero, item.Cidade.Descricao, item.Estabelecimento.UF),
                         municipio: item.Cidade.Descricao,
                         cnae: item.AtividadePrincipal.Codigo.Mask("##.##-#/##"),

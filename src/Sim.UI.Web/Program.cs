@@ -56,7 +56,7 @@ CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture("pt-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.UseResponseCaching();
+//app.UseResponseCaching();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
