@@ -9,7 +9,7 @@ namespace Sim.Data.Context
 
     public class ApplicationContext : DbContext
     {
-        private static string _connectionstring; // = @"Server=127.0.0.1,1433\\sql1;Database=Sim-Application-db20210001;User Id=sa;Password=sql@1234;";
+        private static string _connectionstring = @"Server=127.0.0.1,1433\\sql1;Database=Sim-Application-db20210001;User Id=sa;Password=sql@1234;";
         public ApplicationContext()
         { }
 
@@ -28,10 +28,11 @@ namespace Sim.Data.Context
         public DbSet<Parceiro> Parceiro { get; set; }
         public DbSet<Planner> Planner { get; set; }
         public DbSet<Secretaria> Secretaria { get; set; }
+        public DbSet<EPrefeitura> Prefeitura {get ; set;}
         public DbSet<Servico> Servico { get; set; }
         public DbSet<Setor> Setor { get; set; }
         public DbSet<Inscricao> Inscricao { get; set; }
-        public DbSet<Tipo> Tipos { get; set; }
+        public DbSet<ETipo> Tipos { get; set; }
         public DbSet<Contador> Contador { get; set; }
         public DbSet<StatusAtendimento> StatusAtendimento { get; set; }
        
@@ -51,10 +52,11 @@ namespace Sim.Data.Context
             modelBuilder.Entity<Setor>().ToTable("Setor");
             modelBuilder.Entity<Servico>().ToTable("Servico");
             modelBuilder.Entity<Inscricao>().ToTable("Inscricao");
-            modelBuilder.Entity<Tipo>().ToTable("Tipos");
+            modelBuilder.Entity<ETipo>().ToTable("Tipos");
             modelBuilder.Entity<Contador>().ToTable("Protocolos");
             modelBuilder.Entity<RaeSebrae>().ToTable("RaeSebrae");
             modelBuilder.Entity<StatusAtendimento>().ToTable("StatusAtendimento");
+            modelBuilder.Entity<EPrefeitura>().ToTable("Prefeitura");
 
             modelBuilder.ApplyConfiguration(new Config.Entity.AmbulanteMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpregosMap());
@@ -73,6 +75,7 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.TipoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.ContadorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.StatusAtendimentoMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.PrefeituraMap());
 
             base.OnModelCreating(modelBuilder);
         }

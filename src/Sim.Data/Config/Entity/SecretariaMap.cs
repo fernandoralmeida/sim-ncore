@@ -11,7 +11,7 @@ namespace Sim.Data.Config.Entity
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Nome)
                 .HasColumnType("varchar(max)");
-            builder.Property(c => c.Owner)
+            builder.Property(c => c.Acronimo)
                 .HasColumnType("varchar(max)");
         }
     }

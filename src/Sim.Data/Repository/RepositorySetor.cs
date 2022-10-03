@@ -18,7 +18,10 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<Setor>> ListAllAsync()
         {
-            return await _db.Setor.ToListAsync();
+            return await _db.Setor
+                .Include(s=>s.Canais)
+                .Include(s=>s.Servicos)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Setor>> ListSetorOwnerAsync(string secretaria)

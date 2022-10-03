@@ -135,13 +135,13 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryContador, RepositoryContador>();
 
             //
-            services.AddScoped<IAppServiceBase<Tipo>, AppServiceBase<Tipo>>();
+            services.AddScoped<IAppServiceBase<ETipo>, AppServiceBase<ETipo>>();
             services.AddScoped<IAppServiceTipo, AppServiceTipo>();
 
-            services.AddScoped<IServiceBase<Tipo>, ServiceBase<Tipo>>();
+            services.AddScoped<IServiceBase<ETipo>, ServiceBase<ETipo>>();
             services.AddScoped<IServiceTipo, ServiceTipos>();
 
-            services.AddScoped<IRepositoryBase<Tipo>, RepositoryBase<Tipo>>();
+            services.AddScoped<IRepositoryBase<ETipo>, RepositoryBase<ETipo>>();
             services.AddScoped<IRepositoryTipo, RepositoryTipo>();
 
             //
@@ -184,6 +184,15 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryBase<Empregos>, RepositoryBase<Empregos>>();
             services.AddScoped<IRepositoryEmpregos, RepositoryEmpregos>();
 
+            //
+            services.AddScoped<IAppServiceBase<EPrefeitura>, AppServiceBase<EPrefeitura>>();
+            services.AddScoped<IAppServicePrefeitura, AppServicePrefeitura>();
+            
+            services.AddScoped<IServiceBase<EPrefeitura>, ServiceBase<EPrefeitura>>();
+            services.AddScoped<IServicePrefeitura, ServicePrefeitura>();
+            
+            services.AddScoped<IRepositoryBase<EPrefeitura>, RepositoryBase<EPrefeitura>>();
+            services.AddScoped<IRepositoryPrefeitura, RepositoryPrefeitura>();
             //
             services.AddScoped<IAppServiceBIEmpregos, AppServiceBIEmpregos>();
             services.AddScoped<IServiceBIEmpregos, ServiceBIEmpregos>();

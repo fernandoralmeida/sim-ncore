@@ -54,7 +54,7 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos.Edit
 
             if (t != null)
             {
-                TipoEventos = new SelectList(t, nameof(Tipo.Nome), nameof(Tipo.Nome), null);
+                TipoEventos = new SelectList(t, nameof(ETipo.Nome), nameof(ETipo.Nome), null);
             }
 
             if (s != null)
@@ -81,7 +81,7 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos.Edit
             {
                 if (!ModelState.IsValid)
                 {
-                    StatusMessage = "Verifique o preenchimento correto do formulário!";
+                    StatusMessage = "Verifique o preenchimento correto do formulï¿½rio!";
                     await Onload();
                     return Page();
                 }

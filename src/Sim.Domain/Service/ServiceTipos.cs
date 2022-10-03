@@ -5,7 +5,7 @@ using Sim.Domain.Interface.IService;
 namespace Sim.Domain.Service
 {
 
-    public class ServiceTipos : ServiceBase<Tipo>, IServiceTipo
+    public class ServiceTipos : ServiceBase<ETipo>, IServiceTipo
     {
         private readonly IRepositoryTipo _repositoryTipo;
 
@@ -15,7 +15,7 @@ namespace Sim.Domain.Service
             _repositoryTipo = repositoryTipo;
         }
 
-        public async Task<Tipo> GetIdAsync(Guid id)
+        public async Task<ETipo> GetIdAsync(Guid id)
         {
             return await _repositoryTipo.GetIdAsync(id);
         }
@@ -25,12 +25,12 @@ namespace Sim.Domain.Service
             return 0;
         }
 
-        public async Task<IEnumerable<Tipo>> ListAllAsync()
+        public async Task<IEnumerable<ETipo>> ListAllAsync()
         {
             return await _repositoryTipo.ListAllAsync();
         }
 
-        public async Task<IEnumerable<Tipo>> ListTipoOwnerAsync(string owner)
+        public async Task<IEnumerable<ETipo>> ListTipoOwnerAsync(string owner)
         {
             return await _repositoryTipo.ListTipoOwnerAsync(owner);
         }

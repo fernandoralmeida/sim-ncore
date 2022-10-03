@@ -1,10 +1,10 @@
 ﻿namespace Sim.Domain.Interface.IService
 {
     using Entity;
-    public interface IServiceTipo : IServiceBase<Tipo>
+    public interface IServiceTipo : IServiceBase<ETipo>
     {
-        Task<IEnumerable<Tipo>> ListTipoOwnerAsync(string owner);
-        Task<Tipo> GetIdAsync(Guid id);
-        Task<IEnumerable<Tipo>> ListAllAsync();
+        Task<IEnumerable<ETipo>> ListTipoOwnerAsync(string owner);
+        Task<ETipo> GetIdAsync(Guid id);
+        Task<IEnumerable<ETipo>> ListAllAsync();
     }
 }

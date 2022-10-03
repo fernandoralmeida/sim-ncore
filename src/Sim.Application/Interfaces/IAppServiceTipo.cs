@@ -2,10 +2,10 @@
 
 namespace Sim.Application.Interfaces
 {
-    public interface IAppServiceTipo : IAppServiceBase<Tipo>
+    public interface IAppServiceTipo : IAppServiceBase<ETipo>
     {
-        Task<IEnumerable<Tipo>> ListTipoOwnerAsync(string owner);
-        Task<Tipo> GetIdAsync(Guid id);
-        Task<IEnumerable<Tipo>> ListAllAsync();
+        Task<IEnumerable<ETipo>> ListTipoOwnerAsync(string owner);
+        Task<ETipo> GetIdAsync(Guid id);
+        Task<IEnumerable<ETipo>> ListAllAsync();
     }
 }

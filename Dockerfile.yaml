@@ -1,0 +1,15 @@
+#Build Stage
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS Build
+WORKDIR /source
+COPY . .
+RUN dotnet restore "./Sim.UI.Web/Sim.UI.Web.csproj" --disable-parallel
+RUN dotnet publish "./Sim.UI.Web/Sim.UI.Web.csproj" -c release -o /dist --no-restore
+
+#Server Stage
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS Server
+WORKDIR /App
+COPY --from=build /App ./
+EXPOSE 8000
+ENTRYPOINT [ "dotnet", "Sim.UI.Web.dll" ]
+
+LABEL version="1.0" maintainer="sim-osgm"

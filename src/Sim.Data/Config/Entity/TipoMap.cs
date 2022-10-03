@@ -4,14 +4,14 @@ using Sim.Domain.Entity;
 
 namespace Sim.Data.Config.Entity
 {
-    public class TipoMap : IEntityTypeConfiguration<Tipo>
+    public class TipoMap : IEntityTypeConfiguration<ETipo>
     {
-        public void Configure(EntityTypeBuilder<Tipo> builder)
+        public void Configure(EntityTypeBuilder<ETipo> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Nome)
                 .HasColumnType("varchar(max)");
-            builder.Property(c => c.Owner)
+            builder.Property(c => c.Tipo)
                 .HasColumnType("varchar(max)");
         }
     }
