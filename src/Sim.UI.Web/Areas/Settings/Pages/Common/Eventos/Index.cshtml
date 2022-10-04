@@ -1,0 +1,68 @@
+﻿@page
+@model Sim.UI.Web.Areas.Settings.Pages.Common.Eventos.IndexModel
+@{
+    Layout = "../_Layout.cshtml";
+    ViewData["Title"] = "Index";
+    ViewData["ActivePageSettings"] = SettingsNavPages.Eventos;
+}
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div>
+    <form method="post">
+        <div class="col s12" hidden>
+            <label asp-for="Input.Id" class="form-label"></label>
+            <input asp-for="Input.Id" class="form-control" />
+        </div>
+        <div class="row rounded-b-2 z-depth-1 white">
+
+            <div class="input-field col s12 m6 l6">
+                <select asp-for="Input.Tipo">
+                    <option selected>Evento</option>
+                </select>
+                <label asp-for="Input.Tipo"></label>                
+            </div>
+            <div class="input-field col s12 m6 l6 valign-wrapper">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome"></label>
+                <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
+            </div>
+           
+        </div>
+        <div class="card">
+            <table class="responsive-table striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Nome
+                        </th>
+                        <th>Tipo</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Tipos != null)
+                    {
+                        foreach (var item in Model.Tipos)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tipo)
+                                </td>
+
+                                <td>
+                                    <button type="submit" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-small waves-effect waves-light materialize-red" title="Excluir item"><i class="material-icons">remove</i></button>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </form>
+</div>

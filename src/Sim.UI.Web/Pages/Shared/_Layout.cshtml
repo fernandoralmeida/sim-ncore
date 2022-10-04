@@ -75,15 +75,17 @@
             });
         });
         function handle(e){
-        if(e.keyCode === 13){
-            var v = $("#search").val();
-            if(v === "")
-                return false;
+            if(e.keyCode === 13){
+                var v = $("#search").val();
+                if(v === "")
+                    return false;
 
-            $(".blackboxload").show();
-            $(".progress").show();
+                $(".blackboxload").show();
+                $(".progress").show();
+            }}
+        function voltar() {
+            window.history.back();
         }
-    }
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

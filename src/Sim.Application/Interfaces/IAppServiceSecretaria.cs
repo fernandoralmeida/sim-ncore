@@ -1,11 +1,11 @@
-﻿using Sim.Domain.Entity;
+﻿using Sim.Domain.Organizacao.Model;
 
 namespace Sim.Application.Interfaces
 {
-    public interface IAppServiceSecretaria : IAppServiceBase<Secretaria>
+    public interface IAppServiceSecretaria : IAppServiceBase<EOrganizacao>
     {
-        Task<IEnumerable<Secretaria>> ListSecretariaOwnerAsync(string setor);
-        Task<Secretaria> GetIdAsync(Guid id);
-        Task<IEnumerable<Secretaria>> ListAllAsync();
+        Task<IEnumerable<EOrganizacao>> ListSecretariaOwnerAsync(string setor);
+        Task<EOrganizacao> GetIdAsync(Guid id);
+        Task<IEnumerable<EOrganizacao>> ListAllAsync();
     }
 }

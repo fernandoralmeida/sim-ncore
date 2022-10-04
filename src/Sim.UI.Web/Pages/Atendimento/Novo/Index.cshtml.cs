@@ -14,7 +14,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
     public class IndexModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
-        private readonly IAppServiceSetor _appServiceSetor;
+        //private readonly IAppServiceSetor _appServiceSetor;
         private readonly IAppServiceCanal _appServiceCanal;
         private readonly IAppServiceServico _appServiceServico;
         private readonly IMapper _mapper;
@@ -22,13 +22,13 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
         public IndexModel(IAppServiceAtendimento appServiceAtendimento,
             IAppServiceCanal appServiceCanal,
             IAppServiceServico appServiceServico,
-            IAppServiceSetor appServiceSetor,
+            //IAppServiceSetor appServiceSetor,
             IMapper mapper)
         {
             _appServiceAtendimento = appServiceAtendimento;
             _appServiceCanal = appServiceCanal;
             _appServiceServico = appServiceServico;
-            _appServiceSetor = appServiceSetor;
+            //_appServiceSetor = appServiceSetor;
             _mapper = mapper;
         }
 
@@ -53,6 +53,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
 
         private async Task OnLoad()
         {
+            /*
             var set = await _appServiceSetor.ListAllAsync();
            
 
@@ -67,6 +68,8 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
             {
                 Setores = new SelectList(lst, nameof(Setor.Nome), nameof(Setor.Nome), null);
             }
+            */
+
         }
 
         public async Task<IActionResult> OnGetAsync()

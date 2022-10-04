@@ -3,6 +3,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
 using Sim.Domain;
+using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Organizacao.Service;
+using Sim.Domain.Organizacao.Interfaces.Service;
+using Sim.Domain.Organizacao.Interfaces.Repository;
+
+using Sim.Domain.Evento.Model;
+using Sim.Domain.Evento.Service;
+using Sim.Domain.Evento.Interfaces.Service;
+using Sim.Domain.Evento.Interfaces.Repository;
+
 using Sim.Domain.Entity;
 using Sim.Domain.Interface.IService;
 using Sim.Domain.Interface.IRepository;
@@ -75,53 +85,43 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryBase<StatusAtendimento>, RepositoryBase<StatusAtendimento>>();
             services.AddScoped<IRepositoryStatusAtendimento, RepositoryStatusAtendimento>();
             //
-            services.AddScoped<IAppServiceBase<Secretaria>, AppServiceBase<Secretaria>>();
+            services.AddScoped<IAppServiceBase<EOrganizacao>, AppServiceBase<EOrganizacao>>();
             services.AddScoped<IAppServiceSecretaria, AppServiceSecretaria>();
 
-            services.AddScoped<IServiceBase<Secretaria>, ServiceBase<Secretaria>>();
+            services.AddScoped<IServiceBase<EOrganizacao>, ServiceBase<EOrganizacao>>();
             services.AddScoped<IServiceSecretaria, ServiceSecretaria>();
 
-            services.AddScoped<IRepositoryBase<Secretaria>, RepositoryBase<Secretaria>>();
+            services.AddScoped<IRepositoryBase<EOrganizacao>, RepositoryBase<EOrganizacao>>();
             services.AddScoped<IRepositorySecretaria, RepositorySecretaria>();
 
             //
-            services.AddScoped<IAppServiceBase<Setor>, AppServiceBase<Setor>>();
-            services.AddScoped<IAppServiceSetor, AppServiceSetor>();
-
-            services.AddScoped<IServiceBase<Setor>, ServiceBase<Setor>>();
-            services.AddScoped<IServiceSetor, ServiceSetor>();
-
-            services.AddScoped<IRepositoryBase<Setor>, RepositoryBase<Setor>>();
-            services.AddScoped<IRepositorySetor, RepositorySetor>();
-
-            //
-            services.AddScoped<IAppServiceBase<Servico>, AppServiceBase<Servico>>();
+            services.AddScoped<IAppServiceBase<EServico>, AppServiceBase<EServico>>();
             services.AddScoped<IAppServiceServico, AppServiceServico>();
 
-            services.AddScoped<IServiceBase<Servico>, ServiceBase<Servico>>();
+            services.AddScoped<IServiceBase<EServico>, ServiceBase<EServico>>();
             services.AddScoped<IServiceServico, ServiceServico>();
 
-            services.AddScoped<IRepositoryBase<Servico>, RepositoryBase<Servico>>();
+            services.AddScoped<IRepositoryBase<EServico>, RepositoryBase<EServico>>();
             services.AddScoped<IRepositoryServico, RepositoryServico>();
 
             //
-            services.AddScoped<IAppServiceBase<Evento>, AppServiceBase<Evento>>();
+            services.AddScoped<IAppServiceBase<EEvento>, AppServiceBase<EEvento>>();
             services.AddScoped<IAppServiceEvento, AppServiceEvento>();
 
-            services.AddScoped<IServiceBase<Evento>, ServiceBase<Evento>>();
+            services.AddScoped<IServiceBase<EEvento>, ServiceBase<EEvento>>();
             services.AddScoped<IServiceEvento, ServiceEvento>();
 
-            services.AddScoped<IRepositoryBase<Evento>, RepositoryBase<Evento>>();
+            services.AddScoped<IRepositoryBase<EEvento>, RepositoryBase<EEvento>>();
             services.AddScoped<IRepositoryEvento, RepositoryEvento>();
 
             //
-            services.AddScoped<IAppServiceBase<Canal>, AppServiceBase<Canal>>();
+            services.AddScoped<IAppServiceBase<ECanal>, AppServiceBase<ECanal>>();
             services.AddScoped<IAppServiceCanal, AppServiceCanal>();
 
-            services.AddScoped<IServiceBase<Canal>, ServiceBase<Canal>>();
+            services.AddScoped<IServiceBase<ECanal>, ServiceBase<ECanal>>();
             services.AddScoped<IServiceCanal, ServiceCanal>();
 
-            services.AddScoped<IRepositoryBase<Canal>, RepositoryBase<Canal>>();
+            services.AddScoped<IRepositoryBase<ECanal>, RepositoryBase<ECanal>>();
             services.AddScoped<IRepositoryCanal, RepositoryCanal>();
             
             //
@@ -135,13 +135,13 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryContador, RepositoryContador>();
 
             //
-            services.AddScoped<IAppServiceBase<Tipo>, AppServiceBase<Tipo>>();
+            services.AddScoped<IAppServiceBase<ETipo>, AppServiceBase<ETipo>>();
             services.AddScoped<IAppServiceTipo, AppServiceTipo>();
 
-            services.AddScoped<IServiceBase<Tipo>, ServiceBase<Tipo>>();
+            services.AddScoped<IServiceBase<ETipo>, ServiceBase<ETipo>>();
             services.AddScoped<IServiceTipo, ServiceTipos>();
 
-            services.AddScoped<IRepositoryBase<Tipo>, RepositoryBase<Tipo>>();
+            services.AddScoped<IRepositoryBase<ETipo>, RepositoryBase<ETipo>>();
             services.AddScoped<IRepositoryTipo, RepositoryTipo>();
 
             //
@@ -165,13 +165,13 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryPlaner, RepositoryPlaner>();
 
             //
-            services.AddScoped<IAppServiceBase<Parceiro>, AppServiceBase<Parceiro>>();
+            services.AddScoped<IAppServiceBase<EParceiro>, AppServiceBase<EParceiro>>();
             services.AddScoped<IAppServiceParceiro, AppServiceParceiro>();
 
-            services.AddScoped<IServiceBase<Parceiro>, ServiceBase<Parceiro>>();
+            services.AddScoped<IServiceBase<EParceiro>, ServiceBase<EParceiro>>();
             services.AddScoped<IServiceParceiro, ServiceParceiros>();
 
-            services.AddScoped<IRepositoryBase<Parceiro>, RepositoryBase<Parceiro>>();
+            services.AddScoped<IRepositoryBase<EParceiro>, RepositoryBase<EParceiro>>();
             services.AddScoped<IRepositoryParceiro, RepositoryParceiro>();
 
             //

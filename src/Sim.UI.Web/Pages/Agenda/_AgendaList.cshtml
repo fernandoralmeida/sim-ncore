@@ -1,5 +1,5 @@
-﻿@using Sim.Domain.Entity;
-@model IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)>
+﻿@using Sim.Domain.Evento.Model;
+@model IEnumerable<(string Mes, int Qtde, IEnumerable<EEvento>)>
 
 <div style="height: 16px;"></div>
     @if (Model != null)
@@ -15,7 +15,7 @@
             <div class="row">
                 @foreach(var l in item.Item3)
                 {
-                    @if(l.Situacao <= Evento.ESituacao.Ativo)
+                    @if(l.Situacao <= EEvento.ESituacao.Ativo)
                     {
                         @if((int)l.Data.Value.Subtract(DateTime.Today).TotalDays > 30)
                         {

@@ -1,74 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 using Sim.Application.Interfaces;
+using Sim.Application.VM;
 using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common
 {
     public class IndexModel : PageModel
     {
-        private readonly IAppServiceSecretaria _appServiceSecretaria;
-        public IndexModel(IAppServiceSecretaria appServiceSecretaria)
+        private readonly IAppServiceSecretaria _appServicePrefeitura;
+        public IndexModel(IAppServiceSecretaria appService)
         {
-            _appServiceSecretaria = appServiceSecretaria;
-        }
-
-        public class InputModel
-        {
-            [Key]
-            [HiddenInput(DisplayValue = false)]
-            public Guid Id { get; set; }
-
-            [Required]
-            [DisplayName("Secretaria")]
-            public string Nome { get; set; }
-
-            [DisplayName("Unidade Responsável")]
-            public string Owner { get; set; } //Prefeitura
-
-            [DisplayName("Ativo")]
-            public bool Ativo { get; set; }
-
-            public virtual ICollection<Secretaria> Listar { get; set; }
+            _appServicePrefeitura = appService;
         }
 
         [TempData]
         public string StatusMessage { get; set; }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public VMSecretaria Input { get; set; }
+        public IEnumerable<VMSecretaria> Listar { get; set; }
         
         private async Task OnLoad()
         {
-            var t = await _appServiceSecretaria.ListAllAsync();
-            Input = new InputModel()
-            {
-                Listar = t.ToList(),
-                Ativo = true
-            };
+            var t = await _appServicePrefeitura.DoList();
         }
 
-        public void OnGet()
-        {
-            OnLoad().Wait();
-        }
+        public async Task OnGetAsync() => await OnLoad();
 
         public async Task OnPostAddAsync()
         {
-            if (ModelState.IsValid)
-            {
-                var input = new Secretaria()
-                {
-                    Nome = Input.Nome,
-                    Owner = Input.Owner,
-                    Ativo = true
-                };
-
-                await _appServiceSecretaria.AddAsync(input);
-            }
-
             await OnLoad();
         }
 
@@ -76,15 +37,22 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
         {
             try
             {
-                var sec = await _appServiceSecretaria.GetIdAsync(id);
-                await _appServiceSecretaria.RemoveAsync(sec);
+                var sec = await _appServicePrefeitura.GetIdAsync(id);
+                await _appServicePrefeitura.RemoveAsync(sec);
 
                 await OnLoad();
             }
             catch (Exception ex)
             {
-                StatusMessage = "Erro ao tentar remover Secretaria!" + "\n" + ex.Message;
+                StatusMessage = "Erro ao tentar remover Prefeitura!" + "\n" + ex.Message;
             }
+        }
+
+        public async Task OnGetStatus(Guid id, bool st)
+        {
+            var _org = await _appServicePrefeitura.SingleIdAsync(id);
+            _org.Ativo = st;
+            await _appServicePrefeitura.UpdateAsync(_org);
         }
     }
 }

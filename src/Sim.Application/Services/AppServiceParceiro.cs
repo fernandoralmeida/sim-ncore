@@ -1,10 +1,10 @@
-﻿using Sim.Domain.Entity;
-using Sim.Domain.Interface.IService;
-using Sim.Application.Interfaces;
+﻿using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Organizacao.Interfaces.Service;
 
 namespace Sim.Application.Services
 {
-    public class AppServiceParceiro : AppServiceBase<Parceiro>, IAppServiceParceiro
+    using Interfaces;
+    public class AppServiceParceiro : AppServiceBase<EParceiro>, IAppServiceParceiro
     {
         private readonly IServiceParceiro _parceiro;
         public AppServiceParceiro(IServiceParceiro parceiro)
@@ -13,17 +13,17 @@ namespace Sim.Application.Services
             _parceiro = parceiro;
         }
 
-        public async Task<Parceiro> GetIdAsync(Guid id)
+        public async Task<EParceiro> GetIdAsync(Guid id)
         {
             return await _parceiro.GetIdAsync(id);
         }
 
-        public async Task<IEnumerable<Parceiro>> ListAllAsync()
+        public async Task<IEnumerable<EParceiro>> ListAllAsync()
         {
             return await _parceiro.ListAllAsync();
         }
 
-        public async Task<IEnumerable<Parceiro>> ListParceirosAsync(string owner)
+        public async Task<IEnumerable<EParceiro>> ListParceirosAsync(string owner)
         {
             return await _parceiro.ListParceirosAsync(owner);
         }

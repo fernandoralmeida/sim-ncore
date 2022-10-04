@@ -12,7 +12,6 @@ public class IndexModel : PageModel
     private readonly IAppServiceAtendimento _appAtendimento;
     private readonly IAppServiceStatusAtendimento _appServiceStatusAtendimento;
     private readonly IAppServiceBIAtendimento _biantendimento;
-    private readonly IAppServiceSetor _appSetores;
 
     public EChartDual Panorama { get; set; }
 
@@ -31,20 +30,17 @@ public class IndexModel : PageModel
     public IndexModel(UserManager<ApplicationUser> userManager,
         IAppServiceAtendimento appAtendimento,
         IAppServiceStatusAtendimento appServiceStatusAtendimento,
-        IAppServiceBIAtendimento appServiceBIAtendimento,
-        IAppServiceSetor appServiceSetor)
+        IAppServiceBIAtendimento appServiceBIAtendimento)
     {
         _userManager = userManager;
         _appAtendimento = appAtendimento;
         _appServiceStatusAtendimento = appServiceStatusAtendimento;
         _biantendimento = appServiceBIAtendimento;
-        _appSetores = appServiceSetor;
     }
 
     private async Task<IEnumerable<InputSetor>> DoListUsersAsync() {
         return await Task.Run(async () => { 
             var _list = new List<InputSetor>();
-            var _setores = await _appSetores.ListAllAsync();
 
             foreach(var _roles in new string[]{"M_Pat", "M_BancoPovo", "M_Sebrae", "M_SalaEmpreendedor"}) {
 

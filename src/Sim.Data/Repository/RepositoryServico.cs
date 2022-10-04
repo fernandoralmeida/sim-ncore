@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sim.Data.Context;
-using Sim.Domain.Entity;
-using Sim.Domain.Interface.IRepository;
+using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Organizacao.Interfaces.Repository;
 
 namespace Sim.Data.Repository
 {
-    public class RepositoryServico : RepositoryBase<Servico>, IRepositoryServico
+    public class RepositoryServico : RepositoryBase<EServico>, IRepositoryServico
     {
         public RepositoryServico(ApplicationContext dbContext)
             :base(dbContext)
@@ -13,23 +13,22 @@ namespace Sim.Data.Repository
 
         }
 
-        public async Task<Servico> GetIdAsync(Guid id)
+        public async Task<EServico> GetIdAsync(Guid id)
         {
             return await _db.Servico.Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Servico>> ListAllAsync()
+        public async Task<IEnumerable<EServico>> ListAllAsync()
         {
             return await _db.Servico.OrderBy(s => s.Nome).ToListAsync();
         }
 
-        public async Task<IEnumerable<Servico>> ListServicoOwnerAsync(string setor)
+        public async Task<IEnumerable<EServico>> ListServicoOwnerAsync(string setor)
         {
             return await _db.Servico
-                .Include(s => s.Setor)
-                .Include(s => s.Secretaria)
-                .Where(p => p.Setor.Nome.Contains(setor) 
-                || p.Setor.Nome.Contains("Geral"))
+                .Include(s => s.Dominio)
+                .Where(p => p.Dominio.Nome.Contains(setor) 
+                || p.Dominio.Nome.Contains("Geral"))
                 .OrderBy(s => s.Nome).ToListAsync();
         }
     }

@@ -1,12 +1,12 @@
-﻿using Sim.Domain.Entity;
+﻿using Sim.Domain.Organizacao.Model;
 
 namespace Sim.Application.Interfaces
 {
-    public interface IAppServiceServico : IAppServiceBase<Servico>
+    public interface IAppServiceServico : IAppServiceBase<EServico>
     {
-        Task<IEnumerable<Servico>> ListServicoOwnerAsync(string setor);
-        Task<Servico> GetIdAsync(Guid id);
-        Task<IEnumerable<Servico>> ListAllAsync();
+        Task<IEnumerable<EServico>> ListServicoOwnerAsync(string setor);
+        Task<EServico> GetIdAsync(Guid id);
+        Task<IEnumerable<EServico>> ListAllAsync();
         Task<IEnumerable<(string canal, string value)>> ToListJson(string setor);
     }
 }

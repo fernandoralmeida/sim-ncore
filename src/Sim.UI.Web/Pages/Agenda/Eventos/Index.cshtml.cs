@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
-using Sim.Domain.Entity;
+using Sim.Domain.Evento.Model;
+using Sim.Domain.Organizacao.Model;
 using Sim.Application.Interfaces;
 
 namespace Sim.UI.Web.Pages.Agenda.Eventos
@@ -14,19 +15,16 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
     {
         private readonly IAppServiceTipo _appServiceTipo;
         private readonly IAppServiceEvento _appServiceEvento;
-        private readonly IAppServiceSetor _appServiceSetor;
         private readonly IAppServiceParceiro _appServiceParceiro;
         private readonly IMapper _mapper;
 
         public IndexModel(IAppServiceEvento appServiceEvento,
             IAppServiceTipo appServiceTipo,
-            IAppServiceSetor appServiceSetor,
             IAppServiceParceiro appServiceParceiro,
             IMapper mapper)
         {
             _appServiceEvento = appServiceEvento;
             _appServiceTipo = appServiceTipo;
-            _appServiceSetor = appServiceSetor;
             _appServiceParceiro = appServiceParceiro;
             _mapper = mapper;
         }
@@ -46,26 +44,19 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
         {
             var t = await _appServiceTipo.ListAllAsync();
 
-            var s = await _appServiceSetor.ListAllAsync();
-
             var p = await _appServiceParceiro.ListAllAsync();
 
             if (t != null)
             {
-                TipoEventos = new SelectList(t, nameof(Tipo.Nome), nameof(Tipo.Nome), null);
-            }
-
-            if (s != null)
-            {
-                Setores = new SelectList(s, nameof(Setor.Nome), nameof(Setor.Nome), null);
+                TipoEventos = new SelectList(t, nameof(ETipo.Nome), nameof(ETipo.Nome), null);
             }
 
             if (p != null)
             {
-                Parceiros = new SelectList(p, nameof(Parceiro.Nome), nameof(Parceiro.Nome), null);
+                Parceiros = new SelectList(p, nameof(EParceiro.Nome), nameof(EParceiro.Nome), null);
             }
 
-            Situacoes = new SelectList(Enum.GetNames(typeof(Evento.ESituacao)));
+            Situacoes = new SelectList(Enum.GetNames(typeof(EEvento.ESituacao)));
         }
         public async Task OnGet()
         {
@@ -78,7 +69,7 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
             {
                 if (!ModelState.IsValid)
                 {
-                    StatusMessage = "Verifique o preenchimento correto do formulário!";
+                    StatusMessage = "Verifique o preenchimento correto do formulï¿½rio!";
                     await Onload();
                     return Page();
                 }
@@ -91,7 +82,7 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
                 else
                     Input.Codigo = cod.Result + 1;
 
-                await _appServiceEvento.AddAsync(_mapper.Map<Evento>(Input));
+                await _appServiceEvento.AddAsync(_mapper.Map<EEvento>(Input));
 
                 return RedirectToPage("/Agenda/Index");
             }

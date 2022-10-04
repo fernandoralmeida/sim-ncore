@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sim.Data.Context;
-using Sim.Domain.Entity;
-using Sim.Domain.Interface.IRepository;
+using Sim.Domain.Evento.Model;
+using Sim.Domain.Evento.Interfaces.Repository;
 using System.Linq;
 
 namespace Sim.Data.Repository
 {
-    public class RepositoryEvento : RepositoryBase<Evento>, IRepositoryEvento
+    public class RepositoryEvento : RepositoryBase<EEvento>, IRepositoryEvento
     {
         public RepositoryEvento(ApplicationContext dbContext)
             :base(dbContext)
@@ -14,7 +14,7 @@ namespace Sim.Data.Repository
 
         }
 
-        public async Task<IEnumerable<Evento>> DoListAsyncBy(string param)
+        public async Task<IEnumerable<EEvento>> DoListAsyncBy(string param)
         {
             return await _db.Evento                
                 .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
@@ -29,7 +29,7 @@ namespace Sim.Data.Repository
                 .ToListAsync();    
         }
 
-        public async Task<IEnumerable<Evento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
+        public async Task<IEnumerable<EEvento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
         {
             var n = nome ?? "";
             var t = tipo ?? "";
@@ -45,7 +45,7 @@ namespace Sim.Data.Repository
                 .ToListAsync();    
         }
 
-        public async Task<Evento> GetCodigoAsync(int codigo)
+        public async Task<EEvento> GetCodigoAsync(int codigo)
         {
             return await _db.Evento                
                 .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
@@ -55,7 +55,7 @@ namespace Sim.Data.Repository
                 .FirstOrDefaultAsync();           
         }
 
-        public async Task<Evento> GetCodigoParticipanteAsync(int codigo)
+        public async Task<EEvento> GetCodigoParticipanteAsync(int codigo)
         {
             return await _db.Evento
                 .Include(e => e.Inscritos)
@@ -64,7 +64,7 @@ namespace Sim.Data.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Evento> GetEventoToListParticipantes(int codigo)
+        public async Task<EEvento> GetEventoToListParticipantes(int codigo)
         {
             return await _db.Evento                
                 .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
@@ -74,7 +74,7 @@ namespace Sim.Data.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Evento> GetIdAsync(Guid id)
+        public async Task<EEvento> GetIdAsync(Guid id)
         {
             return await _db.Evento
                 .Include(i => i.Inscritos)
@@ -97,7 +97,7 @@ namespace Sim.Data.Repository
                 return (int)cod;
         }
 
-        public async Task<IEnumerable<Evento>> ListAllAsync()
+        public async Task<IEnumerable<EEvento>> ListAllAsync()
         {
             return await _db.Evento                
                 .Include(i => i.Inscritos).OrderBy(o => o.Data)
@@ -105,7 +105,7 @@ namespace Sim.Data.Repository
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Evento>> ListNomeAsync(string nome)
+        public async Task<IEnumerable<EEvento>> ListNomeAsync(string nome)
         {
             return await _db.Evento                
                 .Include(i=>i.Inscritos)
@@ -115,7 +115,7 @@ namespace Sim.Data.Repository
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Evento>> ListOwnerAsync(string setor)
+        public async Task<IEnumerable<EEvento>> ListOwnerAsync(string setor)
         {
             return await _db.Evento                
                 .Include(i => i.Inscritos)

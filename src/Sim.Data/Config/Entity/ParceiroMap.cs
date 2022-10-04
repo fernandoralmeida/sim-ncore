@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sim.Domain.Entity;
+using Sim.Domain.Organizacao.Model;
 
 namespace Sim.Data.Config.Entity
 {
-    public class ParceiroMap : IEntityTypeConfiguration<Parceiro>
+    public class ParceiroMap : IEntityTypeConfiguration<EParceiro>
     {
-        public void Configure(EntityTypeBuilder<Parceiro> builder)
+        public void Configure(EntityTypeBuilder<EParceiro> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Nome)

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Sim.Application.Interfaces;
-using Sim.Domain.Entity;
+using Sim.Domain.Evento.Model;
 
 namespace Sim.UI.Web.Pages.Agenda
 {
@@ -18,7 +18,7 @@ namespace Sim.UI.Web.Pages.Agenda
         {
             public string Search { get; set; }
             public IEnumerable<InputModelEvento> ListaEventos { get; set; }
-            public IEnumerable<(string Mes, int Qtde, IEnumerable<Evento>)> ListaEventosMes { get; set; }
+            public IEnumerable<(string Mes, int Qtde, IEnumerable<EEvento>)> ListaEventosMes { get; set; }
         }
 
         [TempData]
@@ -29,22 +29,22 @@ namespace Sim.UI.Web.Pages.Agenda
             _appServiceEvento = appServiceEvento;
         }
 
-        public async Task Load(Evento.ESituacao situacao, string m)
+        public async Task Load(EEvento.ESituacao situacao, string m)
         {
-            Evento.ESituacao sto = Evento.ESituacao.Ativo;
+            EEvento.ESituacao sto = EEvento.ESituacao.Ativo;
             switch(m)
             {
                 case "avl":
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
-                    sto = Evento.ESituacao.Ativo;
+                    sto = EEvento.ESituacao.Ativo;
                     break;
                 case "fzd":
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoFinalizado;
-                    sto = Evento.ESituacao.Finalizado;
+                    sto = EEvento.ESituacao.Finalizado;
                     break;
                 case "cld":
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoCancelado;
-                    sto = Evento.ESituacao.Cancelado;
+                    sto = EEvento.ESituacao.Cancelado;
                     break;
                 default:
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
@@ -56,7 +56,7 @@ namespace Sim.UI.Web.Pages.Agenda
 
         public async Task OnGetAsync(string m)
         {            
-            await Load(Evento.ESituacao.Ativo, m);
+            await Load(EEvento.ESituacao.Ativo, m);
         }
 
         public async Task OnPostAsync()

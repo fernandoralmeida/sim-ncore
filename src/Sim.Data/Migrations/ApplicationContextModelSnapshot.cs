@@ -141,33 +141,6 @@ namespace Sim.Data.Migrations
                     b.ToTable("Atendimento", (string)null);
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Canal", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<Guid?>("SecretariaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("SetorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SecretariaId");
-
-                    b.HasIndex("SetorId");
-
-                    b.ToTable("Canal", (string)null);
-                });
-
             modelBuilder.Entity("Sim.Domain.Entity.Contador", b =>
                 {
                     b.Property<Guid>("Id")
@@ -350,47 +323,6 @@ namespace Sim.Data.Migrations
                     b.ToTable("Empresa", (string)null);
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Evento", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Formato")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("Lotacao")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Owner")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Parceiro")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Situacao")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Tipo")
-                        .HasColumnType("varchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Evento", (string)null);
-                });
-
             modelBuilder.Entity("Sim.Domain.Entity.Inscricao", b =>
                 {
                     b.Property<Guid>("Id")
@@ -427,28 +359,6 @@ namespace Sim.Data.Migrations
                     b.HasIndex("ParticipanteId");
 
                     b.ToTable("Inscricao", (string)null);
-                });
-
-            modelBuilder.Entity("Sim.Domain.Entity.Parceiro", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<Guid?>("SecretariaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SecretariaId");
-
-                    b.ToTable("Parceiros", (string)null);
                 });
 
             modelBuilder.Entity("Sim.Domain.Entity.Pessoa", b =>
@@ -601,75 +511,6 @@ namespace Sim.Data.Migrations
                     b.ToTable("RaeSebrae", (string)null);
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Secretaria", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Owner")
-                        .HasColumnType("varchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Secretaria", (string)null);
-                });
-
-            modelBuilder.Entity("Sim.Domain.Entity.Servico", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<Guid?>("SecretariaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("SetorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SecretariaId");
-
-                    b.HasIndex("SetorId");
-
-                    b.ToTable("Servico", (string)null);
-                });
-
-            modelBuilder.Entity("Sim.Domain.Entity.Setor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<Guid?>("SecretariaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SecretariaId");
-
-                    b.ToTable("Setor", (string)null);
-                });
-
             modelBuilder.Entity("Sim.Domain.Entity.StatusAtendimento", b =>
                 {
                     b.Property<Guid>("Id")
@@ -687,7 +528,48 @@ namespace Sim.Data.Migrations
                     b.ToTable("StatusAtendimento", (string)null);
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Tipo", b =>
+            modelBuilder.Entity("Sim.Domain.Evento.Model.EEvento", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Codigo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Formato")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Lotacao")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Owner")
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Parceiro")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Situacao")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("varchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Evento", (string)null);
+                });
+
+            modelBuilder.Entity("Sim.Domain.Evento.Model.ETipo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -696,15 +578,112 @@ namespace Sim.Data.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("DominioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Nome")
                         .HasColumnType("varchar(max)");
 
-                    b.Property<string>("Owner")
+                    b.Property<string>("Tipo")
                         .HasColumnType("varchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DominioId");
+
                     b.ToTable("Tipos", (string)null);
+                });
+
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.ECanal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("DominioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("varchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DominioId");
+
+                    b.ToTable("Canal", (string)null);
+                });
+
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.EOrganizacao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Acronimo")
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Dominio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Hierarquia")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("varchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Secretaria", (string)null);
+                });
+
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.EParceiro", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("DominioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("varchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DominioId");
+
+                    b.ToTable("Parceiros", (string)null);
+                });
+
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.EServico", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("DominioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("varchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DominioId");
+
+                    b.ToTable("Servico", (string)null);
                 });
 
             modelBuilder.Entity("AmbulantePessoa", b =>
@@ -743,21 +722,6 @@ namespace Sim.Data.Migrations
                     b.Navigation("Sebrae");
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Canal", b =>
-                {
-                    b.HasOne("Sim.Domain.Entity.Secretaria", "Secretaria")
-                        .WithMany("Canais")
-                        .HasForeignKey("SecretariaId");
-
-                    b.HasOne("Sim.Domain.Entity.Setor", "Setor")
-                        .WithMany("Canais")
-                        .HasForeignKey("SetorId");
-
-                    b.Navigation("Secretaria");
-
-                    b.Navigation("Setor");
-                });
-
             modelBuilder.Entity("Sim.Domain.Entity.DIA", b =>
                 {
                     b.HasOne("Sim.Domain.Entity.Ambulante", "Ambulante")
@@ -788,7 +752,7 @@ namespace Sim.Data.Migrations
                         .WithMany("Inscricoes")
                         .HasForeignKey("EmpresaId");
 
-                    b.HasOne("Sim.Domain.Entity.Evento", "Evento")
+                    b.HasOne("Sim.Domain.Evento.Model.EEvento", "Evento")
                         .WithMany("Inscritos")
                         .HasForeignKey("EventoId");
 
@@ -803,37 +767,40 @@ namespace Sim.Data.Migrations
                     b.Navigation("Participante");
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Parceiro", b =>
+            modelBuilder.Entity("Sim.Domain.Evento.Model.ETipo", b =>
                 {
-                    b.HasOne("Sim.Domain.Entity.Secretaria", "Secretaria")
+                    b.HasOne("Sim.Domain.Organizacao.Model.EOrganizacao", "Dominio")
                         .WithMany()
-                        .HasForeignKey("SecretariaId");
+                        .HasForeignKey("DominioId");
 
-                    b.Navigation("Secretaria");
+                    b.Navigation("Dominio");
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Servico", b =>
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.ECanal", b =>
                 {
-                    b.HasOne("Sim.Domain.Entity.Secretaria", "Secretaria")
-                        .WithMany("Servicos")
-                        .HasForeignKey("SecretariaId");
+                    b.HasOne("Sim.Domain.Organizacao.Model.EOrganizacao", "Dominio")
+                        .WithMany("Canais")
+                        .HasForeignKey("DominioId");
 
-                    b.HasOne("Sim.Domain.Entity.Setor", "Setor")
-                        .WithMany("Servicos")
-                        .HasForeignKey("SetorId");
-
-                    b.Navigation("Secretaria");
-
-                    b.Navigation("Setor");
+                    b.Navigation("Dominio");
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Setor", b =>
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.EParceiro", b =>
                 {
-                    b.HasOne("Sim.Domain.Entity.Secretaria", "Secretaria")
-                        .WithMany("Setores")
-                        .HasForeignKey("SecretariaId");
+                    b.HasOne("Sim.Domain.Organizacao.Model.EOrganizacao", "Dominio")
+                        .WithMany()
+                        .HasForeignKey("DominioId");
 
-                    b.Navigation("Secretaria");
+                    b.Navigation("Dominio");
+                });
+
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.EServico", b =>
+                {
+                    b.HasOne("Sim.Domain.Organizacao.Model.EOrganizacao", "Dominio")
+                        .WithMany("Servicos")
+                        .HasForeignKey("DominioId");
+
+                    b.Navigation("Dominio");
                 });
 
             modelBuilder.Entity("Sim.Domain.Entity.Ambulante", b =>
@@ -850,11 +817,6 @@ namespace Sim.Data.Migrations
                     b.Navigation("VagasEmpregos");
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Evento", b =>
-                {
-                    b.Navigation("Inscritos");
-                });
-
             modelBuilder.Entity("Sim.Domain.Entity.Pessoa", b =>
                 {
                     b.Navigation("Atendimentos");
@@ -862,16 +824,12 @@ namespace Sim.Data.Migrations
                     b.Navigation("Inscricoes");
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Secretaria", b =>
+            modelBuilder.Entity("Sim.Domain.Evento.Model.EEvento", b =>
                 {
-                    b.Navigation("Canais");
-
-                    b.Navigation("Servicos");
-
-                    b.Navigation("Setores");
+                    b.Navigation("Inscritos");
                 });
 
-            modelBuilder.Entity("Sim.Domain.Entity.Setor", b =>
+            modelBuilder.Entity("Sim.Domain.Organizacao.Model.EOrganizacao", b =>
                 {
                     b.Navigation("Canais");
 

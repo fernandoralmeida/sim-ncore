@@ -1,11 +1,11 @@
-﻿using Sim.Domain.Entity;
+﻿using Sim.Domain.Organizacao.Model;
 
 namespace Sim.Application.Interfaces
 {
-    public interface IAppServiceParceiro : IAppServiceBase<Parceiro>
+    public interface IAppServiceParceiro : IAppServiceBase<EParceiro>
     {
-        Task<IEnumerable<Parceiro>> ListParceirosAsync(string owner);
-        Task<Parceiro> GetIdAsync(Guid id);
-        Task<IEnumerable<Parceiro>> ListAllAsync();
+        Task<IEnumerable<EParceiro>> ListParceirosAsync(string owner);
+        Task<EParceiro> GetIdAsync(Guid id);
+        Task<IEnumerable<EParceiro>> ListAllAsync();
     }
 }

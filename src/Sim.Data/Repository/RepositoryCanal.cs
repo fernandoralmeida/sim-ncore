@@ -1,11 +1,11 @@
 ﻿using Sim.Data.Context;
-using Sim.Domain.Entity;
-using Sim.Domain.Interface.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Organizacao.Interfaces.Repository;
 
 namespace Sim.Data.Repository 
 { 
-    public class RepositoryCanal : RepositoryBase<Canal>, IRepositoryCanal
+    public class RepositoryCanal : RepositoryBase<ECanal>, IRepositoryCanal
     {
         public RepositoryCanal(ApplicationContext dbContext)
             :base(dbContext)
@@ -13,25 +13,23 @@ namespace Sim.Data.Repository
 
         }
 
-        public async Task<Canal> GetIdAsync(Guid id)
+        public async Task<ECanal> GetIdAsync(Guid id)
         {
             return await _db.Canal
-                .Include(s => s.Secretaria)
-                .Include(t => t.Setor)
+                .Include(s => s.Dominio)
                 .Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Canal>> ListAllAsync()
+        public async Task<IEnumerable<ECanal>> ListAllAsync()
         {
             return await _db.Canal
-                .Include(s => s.Secretaria)
-                .Include(t => t.Setor)
+                .Include(s => s.Dominio)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Canal>> ListCanalOwner(string setor)
+        public async Task<IEnumerable<ECanal>> ListCanalOwner(string setor)
         {
-            return await Task.Run(() => _db.Canal.Where(u => u.Setor.Nome.Contains(setor) || u.Setor.Nome.Contains("Geral")));
+            return await Task.Run(() => _db.Canal.Where(u => u.Dominio.Nome.Contains(setor) || u.Dominio.Nome.Contains("Geral")));
         }
     }
 }

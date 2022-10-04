@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Sim.Domain.Evento.Model;
 using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Agenda
@@ -23,6 +24,6 @@ namespace Sim.UI.Web.Pages.Agenda
 
         public virtual Pessoa Participante { get; set; }
         public virtual Empresas Empresa { get; set; }
-        public virtual Evento Evento { get; set; }
+        public virtual EEvento Evento { get; set; }
     }
 }

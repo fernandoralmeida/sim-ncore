@@ -11,7 +11,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
     public class IndexModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
-        private readonly IAppServiceSetor _appServiceSetor;
+        //private readonly IAppServiceSetor _appServiceSetor;
         private readonly IAppServiceCanal _appServiceCanal;
         private readonly IAppServiceServico _appServiceServico;
         private readonly IAppServiceContador _appServiceContador;
@@ -20,14 +20,14 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
         public IndexModel(IAppServiceAtendimento appServiceAtendimento,
             IAppServiceCanal appServiceCanal,
             IAppServiceServico appServiceServico,
-            IAppServiceSetor appServiceSetor,
+            //IAppServiceSetor appServiceSetor,
             IAppServiceContador appServiceContador,
             IMapper mapper)
         {
             _appServiceAtendimento = appServiceAtendimento;
             _appServiceCanal = appServiceCanal;
             _appServiceServico = appServiceServico;
-            _appServiceSetor = appServiceSetor;
+            //_appServiceSetor = appServiceSetor;
             _appServiceContador = appServiceContador;
             _mapper = mapper;
         }
@@ -53,6 +53,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
         
         private async Task OnLoad()
         {
+            /*
             var set = await _appServiceSetor.ListAllAsync();           
 
             var lst = new List<Setor>();
@@ -66,6 +67,8 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
             {
                 Setores = new SelectList(lst, nameof(Setor.Nome), nameof(Setor.Nome), null);
             }
+            */
+
         }
 
         public async Task OnGetAsync()

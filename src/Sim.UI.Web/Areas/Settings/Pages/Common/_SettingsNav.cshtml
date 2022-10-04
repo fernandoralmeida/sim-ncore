@@ -1,28 +1,30 @@
 ﻿@using Sim.UI.Web.Areas.Settings.Pages.Common
 
-
-    <nav>
-        <div class="nav-wrapper white rounded-t-2">
-            <ul class="right">
-                <li class="@SettingsNavPages.SecretariaNavClass(ViewContext)">
-                    <a asp-page="./Index">Secretaria</a>
-                </li>
-                <li class="@SettingsNavPages.SetoresNavClass(ViewContext)">
-                    <a asp-page="./Setores">Setores</a>
-                </li>
-                <li class="@SettingsNavPages.ServicosNavClass(ViewContext)">
-                    <a asp-page="./Servicos">Serviços</a>
-                </li>
-                <li class="@SettingsNavPages.CanalNavClass(ViewContext)">
-                    <a asp-page="./Canal">Canais</a>
-                </li>
-                <li class="@SettingsNavPages.EventosNavClass(ViewContext)">
-                    <a asp-page="./Eventos">Eventos</a>
-                </li>
-                <li class="@SettingsNavPages.ParceirosNavClass(ViewContext)">
-                    <a asp-page="./Parceiros">Parceiros</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav>
+    <div class="nav-wrapper white rounded-t-2">
+        <ul class="right">
+            <li class="@SettingsNavPages.MunicipioNavClass(ViewContext)">
+                <a asp-page="/Common/Index">Município</a>
+            </li>
+            <li class="@SettingsNavPages.UnidadeNavClass(ViewContext)">
+                <a asp-page="/Common/Unidade/Index">Secretaria</a>
+            </li>
+            <li class="@SettingsNavPages.SetoresNavClass(ViewContext)">
+                <a asp-page="/Common/Setor/Index">Setores</a>
+            </li>
+            <li class="@SettingsNavPages.ServicosNavClass(ViewContext)">
+                <a asp-page="/Common/Servicos/Index">Serviços</a>
+            </li>
+            <li class="@SettingsNavPages.CanalNavClass(ViewContext)">
+                <a asp-page="/Common/Canal/Index">Canais</a>
+            </li>
+            <li class="@SettingsNavPages.EventosNavClass(ViewContext)">
+                <a asp-page="/Common/Eventos/Index">Eventos</a>
+            </li>
+            <li class="@SettingsNavPages.ParceirosNavClass(ViewContext)">
+                <a asp-page="/Common/Parceiros/Index">Parceiros</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 

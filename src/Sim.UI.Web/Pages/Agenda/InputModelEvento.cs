@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using Sim.Domain.Entity;
+using Sim.Domain.Evento.Model;
 
 namespace Sim.UI.Web.Pages.Agenda
 {
@@ -43,7 +43,7 @@ namespace Sim.UI.Web.Pages.Agenda
         public int Lotacao { get; set; }
 
         [DisplayName("Situação")]
-        public Evento.ESituacao Situacao { get; set; }
+        public EEvento.ESituacao Situacao { get; set; }
 
         public virtual ICollection<InputModelInscricao> Inscritos { get; set; }
     }

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sim.Data.Context;
-using Sim.Domain.Entity;
-using Sim.Domain.Interface.IRepository;
+using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Organizacao.Interfaces.Repository;
 
 namespace Sim.Data.Repository
 {
 
-    public class RepositoryParceiro : RepositoryBase<Parceiro>, IRepositoryParceiro
+    public class RepositoryParceiro : RepositoryBase<EParceiro>, IRepositoryParceiro
     {
         public RepositoryParceiro(ApplicationContext applicationContext)
             : base(applicationContext)
@@ -14,19 +14,19 @@ namespace Sim.Data.Repository
 
         }
 
-        public async Task<Parceiro> GetIdAsync(Guid id)
+        public async Task<EParceiro> GetIdAsync(Guid id)
         {
-            return await _db.Parceiro.Include(s => s.Secretaria).Where(u => u.Id == id).FirstOrDefaultAsync();
+            return await _db.Parceiro.Include(s => s.Dominio).Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Parceiro>> ListAllAsync()
+        public async Task<IEnumerable<EParceiro>> ListAllAsync()
         {
-            return await _db.Parceiro.Include(s => s.Secretaria).ToListAsync();
+            return await _db.Parceiro.Include(s => s.Dominio).ToListAsync();
         }
 
-        public async Task<IEnumerable<Parceiro>> ListParceirosAsync(string owner)
+        public async Task<IEnumerable<EParceiro>> ListParceirosAsync(string owner)
         {
-            return await _db.Parceiro.Include(s => s.Secretaria).Where(u => u.Secretaria.Nome.Contains(owner)).ToListAsync();
+            return await _db.Parceiro.Include(s => s.Dominio).Where(u => u.Dominio.Nome.Contains(owner)).ToListAsync();
         }
     }
 }

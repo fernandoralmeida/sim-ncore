@@ -1,10 +1,10 @@
-﻿using Sim.Domain.Entity;
-using Sim.Domain.Interface.IService;
-using Sim.Application.Interfaces;
+﻿using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Organizacao.Interfaces.Service;
 
 namespace Sim.Application.Services
 {
-    public class AppServiceSecretaria : AppServiceBase<Secretaria>, IAppServiceSecretaria
+    using Interfaces;
+    public class AppServiceSecretaria : AppServiceBase<EOrganizacao>, IAppServiceSecretaria
     {
         private readonly IServiceSecretaria _secretaria;
 
@@ -14,17 +14,17 @@ namespace Sim.Application.Services
             _secretaria = secretaria;
         }
 
-        public async Task<Secretaria> GetIdAsync(Guid id)
+        public async Task<EOrganizacao> GetIdAsync(Guid id)
         {
             return await _secretaria.GetIdAsync(id);
         }
 
-        public async Task<IEnumerable<Secretaria>> ListAllAsync()
+        public async Task<IEnumerable<EOrganizacao>> ListAllAsync()
         {
             return await _secretaria.ListAllAsync();
         }
 
-        public async Task<IEnumerable<Secretaria>> ListSecretariaOwnerAsync(string setor)
+        public async Task<IEnumerable<EOrganizacao>> ListSecretariaOwnerAsync(string setor)
         {
             return await _secretaria.ListSecretariaOwnerAsync(setor);
         }

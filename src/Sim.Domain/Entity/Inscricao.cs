@@ -1,4 +1,5 @@
-﻿
+﻿using Sim.Domain.Evento.Model;
+
 namespace Sim.Domain.Entity
 {
     public class Inscricao
@@ -15,6 +16,6 @@ namespace Sim.Domain.Entity
 
         public virtual Pessoa? Participante { get; set; }
         public virtual Empresas? Empresa { get; set; }
-        public virtual Evento? Evento { get; set; }
+        public virtual EEvento? Evento { get; set; }
     }
 }

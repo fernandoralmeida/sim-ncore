@@ -1,10 +1,10 @@
-﻿using Sim.Domain.Entity;
-using Sim.Domain.Interface.IService;
-using Sim.Application.Interfaces;
+﻿using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Organizacao.Interfaces.Service;
 
 namespace Sim.Application.Services
 {
-    public class AppServiceServico : AppServiceBase<Servico>, IAppServiceServico
+    using Interfaces;
+    public class AppServiceServico : AppServiceBase<EServico>, IAppServiceServico
     {
         private readonly IServiceServico _servico;
         public AppServiceServico(IServiceServico servico)
@@ -13,17 +13,17 @@ namespace Sim.Application.Services
             _servico = servico;
         }
 
-        public async Task<Servico> GetIdAsync(Guid id)
+        public async Task<EServico> GetIdAsync(Guid id)
         {
             return await _servico.GetIdAsync(id);
         }
 
-        public async Task<IEnumerable<Servico>> ListAllAsync()
+        public async Task<IEnumerable<EServico>> ListAllAsync()
         {
             return await _servico.ListAllAsync();
         }
 
-        public async Task<IEnumerable<Servico>> ListServicoOwnerAsync(string setor)
+        public async Task<IEnumerable<EServico>> ListServicoOwnerAsync(string setor)
         {
             return await _servico.ListServicoOwnerAsync(setor);
         }

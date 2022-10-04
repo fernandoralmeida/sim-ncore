@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Sim.Application.Interfaces;
+using Sim.Domain.Organizacao.Model;
 using Sim.Domain.Entity;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,7 +15,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
     {   
         private readonly IMapper _mapper;
         private readonly IAppServiceAtendimento _appServiceAtendimento;
-        private readonly IAppServiceSetor _appServiceSetor;
+        private readonly IAppServiceSecretaria _appServiceSetor;
         private readonly IAppServiceCanal _appServiceCanal;
         private readonly IAppServiceServico _appServiceServico;
         private readonly IAppServiceContador _appServiceContador;        
@@ -46,7 +47,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
         public IndexModel(IAppServiceEmpresa appServiceEmpresa,
             IAppServiceEmpregos appServiceEmpregos,
             IAppServiceAtendimento appServiceAtendimento,
-            IAppServiceSetor appServiceSetor,
+            IAppServiceSecretaria appServiceSetor,
             IAppServiceCanal appServiceCanal,
             IAppServiceServico appServiceServico,
             IAppServiceContador appServiceContador,
@@ -68,12 +69,12 @@ namespace Sim.UI.Web.Pages.Pat.Add
             Setores = new SelectList(new List<string>(){ "PAT" });    
             InputAtendimento.InputSetor = "PAT";        
             Canais = new SelectList(await _appServiceCanal.ListAllAsync(),
-                                    nameof(Canal.Nome),
-                                    nameof(Canal.Nome),
+                                    nameof(ECanal.Nome),
+                                    nameof(ECanal.Nome),
                                     null);
             Servicos = new SelectList(await _appServiceServico.ListServicoOwnerAsync(InputAtendimento.InputSetor),
-                                    nameof(Servico.Nome),
-                                    nameof(Servico.Nome),
+                                    nameof(EServico.Nome),
+                                    nameof(EServico.Nome),
                                     null);
         }
 

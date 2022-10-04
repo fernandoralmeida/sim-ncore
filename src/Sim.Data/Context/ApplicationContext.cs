@@ -2,14 +2,15 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sim.Domain.Entity;
-
+using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Evento.Model;
 
 namespace Sim.Data.Context
 {   
 
     public class ApplicationContext : DbContext
     {
-        private static string _connectionstring; // = @"Server=127.0.0.1,1433\\sql1;Database=Sim-Application-db20210001;User Id=sa;Password=sql@1234;";
+        private static string _connectionstring = @"Server=127.0.0.1,1433\\sql1;Database=Sim-Application-db20210001;User Id=sa;Password=sql@1234;";
         public ApplicationContext()
         { }
 
@@ -23,15 +24,14 @@ namespace Sim.Data.Context
         public DbSet<RaeSebrae> Sebrae { get; set; }
         public DbSet<Empregos> Emprego { get; set; }
         public DbSet<Atendimento> Atendimento { get; set; }
-        public DbSet<Canal> Canal { get; set; }
-        public DbSet<Evento> Evento { get; set; }
-        public DbSet<Parceiro> Parceiro { get; set; }
+        public DbSet<ECanal> Canal { get; set; }
+        public DbSet<EEvento> Evento { get; set; }
+        public DbSet<EParceiro> Parceiro { get; set; }
         public DbSet<Planner> Planner { get; set; }
-        public DbSet<Secretaria> Secretaria { get; set; }
-        public DbSet<Servico> Servico { get; set; }
-        public DbSet<Setor> Setor { get; set; }
+        public DbSet<EOrganizacao> Secretaria { get; set; }
+        public DbSet<EServico> Servico { get; set; }
         public DbSet<Inscricao> Inscricao { get; set; }
-        public DbSet<Tipo> Tipos { get; set; }
+        public DbSet<ETipo> Tipos { get; set; }
         public DbSet<Contador> Contador { get; set; }
         public DbSet<StatusAtendimento> StatusAtendimento { get; set; }
        
@@ -43,15 +43,14 @@ namespace Sim.Data.Context
             modelBuilder.Entity<Pessoa>().ToTable("Pessoa");
             modelBuilder.Entity<Empresas>().ToTable("Empresa");
             modelBuilder.Entity<Atendimento>().ToTable("Atendimento");
-            modelBuilder.Entity<Parceiro>().ToTable("Parceiros");
-            modelBuilder.Entity<Canal>().ToTable("Canal");
-            modelBuilder.Entity<Evento>().ToTable("Evento");
+            modelBuilder.Entity<EParceiro>().ToTable("Parceiros");
+            modelBuilder.Entity<ECanal>().ToTable("Canal");
+            modelBuilder.Entity<EEvento>().ToTable("Evento");
             modelBuilder.Entity<Planner>().ToTable("Planer");
-            modelBuilder.Entity<Secretaria>().ToTable("Secretaria");
-            modelBuilder.Entity<Setor>().ToTable("Setor");
-            modelBuilder.Entity<Servico>().ToTable("Servico");
+            modelBuilder.Entity<EOrganizacao>().ToTable("Secretaria");
+            modelBuilder.Entity<EServico>().ToTable("Servico");
             modelBuilder.Entity<Inscricao>().ToTable("Inscricao");
-            modelBuilder.Entity<Tipo>().ToTable("Tipos");
+            modelBuilder.Entity<ETipo>().ToTable("Tipos");
             modelBuilder.Entity<Contador>().ToTable("Protocolos");
             modelBuilder.Entity<RaeSebrae>().ToTable("RaeSebrae");
             modelBuilder.Entity<StatusAtendimento>().ToTable("StatusAtendimento");
@@ -67,7 +66,6 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.ParceiroMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.SecretariaMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.ServicoMap());
-            modelBuilder.ApplyConfiguration(new Config.Entity.SetorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.InscricaoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EventoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.TipoMap());

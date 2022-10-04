@@ -5,13 +5,15 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
 {
     public static class SettingsNavPages
     {
-        public static string Secretarias => "Index";
-        public static string Setores => "Setores";
-        public static string Eventos => "Eventos";
-        public static string Servicos => "Servicos";
-        public static string Parceiros => "Parceiros";
+        public static string Municipio => "Index";
+        public static string Unidade => "Unidade";
+        public static string Setores => "Setor";
+        public static string Eventos => "Evento";
+        public static string Servicos => "Servico";
+        public static string Parceiros => "Parceiro";
         public static string Canal => "Canal";
-        public static string SecretariaNavClass(ViewContext viewContext) => PageNavClass(viewContext, Secretarias);
+        public static string MunicipioNavClass(ViewContext viewContext) => PageNavClass(viewContext, Municipio);
+        public static string UnidadeNavClass(ViewContext viewContext) => PageNavClass(viewContext, Unidade);
         public static string SetoresNavClass(ViewContext viewContext) => PageNavClass(viewContext, Setores);
         public static string EventosNavClass(ViewContext viewContext) => PageNavClass(viewContext, Eventos);
         public static string ServicosNavClass(ViewContext viewContext) => PageNavClass(viewContext, Servicos);

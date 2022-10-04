@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-using Sim.Domain.Entity;
+using Sim.Domain.Organizacao.Model;
 using Sim.Application.Interfaces;
 using Sim.Identity.Interfaces;
 using Sim.Identity.Entity;
@@ -85,7 +85,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
 
         private async Task LoadServicos()
         {
-            ListaServicos = new SelectList(await _appServiceServico.ListAllAsync(), nameof(Servico.Nome), nameof(Servico.Nome), null);           
+            ListaServicos = new SelectList(await _appServiceServico.ListAllAsync(), nameof(EServico.Nome), nameof(EServico.Nome), null);           
         }
 
         public async Task OnPostAsync()

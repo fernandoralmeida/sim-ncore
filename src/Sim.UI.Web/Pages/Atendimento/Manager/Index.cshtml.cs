@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using Sim.Application.Interfaces;
-using Sim.Domain.Entity;
+using Sim.Domain.Organizacao.Model;
 
 namespace Sim.UI.Web.Pages.Atendimento.Manager
 {
@@ -12,19 +12,19 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
     public class IndexModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
-        private readonly IAppServiceSetor _appServiceSetor;
+        //private readonly IAppServiceSetor _appServiceSetor;
         private readonly IAppServiceCanal _appServiceCanal;
         private readonly IAppServiceServico _appServiceServico;
 
         public IndexModel(IAppServiceAtendimento appServiceAtendimento,
-            IAppServiceCanal appServiceCanal,
-            IAppServiceServico appServiceServico,
-            IAppServiceSetor appServiceSetor)
+            IAppServiceCanal appServiceCanal,            
+            //IAppServiceSetor appServiceSetor,
+            IAppServiceServico appServiceServico)
         {
             _appServiceAtendimento = appServiceAtendimento;
             _appServiceCanal = appServiceCanal;
             _appServiceServico = appServiceServico;
-            _appServiceSetor = appServiceSetor;
+            //_appServiceSetor = appServiceSetor;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -48,6 +48,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
 
         private async Task OnLoad()
         {
+            /*
             var set = await _appServiceSetor.ListAllAsync();
 
             var lst = new List<Setor>();
@@ -61,6 +62,8 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
             {
                 Setores = new SelectList(lst, nameof(Setor.Nome), nameof(Setor.Nome), null);
             }
+            */
+
         }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
@@ -103,14 +106,14 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
 
             if (canal != null)
             {
-                Canais = new SelectList(canal, nameof(Canal.Nome), nameof(Canal.Nome), null);
+                Canais = new SelectList(canal, nameof(ECanal.Nome), nameof(ECanal.Nome), null);
             }
 
             var serv = await _appServiceServico.ListServicoOwnerAsync(Input.Setor);
 
             if (serv != null)
             {
-                Servicos = new SelectList(serv, nameof(Servico.Nome), nameof(Servico.Nome), null);
+                Servicos = new SelectList(serv, nameof(EServico.Nome), nameof(EServico.Nome), null);
             }
                         
             Input.Canal = atendimemnto_ativio.Canal;            

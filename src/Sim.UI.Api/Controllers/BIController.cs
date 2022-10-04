@@ -15,8 +15,7 @@ public class BIController : ControllerBase {
     private readonly IAppServiceAtendimento _appAtendimento;
     private readonly IAppServiceStatusAtendimento _appServiceStatusAtendimento;
     private readonly IAppServiceBIAtendimento _biantendimento;
-    private readonly IAppServiceSetor _appSetores;
-
+   
     private class InputSetor {
         public string? Setor { get; set; }
         public IEnumerable<InputUser>? Lista { get; set; }
@@ -30,14 +29,12 @@ public class BIController : ControllerBase {
         UserManager<ApplicationUser> userManager,
         IAppServiceAtendimento appServiceAtendimento,
         IAppServiceStatusAtendimento appServiceStatusAtendimento,
-        IAppServiceBIAtendimento appServiceBIAtendimento,
-        IAppServiceSetor appServiceSetor) {
+        IAppServiceBIAtendimento appServiceBIAtendimento) {
         _logger = logger;
         _userManager = userManager;
         _appAtendimento = appServiceAtendimento;
         _appServiceStatusAtendimento = appServiceStatusAtendimento;
         _biantendimento = appServiceBIAtendimento;
-        _appSetores = appServiceSetor;
     }
 
     [HttpGet]
@@ -88,7 +85,7 @@ public class BIController : ControllerBase {
     private async Task<IEnumerable<InputSetor>> DoListUsersAsync() =>
         await Task.Run(async () => { 
             var _list = new List<InputSetor>();
-            var _setores = await _appSetores.ListAllAsync();
+            var _setores = await _appAtendimento.ListAllAsync();
 
             foreach(var _roles in new string[]{"M_Pat", "M_BancoPovo", "M_Sebrae", "M_SalaEmpreendedor"}) {
 
