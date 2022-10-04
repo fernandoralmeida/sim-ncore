@@ -185,6 +185,15 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryEmpregos, RepositoryEmpregos>();
 
             //
+            services.AddScoped<IAppServiceBase<EPrefeitura>, AppServiceBase<EPrefeitura>>();
+            services.AddScoped<IAppServicePrefeitura, AppServicePrefeitura>();
+            
+            services.AddScoped<IServiceBase<EPrefeitura>, ServiceBase<EPrefeitura>>();
+            services.AddScoped<IServicePrefeitura, ServicePrefeitura>();
+            
+            services.AddScoped<IRepositoryBase<EPrefeitura>, RepositoryBase<EPrefeitura>>();
+            services.AddScoped<IRepositoryPrefeitura, RepositoryPrefeitura>();
+            //
             services.AddScoped<IAppServiceBIEmpregos, AppServiceBIEmpregos>();
             services.AddScoped<IServiceBIEmpregos, ServiceBIEmpregos>();
 

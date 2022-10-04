@@ -16,18 +16,31 @@
             <input asp-for="Organizacao.Id"/>
         </div>
         <div class="row z-depth-1 white rounded-default">
+<<<<<<< HEAD
             <div class="card-header pdn-10"><a onclick="voltar()" class="btn-small waves-effect waves-light grey" title="Voltar"><i class="material-icons">undo</i></a>Seção para incluir e gerênciar as unidades da organização</div>
+=======
+            <div class="card-header pdn-v-10">Seção para incluir e gerênciar as unidades da organização</div>
+>>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
             <div class="input-field col s12 m12 12">
                 <input asp-for="Organizacao.Nome" />
                 <label asp-for="Organizacao.Nome"></label>                         
             </div>    
             <div class="input-field col s12 m6 l6">
+<<<<<<< HEAD
                 <input asp-for="Input.Acronimo" required />
                 <label asp-for="Input.Acronimo"></label>                         
             </div>      
             <div class="input-field col s12 m6 l6 valign-wrapper">
                 <input asp-for="Input.Nome" required/>
                 <label asp-for="Input.Nome"></label>
+=======
+                <input asp-for="Input.Nome" required />
+                <label asp-for="Input.Nome"></label>                         
+            </div>      
+            <div class="input-field col s12 m6 l6 valign-wrapper">
+                <input asp-for="Input.Acronimo" required/>
+                <label asp-for="Input.Acronimo"></label>
+>>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
                 <button class="btn waves-effect waves-light"><i class="material-icons">add</i></button>                        
             </div>    
         </div>
@@ -50,6 +63,7 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Acronimo)</td>
 
+<<<<<<< HEAD
                         <td>@Html.DisplayFor(modelItem => item.Dominio)</td>
                         <td>
                             <div class="switch">
@@ -59,6 +73,18 @@
                         <td>
                             <a asp-area="Settings" asp-page="/Common/Index" class="btn-small waves-effect waves-light grey"><i class="material-icons">undo</i></a>                            
                             <a asp-area="Settings" asp-page="Manage/Index" asp-route-id="@item.Id" asp-route-og="@Model.Organizacao.Id" class="btn-small waves-effect waves-light orange"><i class="material-icons">edit</i></a>
+=======
+                        <td>@Html.DisplayFor(modelItem => item.Owner.Nome)</td>
+                        <td>
+                            <div class="switch">
+                                <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" />Off<span class="lever"></span>On</label>
+                            </div>   
+                        </td>
+                        <td>
+                            <a asp-area="Settings" asp-page="/Common/Index" class="btn-small waves-effect waves-light grey"><i class="material-icons">undo</i></a> |
+                            
+                            <a asp-area="Settings" asp-page="Manage/Index" asp-route-id="@item.Id" asp-route-og="@Model.Organizacao.Id" class="btn-small waves-effect waves-light orange"><i class="material-icons">edit</i></a> |
+>>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
                             <a asp-area="Settings" asp-page="Remove/Index" asp-route-id="@item.Id" asp-route-og="@Model.Organizacao.Id" class="btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>
                         </td>
                         <td>

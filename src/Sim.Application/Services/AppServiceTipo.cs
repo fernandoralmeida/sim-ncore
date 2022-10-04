@@ -3,7 +3,10 @@ using Sim.Domain.Evento.Interfaces.Service;
 
 namespace Sim.Application.Services
 {
+<<<<<<< HEAD
     using Interfaces;
+=======
+>>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
     public class AppServiceTipo: AppServiceBase<ETipo>, IAppServiceTipo
     {
         private readonly IServiceTipo _tipo;

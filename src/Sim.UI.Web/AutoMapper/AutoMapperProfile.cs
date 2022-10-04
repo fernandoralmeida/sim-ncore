@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Sim.Domain.Entity;
+<<<<<<< HEAD
 
 using Sim.Domain.Organizacao.Model;
 using Sim.Domain.Evento.Model;
 
+=======
+>>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
 using Sim.Application.VM;
 using Sim.Application.WebService.RWS.Entity;
 using Sim.UI.Web.Pages.Cliente;
@@ -25,7 +28,12 @@ namespace Sim.UI.Web.AutoMapper
             CreateMap<EEvento, InputModelEvento>().ReverseMap();
             CreateMap<Inscricao, InputModelInscricao>().ReverseMap();
             CreateMap<Planner, InputModelPlanner>().ReverseMap();
+<<<<<<< HEAD
             CreateMap<VMSecretaria, EOrganizacao>().ReverseMap();
+=======
+            CreateMap<VMPrefeitura, EPrefeitura>().ConstructUsing(c => new EPrefeitura(c.Id, c.Nome, c.Cidade, c.UF, c.Ativo)).ReverseMap();
+            CreateMap< VMSecretaria, Secretaria>().ReverseMap();
+>>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
         }
     }
 }
