@@ -6,20 +6,11 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common.Unidade.Remove;
 
 public class IndexModel : PageModel
 {
-<<<<<<< HEAD
     //private readonly IAppServicePrefeitura _appservicePrefeitura;
     private readonly IAppServiceSecretaria _appSecretaria;
     public IndexModel(IAppServiceSecretaria appSecretaria)
     {
         //_appservicePrefeitura = appServicPref;
-=======
-    private readonly IAppServicePrefeitura _appservicePrefeitura;
-    private readonly IAppServiceSecretaria _appSecretaria;
-    public IndexModel(IAppServicePrefeitura appServicPref,
-        IAppServiceSecretaria appSecretaria)
-    {
-        _appservicePrefeitura = appServicPref;
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
         _appSecretaria = appSecretaria;
     }
 

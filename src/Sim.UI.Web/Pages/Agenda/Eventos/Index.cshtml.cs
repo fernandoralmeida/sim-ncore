@@ -49,14 +49,6 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
             if (t != null)
             {
                 TipoEventos = new SelectList(t, nameof(ETipo.Nome), nameof(ETipo.Nome), null);
-<<<<<<< HEAD
-=======
-            }
-
-            if (s != null)
-            {
-                Setores = new SelectList(s, nameof(Setor.Nome), nameof(Setor.Nome), null);
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
             }
 
             if (p != null)

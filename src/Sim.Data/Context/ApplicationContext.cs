@@ -28,15 +28,8 @@ namespace Sim.Data.Context
         public DbSet<EEvento> Evento { get; set; }
         public DbSet<EParceiro> Parceiro { get; set; }
         public DbSet<Planner> Planner { get; set; }
-<<<<<<< HEAD
         public DbSet<EOrganizacao> Secretaria { get; set; }
         public DbSet<EServico> Servico { get; set; }
-=======
-        public DbSet<Secretaria> Secretaria { get; set; }
-        public DbSet<EPrefeitura> Prefeitura {get ; set;}
-        public DbSet<Servico> Servico { get; set; }
-        public DbSet<Setor> Setor { get; set; }
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
         public DbSet<Inscricao> Inscricao { get; set; }
         public DbSet<ETipo> Tipos { get; set; }
         public DbSet<Contador> Contador { get; set; }
@@ -61,7 +54,6 @@ namespace Sim.Data.Context
             modelBuilder.Entity<Contador>().ToTable("Protocolos");
             modelBuilder.Entity<RaeSebrae>().ToTable("RaeSebrae");
             modelBuilder.Entity<StatusAtendimento>().ToTable("StatusAtendimento");
-            modelBuilder.Entity<EPrefeitura>().ToTable("Prefeitura");
 
             modelBuilder.ApplyConfiguration(new Config.Entity.AmbulanteMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpregosMap());
@@ -79,7 +71,6 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.TipoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.ContadorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.StatusAtendimentoMap());
-            modelBuilder.ApplyConfiguration(new Config.Entity.PrefeituraMap());
 
             base.OnModelCreating(modelBuilder);
         }

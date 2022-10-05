@@ -3,18 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.Interfaces;
 using Sim.Application.VM;
-<<<<<<< HEAD
 using Sim.Domain.Evento.Model;
 using Sim.Domain.Organizacao.Model;
-=======
-using Sim.Domain.Entity;
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Eventos;
 
 public class IndexModel : PageModel
 {
-<<<<<<< HEAD
     //private readonly IAppServiceSetor _appServiceSetor;
     private readonly IAppServiceSecretaria _appServiceSecretaria;
     private readonly IAppServiceTipo _appServiceTipo;
@@ -22,16 +17,6 @@ public class IndexModel : PageModel
         IAppServiceTipo appServiceTipo)
     {
         //_appServiceSetor = appServiceSetor;
-=======
-    private readonly IAppServiceSetor _appServiceSetor;
-    private readonly IAppServiceSecretaria _appServiceSecretaria;
-    private readonly IAppServiceTipo _appServiceTipo;
-    public IndexModel(IAppServiceSetor appServiceSetor,
-        IAppServiceSecretaria appServiceSecretaria,
-        IAppServiceTipo appServiceTipo)
-    {
-        _appServiceSetor = appServiceSetor;
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
         _appServiceSecretaria = appServiceSecretaria;
         _appServiceTipo = appServiceTipo;
     }
@@ -49,13 +34,8 @@ public class IndexModel : PageModel
     {
         Unidades = new SelectList(
             await _appServiceSecretaria.ListAllAsync(),
-<<<<<<< HEAD
             nameof(EOrganizacao.Id),
             nameof(EOrganizacao.Nome),
-=======
-            nameof(Secretaria.Id),
-            nameof(Secretaria.Nome),
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
             null);
     }
 

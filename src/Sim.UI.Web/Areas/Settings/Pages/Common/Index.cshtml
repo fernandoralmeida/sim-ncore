@@ -1,10 +1,7 @@
 ﻿@page
 @model Sim.UI.Web.Areas.Settings.Pages.Common.IndexModel
 @{
-<<<<<<< HEAD
     Layout = "_Layout.cshtml";
-=======
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
     ViewData["Title"] = "Index";
     ViewData["ActivePageSettings"] = SettingsNavPages.Municipio;
     ViewData["ActivePage"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.Configuracoes;
@@ -22,21 +19,12 @@
         <div class="row z-depth-1 white rounded-default">
             <div class="card-header pdn-v-10">Seção para incluir e gerenênciar organizações</div>
             <div class="input-field col s6 m4 l4">
-<<<<<<< HEAD
                 <input asp-for="Input.Nome" />
                 <label asp-for="Input.Nome"></label>                         
             </div>      
             <div class="input-field col s6 m2 l2">
                 <input asp-for="Input.Acronimo" />
                 <label asp-for="Input.Acronimo"></label>                         
-=======
-                <input asp-for="Input.Cidade" />
-                <label asp-for="Input.Cidade"></label>                         
-            </div>      
-            <div class="input-field col s6 m2 l2">
-                <input asp-for="Input.UF" />
-                <label asp-for="Input.UF"></label>                         
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
             </div>   
             <div class="input-field col s12 m6 l6 valign-wrapper">
                 <input asp-for="Input.Hierarquia" />
@@ -57,7 +45,6 @@
             </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
             @if (Model.Listar != null)
             {
                 foreach (var item in Model.Listar)
@@ -69,19 +56,6 @@
                         <td>
                             <div class="switch">
                                 <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" /><span class="lever"></span></label>
-=======
-            @if (Model.Input.Listar != null)
-            {
-                foreach (var item in Model.Input.Listar)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Cidade)</td>
-                        <td>@Html.DisplayFor(modelItem => item.UF)</td>
-                        <td>
-                            <div class="switch">
-                                <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" />Off<span class="lever"></span>On</label>
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd
                             </div>   
                         </td>
                         <td>                             

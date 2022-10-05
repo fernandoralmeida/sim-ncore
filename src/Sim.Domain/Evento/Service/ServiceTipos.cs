@@ -1,12 +1,8 @@
 ﻿namespace Sim.Domain.Evento.Service
 {
-<<<<<<< HEAD:src/Sim.Domain/Evento/Service/ServiceTipos.cs
     using Model;
     using Interfaces.Repository;
     using Interfaces.Service;
-=======
-
->>>>>>> c0015656c1f538df7daa8cd99c2f51ed66d91cfd:src/Sim.Domain/Service/ServiceTipos.cs
     public class ServiceTipos : ServiceBase<ETipo>, IServiceTipo
     {
         private readonly IRepositoryTipo _repositoryTipo;
