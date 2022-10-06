@@ -1,17 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.Interfaces;
 using Sim.Application.VM;
-using Sim.Domain.Entity;
+using Sim.Domain.Organizacao.Model;
+using AutoMapper;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common
 {
     public class IndexModel : PageModel
     {
         private readonly IAppServiceSecretaria _appServicePrefeitura;
-        public IndexModel(IAppServiceSecretaria appService)
+        private readonly IMapper _mapper;
+        public IndexModel(IAppServiceSecretaria appService,
+            IMapper mapper)
         {
             _appServicePrefeitura = appService;
+            _mapper = mapper;
         }
 
         [TempData]
@@ -20,17 +25,29 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
         [BindProperty]
         public VMSecretaria Input { get; set; }
         public IEnumerable<VMSecretaria> Listar { get; set; }
+        public SelectList Hierarquia { get; set; }
         
         private async Task OnLoad()
         {
-            var t = await _appServicePrefeitura.DoList();
+            var t = await _appServicePrefeitura.DoListHierarquia0Async(await _appServicePrefeitura.ListAllAsync());
+            Listar = _mapper.Map<IEnumerable<VMSecretaria>>(t);
+            Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x == "Matriz"));
         }
 
         public async Task OnGetAsync() => await OnLoad();
 
-        public async Task OnPostAddAsync()
+        public async Task<IActionResult> OnPostAddAsync()
         {
-            await OnLoad();
+            try{
+                Input.Ativo = true;                
+                await _appServicePrefeitura.AddAsync(_mapper.Map<EOrganizacao>(Input));
+                await OnLoad();                
+            }
+            catch(Exception ex) {
+                StatusMessage = "Erro ao tentar incluir!" + "\n" + ex.Message;
+            }
+
+            return Page();
         }
 
         public async Task OnPostRemoveAsync(Guid id)

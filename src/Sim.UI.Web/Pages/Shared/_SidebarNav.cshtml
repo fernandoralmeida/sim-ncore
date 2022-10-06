@@ -1,7 +1,7 @@
 ﻿@using Sim.UI.Web.Pages.Shared
 @inject Sim.Application.Interfaces.IAppServiceAtendimento MeuAtendimento
 
-<ul id="sidenav-left" class="sidenav sidenav-fixed">
+<ul id="sidenav-left" class="sidenav sidenav-fixed border-r">
 
     <li class="no-padding alpha-text-6">
         <ul class="collapsible collapsible-accordion">
@@ -74,7 +74,7 @@
                     <div class="collapsible-body">
                         <ul>
                             <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext)"><a class="waves-effect submit" asp-area="Settings" asp-page="/Common/Index">Sistema<i class="left material-icons">settings</i></a></li>
-                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)"><a asp-area="Admin" asp-page="/Manager/Index" class="waves-effect submit">Contas<i class="left material-icons">account_circle</i></a></li>
+                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)"><a asp-area="Admin" asp-page="/Manager/Index" class="waves-effect submit">Contas<i class="left material-icons">admin_panel_settings</i></a></li>
                         </ul>
                     </div>
                 </li>

@@ -1,8 +1,7 @@
 ﻿@page
 @model Sim.UI.Web.Areas.Settings.Pages.Common.IndexModel
 @{
-    Layout = "_Layout.cshtml";
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Settings";
     ViewData["ActivePageSettings"] = SettingsNavPages.Municipio;
     ViewData["ActivePage"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.Configuracoes;
     ViewData["ActivePageLi"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.ConfigSistema;
@@ -16,29 +15,38 @@
             <label asp-for="Input.Id"></label>
             <input asp-for="Input.Id"/>
         </div>
-        <div class="row z-depth-1 white rounded-default">
-            <div class="card-header pdn-v-10">Seção para incluir e gerenênciar organizações</div>
-            <div class="input-field col s6 m4 l4">
-                <input asp-for="Input.Nome" />
-                <label asp-for="Input.Nome"></label>                         
-            </div>      
-            <div class="input-field col s6 m2 l2">
-                <input asp-for="Input.Acronimo" />
-                <label asp-for="Input.Acronimo"></label>                         
-            </div>   
-            <div class="input-field col s12 m6 l6 valign-wrapper">
-                <input asp-for="Input.Hierarquia" />
-                <label asp-for="Input.Hierarquia"></label>
-                <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>                        
-            </div>    
+        <div class="row border-b">
+            <div class="card-header pdn-v-10">Seção para incluir e gerenênciar organizações<i class="material-icons left">home</i></div>
+            @if(Model.Listar != null) {
+                @if(!Model.Listar.Any()) {
+                    <div class="input-field col s12 m4 l4">
+                        <select asp-for="Input.Hierarquia" asp-items="Model.Hierarquia" ></select>
+                        <label asp-for="Input.Hierarquia"></label>                         
+                    </div>    
+                    <div class="input-field col s12 m4 l4">
+                        <input asp-for="Input.Nome" />
+                        <label asp-for="Input.Nome"></label>                         
+                    </div>      
+                    <div class="input-field col s12 m4 l4 valign-wrapper">
+                        <input asp-for="Input.Acronimo" />
+                        <label asp-for="Input.Acronimo"></label>    
+                        <button type="submit" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>                     
+                    </div>   
+                    <div class="input-field col s12 m6 l6" hidden>
+                        <input asp-for="Input.Dominio" />
+                        <label asp-for="Input.Dominio"></label>                        
+                    </div>
+                }
+            }
+ 
         </div>
     </form>
     <table class="responsive-table">
         <thead>
             <tr>
-                <th>Organização</th>
-                <th>Município</th>
-                <th>UF</th>                
+                <th>Nome</th>
+                <th>Acrônimo</th>
+                <th>Nível</th>                
                 <th>Situação</th>
                 <th>Ações</th>
                 <th>Gerênciar</th>
@@ -58,7 +66,8 @@
                                 <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" /><span class="lever"></span></label>
                             </div>   
                         </td>
-                        <td>                             
+                        <td>         
+                            <a asp-area="Settings" asp-page="Manage/Index" asp-route-id="@item.Id" class="btn-small waves-effect waves-light orange"><i class="material-icons">edit</i></a>                    
                             <a asp-area="Settings" asp-page="Remove/Index" asp-route-id="@item.Id" class="btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>
                         </td>
                         <td>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sim.Data.Context;
-using Sim.Domain.Organizacao.Model;
-using Sim.Domain.Organizacao.Interfaces.Repository;
+using Sim.Domain.Evento.Model;
+using Sim.Domain.Evento.Interfaces.Repository;
 
 namespace Sim.Data.Repository
 {

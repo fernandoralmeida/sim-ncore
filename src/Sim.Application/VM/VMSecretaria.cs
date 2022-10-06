@@ -8,18 +8,19 @@ public class VMSecretaria {
     public Guid Id { get; set; }
 
     [Required]
-    [DisplayName("Secretaria")]
+    [DisplayName("Nome")]
     public string Nome { get; set; }
 
     [Required]
     [DisplayName("Acrônimo")]
     public string Acronimo { get; set; }
-
-    [DisplayName("Unidade Responsável")]
-    public EHierarquia Hierarquia { get; set; } //Prefeitura
+    
+    [Required]
+    [DisplayName("Nível")]
+    public EHierarquia? Hierarquia { get; set; } //Prefeitura
     
     [DisplayName("Dominio")]
-    public string Dominio { get; set; } //Prefeitura
+    public Guid? Dominio { get; set; } //Prefeitura
 
     [DisplayName("Ativo")]
     public bool Ativo { get; set; }

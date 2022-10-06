@@ -20,14 +20,18 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<EOrganizacao>> ListAllAsync()
         {
-            return await _db.Secretaria.Include(p => p.Acronimo).ToListAsync();
+            return await _db.Secretaria
+                .Include(p => p.Servicos)
+                .Include(p => p.Canais)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<EOrganizacao>> ListSecretariaOwnerAsync(string setor)
         {
             return await _db.Secretaria
-                .Include(p => p.Acronimo)
-                .Where(u => u.Dominio == setor)
+                .Include(p => p.Servicos)
+                .Include(p => p.Canais)
+                .Where(u => u.Nome == setor)
                 .ToListAsync();
         }
     }

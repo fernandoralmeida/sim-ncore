@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sim.Domain.Organizacao.Model;
+using Sim.Domain.Evento.Model;
 
 namespace Sim.Data.Config.Entity
 {

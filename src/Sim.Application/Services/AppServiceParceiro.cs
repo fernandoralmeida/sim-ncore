@@ -1,5 +1,5 @@
-﻿using Sim.Domain.Organizacao.Model;
-using Sim.Domain.Organizacao.Interfaces.Service;
+﻿using Sim.Domain.Evento.Model;
+using Sim.Domain.Evento.Interfaces.Service;
 
 namespace Sim.Application.Services
 {

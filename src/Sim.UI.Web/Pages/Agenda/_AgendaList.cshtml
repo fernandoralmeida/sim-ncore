@@ -51,13 +51,13 @@
 
                                 <a class="btn-floating halfway-fab waves-effect waves-light blue @disabledbutton" asp-page="/Agenda/Inscricoes/Novo/Index" asp-route-id="@l.Codigo" title="Inscrever"><i class="material-icons">add</i></a>                            
                             </div>
-                            <div class="card-content truncate">
+                            <div class="card-content truncate border-l border-r">
                                 Data: <span class="@cor-text">@l.Data</span>                      
                                 <br />Formato: @l.Formato
                                 <br />Setor: @l.Owner
                                 <br />Vagas: @l.Vagas()                        
                             </div>
-                            <div class="card-action">                                
+                            <div class="card-action border-l border-r border-b">                                
                                 <a class="@cor-text" asp-page="/Agenda/Inscricoes/Index" asp-route-id="@l.Codigo">Inscritos @l.Inscricoes()</a>
                             </div>
                         </div>

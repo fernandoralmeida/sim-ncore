@@ -22,38 +22,42 @@ public class IndexModel : PageModel
     [TempData]
     public string StatusMessage { get; set; }
 
-    [BindProperty(SupportsGet = true)]
+    [BindProperty]
     public VMSecretaria Input { get; set; }
 
     [BindProperty]
     public VMSecretaria Organizacao { get; set; }
     public IEnumerable<EOrganizacao> Unidades { get; set; }
+    public SelectList Hierarquia { get; set; }
     
     private async Task OnLoad(Guid id)
     {
-        Unidades = await _appSecretaria.ListAllAsync();
+        Unidades = await _appSecretaria.DoListHierarquia1Async(await _appSecretaria.ListAllAsync());
         Organizacao = _mapper.Map<VMSecretaria>(await _appSecretaria.SingleIdAsync(id));  
+        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x != "Matriz"));
     }
 
     public async Task OnGetAsync(string id)
     {
         if (!string.IsNullOrEmpty(id)) 
             await OnLoad(new Guid(id));      
+
+        ViewData["PageTitle"] = "Inclua e gerêncie as unidades da organização";
     }
 
-    public async Task OnPostAsync()
+    public async Task<IActionResult> OnPostAsync()
     {
         try{
-            var _unidade = await _appSecretaria.SingleIdAsync(Organizacao.Id);
-            _unidade.Ativo = true;
-            if (ModelState.IsValid)
-                await _appSecretaria.AddAsync(_unidade);  
-
-            await OnLoad(_unidade.Id);
+            Input.Ativo = true;     
+            Input.Dominio = Organizacao.Id;           
+            await _appSecretaria.AddAsync(_mapper.Map<EOrganizacao>(Input));
+            await OnLoad(Input.Id);                
         }
-        catch (Exception ex){
-            StatusMessage = "Erro: ao tentar incluir Unidade!" + "\n" + ex.Message;
-        }      
+        catch(Exception ex) {
+            StatusMessage = "Erro: " +  ex.Message;
+        }
+
+        return Page();  
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿@page
 @model Sim.UI.Web.Areas.Settings.Pages.Common.Unidade.IndexModel
 @{
+    Layout = "../_Layout.cshtml";
     ViewData["Title"] = "Index";
     ViewData["ActivePageSettings"] = SettingsNavPages.Unidade;
     ViewData["ActivePage"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.Configuracoes;
@@ -15,28 +16,27 @@
             <input asp-for="Input.Id"/>
             <input asp-for="Organizacao.Id"/>
         </div>
-        <div class="row z-depth-1 white rounded-default">
-            <div class="card-header pdn-10"><a onclick="voltar()" class="btn-small waves-effect waves-light grey" title="Voltar"><i class="material-icons">undo</i></a>Seção para incluir e gerênciar as unidades da organização</div>
-            <div class="input-field col s12 m12 12">
-                <input asp-for="Organizacao.Nome" />
-                <label asp-for="Organizacao.Nome"></label>                         
+        <div class="row">
+            <div class="input-field col s12 m3 l3">
+                <select asp-for="Input.Hierarquia" asp-items="Model.Hierarquia" ></select>
+                <label asp-for="Input.Hierarquia"></label>                         
+            </div>   
+            <div class="input-field col s12 m4 l4">
+                <input asp-for="Input.Nome" />
+                <label asp-for="Input.Nome"></label>                         
             </div>    
-            <div class="input-field col s12 m6 l6">
-                <input asp-for="Input.Acronimo" required />
-                <label asp-for="Input.Acronimo"></label>                         
-            </div>      
-            <div class="input-field col s12 m6 l6 valign-wrapper">
-                <input asp-for="Input.Nome" required/>
-                <label asp-for="Input.Nome"></label>
-                <button class="btn waves-effect waves-light"><i class="material-icons">add</i></button>                        
-            </div>    
+            <div class="input-field col s12 m5 l5 valign-wrapper">
+                <input asp-for="Input.Acronimo" />
+                <label asp-for="Input.Acronimo"></label>   
+                <button class="btn waves-effect waves-light"><i class="material-icons">add</i></button>                       
+            </div> 
         </div>
    </form>
     <table class="responsive-table">
         <thead>
             <tr>
-                <th>Unidade</th>
-                <th>Organização</th>
+                <th>Nível</th>
+                <th>Nome</th>
                 <th>Situação</th>
                 <th>Ações</th>
                 <th>Gerênciar</th>
@@ -48,21 +48,21 @@
                 foreach (var item in Model.Unidades)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Acronimo)</td>
+                        @{ var _hierarquia = item.Hierarquia.ToString();}
+                        <td>@Html.DisplayFor(modelItem => _hierarquia)</td>
 
-                        <td>@Html.DisplayFor(modelItem => item.Dominio)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Acronimo)</td>
                         <td>
                             <div class="switch">
                                 <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" /><span class="lever"></span></label>
                             </div>   
                         </td>
                         <td>
-                            <a asp-area="Settings" asp-page="/Common/Index" class="btn-small waves-effect waves-light grey"><i class="material-icons">undo</i></a>                            
-                            <a asp-area="Settings" asp-page="Manage/Index" asp-route-id="@item.Id" asp-route-og="@Model.Organizacao.Id" class="btn-small waves-effect waves-light orange"><i class="material-icons">edit</i></a>
-                            <a asp-area="Settings" asp-page="Remove/Index" asp-route-id="@item.Id" asp-route-og="@Model.Organizacao.Id" class="btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>
+                            <a asp-area="Settings" asp-page="Manage/Index" asp-route-id="@item.Id" class="btn-small waves-effect waves-light orange"><i class="material-icons">edit</i></a>
+                            <a asp-area="Settings" asp-page="Remove/Index" asp-route-id="@item.Id" class="btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>
                         </td>
                         <td>
-                            <a asp-area="Settings" asp-page="/Common/Setor/Index" asp-route-id="@item.Id" asp-route-og="@Model.Organizacao.Id" class="btn-small waves-effect waves-light blue"><i class="material-icons">settings navigate_next</i></a>
+                            <a asp-area="Settings" asp-page="/Common/Setor/Index" asp-route-id="@item.Id" class="btn-small waves-effect waves-light blue"><i class="material-icons">settings navigate_next</i></a>
                         </td>
                     </tr>
                 }

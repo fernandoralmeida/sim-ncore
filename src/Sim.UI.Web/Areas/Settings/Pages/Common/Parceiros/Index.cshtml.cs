@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.Interfaces;
 using Sim.Application.VM;
+using Sim.Domain.Evento.Model;
 using Sim.Domain.Organizacao.Model;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Parceiros;

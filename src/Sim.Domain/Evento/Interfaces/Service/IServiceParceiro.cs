@@ -1,8 +1,7 @@
-﻿using Sim.Domain.Evento.Model;
-
-namespace Sim.Application.Interfaces
+﻿namespace Sim.Domain.Evento.Interfaces.Service
 {
-    public interface IAppServiceParceiro : IAppServiceBase<EParceiro>
+    using Model;
+    public interface IServiceParceiro : IServiceBase<EParceiro>
     {
         Task<IEnumerable<EParceiro>> ListParceirosAsync(string owner);
         Task<EParceiro> GetIdAsync(Guid id);
