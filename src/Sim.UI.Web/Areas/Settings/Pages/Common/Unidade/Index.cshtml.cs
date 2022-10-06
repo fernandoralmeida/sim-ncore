@@ -30,33 +30,28 @@ public class IndexModel : PageModel
     public IEnumerable<EOrganizacao> Unidades { get; set; }
     public SelectList Hierarquia { get; set; }
     
-    private async Task OnLoad(Guid id)
-    {
-        Unidades = await _appSecretaria.DoListHierarquia1Async(await _appSecretaria.ListAllAsync());
-        Organizacao = _mapper.Map<VMSecretaria>(await _appSecretaria.SingleIdAsync(id));  
-        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x != "Matriz"));
+    private async Task OnLoad() {
+        var _list = await _appSecretaria.ListAllAsync();
+        Unidades = await _appSecretaria.DoListHierarquia1Async(_list);
+        var _org = await _appSecretaria.DoListHierarquia0Async(_list);
+        Organizacao = _mapper.Map<VMSecretaria>(_org.SingleOrDefault());  
+        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x == "Secretaria"));
     }
 
-    public async Task OnGetAsync(string id)
-    {
-        if (!string.IsNullOrEmpty(id)) 
-            await OnLoad(new Guid(id));      
-
-        ViewData["PageTitle"] = "Inclua e gerêncie as unidades da organização";
+    public async Task OnGetAsync(string id) {
+        await OnLoad();
     }
 
-    public async Task<IActionResult> OnPostAsync()
-    {
+    public async Task<IActionResult> OnPostAsync() {
         try{
             Input.Ativo = true;     
             Input.Dominio = Organizacao.Id;           
             await _appSecretaria.AddAsync(_mapper.Map<EOrganizacao>(Input));
-            await OnLoad(Input.Id);                
+            await OnLoad();                
         }
         catch(Exception ex) {
             StatusMessage = "Erro: " +  ex.Message;
         }
-
         return Page();  
     }
 }

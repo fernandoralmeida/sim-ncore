@@ -6,7 +6,7 @@ using Sim.Domain.Organizacao.Model;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Sim.UI.Web.Areas.Settings.Pages.Common.Unidade.Manage;
+namespace Sim.UI.Web.Areas.Settings.Pages.Common.Manage;
 public class IndexModel : PageModel
 {
     private readonly IAppServiceSecretaria _appSecretaria;
@@ -26,7 +26,7 @@ public class IndexModel : PageModel
     public SelectList Hierarquia { get; set; }
 
     private void OnLoad() {        
-        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x == "Secretaria")); 
+        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x == "Matriz")); 
     }
 
     public async Task OnGetAsync(string id)    {

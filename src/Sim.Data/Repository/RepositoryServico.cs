@@ -20,7 +20,11 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<EServico>> ListAllAsync()
         {
-            return await _db.Servico.OrderBy(s => s.Nome).ToListAsync();
+            return await _db.Servico
+                .Include(d => d.Dominio)
+                .OrderBy(s => s.Nome)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<EServico>> ListServicoOwnerAsync(string setor)

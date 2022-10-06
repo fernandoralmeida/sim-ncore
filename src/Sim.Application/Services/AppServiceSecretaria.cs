@@ -24,9 +24,24 @@ namespace Sim.Application.Services
             return await _secretaria.DoListHierarquia1Async(lista);
         }
 
+        public async Task<IEnumerable<EOrganizacao>> DoListHierarquia1from0Async(IEnumerable<EOrganizacao> lista, Guid id)
+        {
+            return await _secretaria.DoListHierarquia1from0Async(lista, id);
+        }
+
         public async Task<IEnumerable<EOrganizacao>> DoListHierarquia2Async(IEnumerable<EOrganizacao> lista)
         {
             return await _secretaria.DoListHierarquia2Async(lista);
+        }
+
+        public async Task<IEnumerable<EOrganizacao>> DoListHierarquia2from0Async(IEnumerable<EOrganizacao> lista, Guid id)
+        {
+            return await _secretaria.DoListHierarquia2from0Async(lista, id);
+        }
+
+        public async Task<IEnumerable<EOrganizacao>> DoListHierarquia2from1Async(IEnumerable<EOrganizacao> lista, Guid id)
+        {
+            return await _secretaria.DoListHierarquia2from1Async(lista, id);
         }
 
         public async Task<EOrganizacao> GetIdAsync(Guid id)

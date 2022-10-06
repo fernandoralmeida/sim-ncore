@@ -26,6 +26,7 @@ namespace Sim.UI.Web.AutoMapper
             CreateMap<Inscricao, InputModelInscricao>().ReverseMap();
             CreateMap<Planner, InputModelPlanner>().ReverseMap();
             CreateMap<VMSecretaria, EOrganizacao>().ReverseMap();
+            CreateMap<VMServicos, EServico>().ReverseMap();
         }
     }
 }

@@ -6,7 +6,7 @@ using Sim.Domain.Organizacao.Model;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Sim.UI.Web.Areas.Settings.Pages.Common.Unidade.Manage;
+namespace Sim.UI.Web.Areas.Settings.Pages.Common.Setor.Manage;
 public class IndexModel : PageModel
 {
     private readonly IAppServiceSecretaria _appSecretaria;
@@ -26,21 +26,23 @@ public class IndexModel : PageModel
     public SelectList Hierarquia { get; set; }
 
     private void OnLoad() {        
-        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x == "Secretaria")); 
+        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x == "Setor")); 
     }
 
-    public async Task OnGetAsync(string id)    {
-       OnLoad();  
-       Input = _mapper.Map<VMSecretaria>(await _appSecretaria.SingleIdAsync(new Guid(id)));  
+    public async Task OnGetAsync(string id, string dm)    {
+        OnLoad();  
+        Input = _mapper.Map<VMSecretaria>(await _appSecretaria.SingleIdAsync(new Guid(id)));  
+        Input.Dominio = new Guid(dm);
+        if(Input.Hierarquia == EHierarquia.Setor) {                        
+            if(string.IsNullOrEmpty(Input.Acronimo)) Input.Acronimo = Input.Nome;
+        }
     }
 
     public async Task OnPostAsync()
     {
-        if (ModelState.IsValid)
-        {                
-            if(Input.Hierarquia == EHierarquia.Secretaria) {
-                var _org = await _appSecretaria.DoListHierarquia0Async(await _appSecretaria.ListAllAsync());
-                Input.Dominio = _org.SingleOrDefault().Id;
+        if (ModelState.IsValid) {
+            if(Input.Hierarquia == EHierarquia.Setor) {                        
+                Input.Acronimo = Input.Nome;
             }
             await _appSecretaria.UpdateAsync(_mapper.Map<EOrganizacao>(Input));
             OnLoad();

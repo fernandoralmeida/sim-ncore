@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Domain.Organizacao.Model;
 using Sim.Application.Interfaces;
 using Sim.Application.VM;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Setor;
 
@@ -30,41 +31,32 @@ public class IndexModel : PageModel
 
     [BindProperty]
     public VMSecretaria Unidade { get; set; }
-
-    [BindProperty]
-    public VMSecretaria Organizacao { get; set; }
-
+    public SelectList Hierarquia { get; set; }
     public IEnumerable<EOrganizacao> Setores { get; set; }
 
-    private async Task OnLoad(Guid id)
-    {
-        //Setores = await _appSetor.ListAllAsync();
-        Unidade = _mapper.Map<VMSecretaria>(await _appSecretaria.GetIdAsync(id));          
+    private async Task OnLoad(Guid id) {
+        var _list = await _appSecretaria.ListAllAsync();
+        Setores = await _appSecretaria.DoListHierarquia2from1Async(_list, id);
+        Unidade = _mapper.Map<VMSecretaria>(await _appSecretaria.SingleIdAsync(id));  
+        Hierarquia = new SelectList(Enum.GetNames(typeof(EHierarquia)).Where(x => x == "Setor"));
     }
 
-    public async Task OnGetAsync(string id, string og)
-    {
-        if (!string.IsNullOrEmpty(id)) 
-            await OnLoad(new Guid(id));      
-
-        if (!string.IsNullOrEmpty(og)) 
-            Organizacao = _mapper.Map<VMSecretaria>(await _appSecretaria.GetIdAsync(new Guid(og)));  
+    public async Task OnGetAsync(string id) {
+        await OnLoad(new Guid(id));
     }
 
-    public async Task OnPostAsync()
-    {
+    public async Task<IActionResult> OnPostAsync() {
         try{
-            var _setor = _mapper.Map<EOrganizacao>(Input);
-            _setor = await _appSecretaria.SingleIdAsync(Unidade.Id);
-            _setor.Ativo = true;
-            if (ModelState.IsValid)
-                await _appSecretaria.AddAsync(_setor);  
-
-            await OnLoad(_setor.Id);
+            Input.Ativo = true;     
+            Input.Dominio = Unidade.Id;
+            Input.Acronimo = Input.Nome;           
+            await _appSecretaria.AddAsync(_mapper.Map<EOrganizacao>(Input));
+            await OnLoad(Unidade.Id);                
         }
-        catch (Exception ex){
-            StatusMessage = "Erro: ao tentar incluir Unidade!" + "\n" + ex.Message;
-        }      
+        catch(Exception ex) {
+            StatusMessage = "Erro: " +  ex.Message;
+        }
+        return Page();  
     }
 }
 

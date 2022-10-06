@@ -16,7 +16,7 @@ public class IndexModel : PageModel
 
     [TempData]
     public string StatusMessage { get; set; }
-    public async Task<IActionResult> OnGetAsync(string id, string og) {
+    public async Task<IActionResult> OnGetAsync(string id) {
         try
         {   
             var _unidade = await _appSecretaria.SingleIdAsync(new Guid(id));         
@@ -26,6 +26,6 @@ public class IndexModel : PageModel
         {
             StatusMessage = "Erro ao tentar remover a Unidade!" + "\n" + ex.Message;
         }
-        return RedirectToPage("/Common/Unidade/Index", new { id = og } );
+        return RedirectToPage("/Common/Unidade/Index", new { id = id } );
     }
 }
