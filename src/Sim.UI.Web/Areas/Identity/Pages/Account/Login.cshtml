@@ -14,46 +14,45 @@
 </div>
 }
 
-<div class="form-signin card" style="margin-top:20px;">    
-        <section>
-            <form id="account" method="post" class="center">
-                <div class="logo-sim-lg"></div>
-                <h6 class="mb-5 fw-normal">Entrar no Sim.Web</h6>
-                <div asp-validation-summary="All" class="red-text"></div>
-                <div class="input-field">
-                    <i class="material-icons prefix">person</i>
-                    <input asp-for="Input.UserName" type="text" id="floatingInput" />
-                    <label asp-for="Input.UserName" for="floatingInput"></label>
-                </div>
-                <div class="input-field">
-                    <i class="material-icons prefix">key</i>
-                    <input asp-for="Input.Password" type="password" id="floatingsenha" />
-                    <label asp-for="Input.Password" for="floatingsenha"></label>
-                </div>
-                <p hidden>
-                    <label>
-                        <input type="checkbox" asp-for="Input.RememberMe"/>
-                        <span>@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
-                    </label>
+<div class="form-signin card border-a" style="margin-top:50px;">    
+    <section>
+        <form id="account" method="post" class="center pdn-10">
+            <div class="logo-sim-lg"></div>            
+            <div asp-validation-summary="All" class="red-text"></div>
+            <div class="input-field">
+                <i class="material-icons prefix">person</i>
+                <input asp-for="Input.UserName" type="text" id="floatingInput" />
+                <label asp-for="Input.UserName" for="floatingInput"></label>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">key</i>
+                <input asp-for="Input.Password" type="password" id="floatingsenha" />
+                <label asp-for="Input.Password" for="floatingsenha"></label>
+            </div>
+            <p hidden>
+                <label>
+                    <input type="checkbox" asp-for="Input.RememberMe"/>
+                    <span>@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
+                </label>
+            </p>
+
+            <button type="submit" class="btn btn-large waves-effect waves-light">Entrar</button>
+            <div class="form-floating" hidden>
+                <p>
+                    <a id="forgot-password" asp-page="./ForgotPassword">Esqueceu sua senha?</a>
+                </p>
+                <!--
+                <p>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registre-se como um novo usuário</a>
+                </p>
+                -->
+                <p>
+                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmação por email</a>
                 </p>
 
-                <button type="submit" class="btn btn-large waves-effect waves-light">Entrar</button>
-                <div class="form-floating" hidden>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Esqueceu sua senha?</a>
-                    </p>
-                    <!--
-        <p>
-            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registre-se como um novo usuário</a>
-        </p>
-        -->
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmação por email</a>
-                    </p>
-
-                </div>
-            </form>
-        </section>
+            </div>
+        </form>
+    </section>
 </div>
 
 @section Scripts {

@@ -13,7 +13,7 @@
     <form method="post">
         <div class="card">
             <div class="row">
-                <div class="col s12">
+                <div class="col s12" hidden>
                     <input asp-for="Input.Id"/>                    
                     <input asp-for="Input.Ativo"/>
                     <input asp-for="Input.Dominio"/>
@@ -30,7 +30,7 @@
                         <input asp-for="Input.Nome" />
                         <label asp-for="Input.Nome"></label>                         
                     </div>    
-                    <div class="input-field col s12 m5 l5">
+                    <div class="input-field col s12 m5 l5" hidden>
                         <input asp-for="Input.Acronimo" />
                         <label asp-for="Input.Acronimo"></label>                       
                     </div>

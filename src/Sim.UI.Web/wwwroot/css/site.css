@@ -366,6 +366,12 @@ nav .input-field label i {
 nav .input-field label.active i{
     color: rgba(0, 0, 0, 0.5);    
 }
+.card {
+    border-radius: 4px;
+}
+.card-panel {
+    border-radius: 4px;
+}
 .card .card-action:last-child {
     border-radius: 4px;
 }
@@ -472,7 +478,7 @@ nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
     background-image: url(imgs/sim-ico.ico);
     background-size: 64px 64px;
     height: 64px;
-    width: 64px;
+    width: 64px;    
     image-rendering: optimizeQuality;
 }
 .sedemp {
@@ -562,7 +568,7 @@ nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
     min-width: 55px;
     max-width: 65px;
     border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, .1);
+    /*border: 1px solid rgba(0, 0, 0, .1);*/
     transition: .3s;
 }.box-cell-item:hover{
     background-color:rgba(0, 0, 0, .04);
@@ -576,7 +582,7 @@ nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
     text-align: center; 
     border-radius: 2px;
     transition: .3s;
-    border: 1px solid rgba(0, 0, 0, .1);
+    /*border: 1px solid rgba(0, 0, 0, .1);*/
 }
 .box-cell-item-flex:hover{
     background-color: rgba(0, 0, 0, .04);

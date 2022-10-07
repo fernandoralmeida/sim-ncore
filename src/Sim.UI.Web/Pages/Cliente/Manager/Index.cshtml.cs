@@ -38,7 +38,7 @@ namespace Sim.UI.Web.Pages.Cliente.Manager
 
             if (Input.Deficiencia != null)
             {
-                if (t.Deficiencia.Contains("Física"))
+                if (t.Deficiencia.Contains("FÃ­sica"))
                     Input.Fisica = true;
 
                 if (t.Deficiencia.Contains("Visual"))
@@ -71,7 +71,7 @@ namespace Sim.UI.Web.Pages.Cliente.Manager
                 pessoa.Deficiencia = string.Empty;
 
                 if (Input.Fisica)
-                    pessoa.Deficiencia += "Física;";
+                    pessoa.Deficiencia += "FÃ­sica;";
 
                 if (Input.Visual)
                     pessoa.Deficiencia += "Visual;";

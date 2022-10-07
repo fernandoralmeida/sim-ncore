@@ -28,18 +28,22 @@ public class IndexModel : PageModel
     [BindProperty]
     public VMServicos Input { get; set; }
 
+    [BindProperty]
+    public Guid ReturnID { get; set; }
     public IEnumerable<EServico> Servicos { get; set; }
     public SelectList Dominios { get; set; }
     
     public async Task OnLoadAsync(Guid id, Guid dm) {
         var _list = await _appdominio.ListAllAsync();
         var _setores = await _appdominio.DoListHierarquia2from1Async(_list, dm);
-        Dominios = new SelectList(_setores, nameof(EOrganizacao.Id), nameof(EOrganizacao.Nome));
-        Servicos = await _appservicos.DoList(s => s.Dominio.Id == id || s.Dominio == null);
+        Dominios = new SelectList(_setores.Where(s => s.Id == id), nameof(EOrganizacao.Id), nameof(EOrganizacao.Nome));
+        ReturnID = dm;
+        Servicos = await _appservicos.DoListByDominioAsync(id);
     }
 
     public async Task OnGetAsync(string id, string dm) {
-        await OnLoadAsync(new Guid(id), new Guid(dm));        
+        await OnLoadAsync(new Guid(id), new Guid(dm));
+
     }
 
     public async Task OnPostAsync() {

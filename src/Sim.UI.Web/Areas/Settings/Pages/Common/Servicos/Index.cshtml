@@ -11,10 +11,11 @@
     <form method="post">
         <div class="col s12" hidden>
             <input asp-for="Input.Id"/>
+            <input asp-for="ReturnID"/>
         </div>
         <div class="row">
             <div class="card-header white">
-                <a asp-area="Settings" asp-page="/Common/Unidade/Index" class="btn-small waves-effect waves-light grey" title="Voltar"><i class="material-icons">undo</i></a><span class="pdn-10">Inclua ou remova serviços</span>
+                <a asp-area="Settings" asp-page="/Common/Setor/Index" asp-route-id="@Model.ReturnID" class="btn-small waves-effect waves-light grey" title="Voltar"><i class="material-icons">undo</i></a><span class="pdn-10">Inclua ou remova serviços</span>
             </div>
             <div class="input-field col s12 m5 l3">
                 <select asp-for="Input.Dominio" asp-items="Model.Dominios" ></select>
@@ -28,7 +29,7 @@
         </div>
     </form>
 
-    <table class="responsive-table">
+    <table class="responsive-table striped">
         <thead>
             <tr>
                 <th>Servico</th>

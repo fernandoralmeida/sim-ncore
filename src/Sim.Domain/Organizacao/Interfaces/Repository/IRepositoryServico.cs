@@ -6,5 +6,6 @@
         Task<IEnumerable<EServico>> ListServicoOwnerAsync(string setor);
         Task<EServico> GetIdAsync(Guid id);
         Task<IEnumerable<EServico>> ListAllAsync();
+        Task<IEnumerable<EServico>> DoListByDominioAsync(Guid id);
     }
 }

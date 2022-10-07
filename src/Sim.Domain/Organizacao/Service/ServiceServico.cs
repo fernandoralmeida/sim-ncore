@@ -12,6 +12,11 @@
             _servico = repositoryServico;
         }
 
+        public async Task<IEnumerable<EServico>> DoListByDominioAsync(Guid id)
+        {
+            return await _servico.DoListByDominioAsync(id);
+        }
+
         public async Task<EServico> GetIdAsync(Guid id)
         {
             return await _servico.GetIdAsync(id);

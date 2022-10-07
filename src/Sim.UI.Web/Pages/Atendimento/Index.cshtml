@@ -10,14 +10,14 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-    <div class="row">        
-        <div  class="col s12 l4 m4 offset-m4 offset-l4 no-padding">
-            <div class="input-field valign-wrapper white z-depth-1 hoverable rounded-default pdn-h-8" style="margin:0px;">
-                <input asp-for="Input.DataAtendimento" />
-                <button class="btn waves-effect waves-light submit"><i class="material-icons">refresh</i></button>
+    <nav class="row">
+        <div class="nav-wrapper">             
+            <div class="input-field col s12">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Input.DataAtendimento" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>
         </div>
-    </div>
+    </nav>
 </form>
 
 <div class="card">
@@ -114,7 +114,7 @@
 @section scripts{
     <script src="~/js/jquery.mask.min.js"></script>
     <script>
-        $('#inputData').mask('00/00/0000', { placeholder: "dd/mm/yyyy" });
+        $('#search').mask('00/00/0000', { placeholder: "15/08/1853" });
     </script>
     <script>
         $(function () {

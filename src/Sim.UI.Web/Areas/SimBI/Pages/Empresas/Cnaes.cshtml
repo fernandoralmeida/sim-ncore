@@ -11,7 +11,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <div class="row">
-    <ul class="collapsible white borderless rounded-default">
+    <ul class="collapsible z-depth-0 white borderless rounded-default">
             @foreach (var emp in Model.ListCnaes)
             {
                 @foreach (var s in emp.ListaSecao)
@@ -31,7 +31,7 @@
                                         <div class="collapsible-header">@d.Classe.Key<span class="new badge blue-grey darken-1" data-badge-caption="">@d.Classe.Value</span></div>
                                         <div class="collapsible-body">
                                             <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@cnaei" data-munic="@Model.MunicipioSelecionado" data-cnaef="@cnaef">Listar Subclasse</a></div>
-                                            <ul class="collection z-depth-1">
+                                            <ul class="collection">
                                                 @foreach (var sc in d.ListaSubClasse)
                                                 {
                                                     string[] cnae = sc.Key.Split(" - ");

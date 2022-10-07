@@ -13,6 +13,15 @@ namespace Sim.Data.Repository
 
         }
 
+        public async Task<IEnumerable<EServico>> DoListByDominioAsync(Guid id) {
+            return await _db.Servico
+                .Include(s => s.Dominio)
+                .Where(p => p.Dominio == null || p.Dominio.Id == id)
+                .AsNoTracking()
+                .OrderBy(s => s.Nome)
+                .ToListAsync();
+        }
+
         public async Task<EServico> GetIdAsync(Guid id)
         {
             return await _db.Servico.Where(u => u.Id == id).FirstOrDefaultAsync();
@@ -32,7 +41,7 @@ namespace Sim.Data.Repository
             return await _db.Servico
                 .Include(s => s.Dominio)
                 .Where(p => p.Dominio.Nome.Contains(setor) 
-                || p.Dominio.Nome.Contains("Geral"))
+                || p.Dominio == null)
                 .OrderBy(s => s.Nome).ToListAsync();
         }
     }
