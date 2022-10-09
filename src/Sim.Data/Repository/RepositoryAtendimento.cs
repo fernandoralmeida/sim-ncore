@@ -28,7 +28,7 @@ namespace Sim.Data.Repository
                         a.Servicos.Contains(param) ||
                         a.Setor.Contains(param) ||
                         a.Owner_AppUser_Id.Contains(param))
-                        .AsNoTracking()
+                        .AsNoTrackingWithIdentityResolution()
                         .OrderBy(o => o.Data)
                         .ToListAsync();     
         }
@@ -42,7 +42,7 @@ namespace Sim.Data.Repository
                         .Where(a => a.Data.Value.Date.Year == ano &&
                                     a.Status == "Finalizado" && 
                                     a.Ativo == true)
-                        .AsNoTracking()
+                        .AsNoTrackingWithIdentityResolution()
                         .OrderBy(o => o.Data)
                         .ToListAsync();
         }
@@ -73,7 +73,9 @@ namespace Sim.Data.Repository
                 .Include(p => p.Pessoa)
                 .Include(e => e.Empresa)
                 .Include(s => s.Sebrae)
-                .OrderByDescending(o => o.Data.Value.Date).ToListAsync();
+                .OrderByDescending(o => o.Data.Value.Date)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Atendimento>> ListAtendimentoAtivoAsync(string userid)
@@ -134,7 +136,9 @@ namespace Sim.Data.Repository
                 .Include(u => u.Pessoa)
                 .Include(e => e.Empresa)
                 .Include(s => s.Sebrae)
-                .Where(a => a.Owner_AppUser_Id == userid && a.Data.Value.Date == date.Value.Date && a.Status == "Finalizado" && a.Ativo == true).OrderBy(o => o.Data));
+                .Where(a => a.Owner_AppUser_Id == userid && a.Data.Value.Date == date.Value.Date && a.Status == "Finalizado" && a.Ativo == true)
+                .OrderBy(o => o.Data)
+                .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListMeusAtendimentosRaeAsync(string userid)
@@ -143,7 +147,9 @@ namespace Sim.Data.Repository
                 .Include(u => u.Pessoa)
                 .Include(e => e.Empresa)
                 .Include(s => s.Sebrae)
-                .Where(a => a.Owner_AppUser_Id == userid && a.Status == "Finalizado" && a.Ativo == true).OrderBy(o => o.Data));
+                .Where(a => a.Owner_AppUser_Id == userid && a.Status == "Finalizado" && a.Ativo == true)
+                .OrderBy(o => o.Data)
+                .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListMonthAsync(DateTime? month)
@@ -154,7 +160,9 @@ namespace Sim.Data.Repository
                 .Include(s => s.Sebrae)
                 .Where(a => a.Data.Value.Month == month.Value.Month
                 && a.Status == "Finalizado"
-                && a.Ativo == true).OrderBy(o => o.Data));
+                && a.Ativo == true)
+                .OrderBy(o => o.Data)
+                .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListParamAsync(List<object> lparam)
@@ -188,7 +196,7 @@ namespace Sim.Data.Repository
             .Where(a => a.Empresa.CNAE_Principal.Contains(cnae))
             .Where(a => a.Servicos.Contains(servico))
             .Where(a => a.Owner_AppUser_Id.Contains(user))
-            .AsNoTracking()
+            .AsNoTrackingWithIdentityResolution()
             .OrderBy(o => o.Data)
             .ToListAsync();             
         }
@@ -200,7 +208,9 @@ namespace Sim.Data.Repository
                 .Include(e => e.Empresa)
                 .Include(s => s.Sebrae)
                 .Where(a => a.Data.Value.Date >= dataI
-                && a.Data.Value.Date <= dataF && a.Status == "Finalizado" && a.Ativo == true).OrderBy(o => o.Data));
+                && a.Data.Value.Date <= dataF && a.Status == "Finalizado" && a.Ativo == true)
+                .OrderBy(o => o.Data)
+                .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListPessoaAsync(string cpf)
@@ -209,22 +219,27 @@ namespace Sim.Data.Repository
                 .Include(p => p.Pessoa)
                 .Include(e => e.Empresa)
                 .Include(s => s.Sebrae)
-                .Where(u => u.Pessoa.CPF == cpf).OrderBy(d => d.Data).OrderByDescending(o => o.Data));
+                .Where(u => u.Pessoa.CPF == cpf).OrderBy(d => d.Data)
+                .OrderByDescending(o => o.Data)
+                .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListServicosAsync(string servicos)
         {
-            return await Task.Run(() => _db.Atendimento.Where(u => u.Servicos.Contains(servicos) && u.Status == "Finalizado" && u.Ativo == true));
+            return await Task.Run(() => _db.Atendimento.Where(u => u.Servicos.Contains(servicos) && u.Status == "Finalizado" && u.Ativo == true)
+                                            .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListSetorAsync(string setor)
         {
-            return await Task.Run(() => _db.Atendimento.Where(u => u.Setor == setor && u.Status == "Finalizado" && u.Ativo == true));
+            return await Task.Run(() => _db.Atendimento.Where(u => u.Setor == setor && u.Status == "Finalizado" && u.Ativo == true)
+                                            .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListUserNameAsync(string username)
         {
-            return await Task.Run(() => _db.Atendimento.Where(u => u.Owner_AppUser_Id == username && u.Status == "Finalizado" && u.Ativo == true));
+            return await Task.Run(() => _db.Atendimento.Where(u => u.Owner_AppUser_Id == username && u.Status == "Finalizado" && u.Ativo == true)
+                                            .AsNoTrackingWithIdentityResolution());
         }
 
         public async Task<IEnumerable<Atendimento>> ListUserNamePeriodoAsync(string username, DateTime? date)
@@ -233,7 +248,8 @@ namespace Sim.Data.Repository
                 .Include(p => p.Pessoa)
                 .Include(e => e.Empresa)
                 .Include(s => s.Sebrae)
-                .Where(u => u.Owner_AppUser_Id == username && u.Status == "Finalizado" && u.Ativo == true && u.Data.Value.Date == date.Value.Date));
+                .Where(u => u.Owner_AppUser_Id == username && u.Status == "Finalizado" && u.Ativo == true && u.Data.Value.Date == date.Value.Date)
+                .AsNoTrackingWithIdentityResolution());
         }
     }
 }

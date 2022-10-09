@@ -15,9 +15,9 @@
 
 <div class="navbar-fixed">
     <nav class="navbar z-depth-0">
-        <div class="nav-wrapper">
-            <a href="#" data-target="sidenav-left" class="sidenav-trigger alpha-text-9"><i class="material-icons">menu</i></a>
-            <a class="navbar-page-name alpha-text-9">@ViewData["Title"]</a>
+        <div class="nav-wrapper grey lighten-5">
+            <a href="#" data-target="sidenav-left" class="sidenav-trigger alpha-text-8"><i class="material-icons">menu</i></a>
+            <a class="navbar-page-name alpha-text-8">@ViewData["Title"]</a>
             <ul class="right">                
                     @if(SignInManager.IsSignedIn(User))
                     {
@@ -32,7 +32,7 @@
                         @if (!_status)
                         { account_color = "alpha-text-5"; }
                         else
-                        { account_color = "alpha-text-9"; }
+                        { account_color = "teal-text"; }
 
                         <li class="dropdown-trigger @LayoutNavPages.LoginNavClass(ViewContext)" data-target="dropdownuser">
                             <a id="btnstatus" class="@account_color" href="#">@DisplayName<i class="left material-icons">person</i></a>
@@ -57,7 +57,10 @@
         var uid = document.querySelector('#meustatusonline').value;
         const btnstatus = document.querySelector('#btnstatus');
         btnstatus.classList.remove('alpha-text-5');
+        btnstatus.classList.remove('teal-text');
         if (!st.checked) { $('#btnstatus').addClass('alpha-text-5'); }        
+        else
+        { $('#btnstatus').addClass('teal-text'); }
         var formData = { id: uid, val: st.checked };
         $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 
         function(returnedData){

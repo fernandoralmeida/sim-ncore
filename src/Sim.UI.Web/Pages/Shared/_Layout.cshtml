@@ -20,8 +20,8 @@
         <partial name="_LoginPartial" />
         <partial name="_SidebarNav" />        
     </header>
-    <main>        
-        <div class="progress" style="display: flex; position: fixed; margin-top: -4px; z-index:998; border-radius: 0px;"><div class="indeterminate"></div></div>
+    <main class="border-l">        
+        <div class="progress" style="display: flex; position: fixed; margin-top: -0px; z-index:998; border-radius: 0px;"><div class="indeterminate"></div></div>
         <div class="blackboxload"></div>
         <!--
         <div class="teal lighten-2 navbar-extended"></div>  
@@ -30,7 +30,7 @@
             @RenderBody()
         </div>
     </main>
-    <footer class="page-footer white border-t">
+    <footer class="page-footer grey lighten-5 border-l">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer-copyright white">
+        <div class="footer-copyright grey lighten-4">
             <div class="container alpha-text-9">
                 &copy; @DateTime.Now.Year - Sim.Web
                 <a class="blue-text" href="http://www.jau.sp.gov.br" target="_blank">Jahu-SP</a>

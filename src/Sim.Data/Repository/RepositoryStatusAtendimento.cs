@@ -18,12 +18,12 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<StatusAtendimento>> ListAllAsync()
         {
-            return await _db.StatusAtendimento.ToListAsync();
+            return await _db.StatusAtendimento.AsNoTrackingWithIdentityResolution().ToListAsync();
         }
 
         public async Task<IEnumerable<StatusAtendimento>> ListUserAsync(string username)
         {
-            return await _db.StatusAtendimento.Where(s => s.UnserName == username).ToListAsync();
+            return await _db.StatusAtendimento.Where(s => s.UnserName == username).AsNoTrackingWithIdentityResolution().ToListAsync();
         }
     }
 }

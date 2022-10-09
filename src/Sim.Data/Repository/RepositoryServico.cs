@@ -17,7 +17,7 @@ namespace Sim.Data.Repository
             return await _db.Servico
                 .Include(s => s.Dominio)
                 .Where(p => p.Dominio == null || p.Dominio.Id == id)
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .OrderBy(s => s.Nome)
                 .ToListAsync();
         }
@@ -32,7 +32,7 @@ namespace Sim.Data.Repository
             return await _db.Servico
                 .Include(d => d.Dominio)
                 .OrderBy(s => s.Nome)
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
         }
 
@@ -42,7 +42,9 @@ namespace Sim.Data.Repository
                 .Include(s => s.Dominio)
                 .Where(p => p.Dominio.Nome.Contains(setor) 
                 || p.Dominio == null)
-                .OrderBy(s => s.Nome).ToListAsync();
+                .OrderBy(s => s.Nome)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
     }
 

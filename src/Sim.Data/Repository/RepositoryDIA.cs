@@ -20,7 +20,9 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<DIA>> ListAllAsync()
         {
-            return await _db.DIA.Include(a => a.Ambulante).ToListAsync();
+            return await _db.DIA.Include(a => a.Ambulante)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<DIA>> ListAtividadeAsync(string atividade)

@@ -32,7 +32,7 @@ namespace Sim.Data.Repository
                             e.Inclusivo.Contains(param) ||
                             e.Status.Contains(param) ||
                             e.Genero.Contains(param))
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .OrderBy(o => o.Data)
                 .ToListAsync();
         }
@@ -42,7 +42,7 @@ namespace Sim.Data.Repository
             return await _db.Emprego.Include(e => e.Empresa)
                                     .Include(p => p.Pessoa)
                 .Where(e => e.Data.Value.Year == ano)
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .OrderBy(o => o.Data)
                 .ToListAsync();
         }

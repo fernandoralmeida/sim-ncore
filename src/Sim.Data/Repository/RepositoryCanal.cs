@@ -24,12 +24,15 @@ namespace Sim.Data.Repository
         {
             return await _db.Canal
                 .Include(s => s.Dominio)
+                .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<ECanal>> ListCanalOwner(string setor)
         {
-            return await Task.Run(() => _db.Canal.Where(u => u.Dominio.Nome.Contains(setor) || u.Dominio.Nome.Contains("Geral")));
+            return await _db.Canal.Where(u => u.Dominio.Nome.Contains(setor) || u.Dominio.Nome.Contains("Geral"))
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
     }
 }

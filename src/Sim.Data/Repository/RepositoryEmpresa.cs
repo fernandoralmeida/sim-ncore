@@ -32,7 +32,7 @@ namespace Sim.Data.Repository
                 s.Logradouro.Contains(param) ||
                 s.Bairro.Contains(param))
                 .OrderByDescending(o => o.Data_Abertura)
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();  
         }
 
@@ -69,7 +69,7 @@ namespace Sim.Data.Repository
                 .Where(s => s.Logradouro.Contains(logradouro))
                 .Where(s => s.Bairro.Contains(bairro))
                 .OrderByDescending(o => o.Data_Abertura)
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();            
         }
 

@@ -23,7 +23,7 @@ namespace Sim.Data.Repository
             return await _db.Secretaria
                 .Include(p => p.Servicos)
                 .Include(p => p.Canais)
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
         }
 
@@ -33,7 +33,7 @@ namespace Sim.Data.Repository
                 .Include(p => p.Servicos)
                 .Include(p => p.Canais)
                 .Where(u => u.Nome == setor)
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .ToListAsync();
         }
     }

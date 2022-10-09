@@ -20,12 +20,12 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<Planner>> ListAllAsync()
         {
-            return await _db.Planner.ToListAsync();
+            return await _db.Planner.AsNoTrackingWithIdentityResolution().ToListAsync();
         }
 
         public async Task<IEnumerable<Planner>> ListDataAsync(DateTime? data)
         {
-            return await _db.Planner.Where(u => u.DataInicial == data).ToListAsync();
+            return await _db.Planner.Where(u => u.DataInicial == data).AsNoTrackingWithIdentityResolution().ToListAsync();
         }
 
         public async Task<IEnumerable<Planner>> ListPlannerAsync(DateTime? datai, DateTime? dataf, string username)
@@ -34,7 +34,7 @@ namespace Sim.Data.Repository
                 .Where(s => s.DataInicial.Value.Date == datai
                 && s.DataFinal.Value.Date == dataf
                 && s.Owner_AppUser_Id == username)
-                .OrderBy(o => o.DataInicial).ToListAsync();
+                .OrderBy(o => o.DataInicial).AsNoTrackingWithIdentityResolution().ToListAsync();
         }
     }
 }

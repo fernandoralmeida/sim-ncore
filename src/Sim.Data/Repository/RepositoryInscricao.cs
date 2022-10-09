@@ -69,7 +69,9 @@ namespace Sim.Data.Repository
                 .Include(p => p.Participante)
                 .Include(e => e.Empresa)
                 .Include(e => e.Evento)
-                .Where(u => u.Evento.Codigo.ToString() == evento).ToListAsync();
+                .Where(u => u.Evento.Codigo.ToString() == evento)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Inscricao>> ListParticipanteAsync(string nome)
@@ -78,7 +80,9 @@ namespace Sim.Data.Repository
                 .Include(p => p.Participante)
                 .Include(e => e.Empresa)
                 .Include(e => e.Evento)
-                .Where(s => s.Participante.CPF == nome).ToListAsync();
+                .Where(s => s.Participante.CPF == nome)
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Inscricao>> ListTipoAsync(string evento)
@@ -88,7 +92,9 @@ namespace Sim.Data.Repository
                 .Include(e => e.Evento)
                 .Include(p => p.Participante)
                 .Include(t=>t.Empresa)
-                .Where(s=>s.Evento.Tipo.Contains(evento)).ToListAsync();
+                .Where(s=>s.Evento.Tipo.Contains(evento))
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
         }
     }
 }

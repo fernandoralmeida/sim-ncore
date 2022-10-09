@@ -20,12 +20,12 @@ namespace Sim.Data.Repository
 
         public async Task<IEnumerable<ETipo>> ListAllAsync()
         {
-            return await _db.Tipos.ToListAsync();
+            return await _db.Tipos.AsNoTrackingWithIdentityResolution().ToListAsync();
         }
 
         public async Task<IEnumerable<ETipo>> ListTipoOwnerAsync(string owner)
         {
-            return await _db.Tipos.Where(u => u.Tipo.Contains(owner)).ToListAsync();
+            return await _db.Tipos.Where(u => u.Tipo.Contains(owner)).AsNoTrackingWithIdentityResolution().ToListAsync();
         }
     }
 }

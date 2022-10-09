@@ -1,23 +1,23 @@
 ﻿@using Sim.UI.Web.Pages.Shared
 @inject Sim.Application.Interfaces.IAppServiceAtendimento MeuAtendimento
 
-<ul id="sidenav-left" class="sidenav sidenav-fixed border-r">
+<ul id="sidenav-left" class="sidenav sidenav-fixed">
 
     <li class="no-padding alpha-text-6">
         <ul class="collapsible collapsible-accordion">
-            <li class="waves-effect waves-teal @LayoutNavPages.InicioNavClass(ViewContext)">
+            <li class="@LayoutNavPages.InicioNavClass(ViewContext) grey lighten-5">
                 <div class="collapsible-header"><img src="~/icons/sedempi-166p.svg" width="150px" style="margin-top: 17px;"/><i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body alpha-text-6">
                     <ul>
-                        <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext)"><a class="waves-effect submit" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
-                        <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)"><a class="waves-effect submit" asp-page="/Pat/Index">PAT<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)"><a class="waves-effect" href="#" >Banco do Povo<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioSANavClass(ViewContext)"><a class="waves-effect submit" asp-page="/SebraeAqui/Index">Sebrae Aqui<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioSENavClass(ViewContext)"><a class="waves-effect" href="#" >Sala do Empreendedor<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext)"><a class=" submit" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
+                        <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)"><a class=" submit" asp-page="/Pat/Index">PAT<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)"><a class="" href="#" >Banco do Povo<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioSANavClass(ViewContext)"><a class=" submit" asp-page="/SebraeAqui/Index">Sebrae Aqui<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioSENavClass(ViewContext)"><a class="" href="#" >Sala do Empreendedor<i class="left material-icons">chevron_right</i></a></li>
                     </ul>
                 </div>
             </li>
-            <li class="waves-effect waves-teal @LayoutNavPages.AtendimentoNavClass(ViewContext)">
+            <li class="@LayoutNavPages.AtendimentoNavClass(ViewContext)">
                 <div class="collapsible-header">Atendimentos<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
@@ -26,55 +26,55 @@
                         }
                         @if(_has_atendimento.Any())
                         {
-                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Atendimento/Novo/Index" class="waves-effect submit">Continuar<i class="left material-icons">shortcut</i></a></li>
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Atendimento/Novo/Index" class=" submit">Continuar<i class="left material-icons">shortcut</i></a></li>
                         }
                         else
                         {
-                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Cliente/Index" class="waves-effect submit">Novo<i class="left material-icons">alarm_add</i></a></li>
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Cliente/Index" class=" submit">Novo<i class="left material-icons">alarm_add</i></a></li>
                         }
-                        <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext)"><a asp-page="/Atendimento/Index" class="waves-effect submit">Diários<i class="left material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta/Index" class="waves-effect submit">Consultar<i class="left material-icons">search</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoAnonimoNavClass(ViewContext)"><a asp-page="/Atendimento/Anonimo/Index" class="waves-effect submit" >Anônimo<i class="left material-icons">person_2</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext)"><a asp-page="/Atendimento/Index" class=" submit">Diários<i class="left material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta/Index" class=" submit">Consultar<i class="left material-icons">search</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoAnonimoNavClass(ViewContext)"><a asp-page="/Atendimento/Anonimo/Index" class=" submit" >Anônimo<i class="left material-icons">person_2</i></a></li>
                     </ul>
                 </div>
             </li>
-            <li class="waves-effect waves-teal @LayoutNavPages.ClientesNavClass(ViewContext)">
+            <li class="@LayoutNavPages.ClientesNavClass(ViewContext)">
                 <div class="collapsible-header">Clientes<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext)"><a asp-page="/Cliente/Index" class="waves-effect submit">Pessoas<i class="left material-icons">group</i></a></li>
-                        <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext)"><a asp-page="/Empresa/Index" class="waves-effect submit">Empresas<i class="left material-icons">domain</i></a></li>
+                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext)"><a asp-page="/Cliente/Index" class=" submit">Pessoas<i class="left material-icons">group</i></a></li>
+                        <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext)"><a asp-page="/Empresa/Index" class=" submit">Empresas<i class="left material-icons">domain</i></a></li>
                     </ul>
                 </div>
             </li>
-            <li class="waves-effect waves-teal @LayoutNavPages.AgendaNavClass(ViewContext)">
+            <li class="@LayoutNavPages.AgendaNavClass(ViewContext)">
                 <div class="collapsible-header">Agenda<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext)"><a asp-page="/Agenda/Index" class="waves-effect submit">Eventos<i class="left material-icons">event</i></a></li>
-                        <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext)"><a asp-page="/Planner/Index" class="waves-effect submit">e-Planner<i class="left material-icons">description</i></a></li>
+                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext)"><a asp-page="/Agenda/Index" class=" submit">Eventos<i class="left material-icons">event</i></a></li>
+                        <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext)"><a asp-page="/Planner/Index" class=" submit">e-Planner<i class="left material-icons">description</i></a></li>
                     </ul>
                 </div>
             </li>
-            <li class="waves-effect waves-teal @LayoutNavPages.PowerBINavClass(ViewContext)">
+            <li class="@LayoutNavPages.PowerBINavClass(ViewContext)">
                 <div class="collapsible-header">Power BI<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.PowerBIEmpregrosNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empregos/Index" class="waves-effect submit">Empregos<i class="left  material-icons">engineering</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Atendimentos/Index" class="waves-effect submit">Atendimentos<i class="left  material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empresas/Index" class="waves-effect submit">Empresas<i class="left material-icons">domain</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEmpregrosNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empregos/Index" class=" submit">Empregos<i class="left  material-icons">engineering</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Atendimentos/Index" class=" submit">Atendimentos<i class="left  material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empresas/Index" class=" submit">Empresas<i class="left material-icons">domain</i></a></li>
                     </ul>
                 </div>
             </li>
 
             @if (User.IsInRole("Administrador"))
             {
-                <li class="waves-effect waves-teal @LayoutNavPages.ConfiguracoesNavClass(ViewContext)">
+                <li class="@LayoutNavPages.ConfiguracoesNavClass(ViewContext)">
                     <div class="collapsible-header">Configurações<i class="material-icons chevron">chevron_left</i></div>
                     <div class="collapsible-body">
                         <ul>
-                            <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext)"><a class="waves-effect submit" asp-area="Settings" asp-page="/Common/Index">Sistema<i class="left material-icons">settings</i></a></li>
-                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)"><a asp-area="Admin" asp-page="/Manager/Index" class="waves-effect submit">Contas<i class="left material-icons">admin_panel_settings</i></a></li>
+                            <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext)"><a class=" submit" asp-area="Settings" asp-page="/Common/Index">Sistema<i class="left material-icons">settings</i></a></li>
+                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)"><a asp-area="Admin" asp-page="/Manager/Index" class=" submit">Contas<i class="left material-icons">admin_panel_settings</i></a></li>
                         </ul>
                     </div>
                 </li>
