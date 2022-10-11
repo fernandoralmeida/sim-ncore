@@ -2,6 +2,7 @@
 using Sim.Data.Context;
 using Sim.Domain.Evento.Model;
 using Sim.Domain.Evento.Interfaces.Repository;
+using System.Linq.Expressions;
 
 namespace Sim.Data.Repository
 {
@@ -12,6 +13,18 @@ namespace Sim.Data.Repository
             : base(applicationContext)
         {
 
+        }
+
+        public async Task<IEnumerable<EParceiro>> DoListAsync(Expression<Func<EParceiro, bool>> filter = null) {
+            var _query = _db.Parceiro.AsQueryable();
+
+            if(filter != null)
+                _query = _query
+                    .Where(filter)
+                    .Include(s => s.Dominio)
+                    .AsNoTrackingWithIdentityResolution();
+
+            return await _query.ToListAsync();
         }
 
         public async Task<EParceiro> GetIdAsync(Guid id)

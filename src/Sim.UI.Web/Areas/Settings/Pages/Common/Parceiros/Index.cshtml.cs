@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,13 +12,16 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common.Parceiros;
 public class IndexModel : PageModel
 {
 
-    private readonly IAppServiceSecretaria _appServiceSecretaria;
-    private readonly IAppServiceParceiro _appServiceParceiro;
+    private readonly IAppServiceSecretaria _appSecretaria;
+    private readonly IAppServiceParceiro _appParceiro;
+    private readonly IMapper _mapper;
     public IndexModel(IAppServiceSecretaria appServiceSecretaria,
-        IAppServiceParceiro appServiceParceiro)
+        IAppServiceParceiro appServiceParceiro,
+        IMapper mapper)
     {
-        _appServiceSecretaria = appServiceSecretaria;
-        _appServiceParceiro = appServiceParceiro;
+        _appSecretaria = appServiceSecretaria;
+        _appParceiro = appServiceParceiro;
+        _mapper = mapper;
     }
 
     [TempData]
@@ -25,65 +29,54 @@ public class IndexModel : PageModel
 
     [BindProperty]
     public VMParceiros Input { get; set; }
+    
+    [BindProperty]
+    public EOrganizacao Unidade { get; set; }
     public IEnumerable<EParceiro> Parceiros { get; set; }
-    public SelectList Secretarias { get; set; }
 
-    private async Task OnLoad()
-    {
-        Secretarias = new SelectList(
-            await _appServiceSecretaria.ListAllAsync(),
-            nameof(EOrganizacao.Id),
-            nameof(EOrganizacao.Nome),
-            null);
+    private async Task OnLoad(Guid id) {
+        Input = new();
+        Unidade = await _appSecretaria.GetIdAsync(id);
+        Input.Dominio = Unidade;
+        Parceiros = await _appParceiro.DoListAsync(filter: s => s.Dominio.Id == id || s.Dominio == null);
     }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task OnGetAsync(string id)
     {
-        await OnLoad();
-        return Page();
+        await OnLoad(new Guid(id));
     }
 
-    public async Task OnPostAddAsync()
+    public async Task OnPostAddAsync(string id)
     {
         try
         {
             if (ModelState.IsValid)
             {
-                var sec = await _appServiceSecretaria.GetIdAsync(Input.Id);
-
-                await _appServiceParceiro.AddAsync(
-                    new EParceiro(){
-                        Nome = Input.Nome,
-                        Dominio = sec,
-                        Ativo = true
-                    }
-                );
-
-                Input.Nome = string.Empty;
+                Input.Dominio = await _appSecretaria.SingleIdAsync(new Guid(id));
+                Input.Ativo = true;
+                await _appParceiro.AddAsync(_mapper.Map<EParceiro>(Input));
             }
-            await OnLoad();
+            await OnLoad(new Guid(id));
         }
         catch (Exception ex)
         {
-            StatusMessage = "Erro ao tentar incluir novo parceiro!" + "\n" + ex.Message;
+            StatusMessage = "Erro: " + ex.Message;
         }
-
     }
 
-    public async Task OnPostRemoveAsync(Guid id)
+    public async Task OnPostRemoveAsync(Guid id, string domain)
     {
         try
         {
-            var canal = await _appServiceParceiro.GetIdAsync(id);
+            var canal = await _appParceiro.GetIdAsync(id);
 
-            await _appServiceParceiro.RemoveAsync(canal);
+            await _appParceiro.RemoveAsync(canal);
 
-            await OnLoad();
-
+            await OnLoad(new Guid(domain));
         }
         catch (Exception ex)
         {
-            StatusMessage = "Erro ao tentar remover parceiro!" + "\n" + ex.Message;
+            StatusMessage = "Erro: " + ex.Message;
         }
     }
 }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,15 +11,15 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common.Eventos;
 
 public class IndexModel : PageModel
 {
-    //private readonly IAppServiceSetor _appServiceSetor;
-    private readonly IAppServiceSecretaria _appServiceSecretaria;
-    private readonly IAppServiceTipo _appServiceTipo;
+    private readonly IAppServiceSecretaria _appSecretaria;
+    private readonly IAppServiceTipo _appTipo;
+    private readonly IMapper _mapper;
     public IndexModel(IAppServiceSecretaria appServiceSecretaria,
-        IAppServiceTipo appServiceTipo)
-    {
-        //_appServiceSetor = appServiceSetor;
-        _appServiceSecretaria = appServiceSecretaria;
-        _appServiceTipo = appServiceTipo;
+        IAppServiceTipo appServiceTipo,
+        IMapper mapper) {
+        _appSecretaria = appServiceSecretaria;
+        _appTipo = appServiceTipo;
+        _mapper = mapper;
     }
 
     [TempData]
@@ -27,57 +28,48 @@ public class IndexModel : PageModel
     [BindProperty]
     public VMTipo Input { get; set; }
 
+    [BindProperty]
+    public EOrganizacao Unidade { get; set; }
     public IEnumerable<ETipo> Tipos { get; set; }
-    public SelectList Unidades { get; set; }
 
-    private async Task OnLoad()
-    {
-        Unidades = new SelectList(
-            await _appServiceSecretaria.ListAllAsync(),
-            nameof(EOrganizacao.Id),
-            nameof(EOrganizacao.Nome),
-            null);
+    private async Task OnLoad(Guid id) {
+        Input = new();
+        Unidade = await _appSecretaria.GetIdAsync(id);
+        Input.Dominio = Unidade;
+        Tipos = await _appTipo.DoList(filter: s => s.Dominio.Id == id || s.Dominio == null);
     }
 
-    public async Task<IActionResult> OnGetAsync()
-    {
-        await OnLoad();
-        return Page();
+    public async Task OnGetAsync(string id) {
+        await OnLoad(new Guid(id));
     }
 
-    public async Task OnPostAddAsync()
-    {
+    public async Task OnPostAddAsync(Guid id) {
         try
         {
-            if (ModelState.IsValid)
-            {  
-                await _appServiceTipo.AddAsync(
-                    new ETipo(){
-                        Nome = Input.Nome,
-                        Tipo = "Evento",
-                        Ativo = true
-                    });                    
+            Input.Dominio = await _appSecretaria.SingleIdAsync(id);
+            Input.Ativo = true;
+            Input.Tipo = "Evento";
+            if (ModelState.IsValid) {
+                await _appTipo.AddAsync(_mapper.Map<ETipo>(Input));                     
             }
-            await OnLoad();
-            Input.Nome = string.Empty;
+            await OnLoad(id);            
         }
         catch (Exception ex)
         {
-            StatusMessage = "Erro ao tentar incluír novo canal!" + "\n" + ex.Message;
+            StatusMessage = "Erro: " + ex.Message;
         }
     }
 
-    public async Task OnPostRemoveAsync(Guid id)
-    {
+    public async Task OnPostRemoveAsync(Guid id, Guid domain) {
         try
         {
-            var canal = await _appServiceTipo.GetIdAsync(id);
-            await _appServiceTipo.RemoveAsync(canal);
-            await OnLoad();
+            var canal = await _appTipo.GetIdAsync(id);
+            await _appTipo.RemoveAsync(canal);
+            await OnLoad(domain);
         }
         catch (Exception ex)
         {
-            StatusMessage = "Erro ao tentar remover canal!" + "\n" + ex.Message;
+            StatusMessage = "Erro: " + ex.Message;
         }
     }
 }

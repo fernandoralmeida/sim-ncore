@@ -1,4 +1,5 @@
-﻿using Sim.Domain.Evento.Model;
+﻿using System.Linq.Expressions;
+using Sim.Domain.Evento.Model;
 
 namespace Sim.Application.Interfaces
 {
@@ -7,5 +8,6 @@ namespace Sim.Application.Interfaces
         Task<IEnumerable<EParceiro>> ListParceirosAsync(string owner);
         Task<EParceiro> GetIdAsync(Guid id);
         Task<IEnumerable<EParceiro>> ListAllAsync();
+        Task<IEnumerable<EParceiro>> DoListAsync(Expression<Func<EParceiro, bool>>? filter = null);
     }
 }
