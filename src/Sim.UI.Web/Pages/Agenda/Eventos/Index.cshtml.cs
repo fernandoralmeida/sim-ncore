@@ -16,16 +16,19 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
         private readonly IAppServiceTipo _appServiceTipo;
         private readonly IAppServiceEvento _appServiceEvento;
         private readonly IAppServiceParceiro _appServiceParceiro;
+        private readonly IAppServiceSecretaria _appSecretaria;
         private readonly IMapper _mapper;
 
         public IndexModel(IAppServiceEvento appServiceEvento,
             IAppServiceTipo appServiceTipo,
             IAppServiceParceiro appServiceParceiro,
+            IAppServiceSecretaria appSecretaria,
             IMapper mapper)
         {
             _appServiceEvento = appServiceEvento;
             _appServiceTipo = appServiceTipo;
             _appServiceParceiro = appServiceParceiro;
+            _appSecretaria = appSecretaria;
             _mapper = mapper;
         }
 
@@ -42,9 +45,14 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
 
         private async Task Onload()
         {
-            var t = await _appServiceTipo.ListAllAsync();
 
-            var p = await _appServiceParceiro.ListAllAsync();
+            var _org = await _appSecretaria.DoList(s => s.Hierarquia == EHierarquia.Secretaria);
+            var _setores = await _appSecretaria.DoList(s => s.Hierarquia == EHierarquia.Setor && s.Dominio ==  _org.FirstOrDefault().Id);
+            Setores = new SelectList(_setores, nameof(EOrganizacao.Nome), nameof(EOrganizacao.Nome), null);
+
+            var t = await _appServiceTipo.DoListAsync();
+
+            var p = await _appServiceParceiro.DoListAsync();
 
             if (t != null)
             {
@@ -69,7 +77,7 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
             {
                 if (!ModelState.IsValid)
                 {
-                    StatusMessage = "Verifique o preenchimento correto do formul�rio!";
+                    StatusMessage = "Verifique o preenchimento correto do formulário!";
                     await Onload();
                     return Page();
                 }

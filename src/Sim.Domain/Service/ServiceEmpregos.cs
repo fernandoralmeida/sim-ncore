@@ -1,4 +1,5 @@
-﻿using Sim.Domain.Entity;
+﻿using System.Linq.Expressions;
+using Sim.Domain.Entity;
 using Sim.Domain.Interface.IRepository;
 using Sim.Domain.Interface.IService;
 
@@ -12,19 +13,19 @@ namespace Sim.Domain.Service
             _repositoryEmpregos = repositoryBase;
         }
 
-        public async Task<IEnumerable<Empregos>> DoListEmpregosAsync()
+        public async Task<IEnumerable<Empregos>> DoListAsync(Expression<Func<Empregos, bool>>? filter = null)
         {
-            return await _repositoryEmpregos.DoListEmpregosAsync();
+            return await _repositoryEmpregos.DoListAsync(filter);
         }
 
-        public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncBy(string param)
+        public async Task<IEnumerable<Empregos>> DoListEmpregosAsync()
         {
-            return await _repositoryEmpregos.DoListEmpregosAsyncBy(param);
+            return await DoListAsync();
         }
 
         public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncByAno(int ano)
         {
-            return await _repositoryEmpregos.DoListEmpregosAsyncByAno(ano);
+            return await DoListAsync(s => s.Data.Value.Year == ano);
         }
 
         public async Task<Empregos> GetEmpregoByIdAsync(Guid id)

@@ -26,16 +26,28 @@ namespace Sim.UI.Web.Pages.Pat.Consulta{
 
         public IndexModel(IAppServiceEmpregos appServiceEmpregos){
             _appempregos = appServiceEmpregos;
+            Input = new();
         }
 
         public IEnumerable<Empregos> ListaEmpregos { get; set; }
 
         public async Task OnGetAsync() {            
-            ListaEmpregos = await _appempregos.DoListEmpregosAsyncBy(InputSearch);
+            ListaEmpregos = await _appempregos.DoListAsync(
+                s => s.Status == Empregos.EStatus.Finalizada.ToString() || 
+                s.Status == "Finalizado");
         }
 
         public async Task OnPostAsync(){
-            ListaEmpregos = await _appempregos.DoListEmpregosAsyncBy(InputSearch);
+            ListaEmpregos = await _appempregos.DoListAsync(
+                e => e.Empresa.CNPJ.Contains(InputSearch) ||
+                e.Empresa.Nome_Empresarial.Contains(InputSearch) ||
+                e.Empresa.Atividade_Principal.Contains(InputSearch) ||
+                e.Pessoa.CPF.Contains(InputSearch) ||
+                e.Pessoa.Nome.Contains(InputSearch) ||
+                e.Ocupacao.Contains(InputSearch) ||
+                e.Inclusivo.Contains(InputSearch) ||
+                e.Status.Contains(InputSearch) ||
+                e.Genero.Contains(InputSearch));
         }
     }
 }

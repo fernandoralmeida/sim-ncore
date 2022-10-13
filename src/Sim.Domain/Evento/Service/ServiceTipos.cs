@@ -3,6 +3,9 @@
     using Model;
     using Interfaces.Repository;
     using Interfaces.Service;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+
     public class ServiceTipos : ServiceBase<ETipo>, IServiceTipo
     {
         private readonly IRepositoryTipo _repositoryTipo;
@@ -13,6 +16,11 @@
             _repositoryTipo = repositoryTipo;
         }
 
+        public async Task<IEnumerable<ETipo>> DoListAsync(Expression<Func<ETipo, bool>>? filter = null)
+        {
+            return await _repositoryTipo.DoListAsync(filter);
+        }
+
         public async Task<ETipo> GetIdAsync(Guid id)
         {
             return await _repositoryTipo.GetIdAsync(id);
@@ -21,16 +29,6 @@
         public int LastCodigo()
         {
             return 0;
-        }
-
-        public async Task<IEnumerable<ETipo>> ListAllAsync()
-        {
-            return await _repositoryTipo.ListAllAsync();
-        }
-
-        public async Task<IEnumerable<ETipo>> ListTipoOwnerAsync(string owner)
-        {
-            return await _repositoryTipo.ListTipoOwnerAsync(owner);
         }
     }
 }

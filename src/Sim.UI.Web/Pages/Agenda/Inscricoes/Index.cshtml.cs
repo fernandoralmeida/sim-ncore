@@ -28,7 +28,10 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes
         public string StatusMessage { get; set; }
         public async Task OnGetAsync(int id)
         {
-            Input = _mapper.Map<InputModelEvento>(await _appServiceEvento.GetCodigoAsync(id));            
+            var _event = await _appServiceEvento.DoListAsync(s => s.Codigo == id);            
+            Input = _mapper.Map<InputModelEvento>(_event.FirstOrDefault());       
+            var _qry = Input.Inscritos.OrderBy(s => s.Participante.Nome);
+            Input.Inscritos = _qry.ToList();
         }
 
         public async Task<IActionResult> OnPostRemoveAsync(Guid id, int ide)
@@ -40,8 +43,10 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes
 
         public async Task OnPostReorder(int id)
         {
-            Input = _mapper.Map<InputModelEvento>(await _appServiceEvento.GetEventoToListParticipantes(id));
-            Input.Inscritos = Input.Inscritos.OrderBy(s => s.Participante.Nome).ToList();
+            var _event = await _appServiceEvento.DoListAsync(s => s.Codigo == id); 
+            Input = _mapper.Map<InputModelEvento>(_event.FirstOrDefault());    
+            var _qry = Input.Inscritos.OrderBy(s => s.Data_Inscricao);
+            Input.Inscritos = _qry.ToList();        
         }
 
         public async Task<JsonResult> OnGetDetalheInscrito(string id)

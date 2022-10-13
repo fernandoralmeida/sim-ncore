@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sim.Domain.Organizacao.Model;
 using Sim.Domain.Organizacao.Interfaces.Repository;
+using System.Linq.Expressions;
 
 namespace Sim.Data.Repository 
 { 
@@ -13,19 +14,24 @@ namespace Sim.Data.Repository
 
         }
 
+        public async Task<IEnumerable<ECanal>> DoListAsync(Expression<Func<ECanal, bool>> filter = null)
+        {
+            var _query = _db.Canal.AsQueryable();
+
+            if(filter != null)
+                _query = _query
+                    .Where(filter)
+                    .Include(s => s.Dominio)
+                    .AsNoTrackingWithIdentityResolution();
+
+            return await _query.ToListAsync();
+        }
+
         public async Task<ECanal> GetIdAsync(Guid id)
         {
             return await _db.Canal
                 .Include(s => s.Dominio)
                 .Where(p => p.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<ECanal>> ListAllAsync()
-        {
-            return await _db.Canal
-                .Include(s => s.Dominio)
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();
         }
 
         public async Task<IEnumerable<ECanal>> ListCanalOwner(string setor)

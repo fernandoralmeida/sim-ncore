@@ -3,6 +3,7 @@ using Sim.Data.Context;
 using Sim.Domain.Evento.Model;
 using Sim.Domain.Evento.Interfaces.Repository;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Sim.Data.Repository
 {
@@ -14,70 +15,25 @@ namespace Sim.Data.Repository
 
         }
 
-        public async Task<IEnumerable<EEvento>> DoListAsyncBy(string param)
+        public async Task<IEnumerable<EEvento>> DoListAsync(Expression<Func<EEvento, bool>> filter = null)
         {
-            return await _db.Evento                
-                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
-                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)
-                .Where(s => s.Nome.Contains(param) ||
-                            s.Tipo.Contains(param) ||
-                            s.Owner == param ||
-                            s.Inscritos.Any(p => p.Participante.CPF == param ||
-                                                 p.Empresa.CNPJ == param))
-                .OrderBy(o => o.Data)
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();    
-        }
+            var _query = _db.Evento.AsQueryable();
 
-        public async Task<IEnumerable<EEvento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
-        {
-            var n = nome ?? "";
-            var t = tipo ?? "";
-            var o = setor ?? "";
+            if(filter != null)
+                _query = _query
+                    .Where(filter)
+                    .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
+                    .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)
+                    .AsNoTrackingWithIdentityResolution();
 
-            return await _db.Evento                
-                .Include(i => i.Inscritos)   
-                .Where(s => s.Nome.Contains(n))
-                .Where(s => s.Tipo.Contains(t))
-                .Where(s => s.Owner.Contains(o))
-                .Where(s => s.Data.Value.Year == ano)          
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();    
-        }
-
-        public async Task<EEvento> GetCodigoAsync(int codigo)
-        {
-            return await _db.Evento                
-                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
-                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)
-                .Where(i => i.Codigo == codigo)
-                .AsNoTrackingWithIdentityResolution()
-                .FirstOrDefaultAsync();           
-        }
-
-        public async Task<EEvento> GetCodigoParticipanteAsync(int codigo)
-        {
-            return await _db.Evento
-                .Include(e => e.Inscritos)
-                .Where(p => p.Codigo == codigo)
-                .AsNoTrackingWithIdentityResolution()
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<EEvento> GetEventoToListParticipantes(int codigo)
-        {
-            return await _db.Evento                
-                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
-                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)
-                .Where(i => i.Codigo == codigo)                
-                .AsNoTrackingWithIdentityResolution()
-                .FirstOrDefaultAsync();
+            return await _query.ToListAsync();
         }
 
         public async Task<EEvento> GetIdAsync(Guid id)
         {
             return await _db.Evento
-                .Include(i => i.Inscritos)
+                .Include(i => i.Inscritos).ThenInclude(i => i.Participante)
+                .Include(i => i.Inscritos).ThenInclude(i => i.Empresa)
                 .Where(u => u.Id == id)
                 .OrderBy(d => d.Data)
                 .AsNoTrackingWithIdentityResolution()
@@ -97,32 +53,5 @@ namespace Sim.Data.Repository
                 return (int)cod;
         }
 
-        public async Task<IEnumerable<EEvento>> ListAllAsync()
-        {
-            return await _db.Evento                
-                .Include(i => i.Inscritos).OrderBy(o => o.Data)
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<EEvento>> ListNomeAsync(string nome)
-        {
-            return await _db.Evento                
-                .Include(i=>i.Inscritos)
-                .Where(u => u.Nome.Contains(nome))
-                .OrderBy(d => d.Data)
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<EEvento>> ListOwnerAsync(string setor)
-        {
-            return await _db.Evento                
-                .Include(i => i.Inscritos)
-                .Where(u => u.Owner.Contains(setor))
-                .OrderBy(d => d.Data)
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();
-        }
     }
 }

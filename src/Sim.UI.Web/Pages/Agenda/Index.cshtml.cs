@@ -51,7 +51,7 @@ namespace Sim.UI.Web.Pages.Agenda
                     break;
             }
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.DoListSituacaoAsyncBy(sto));
+                .ListEventosPorMesAsync(await _appServiceEvento.DoListAsync(s => s.Situacao == sto));
         }
 
         public async Task OnGetAsync(string m)
@@ -62,7 +62,7 @@ namespace Sim.UI.Web.Pages.Agenda
         public async Task OnPostAsync()
         {
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.DoListAsyncBy(Input.Search));
+                .ListEventosPorMesAsync(await _appServiceEvento.DoListAsync(s => s.Descricao.Contains(Input.Search)));
         }
 
         private int QuantosDiasFaltam(DateTime dataalvo)

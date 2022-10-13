@@ -26,46 +26,42 @@
                 <button type="submit" asp-route-id="@Model.Unidade.Id" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
             </div>
         </div>
-        <div class="card">
-            <table class="responsive-table striped">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Tipo</th>
-                        <th>Dominio</th>
-                        <th>Ativo</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.Tipos != null)
-                    {
-                        foreach (var item in Model.Tipos)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nome)
-                                </td>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Tipo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Dominio.Acronimo)
-                                </td>
-                                <td>
-                                    <div class="switch">
-                                        <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" /><span class="lever"></span></label>
-                                    </div>   
-                                </td>
-                                <td>
-                                    <button asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-domain="@Model.Unidade.Id" class="btn btn-small waves-effect materialize-red"><i class="material-icons">remove</i></button>
-                                </td>
-                            </tr>
-                        }
+        <table class="responsive-table striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Dominio</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Tipos != null)
+                {
+                    foreach (var item in Model.Tipos)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tipo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dominio.Acronimo)
+                            </td>
+
+                            <td>
+                                <button asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-domain="@Model.Unidade.Id" class="btn-small waves-effect orange"><i class="material-icons">edit</i></button>
+                                <button asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-domain="@Model.Unidade.Id" class="btn-small waves-effect materialize-red"><i class="material-icons">remove</i></button>
+                            </td>
+                        </tr>
                     }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
+        
     </form>
 </div>

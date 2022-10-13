@@ -31,19 +31,5 @@ namespace Sim.Data.Repository
         {
             return await _db.Parceiro.Include(s => s.Dominio).Where(u => u.Id == id).FirstOrDefaultAsync();
         }
-
-        public async Task<IEnumerable<EParceiro>> ListAllAsync()
-        {
-            return await _db.Parceiro.Include(s => s.Dominio)
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<EParceiro>> ListParceirosAsync(string owner)
-        {
-            return await _db.Parceiro.Include(s => s.Dominio).Where(u => u.Dominio.Nome.Contains(owner))
-                .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();
-        }
     }
 }

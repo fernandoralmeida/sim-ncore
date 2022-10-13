@@ -1,5 +1,6 @@
 ﻿namespace Sim.Domain.Organizacao.Service
 {
+    using System.Linq.Expressions;
     using Model;
     using Organizacao.Interfaces.Repository;
     using Organizacao.Interfaces.Service;
@@ -10,6 +11,11 @@
             :base(repositoryServico)
         {
             _servico = repositoryServico;
+        }
+
+        public async Task<IEnumerable<EServico>> DoListAsync(Expression<Func<EServico, bool>>? filter = null)
+        {
+            return await _servico.DoListAsync(filter);
         }
 
         public async Task<IEnumerable<EServico>> DoListByDominioAsync(Guid id)
@@ -34,7 +40,8 @@
 
         public async Task<IEnumerable<(string servico, string value)>> ToListJson(string setor)
         {
-            var list = await ListServicoOwnerAsync(setor);
+            var list = await DoListAsync(s => s.Dominio.Nome == setor);
+
             var servicelist = new List<(string canal, string value)>();
 
             foreach (var item in list)

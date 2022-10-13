@@ -1,4 +1,5 @@
 ﻿
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Sim.Data.Context;
 using Sim.Domain.Entity;
@@ -9,6 +10,21 @@ namespace Sim.Data.Repository
     public class RepositoryEmpregos : RepositoryBase<Empregos>, IRepositoryEmpregos
     {
         public RepositoryEmpregos(ApplicationContext applicationContext) : base(applicationContext) { }
+
+        public async Task<IEnumerable<Empregos>> DoListAsync(Expression<Func<Empregos, bool>> filter = null)
+        {
+            var _query = _db.Emprego.AsQueryable();
+
+            if(filter != null)
+                _query = _query
+                    .Include(p => p.Pessoa)
+                    .Include(e => e.Empresa)
+                    .Where(filter)
+                    .AsNoTrackingWithIdentityResolution()
+                    .OrderBy(o => o.Data);
+
+            return await _query.ToListAsync();
+        }
 
         public async Task<IEnumerable<Empregos>> DoListEmpregosAsync()
         {

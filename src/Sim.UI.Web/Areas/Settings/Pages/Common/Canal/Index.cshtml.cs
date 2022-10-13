@@ -34,7 +34,7 @@ public class IndexModel : PageModel
         Input = new();
         Unidade = await _appSecretaria.GetIdAsync(id);
         Input.Dominio = Unidade;
-        Canais = await _appCanal.DoList(filter: s => s.Dominio.Id == id || s.Dominio == null);
+        Canais = await _appCanal.DoListAsync(filter: s => s.Dominio.Id == id || s.Dominio == null);
     }
 
     public async Task OnGetAsync(string id) {
@@ -44,6 +44,8 @@ public class IndexModel : PageModel
     public async Task OnPostAddAsync(Guid id) {
         try {
             Input.Ativo = true;
+            var _dom = await _appSecretaria.SingleIdAsync(id);
+            Input.Dominio = _dom;
             if (ModelState.IsValid)  {
                 await _appCanal.AddAsync(_mapper.Map<ECanal>(Input));
             }

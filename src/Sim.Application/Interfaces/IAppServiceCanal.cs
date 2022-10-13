@@ -1,12 +1,12 @@
-﻿using Sim.Domain.Organizacao.Model;
+﻿using System.Linq.Expressions;
+using Sim.Domain.Organizacao.Model;
 
 namespace Sim.Application.Interfaces
 {
     public interface IAppServiceCanal : IAppServiceBase<ECanal>
     {
-        Task<IEnumerable<ECanal>> ListCanalOwner(string setor);
         Task<ECanal> GetIdAsync(Guid id);
-        Task<IEnumerable<ECanal>> ListAllAsync();
-        Task<IEnumerable<(string canal, string value)>> ToListJson(string setor);
+        Task<IEnumerable<ECanal>> DoListAsync(Expression<Func<ECanal, bool>>? filter = null);
+        Task<IEnumerable<(string canal, string value)>> DoListJson(string setor);
     }
 }

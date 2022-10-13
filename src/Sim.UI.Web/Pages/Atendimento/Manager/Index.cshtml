@@ -151,13 +151,6 @@
         $(function () {
             document.querySelector('#Input_Setor').addEventListener("change", function() {
                 var getSetor = $("#Input_Setor").val(); 
-                $("#Input_Canal").empty();
-                $.getJSON(`/Atendimento/Novo/Index?handler=Canais&getSetor=${getSetor}`, (data) => {
-                    data.forEach(function(item) {
-                        $("#Input_Canal").append(`<option>${item.item1}</option>`);
-                    });
-                    $("#Input_Canal").trigger('contentChanged');
-                });
                 
                 $("#Input_Servicos").empty();
                 $.getJSON(`/Atendimento/Novo/Index?handler=Servicos&getSetor=${getSetor}`, (data) => {
@@ -166,10 +159,6 @@
                     });
                     $("#Input_Servicos").trigger('contentChanged');
                 });
-            });
-            
-            $('#Input_Canal').on('contentChanged', function() {
-                $(this).formSelect();
             });
             
             $('#Input_Servicos').on('contentChanged', function() {

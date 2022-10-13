@@ -34,11 +34,35 @@ namespace Sim.UI.Web.Pages.Pat
         }
         public async Task OnGetAsync()
         {
-            ListaEmpregos = await _appEmpregos.DoListEmpregosAsync();
+            ListaEmpregos = await _appEmpregos.DoListAsync(
+                s => s.Status == "Ativo" ||
+                s.Status == Empregos.EStatus.Ativa.ToString());
         }
 
+        public async Task OnGetVagaPreenchidaAsync(Guid id)
+        {
+            try {
+                var _vaga = await _appEmpregos.SingleIdAsync(id);
+                _vaga.Status = Empregos.EStatus.Finalizada.ToString();
+                await _appEmpregos.UpdateAsync(_vaga);
+                ListaEmpregos = await _appEmpregos.DoListAsync(
+                    s => s.Status == "Ativo" ||
+                    s.Status == Empregos.EStatus.Ativa.ToString());
+            }
+            catch (Exception ex) {
+                StatusMessage = "Erro: " + ex.Message;
+            }
+        }
         public async Task OnPostAsync(){
-            ListaEmpregos = await _appEmpregos.DoListEmpregosAsyncBy(InputSearch);
+            ListaEmpregos = await _appEmpregos.DoListAsync(e => e.Empresa.CNPJ.Contains(InputSearch) ||
+                            e.Empresa.Nome_Empresarial.Contains(InputSearch) ||
+                            e.Empresa.Atividade_Principal.Contains(InputSearch) ||
+                            e.Pessoa.CPF.Contains(InputSearch) ||
+                            e.Pessoa.Nome.Contains(InputSearch) ||
+                            e.Ocupacao.Contains(InputSearch) ||
+                            e.Inclusivo.Contains(InputSearch) ||
+                            e.Status.Contains(InputSearch) ||
+                            e.Genero.Contains(InputSearch));
         }
 
         public async Task<JsonResult> OnGetClienteAsync(string id){                        

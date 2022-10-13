@@ -24,15 +24,5 @@
         {
             return await _repositoryParceiro.GetIdAsync(id);
         }
-
-        public async Task<IEnumerable<EParceiro>> ListAllAsync()
-        {
-            return await _repositoryParceiro.ListAllAsync();
-        }
-
-        public async Task<IEnumerable<EParceiro>> ListParceirosAsync(string owner)
-        {
-            return await _repositoryParceiro.ListParceirosAsync(owner);
-        }
     }
 }

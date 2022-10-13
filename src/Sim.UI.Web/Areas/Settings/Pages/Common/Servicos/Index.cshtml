@@ -34,7 +34,7 @@
             <tr>
                 <th>Servico</th>
                 <th>Dominio</th>
-                <th>Ativo</th>
+
                 <th>Ações</th>
             </tr>
         </thead>
@@ -50,11 +50,7 @@
                                 @Html.DisplayFor(modelItem => item.Dominio.Nome)
                             }
                         </td>
-                        <td>
-                            <div class="switch">
-                                <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" /><span class="lever"></span></label>
-                            </div>   
-                        </td>
+
                         <td>
                             <a data-id="@item.Id" data-nome="@item.Nome" class="waves-effect waves-light btn-small orange showmodal modal-trigger" href="#modal1"><i class="material-icons">edit</i></a>                 
                             <a asp-area="Settings" asp-page="Remove/Index" asp-route-id="@item.Id" class="btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>

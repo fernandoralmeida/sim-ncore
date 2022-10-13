@@ -33,7 +33,7 @@
                     <tr>
                         <th>Parceiro</th>
                         <th>Dominio</th>
-                        <th>Ativo</th>
+
                         <th>Ação</th>
                     </tr>
                 </thead>
@@ -50,11 +50,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Dominio.Acronimo)
                                 </td>
-                                <td>
-                                    <div class="switch">
-                                        <label><input class="icheckbox" data-id="@item.Id" checked="@item.Ativo" type="checkbox" /><span class="lever"></span></label>
-                                    </div>   
-                                </td>
+
                                 <td>
                                     <button asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-domain="@Model.Unidade.Id" class="btn btn-small waves-effect materialize-red"><i class="material-icons">remove</i></button>
                                 </td>

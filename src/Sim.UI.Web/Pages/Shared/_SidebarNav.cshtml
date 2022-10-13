@@ -1,5 +1,13 @@
 ﻿@using Sim.UI.Web.Pages.Shared
 @inject Sim.Application.Interfaces.IAppServiceAtendimento MeuAtendimento
+@inject Sim.Application.Interfaces.IAppServiceSecretaria _appOrganizacao
+
+
+@{
+    var _org = await _appOrganizacao.DoList();
+    var _unidades = _org.Where(s => s.Hierarquia == Domain.Organizacao.Model.EHierarquia.Secretaria);
+    var _setores = await _appOrganizacao.DoListHierarquia2from1Async(_org, _unidades.FirstOrDefault().Id);
+}
 
 <ul id="sidenav-left" class="sidenav sidenav-fixed">
 
@@ -10,10 +18,42 @@
                 <div class="collapsible-body alpha-text-6">
                     <ul>
                         <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext)"><a class=" submit" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
+                        
+                        @foreach (var item in _setores.Where(s => s.Ativo == true)) {
+
+                            var _class = string.Empty;
+                            var _link = string.Empty;
+
+                            @switch (item.Nome.ToLower())
+                            {
+                                case "pat":
+                                    _class = LayoutNavPages.InicioPATNavClass(ViewContext);
+                                    _link = "/Pat/Index";
+                                    break;
+                                case "sebrae aqui":
+                                    _class = LayoutNavPages.InicioSANavClass(ViewContext);
+                                    _link = "/SebraeAqui/Index";
+                                    break;
+                                case "sala do empeendedor":
+                                    _class = LayoutNavPages.InicioSENavClass(ViewContext);
+                                    _link = "./";
+                                    break;
+                                case "banco do povo":
+                                    _class = LayoutNavPages.InicioBPPNavClass(ViewContext);
+                                    _link = "./";
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                           <li class="@_class"><a class="submit" asp-page="@_link">@item.Nome<i class="left material-icons">chevron_right</i></a></li>                             
+                        }
+                        <!--
                         <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)"><a class=" submit" asp-page="/Pat/Index">PAT<i class="left material-icons">chevron_right</i></a></li>
                         <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)"><a class="" href="#" >Banco do Povo<i class="left material-icons">chevron_right</i></a></li>
                         <li class="@LayoutNavPages.InicioSANavClass(ViewContext)"><a class=" submit" asp-page="/SebraeAqui/Index">Sebrae Aqui<i class="left material-icons">chevron_right</i></a></li>
                         <li class="@LayoutNavPages.InicioSENavClass(ViewContext)"><a class="" href="#" >Sala do Empreendedor<i class="left material-icons">chevron_right</i></a></li>
+                        -->
                     </ul>
                 </div>
             </li>

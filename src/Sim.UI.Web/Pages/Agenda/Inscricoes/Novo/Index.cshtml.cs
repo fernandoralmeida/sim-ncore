@@ -47,7 +47,10 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
         {
             
             if (id != null)
-                Input.Evento = await _appServiceEvento.GetCodigoAsync((int)id);            
+            {
+                var _evento = await _appServiceEvento.DoListAsync(s => s.Codigo == (int)id);            
+                Input.Evento = _evento.FirstOrDefault();            
+            }
         }
 
         public async Task OnPostIncluirPessoaAsync()
@@ -62,7 +65,7 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
 
                 if (ja_inscricao)
                 {
-                    StatusMessage = "Erro: Pessoa já consta na lista de participantes!";
+                    StatusMessage = "Erro: Pessoa jÃ¡ consta na lista de participantes!";
                     Input.Participante = null;
                 }
                 else
@@ -76,7 +79,7 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
                 }
             }
             else
-                StatusMessage = "Alerta: Pessoa não encontrada no Sistema!";
+                StatusMessage = "Alerta: Pessoa nÃ£o encontrada no Sistema!";
         }
 
         public void OnPostRemoverPessoa()
@@ -89,7 +92,7 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
             var t = await _appServiceEmpresa.ConsultaCNPJAsync(GetCNPJ);
             Input.Empresa = t.FirstOrDefault();
             if (Input.Empresa == null)
-                StatusMessage = "Alerta: Empresa não encontrada no Sistema!";
+                StatusMessage = "Alerta: Empresa nÃ£o encontrada no Sistema!";
         }
 
         public void OnPostRemoverEmpresa()
@@ -101,7 +104,8 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
         {
             try
             {
-                Input.Evento = await _appServiceEvento.GetCodigoAsync(GetNumeroEvento);
+                var _evento = await _appServiceEvento.DoListAsync(s => s.Codigo == GetNumeroEvento);
+                Input.Evento = _evento.FirstOrDefault();
             }
             catch (Exception ex)
             {

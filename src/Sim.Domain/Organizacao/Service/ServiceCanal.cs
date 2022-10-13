@@ -1,5 +1,7 @@
 ﻿namespace Sim.Domain.Organizacao.Service
 {
+    using System;
+    using System.Linq.Expressions;
     using Model;
     using Organizacao.Interfaces.Repository;
     using Organizacao.Interfaces.Service;
@@ -15,19 +17,14 @@
             return await _canal.GetIdAsync(id);
         }
 
-        public async Task<IEnumerable<ECanal>> ListAllAsync()
+        public async Task<IEnumerable<ECanal>> DoListAsync(Expression<Func<ECanal, bool>>? filter = null)
         {
-            return await _canal.ListAllAsync();
+            return await _canal.DoListAsync(filter);
         }
 
-        public async Task<IEnumerable<ECanal>> ListCanalOwner(string setor)
+        public async Task<IEnumerable<(string canal, string value)>> DoListJson(string setor)
         {
-            return await _canal.ListCanalOwner(setor);
-        }
-
-        public async Task<IEnumerable<(string canal, string value)>> ToListJson(string setor)
-        {
-            var list = await ListCanalOwner(setor);
+            var list = await DoListAsync(s => s.Dominio.Nome == setor);
             var canallist = new List<(string canal, string value)>();
 
             foreach(var item in list)

@@ -2,6 +2,7 @@
 using Sim.Data.Context;
 using Sim.Domain.Organizacao.Model;
 using Sim.Domain.Organizacao.Interfaces.Repository;
+using System.Linq.Expressions;
 
 namespace Sim.Data.Repository
 {
@@ -11,6 +12,19 @@ namespace Sim.Data.Repository
             :base(dbContext)
         {
 
+        }
+
+        public async Task<IEnumerable<EServico>> DoListAsync(Expression<Func<EServico, bool>> filter = null)
+        {
+            var _query = _db.Servico.AsQueryable();
+
+            if(filter != null)
+                _query = _query
+                    .Where(filter)
+                    .Include(i => i.Dominio)
+                    .AsNoTrackingWithIdentityResolution();
+
+            return await _query.ToListAsync();
         }
 
         public async Task<IEnumerable<EServico>> DoListByDominioAsync(Guid id) {

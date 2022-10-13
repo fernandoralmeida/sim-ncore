@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.Interfaces;
-using Sim.Domain.Entity;
+using Sim.Domain.Organizacao.Model;
 
 namespace Sim.UI.Web.Pages.Atendimento.Anonimo
 {
     public class IndexModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
+        private readonly IAppServiceSecretaria _appSecretaria;
         //private readonly IAppServiceSetor _appServiceSetor;
         private readonly IAppServiceCanal _appServiceCanal;
         private readonly IAppServiceServico _appServiceServico;
@@ -20,14 +21,14 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
         public IndexModel(IAppServiceAtendimento appServiceAtendimento,
             IAppServiceCanal appServiceCanal,
             IAppServiceServico appServiceServico,
-            //IAppServiceSetor appServiceSetor,
+            IAppServiceSecretaria appSecretaria,
             IAppServiceContador appServiceContador,
             IMapper mapper)
         {
             _appServiceAtendimento = appServiceAtendimento;
             _appServiceCanal = appServiceCanal;
             _appServiceServico = appServiceServico;
-            //_appServiceSetor = appServiceSetor;
+            _appSecretaria = appSecretaria;
             _appServiceContador = appServiceContador;
             _mapper = mapper;
         }
@@ -45,6 +46,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
         [BindProperty]
         public string GetCNPJ { get; set; }
         public SelectList Setores { get; set; }
+        public SelectList Canais { get; set; }
 
         public string GetServico { get; set; }
 
@@ -53,22 +55,12 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
         
         private async Task OnLoad()
         {
-            /*
-            var set = await _appServiceSetor.ListAllAsync();           
-
-            var lst = new List<Setor>();
-            foreach (var s in set)
-            {
-                if (s.Nome != "Geral")
-                    lst.Add(new Setor() { Nome = s.Nome, Secretaria = s.Secretaria, Id = s.Id, Ativo = s.Ativo, Canais = s.Canais, Servicos = s.Servicos });
-            }
-
-            if (lst != null)
-            {
-                Setores = new SelectList(lst, nameof(Setor.Nome), nameof(Setor.Nome), null);
-            }
-            */
-
+            var _org = await _appSecretaria.DoList(s => s.Hierarquia == EHierarquia.Secretaria);
+            var _setores = await _appSecretaria.DoList(s => s.Hierarquia == EHierarquia.Setor && s.Dominio ==  _org.FirstOrDefault().Id);     
+            var _canais = await _appServiceCanal.DoList(s => s.Dominio.Id == _org.FirstOrDefault().Id);
+            
+            Setores = new SelectList(_setores, nameof(EOrganizacao.Nome), nameof(EOrganizacao.Nome), null);
+            Canais = new SelectList(_canais, nameof(ECanal.Nome), nameof(ECanal.Nome), null);
         }
 
         public async Task OnGetAsync()
@@ -78,7 +70,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
 
         public async Task<JsonResult> OnGetCanais()
         {
-            return new JsonResult(await _appServiceCanal.ToListJson(GetSetor));
+            return new JsonResult(await _appServiceCanal.DoListJson(GetSetor));
         }
 
         public async Task<JsonResult> OnGetServicos()

@@ -68,7 +68,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
         { 
             Setores = new SelectList(new List<string>(){ "PAT" });    
             InputAtendimento.InputSetor = "PAT";        
-            Canais = new SelectList(await _appServiceCanal.ListAllAsync(),
+            Canais = new SelectList(await _appServiceCanal.DoListAsync(),
                                     nameof(ECanal.Nome),
                                     nameof(ECanal.Nome),
                                     null);

@@ -25,9 +25,10 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Lista
         public string StatusMessage { get; set; }
         public async Task OnGetAsync(int id)
         {
-            var lista = await _appServiceEvento.GetEventoToListParticipantes((int)id);
-            Input = _mapper.Map<InputModelEvento>(lista);
-            Input.Inscritos = Input.Inscritos.OrderBy(s=>s.Participante.Nome).ToList();
+            var _event = await _appServiceEvento.DoListAsync(s => s.Codigo == id);            
+            Input = _mapper.Map<InputModelEvento>(_event.FirstOrDefault());       
+            var _qry = Input.Inscritos.OrderBy(s => s.Participante.Nome);
+            Input.Inscritos = _qry.ToList();
         }
     }
 }

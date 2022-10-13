@@ -36,7 +36,7 @@ public class IndexModel : PageModel
         Input = new();
         Unidade = await _appSecretaria.GetIdAsync(id);
         Input.Dominio = Unidade;
-        Tipos = await _appTipo.DoList(filter: s => s.Dominio.Id == id || s.Dominio == null);
+        Tipos = await _appTipo.DoListAsync(filter: s => s.Dominio.Id == id || s.Dominio == null);
     }
 
     public async Task OnGetAsync(string id) {

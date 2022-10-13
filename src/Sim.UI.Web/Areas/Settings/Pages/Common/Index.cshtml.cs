@@ -65,6 +65,18 @@ namespace Sim.UI.Web.Areas.Settings.Pages.Common
             }
         }
 
+        public async Task OnGetRemove(Guid id) {
+            try
+            {
+                var canal = await _appServicePrefeitura.SingleIdAsync(id);
+                await _appServicePrefeitura.RemoveAsync(canal);
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = "Erro: " + ex.Message;
+            }
+        }
+
         public async Task OnGetStatus(Guid id, bool st)
         {
             var _org = await _appServicePrefeitura.SingleIdAsync(id);

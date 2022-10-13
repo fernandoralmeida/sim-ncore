@@ -4,6 +4,8 @@ namespace Sim.Domain.Evento.Service
     using Model;
     using Interfaces.Repository;
     using Interfaces.Service;
+    using System.Linq.Expressions;
+
     public class ServiceEvento : ServiceBase<EEvento>, IServiceEvento
     {
         private readonly IRepositoryEvento _evento;
@@ -12,25 +14,15 @@ namespace Sim.Domain.Evento.Service
         {
             _evento = repositoryEvento;
         }
-        
-        public async Task<EEvento> GetCodigoAsync(int codigo)
+
+        public async Task<IEnumerable<EEvento>> DoListAsync(Expression<Func<EEvento, bool>>? filter = null)
         {
-            return await _evento.GetCodigoAsync(codigo);
+            return await _evento.DoListAsync(filter);
         }
 
-        public async Task<EEvento> GetCodigoParticipanteAsync(int codigo)
+        public async Task<EEvento> GetIdAsync(Guid id)
         {
-            return await _evento.GetCodigoParticipanteAsync(codigo);
-        }
-
-        public async Task<IEnumerable<EEvento>> ListNomeAsync(string nome)
-        {
-            return await _evento.ListNomeAsync(nome);
-        }
-
-        public async Task<IEnumerable<EEvento>> ListOwnerAsync(string setor)
-        {
-            return await _evento.ListOwnerAsync(setor);
+            return await _evento.GetIdAsync(id);
         }
 
         public int LastCodigo()
@@ -71,34 +63,5 @@ namespace Sim.Domain.Evento.Service
             }
         }
 
-        public async Task<EEvento> GetIdAsync(Guid id)
-        {
-            return await _evento.GetIdAsync(id);
-        }
-
-        public async Task<IEnumerable<EEvento>> ListAllAsync()
-        {
-            return await _evento.ListAllAsync();
-        }
-
-        public async Task<EEvento> GetEventoToListParticipantes(int codigo)
-        {
-            return await _evento.GetEventoToListParticipantes(codigo);
-        }
-
-        public async Task<IEnumerable<EEvento>> DoListEventByParam(string nome, string tipo, string setor, int ano)
-        {
-            return await _evento.DoListEventByParam(nome, tipo, setor, ano);
-        }
-
-        public async Task<IEnumerable<EEvento>> DoListAsyncBy(string param)
-        {
-            return await _evento.DoListAsyncBy(param);
-        }
-
-        public async Task<IEnumerable<EEvento>> DoListSituacaoAsyncBy(IEnumerable<EEvento> eventos, EEvento.ESituacao situacao)
-        {
-            return await Task.Run(() => eventos.Where(s => s.EventoBySituacao(s, situacao)).OrderByDescending(o => o.Data));
-        }
     }
 }

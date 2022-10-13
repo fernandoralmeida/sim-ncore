@@ -18,7 +18,7 @@
                 <label asp-for="Input.Setor"></label>
             </div>
             <div class="input-field col s12 m6 l6">
-                <select id="Input_Canal" asp-for="Input.Canal"></select>
+                <select id="Input_Canal" asp-for="Input.Canal" asp-items="Model.Canais"></select>
                 <label asp-for="Input.Canal"></label>
             </div>
 
@@ -63,15 +63,7 @@
         $(function() {
  
             document.querySelector('#Input_Setor').addEventListener("change", function() {
-                var getSetor = $("#Input_Setor").val(); 
-                $("#Input_Canal").empty();
-                $.getJSON(`/Atendimento/Novo/Index?handler=Canais&getSetor=${getSetor}`, (data) => {
-                    data.forEach(function(item) {
-                        $("#Input_Canal").append(`<option>${item.item1}</option>`);
-                    });
-                    $("#Input_Canal").trigger('contentChanged');
-                });
-                
+                var getSetor = $("#Input_Setor").val();                 
                 $("#Input_Servicos").empty();
                 $.getJSON(`/Atendimento/Novo/Index?handler=Servicos&getSetor=${getSetor}`, (data) => {
                     data.forEach(function(item) {
@@ -79,11 +71,7 @@
                     });
                     $("#Input_Servicos").trigger('contentChanged');
                 });
-            });
-            
-            $('#Input_Canal').on('contentChanged', function() {
-                $(this).formSelect();
-            });
+            });            
             
             $('#Input_Servicos').on('contentChanged', function() {
                 $(this).formSelect();

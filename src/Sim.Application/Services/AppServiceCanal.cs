@@ -3,6 +3,10 @@ using Sim.Domain.Organizacao.Interfaces.Service;
 
 namespace Sim.Application.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Interfaces;
 
     public class AppServiceCanal : AppServiceBase<ECanal>, IAppServiceCanal
@@ -12,24 +16,19 @@ namespace Sim.Application.Services
             :base(canal)
         { _canal = canal; }
 
+        public async Task<IEnumerable<ECanal>> DoListAsync(Expression<Func<ECanal, bool>> filter = null)
+        {
+            return await _canal.DoListAsync(filter);
+        }
+
+        public async Task<IEnumerable<(string canal, string value)>> DoListJson(string setor)
+        {
+            return await _canal.DoListJson(setor);
+        }
+
         public async Task<ECanal> GetIdAsync(Guid id)
         {
-            return await _canal.GetIdAsync(id).ConfigureAwait(false);  
-        }
-
-        public async Task<IEnumerable<ECanal>> ListAllAsync()
-        {
-            return await _canal.ListAllAsync();
-        }
-
-        public async Task<IEnumerable<ECanal>> ListCanalOwner(string setor)
-        {
-            return await _canal.ListCanalOwner(setor);
-        }
-
-        public async Task<IEnumerable<(string canal, string value)>> ToListJson(string setor)
-        {
-            return await _canal.ToListJson(setor);
+            return await _canal.GetIdAsync(id);
         }
     }
 }

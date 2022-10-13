@@ -3,6 +3,7 @@ namespace Sim.Domain.Entity
 {
     public class Empregos
     {
+        public enum EStatus { Ativa = 0, Finalizada = 1, Cancelada = 2 }
         public Empregos() { }
         public Guid Id { get; set; }
         public DateTime? Data { get; set; }
