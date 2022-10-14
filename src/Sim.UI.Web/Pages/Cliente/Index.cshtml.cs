@@ -42,6 +42,7 @@ namespace Sim.UI.Web.Pages.Cliente
         {
             try
             {
+                Input.Valor = Input.Valor.Trim();
 
                 if(Input.Valor.MaskRemove().All(char.IsDigit))
                 {

@@ -51,26 +51,32 @@ namespace Sim.UI.Web.Pages.Empresa.Consulta
         {
             try
             {
-                    var param = new List<object>() {
-                        cnpj,
-                        rs,
-                        cnae,
-                        lgd,
-                        bro
-                    };
+                Input.CNPJ = cnpj;
+                Input.RazaoSocial = rs;
+                Input.CNAE = cnae;
+                Input.Logradouro = lgd;
+                Input.Bairro = bro;
 
-                    if (pag == null)
-                        pag = 1;
+                var param = new List<object>() {
+                    cnpj,
+                    rs,
+                    cnae,
+                    lgd,
+                    bro
+                };
 
-                    var _list = await   _empresaApp.ListEmpresasAsync(param);
-                    
-                    RegCount = _list.Count();
-                    
-                    var pagesize = 10;
+                if (pag == null)
+                    pag = 1;
 
-                    IQueryable<Empresas> _empresas = _list.AsQueryable();       
+                var _list = await   _empresaApp.ListEmpresasAsync(param);
+                
+                RegCount = _list.Count();
+                
+                var pagesize = 10;
 
-                    PaginationEmpresas = Pagination<Empresas>.Create(_empresas.AsNoTracking(), pag?? 1, pagesize);
+                IQueryable<Empresas> _empresas = _list.AsQueryable();       
+
+                PaginationEmpresas = Pagination<Empresas>.Create(_empresas.AsNoTracking(), pag?? 1, pagesize);
             }
             catch(Exception ex)
             {

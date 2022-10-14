@@ -74,14 +74,16 @@
         var prevDisabled = !Model.PaginationAtendimentos.HasPreviusPage ? "disabled" : "";
         var nextDisabled = !Model.PaginationAtendimentos.HasNextPage ? "disabled" : "";
     }
-    <div class="card-action right-align">
-        <span class="left teal-text">Página @Model.PaginationAtendimentos.PageIndex de @Model.PaginationAtendimentos.TotalPages - @Model.RegCount Reg.</span>
+    <div class="row">
+        <span>Página @Model.PaginationAtendimentos.PageIndex de @Model.PaginationAtendimentos.TotalPages - @Model.RegCount Reg.</span>
+    </div>
+    <div class="row center">        
         <a asp-page="./Index" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
         <a asp-page="./Index" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
-        </a>
+        </a>        
     </div>
 </div>
 

@@ -90,9 +90,10 @@
         var prevDisabled = !Model.Pagination.HasPreviusPage ? "disabled" : "";
         var nextDisabled = !Model.Pagination.HasNextPage ? "disabled" : "";
     }
-
-    <div class="card-action right-align">
+    <div class="row">
         <span class="left teal-text">Página @Model.Pagination.PageIndex de @Model.Pagination.TotalPages - @Model.RegCount Reg.</span>
+    </div>
+    <div class="row center">        
         <a asp-page="./Index" asp-route-src="@Model.src" asp-route-p="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>

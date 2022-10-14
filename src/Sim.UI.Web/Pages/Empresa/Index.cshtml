@@ -89,20 +89,20 @@
     @{
         var prevDisabled = !Model.PaginationEmpresas.HasPreviusPage ? "disabled" : "";
         var nextDisabled = !Model.PaginationEmpresas.HasNextPage ? "disabled" : "";
+        var _isdisabled = Model.PaginationEmpresas.Any() ? null : "disabled";
     }
+    <div class="row">
+        <span class="left">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
+        <a asp-page="/Empresa/Export/Index" asp-route-ss="@Model.Src" class="btn-small waves-effect waves-light green @_isdisabled right" title="Exportar"><i class="material-icons">description file_download</i></a>
+    </div>
 
-    <div class="card-action right-align">
-        <span class="left teal-text">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
+    <div class="row center">        
         <a asp-page="./Index" asp-route-Src="@Model.Src" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
         <a asp-page="./Index" asp-route-Src="@Model.Src" asp-route-pag="@(Model.PaginationEmpresas.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
-        </a>
-
-        @{ var _isdisabled = Model.PaginationEmpresas.Any() ? null : "disabled"; }
-
-        <a asp-page="/Empresa/Export/Index" asp-route-ss="@Model.Src" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
+        </a> 
     </div>
 </div>
 

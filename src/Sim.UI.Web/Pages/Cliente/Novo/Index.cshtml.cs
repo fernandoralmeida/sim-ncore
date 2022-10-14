@@ -60,6 +60,8 @@ namespace Sim.UI.Web.Pages.Cliente.Novo
                     return Page();
                 }
 
+                Input.Nome = Input.Nome.Trim();                
+
                 var pessoa = _mapper.Map<Pessoa>(Input);
 
                 if (Input.Fisica)
