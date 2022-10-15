@@ -1,5 +1,6 @@
 ﻿@page
 @model Sim.UI.Web.Pages.Empresa.Consulta.IndexModel
+@using Sim.UI.Web.Functions
 @{
     ViewData["Title"] = "Empresa/Consulta";
     ViewData["ActivePageEmp"] = EmpresaNavPages.Consulta;
@@ -80,7 +81,10 @@
                             @Html.DisplayFor(modelItem => ano)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CNPJ)
+                            @{
+                                var _cnpj = item.CNPJ.MaskRemove();
+                            }
+                            <a class="blue-text" asp-page="/Empresa/Preview/Index" asp-route-id="@_cnpj" target="_blank">@Html.DisplayFor(modelItem => item.CNPJ)</a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Nome_Empresarial)

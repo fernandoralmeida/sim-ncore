@@ -57,5 +57,8 @@ namespace Sim.Application.Cnpj.Services
 
         public async Task<IEnumerable<EExport>> DoListExport(string municipio) =>
             await _cnpj.DoListExport(await DoListEmpresasAsync(municipio));
+
+        public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj) =>
+            await _cnpj.GetCNPJAsync(cnpj);
     }
 }

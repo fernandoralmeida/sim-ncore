@@ -1,5 +1,6 @@
 @page
 @model Sim.UI.Web.Pages.Empresa.RFB.IndexModel
+@using Sim.UI.Web.Functions
 @{
     ViewData["Title"] = "Empresas";
     ViewData["ActivePageRFB"] = EmpresaNavPages.RFB;
@@ -56,7 +57,10 @@
                             @Html.DisplayFor(modelItem => item.Estabelecimento.DataInicioAtividade)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CNPJ)
+                            @{
+                                var _cnpj = item.CNPJ.MaskRemove();
+                            }
+                            <a class="blue-text" asp-page="/Empresa/Preview/Index" asp-route-id="@_cnpj" target="_blank">@Html.DisplayFor(modelItem => item.CNPJ)</a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Empresa.RazaoSocial)
@@ -91,7 +95,7 @@
         var nextDisabled = !Model.Pagination.HasNextPage ? "disabled" : "";
     }
     <div class="row">
-        <span class="left teal-text">Página @Model.Pagination.PageIndex de @Model.Pagination.TotalPages - @Model.RegCount Reg.</span>
+        <span class="left">Página @Model.Pagination.PageIndex de @Model.Pagination.TotalPages - @Model.RegCount Reg.</span>
     </div>
     <div class="row center">        
         <a asp-page="./Index" asp-route-src="@Model.src" asp-route-p="@(Model.Pagination.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">

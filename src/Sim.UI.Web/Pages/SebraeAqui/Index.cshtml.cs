@@ -29,7 +29,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui
 
             RegCount = _list.Count();
 
-            IQueryable<Domain.Entity.Atendimento> _atendimentos = _list.AsQueryable();
+            IQueryable<Domain.Entity.Atendimento> _atendimentos = _list.OrderBy(o => o.Data).AsQueryable();
 
             if (pag == null)
                 pag = 1;

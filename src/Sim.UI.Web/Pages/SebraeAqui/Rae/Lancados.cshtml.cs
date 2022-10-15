@@ -30,7 +30,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 
             RegCount = _list.Count();
 
-            IQueryable<Domain.Entity.Atendimento> _atendimentos = _list.AsQueryable();
+            IQueryable<Domain.Entity.Atendimento> _atendimentos = _list.OrderByDescending(o => o.Data).AsQueryable();
 
             if (pag == null)
                 pag = 1;
@@ -41,7 +41,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 
             if (!PaginationAtendimentos.Any())
             {
-                StatusMessage = string.Format("Não há atendimentos para lançar");
+                StatusMessage = string.Format("Nï¿½o hï¿½ atendimentos para lanï¿½ar");
             }
         }
 

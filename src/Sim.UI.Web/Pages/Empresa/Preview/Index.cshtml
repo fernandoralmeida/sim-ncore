@@ -1,0 +1,199 @@
+﻿@page
+@model Sim.UI.Web.Pages.Empresa.Preview.IndexModel
+
+@{
+    Layout = "/Pages/Shared/__LayoutModal.cshtml";
+    ViewData["Title"] = "Empresas";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">CNPJ</th>
+            <th scope="col">Razão Social</th>
+            <th scope="col">Porte</th>
+            <th scope="col">Natureza Jurídica</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.DisplayFor(modelitem => Model.Input.CNPJ)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Empresa.RazaoSocial)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Empresa.PorteEmpresa)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.NaturezaJuridica.Codigo) - @Html.DisplayFor(modelitem => Model.Input.NaturezaJuridica.Descricao)</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Nome Fantasia</th>
+            <th scope="col">Abertura</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Estabelecimento.NomeFantasia)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Estabelecimento.DataInicioAtividade)</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Situação</th>
+            <th scope="col">Data</th>
+            <th scope="col">Motivo</th>
+            <th scope="col">Ente Federativo</th>
+            <th scope="col">Capital Social</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Estabelecimento.SituacaoCadastral)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Estabelecimento.DataSituacaoCadastral)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.MotivoSituacaoCadastral.Descricao)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Empresa.EnteFederativoResponsavel)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Empresa.CapitalSocial)</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">CNAE</th>
+            <th scope="col">Descrição</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.DisplayFor(modelitem => Model.Input.AtividadePrincipal.Codigo)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.AtividadePrincipal.Descricao)</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">CEP</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Bairro</th>
+            <th scope="col">Municipio</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Estabelecimento.CEP)</td>
+            <td>
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.TipoLogradouro)
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.Logradouro)
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.Numero)
+            </td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Estabelecimento.Bairro)</td>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Cidade.Descricao)</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Correio Eletronico</th>
+            <th scope="col">Tel 1</th>
+            <th scope="col">Tel 2</th>
+            <th scope="col">Fax</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.DisplayFor(modelitem => Model.Input.Estabelecimento.CorreioEletronico)</td>
+            <td>
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.DDD1)
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.Telefone1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.DDD2)
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.Telefone2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.DDDFax)
+                @Html.DisplayFor(modelitem => Model.Input.Estabelecimento.Fax)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@if (Model.Input.SimplesNacional != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Optante Simples</th>
+                <th scope="col">Inicio</th>
+                <th scope="col">Exclusão</th>
+                <th scope="col">Optante MEI</th>
+                <th scope="col">Inicio</th>
+                <th scope="col">Exclusão</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(modelitem => Model.Input.SimplesNacional.OpcaoSimples)</td>
+                <td>@Html.DisplayFor(modelitem => Model.Input.SimplesNacional.DataOpcaoSimples)</td>
+                <td>@Html.DisplayFor(modelitem => Model.Input.SimplesNacional.DataExclusaoSimples)</td>
+                <td>
+                    @Html.DisplayFor(modelitem => Model.Input.SimplesNacional.OpcaoMEI)
+                </td>
+                <td>@Html.DisplayFor(modelitem => Model.Input.SimplesNacional.DataOpcaoMEI)</td>
+                <td>@Html.DisplayFor(modelitem => Model.Input.SimplesNacional.DataExclusaoMEI)</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@if (Model.Input.Socios.Count() > 0 && User.IsInRole("Administrador") || User.IsInRole("M_RFB"))
+{
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Identificação</th>
+                <th scope="col">Nome</th>
+                <th scope="col">CPF/CNPJ</th>
+                <th scope="col">Qualificação</th>
+                <th scope="col">Faixa Etária</th>
+                <th scope="col">Representante</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+
+                int cont = 0;
+
+            }
+
+            @foreach (var item in Model.Input.Socios)
+            {
+
+                <tr>
+                    <th scope="row">
+                        @{ cont++; }
+                        @cont
+                    </th>
+                    <td>@Html.DisplayFor(modelItem => item.IdentificadorSocio)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NomeRazaoSocio)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CnpjCpfSocio)</td>
+                    <td>@Html.DisplayFor(modelItem => item.QualificacaoSocio)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FaixaEtaria)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NomeRepresentante)</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}

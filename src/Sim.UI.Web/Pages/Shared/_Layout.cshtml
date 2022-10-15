@@ -23,7 +23,7 @@
     <main class="border-l">        
         <!--<div class="progress" style="display: flex; position: fixed; margin-top: -0px; z-index:998; border-radius: 0px;"><div class="indeterminate"></div></div>-->
         <div class="blackboxload">
-            <div class="row center mgn-t-10">
+            <div id="loader" class="row center mgn-t-10">
                 <div class="preloader-wrapper big active">
                     <div class="spinner-layer spinner-blue-only">
                         <div class="circle-clipper left">
@@ -81,13 +81,14 @@
     
     <script>
         $(window).on('load', function () { 
-            $(".progress").fadeOut("slow"); 
-            $(".blackboxload").hide();
+            //$(".progress").fadeOut("slow"); 
+            $("#loader").hide();
+            $(".blackboxload").fadeOut("slow"); 
         });    
         $(function () {
             $(".submit").click(function () {
                 $(".blackboxload").show();
-                $(".progress").show();
+                $("#loader").show();
             });
         });
         function handle(e){
@@ -97,7 +98,7 @@
                     return false;
 
                 $(".blackboxload").show();
-                $(".progress").show();
+                $("#loader").show();
             }}
         function voltar() {
             window.history.back();

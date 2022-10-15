@@ -302,7 +302,9 @@ nav.navbar .brand-logo i {
     line-height: inherit;
     transition: color .2s
 }
-
+.modal {
+    border-radius: 4px;
+}
 /*  Sidenav  */
 .sidenav .logo-container {
     padding: 0 16px;

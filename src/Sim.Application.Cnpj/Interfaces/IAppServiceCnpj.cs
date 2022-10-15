@@ -4,6 +4,7 @@ namespace Sim.Application.Cnpj.Interfaces
 {
     public interface IAppServiceCnpj : IAppServiceBase<BaseReceitaFederal>
     {
+        Task<BaseReceitaFederal> GetCNPJAsync(string cnpj);
         Task<IEnumerable<BaseReceitaFederal>> DoListBaseRazaoSociosAsync(string param);
         Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio);
         Task<IEnumerable<Municipio>> DoListMinicipiosAsync();

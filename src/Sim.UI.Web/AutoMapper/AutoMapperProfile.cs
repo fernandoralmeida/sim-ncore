@@ -12,6 +12,9 @@ using Sim.UI.Web.Pages.Atendimento;
 using Sim.UI.Web.Pages.Planner;
 using Sim.UI.Web.Pages.Agenda;
 
+using Sim.Domain.Cnpj.Entity;
+using Sim.Application.Cnpj.Views;
+
 namespace Sim.UI.Web.AutoMapper
 {
     public class AutoMapperProfile : Profile
@@ -30,6 +33,7 @@ namespace Sim.UI.Web.AutoMapper
             CreateMap<VMTipo, ETipo>().ReverseMap();
             CreateMap<VMCanal, ECanal>().ReverseMap();
             CreateMap<VMParceiros, EParceiro>().ReverseMap();
+            CreateMap<VMBaseReceitaFederal, BaseReceitaFederal>().ReverseMap();
         }
     }
 }
