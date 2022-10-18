@@ -9,7 +9,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <nav>
-    <div class="nav-wrapper white rounded-t-2">
+    <div class="nav-wrapper rounded-t-2">
         <ul class="right">
             <li><a asp-page="/Empresa/Novo/Index" title="Incluir Empresa!"><i class="material-icons">add</i></a></li>
             <li class="active"><a asp-page="/Empresa/Consulta/Index" title="Consulta Avançada!"><i class="material-icons">manage_search</i></a></li>
@@ -19,7 +19,7 @@
 </nav>
 <div>
     <form method="post">
-        <div class="row white rounded-b-2">
+        <div class="row rounded-b-2">
             <div class="col s12">
                 <div class="input-field col s6 m3 xl3">
                     <input asp-for="Input.CNPJ" id="inputCNPJ"/>

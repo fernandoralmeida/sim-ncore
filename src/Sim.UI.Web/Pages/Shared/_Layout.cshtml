@@ -1,6 +1,4 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">    
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,7 +9,7 @@
     <link rel="shortcut icon" href="~/favicon.ico" />    
     <link rel="stylesheet" href="~/lib/google/material-symbols-rounded.css"/>
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />    
-    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/site.dark.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIM - @ViewData["Title"]</title>
 </head>
@@ -37,18 +35,18 @@
                 </div>
             </div>
         </div>
-        <!--
+        <!-- 
         <div class="teal lighten-2 navbar-extended"></div>  
-        -->                
+        -->               
         <div class="container-m20">            
             @RenderBody()
         </div>
     </main>
-    <footer class="page-footer grey lighten-5 border-l">
+    <footer class="page-footer border-l">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
-                    <h6 class="alpha-text-9">Servidores</h6>
+                    <h6>Servidores</h6>
                     <ul>
                         <li><a class="blue-text" href="https://portal.conam.com.br/rhjau/login.php" target="_blank">Meu Holerite</a></li>
                         <li><a class="blue-text" href="http://www.jau.sp.gov.br/arquivos/manual_do_servidor.pdf" target="_blank">Manual do Servidor Público</a></li>
@@ -57,7 +55,7 @@
                     </ul>
                 </div>
                 <div class="col l4 offset-l2 s12 right">
-                    <h6 class="alpha-text-9">Links</h6>
+                    <h6>Links</h6>
                     <ul>
                         <li><a class="blue-text" href="https://jau.sp.gov.br/servicos-online" target="_blank">Serviços Online</a></li>
                         <li><a class="blue-text" href="https://jau.sp.gov.br/jornal-oficial" target="_blank">Jornal Oficial</a></li>
@@ -67,8 +65,8 @@
                 </div>
             </div>
         </div>
-        <div class="footer-copyright grey lighten-4">
-            <div class="container alpha-text-9">
+        <div class="footer-copyright">
+            <div class="container">
                 &copy; @DateTime.Now.Year - Sim.Web
                 <a class="blue-text" href="http://www.jau.sp.gov.br" target="_blank">Jahu-SP</a>
             </div>
