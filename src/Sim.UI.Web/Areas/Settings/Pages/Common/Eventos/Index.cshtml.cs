@@ -44,18 +44,15 @@ public class IndexModel : PageModel
     }
 
     public async Task OnPostAddAsync(Guid id) {
-        try
-        {
-            Input.Dominio = await _appSecretaria.SingleIdAsync(id);
+        try {
             Input.Ativo = true;
+            var _dom = await _appSecretaria.SingleIdAsync(id);
+            Input.Dominio = _dom;
             Input.Tipo = "Evento";
-            if (ModelState.IsValid) {
-                await _appTipo.AddAsync(_mapper.Map<ETipo>(Input));                     
-            }
-            await OnLoad(id);            
+            await _appTipo.AddAsync(_mapper.Map<ETipo>(Input));            
+            await OnLoad(id);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             StatusMessage = "Erro: " + ex.Message;
         }
     }

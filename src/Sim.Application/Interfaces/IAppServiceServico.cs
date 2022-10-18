@@ -1,4 +1,5 @@
-﻿using Sim.Domain.Organizacao.Model;
+﻿using System.Linq.Expressions;
+using Sim.Domain.Organizacao.Model;
 
 namespace Sim.Application.Interfaces
 {
@@ -9,5 +10,6 @@ namespace Sim.Application.Interfaces
         Task<IEnumerable<EServico>> ListAllAsync();
         Task<IEnumerable<EServico>> DoListByDominioAsync(Guid id);
         Task<IEnumerable<(string canal, string value)>> ToListJson(string setor);
+        Task<IEnumerable<EServico>> DoListAsync(Expression<Func<EServico, bool>>? filter = null);
     }
 }

@@ -6,7 +6,9 @@
 @{
     var _org = await _appOrganizacao.DoList();
     var _unidades = _org.Where(s => s.Hierarquia == Domain.Organizacao.Model.EHierarquia.Secretaria);
-    var _setores = await _appOrganizacao.DoListHierarquia2from1Async(_org, _unidades.FirstOrDefault().Id);
+    var _setores = new List<Sim.Domain.Organizacao.Model.EOrganizacao>();
+    @if(_unidades.Any())
+        _setores = _appOrganizacao.DoListHierarquia2from1Async(_org, _unidades.FirstOrDefault().Id).Result.ToList();
 }
 
 <ul id="sidenav-left" class="sidenav sidenav-fixed">

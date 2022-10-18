@@ -3,6 +3,7 @@ using Sim.Domain.Organizacao.Interfaces.Service;
 
 namespace Sim.Application.Services
 {
+    using System.Linq.Expressions;
     using Interfaces;
     public class AppServiceServico : AppServiceBase<EServico>, IAppServiceServico
     {
@@ -11,6 +12,10 @@ namespace Sim.Application.Services
             :base(servico)
         {
             _servico = servico;
+        }
+
+        public async Task<IEnumerable<EServico>> DoListAsync(Expression<Func<EServico, bool>> filter = null) {
+            return await _servico.DoListAsync(filter);
         }
 
         public async Task<IEnumerable<EServico>> DoListByDominioAsync(Guid id)

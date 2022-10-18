@@ -59,17 +59,17 @@ public class IndexModel : PageModel
         return Page();  
     }
 
-    public async Task<IActionResult> OnGetRemove(string id) {
+    public async Task OnGetRemove(string id, Guid dm) {
         try
         {   
             var _unidade = await _appSecretaria.SingleIdAsync(new Guid(id));         
-            await _appSecretaria.RemoveAsync(_unidade);            
+            await _appSecretaria.RemoveAsync(_unidade);    
+            await OnLoad(dm); 
         }
         catch (Exception ex)
         {
             StatusMessage = "Erro: " + ex.Message;
         }
-        return RedirectToPage("/Common/Setor/Index", new { id = id } );
     }
 }
 
