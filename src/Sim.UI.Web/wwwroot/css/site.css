@@ -32,6 +32,14 @@ hr{
     border: 0px;
     background-color: rgba(0, 0, 0, 0.2);
 }
+footer {
+    background-color: var(--bgfooter) !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+.footer-overlay {
+    background-color: rgba(0, 0, 0, .02);
+    color: rgba(0, 0, 0, 0.5) !important;
+}
 .display-block{
     display: block;
 }
