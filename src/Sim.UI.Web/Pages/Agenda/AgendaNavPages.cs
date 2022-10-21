@@ -14,7 +14,7 @@ namespace Sim.UI.Web.Pages.Agenda
         {
             var activePage = viewContext.ViewData["ActivePageEvento"] as string
                 ?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
-            return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "grey lighten-3" : null;
+            return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null;
         }
     }
 }

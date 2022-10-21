@@ -7,7 +7,7 @@ for details on configuring this project to bundle and minify static web assets. 
     --bgwhite:#fff;
     --bglight: rgb(245,245,245);
     --bgdarkdark: rgb(60,60,60);
-    --bgfooter:rgb(250,250,250);
+    --bgfooter: rgba(0, 0, 0, .02);
 }
 html {
     /* fonte padrão Roboto 
@@ -18,7 +18,7 @@ main{
     flex: 1 0 auto;
 }
 body {
-    background-color: var(--bgwhite);
+    background-color: var(--bglight);
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -33,7 +33,7 @@ hr{
     background-color: rgba(0, 0, 0, 0.2);
 }
 footer {
-    background-color: var(--bgfooter) !important;
+    background-color: rgba(0, 0, 0, .02) !important;
     color: rgba(0, 0, 0, 0.5) !important;
 }
 .footer-overlay {
@@ -267,11 +267,12 @@ footer {
 .alpha-w-text-9{ color: rgba(255, 255, 255, 0.9);}
 .navbar-page-name {
     margin-left: 10px;
+    color: rgba(0, 0, 0, 0.7);
 }
 /* materialize */
 .sidenav {
     width: 250px;
-    background-color: var(--bgwhite);
+    background-color: #4db6ac;
 }
 .has-fixed-sidenav .fixed-chart {
     left: 250px
@@ -294,7 +295,7 @@ footer {
 }
 nav {
     color: #686868;
-    background-color: var(--bglight);
+    background-color: #4db6ac;
     width: 100%;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
@@ -344,6 +345,7 @@ nav.navbar .brand-logo i {
     width: 24px;
     line-height: 24px;
     margin: 20px 0 0 0;
+    color:rgba(0, 0, 0, 0.7);
     transition: transform .2s
 }
 .sidenav .collapsible .collapsible-body {
@@ -351,28 +353,28 @@ nav.navbar .brand-logo i {
     background-color: transparent;
 }
 .sidenav .collapsible>li {
+    color: rgba(0, 0, 0, 0.7);
     border-bottom: 1px solid rgba(0,0,0,0.1);
     transition: background-color .2s;
 }
 .sidenav li.active {    
-    color: teal;
-    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.7);
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active {
-    color: teal;
-    background-color: #e0f2f1;  
+    color: rgba(0, 0, 0, 8);
+    background-color: teal;  
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a {
-    color: teal;
+    color: rgba(0, 0, 0, 0.7);
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a>i.material-icons {
-    color: teal;
+    color: rgba(0, 0, 0, 0.7);
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a {
-    color: rgba(0,0,0,0.6);
+    color: rgba(0,0,0,0.7);
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a>i.material-icons {
-    color: rgba(0,0,0,0.6);
+    color: rgba(0,0,0,0.7);
     margin: 0 5px 0 0;
 }
 nav .input-field label i {

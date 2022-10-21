@@ -21,7 +21,7 @@
                     <ul>
                         <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext)"><a class=" submit" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
                         
-                        @foreach (var item in _setores.Where(s => s.Ativo == true)) {
+                        @foreach (var item in _setores.Where(s => s.Ativo == true).OrderBy(o => o.Nome)) {
 
                             var _class = string.Empty;
                             var _link = string.Empty;
