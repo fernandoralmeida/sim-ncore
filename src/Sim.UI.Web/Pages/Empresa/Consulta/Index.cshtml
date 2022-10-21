@@ -47,8 +47,8 @@
     </form>
 </div>
 
-<div class="card" style="overflow-y:auto;">
-    <table class="striped">
+<div class="card">
+    <table class="responsive-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -119,11 +119,12 @@
         var nextDisabled = !Model.PaginationEmpresas.HasNextPage ? "disabled" : "";
         var _isdisabled = Model.PaginationEmpresas.Any()? null : "disabled";
     }
-    <div class="row">
+
+    <div class="card-action center">   
+        
         <span class="left">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
         <a asp-page="/Empresa/Export/Index" asp-route-ss="-" asp-route-c="@Model.Input.CNPJ" asp-route-e="@Model.Input.CNAE" asp-route-l="@Model.Input.Logradouro" asp-route-b="@Model.Input.Bairro" asp-route-r="@Model.Input.RazaoSocial" class="btn-small waves-effect waves-light green @_isdisabled right" title="Exportar"><i class="material-icons">description file_download</i></a>
-    </div>
-    <div class="row center">        
+         
         <a asp-page="./Index" asp-route-cnpj="@Model.Input.CNPJ" asp-route-rs="@Model.Input.RazaoSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-lgd="@Model.Input.Logradouro" asp-route-bro="@Model.Input.Bairro" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>

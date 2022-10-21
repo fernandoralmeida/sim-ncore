@@ -26,7 +26,7 @@
 </form>
 
 <div class="card">
-    <table class="striped responsive-table">
+    <table class="responsive-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -95,12 +95,10 @@
         var nextDisabled = !Model.PaginationEmpresas.HasNextPage ? "disabled" : "";
         var _isdisabled = Model.PaginationEmpresas.Any() ? null : "disabled";
     }
-    <div class="row">
+    <div class="card-action center">         
         <span class="left">Página @Model.PaginationEmpresas.PageIndex de @Model.PaginationEmpresas.TotalPages - @Model.RegCount Reg.</span>
         <a asp-page="/Empresa/Export/Index" asp-route-ss="@Model.Src" class="btn-small waves-effect waves-light green @_isdisabled right" title="Exportar"><i class="material-icons">description file_download</i></a>
-    </div>
-
-    <div class="row center">        
+      
         <a asp-page="./Index" asp-route-Src="@Model.Src" asp-route-pag="@(Model.PaginationEmpresas.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>

@@ -7,7 +7,7 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-<div>
+<div class="card">
     <table class="responsive-table">
         <thead>
             <tr>
@@ -74,10 +74,8 @@
         var prevDisabled = !Model.PaginationAtendimentos.HasPreviusPage ? "disabled" : "";
         var nextDisabled = !Model.PaginationAtendimentos.HasNextPage ? "disabled" : "";
     }
-    <div class="row">
-        <span>Página @Model.PaginationAtendimentos.PageIndex de @Model.PaginationAtendimentos.TotalPages - @Model.RegCount Reg.</span>
-    </div>
-    <div class="row center">        
+    <div class="card-action center">        
+        <span class="left">Página @Model.PaginationAtendimentos.PageIndex de @Model.PaginationAtendimentos.TotalPages - @Model.RegCount Reg.</span>
         <a asp-page="./Index" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>

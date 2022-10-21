@@ -29,34 +29,35 @@
             </div>
         </div>
     </form>
-
-    <table class="responsive-table striped">
-        <thead>
-            <tr>
-                <th>Servico</th>
-                <th>Dominio</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Servicos != null)
-            {
-                foreach (var item in Model.Servicos)
+    <div class="card">
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Servico</th>
+                    <th>Dominio</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Servicos != null)
                 {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dominio.Acronimo)
-                        </td>
-                        <td>
-                            <a data-id="@item.Id" data-nome="@item.Nome" class="waves-effect waves-light btn-small orange showmodal modal-trigger" href="#modal1"><i class="material-icons">edit</i></a>                 
-                            <a asp-area="Settings" asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-dm="@Model.ReturnID" asp-route-st="@Model.SetorID" class="btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>
-                        </td>
-                    </tr>
+                    foreach (var item in Model.Servicos)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dominio.Acronimo)
+                            </td>
+                            <td>
+                                <a data-id="@item.Id" data-nome="@item.Nome" class="waves-effect waves-light btn-small orange showmodal modal-trigger" href="#modal1"><i class="material-icons">edit</i></a>                 
+                                <a asp-area="Settings" asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-dm="@Model.ReturnID" asp-route-st="@Model.SetorID" class="btn-small waves-effect waves-light red"><i class="material-icons">remove</i></a>
+                            </td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>  
+            </tbody>
+        </table> 
+    </div>
 
 </div>
 

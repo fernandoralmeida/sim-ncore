@@ -26,41 +26,41 @@
                 <button type="submit" asp-route-id="@Model.Unidade.Id" asp-page-handler="Add" class="btn waves-effect waves-light"><i class="material-icons">add</i></button>
             </div>
         </div>
-
-        <table class="responsive-table striped">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Tipo</th>
-                    <th>Dominio</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Tipos != null)
-                {
-                    foreach (var item in Model.Tipos)
+        <div class="card">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Dominio</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Tipos != null)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nome)
-                            </td>
+                        foreach (var item in Model.Tipos)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Tipo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dominio.Acronimo)
-                            </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tipo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Dominio.Acronimo)
+                                </td>
 
-                            <td>
-                                <button asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-domain="@Model.Unidade.Id" class="btn-small waves-effect materialize-red"><i class="material-icons">remove</i></button>
-                            </td>
-                        </tr>
+                                <td>
+                                    <button asp-page-handler="Remove" asp-route-id="@item.Id" asp-route-domain="@Model.Unidade.Id" class="btn-small waves-effect materialize-red"><i class="material-icons">remove</i></button>
+                                </td>
+                            </tr>
+                        }
                     }
-                }
-            </tbody>
-        </table>
-        
+                </tbody>
+            </table>
+        </div>        
     </form>
 </div>

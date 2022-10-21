@@ -30,9 +30,9 @@
                         var account_color = "";
 
                         @if (!_status)
-                        { account_color = "alpha-text-7"; }
-                        else
                         { account_color = "alpha-w-text-8"; }
+                        else
+                        { account_color = "alpha-text-7"; }
 
                         <li class="dropdown-trigger @LayoutNavPages.LoginNavClass(ViewContext) mgn-r-10" data-target="dropdownuser">
                             <a id="btnstatus" class="@account_color" href="#">@DisplayName<i class="left material-icons ">person</i></a>
@@ -56,11 +56,11 @@
         var st = document.querySelector('#chkstatus');
         var uid = document.querySelector('#meustatusonline').value;
         const btnstatus = document.querySelector('#btnstatus');
+        btnstatus.classList.remove('alpha-w-text-3');
         btnstatus.classList.remove('alpha-text-7');
-        btnstatus.classList.remove('alpha-w-text-8');
-        if (!st.checked) { $('#btnstatus').addClass('alpha-text-7'); }        
+        if (!st.checked) { $('#btnstatus').addClass('alpha-w-text-3'); }        
         else
-        { $('#btnstatus').addClass('alpha-w-text-8'); }
+        { $('#btnstatus').addClass('alpha-text-7'); }
         var formData = { id: uid, val: st.checked };
         $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 
         function(returnedData){
