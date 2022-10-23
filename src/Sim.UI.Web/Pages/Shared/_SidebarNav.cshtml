@@ -19,7 +19,7 @@
                 <div class="collapsible-header"><img src="~/icons/sedempi-166p.svg" width="150px" style="margin-top: 17px;"/><i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext)"><a class=" submit" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
+                        <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext) submit"><a class="" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
                         
                         @foreach (var item in _setores.Where(s => s.Ativo == true).OrderBy(o => o.Nome)) {
 
@@ -51,10 +51,10 @@
                            <li class="@_class"><a class="submit" asp-page="@_link">@item.Nome<i class="left material-icons">chevron_right</i></a></li>                             
                         }
                         <!--
-                        <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)"><a class=" submit" asp-page="/Pat/Index">PAT<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)"><a class="" href="#" >Banco do Povo<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioSANavClass(ViewContext)"><a class=" submit" asp-page="/SebraeAqui/Index">Sebrae Aqui<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioSENavClass(ViewContext)"><a class="" href="#" >Sala do Empreendedor<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioPATNavClass(ViewContext) submit"><a class="" asp-page="/Pat/Index">PAT<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext) submit"><a class="" href="#" >Banco do Povo<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioSANavClass(ViewContext) submit"><a class="" asp-page="/SebraeAqui/Index">Sebrae Aqui<i class="left material-icons">chevron_right</i></a></li>
+                        <li class="@LayoutNavPages.InicioSENavClass(ViewContext) submit"><a class="" href="#" >Sala do Empreendedor<i class="left material-icons">chevron_right</i></a></li>
                         -->
                     </ul>
                 </div>
@@ -68,15 +68,15 @@
                         }
                         @if(_has_atendimento.Any())
                         {
-                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Atendimento/Novo/Index" class=" submit">Continuar<i class="left material-icons">shortcut</i></a></li>
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext) submit"><a asp-page="/Atendimento/Novo/Index" class="">Continuar<i class="left material-icons">shortcut</i></a></li>
                         }
                         else
                         {
-                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext)"><a asp-page="/Cliente/Index" class=" submit">Novo<i class="left material-icons">alarm_add</i></a></li>
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext) submit"><a asp-page="/Cliente/Index" class="">Novo<i class="left material-icons">alarm_add</i></a></li>
                         }
-                        <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext)"><a asp-page="/Atendimento/Index" class=" submit">Diários<i class="left material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext)"><a asp-page="/Atendimento/Consulta/Index" class=" submit">Consultar<i class="left material-icons">search</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoAnonimoNavClass(ViewContext)"><a asp-page="/Atendimento/Anonimo/Index" class=" submit" >Anônimo<i class="left material-icons">person_2</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext) submit"><a asp-page="/Atendimento/Index" class="">Diários<i class="left material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext) submit"><a asp-page="/Atendimento/Consulta/Index" class="">Consultar<i class="left material-icons">search</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoAnonimoNavClass(ViewContext) submit"><a asp-page="/Atendimento/Anonimo/Index" class="" >Anônimo<i class="left material-icons">person_2</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -84,8 +84,8 @@
                 <div class="collapsible-header">Clientes<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext)"><a asp-page="/Cliente/Index" class=" submit">Pessoas<i class="left material-icons">group</i></a></li>
-                        <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext)"><a asp-page="/Empresa/Index" class=" submit">Empresas<i class="left material-icons">domain</i></a></li>
+                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext) submit"><a asp-page="/Cliente/Index" class="">Pessoas<i class="left material-icons">group</i></a></li>
+                        <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext) submit"><a asp-page="/Empresa/Index" class="">Empresas<i class="left material-icons">domain</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -93,8 +93,8 @@
                 <div class="collapsible-header">Agenda<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext)"><a asp-page="/Agenda/Index" class=" submit">Eventos<i class="left material-icons">event</i></a></li>
-                        <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext)"><a asp-page="/Planner/Index" class=" submit">e-Planner<i class="left material-icons">description</i></a></li>
+                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext) submit"><a asp-page="/Agenda/Index" class="">Eventos<i class="left material-icons">event</i></a></li>
+                        <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext) submit"><a asp-page="/Planner/Index" class="">e-Planner<i class="left material-icons">description</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -102,9 +102,9 @@
                 <div class="collapsible-header">Power BI<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.PowerBIEmpregrosNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empregos/Index" class=" submit">Empregos<i class="left  material-icons">engineering</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Atendimentos/Index" class=" submit">Atendimentos<i class="left  material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext)"><a asp-area="SimBI" asp-page="/Empresas/Index" class=" submit">Empresas<i class="left material-icons">domain</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEmpregrosNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Empregos/Index" class="">Empregos<i class="left  material-icons">engineering</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Atendimentos/Index" class="">Atendimentos<i class="left  material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Empresas/Index" class="">Empresas<i class="left material-icons">domain</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -115,8 +115,8 @@
                     <div class="collapsible-header">Configurações<i class="material-icons chevron">chevron_left</i></div>
                     <div class="collapsible-body">
                         <ul>
-                            <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext)"><a class=" submit" asp-area="Settings" asp-page="/Common/Index">Sistema<i class="left material-icons">settings</i></a></li>
-                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)"><a asp-area="Admin" asp-page="/Manager/Index" class=" submit">Contas<i class="left material-icons">admin_panel_settings</i></a></li>
+                            <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext) submit"><a class="" asp-area="Settings" asp-page="/Common/Index">Sistema<i class="left material-icons">settings</i></a></li>
+                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext) submit"><a asp-area="Admin" asp-page="/Manager/Index" class="">Contas<i class="left material-icons">admin_panel_settings</i></a></li>
                         </ul>
                     </div>
                 </li>

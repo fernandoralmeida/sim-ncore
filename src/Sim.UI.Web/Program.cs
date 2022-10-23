@@ -36,6 +36,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.RegisterServices();
 builder.Services.RegisterServicesCNPJ();
 
+builder.Services.AddScoped<HttpContextAccessor>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

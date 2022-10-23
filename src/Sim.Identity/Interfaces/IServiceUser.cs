@@ -7,5 +7,6 @@ namespace Sim.Identity.Interfaces
         Task<ApplicationUser> GetIdAsync(string id);
         Task<IEnumerable<ApplicationUser>> ListAllAsync();
         Task<bool> lockUnlockAsync(string id, bool lockUnlock);
+        Task<bool> SetThemeAsync(string id, string theme);
     }
 }

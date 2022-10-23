@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Sim.Identity.Entity
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="pt-br">    
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,7 +13,15 @@
     <link rel="shortcut icon" href="~/favicon.ico" />    
     <link rel="stylesheet" href="~/lib/google/material-symbols-rounded.css"/>
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />    
-    <link rel="stylesheet" href="~/css/site.css">
+
+    @{
+        var _user = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name);
+        var _mytheme = _user.Theme == null ? "light" : _user.Theme;
+        @if(_mytheme == "dark")
+        { <link rel="stylesheet" href="~/css/dark.css"> }
+        else
+        { <link rel="stylesheet" href="~/css/light.css"> }
+    }
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIM - @ViewData["Title"]</title>
 </head>
@@ -87,6 +99,7 @@
             $(".submit").click(function () {
                 $(".blackboxload").show();
                 $("#loader").show();
+                $(this).addClass('active');
             });
         });
         function handle(e){
@@ -101,6 +114,14 @@
         function voltar() {
             window.history.back();
         }
+        $(function () {
+            $('#settheme').click(function () {
+                var t = $(this).data('theme');   
+                var u = $(this).data('id');  
+                $.get(`/Identity/Account/Manage?id=${u}&theme=${t}&handler=SetTheme`);
+                window.location.reload();
+            });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

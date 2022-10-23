@@ -25,10 +25,18 @@ namespace Sim.Identity.Repository
 
         public async Task<bool> lockUnlockAsync(string id, bool lockUnlock)
         {
-            var t = await _db.AppUsers.FindAsync(id);
+            var t = await _db.AppUsers.FirstOrDefaultAsync(s => s.UserName == id);
             t.LockoutEnabled = lockUnlock;
             await _db.SaveChangesAsync();
             return lockUnlock;
+        }
+
+        public async Task<bool> SetThemeAsync(string id, string theme)
+        {
+            var t = await _db.AppUsers.FirstOrDefaultAsync(s => s.UserName == id);
+            t.Theme = theme;
+            _db.Update(t);
+            return await _db.SaveChangesAsync() == 1 ? true : false;
         }
     }
 }

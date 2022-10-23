@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Identity.Entity;
+using Sim.Identity.Interfaces;
 
 namespace Sim.UI.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -13,13 +14,16 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IServiceUser _user;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IServiceUser user)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _user = user;
         }
 
         public string UserName { get; set; }
@@ -61,6 +65,15 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account.Manage
                 Genero = appuser.Gender,
                 PhoneNumber = phoneNumber
             };
+        }
+
+        public async Task<IActionResult> OnGetSetTheme(string id, string theme)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                await _user.SetThemeAsync(id, theme);
+            }
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnGetAsync()

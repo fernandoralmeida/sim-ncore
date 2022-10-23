@@ -31,6 +31,9 @@ namespace Sim.Identity.Config
 
             builder.Property(u => u.Gender)
                 .HasMaxLength(20);
+            
+            builder.Property(u => u.Theme)
+                .HasMaxLength(20);
 
             builder.ToTable("AspNetUsers");
         }

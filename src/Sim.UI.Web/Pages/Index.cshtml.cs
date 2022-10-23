@@ -22,6 +22,10 @@ namespace Sim.UI.Web.Pages
             _logger = logger;
         }
 
+        public IActionResult OnGetSetTheme(string userid, string theme) {  
+            
+            return RedirectToPage();
+        }
         public void OnGet()
         {
 

@@ -1,11 +1,11 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 :root{
     --buttoncolor: teal;    
     --teal-20: rgba(42, 128, 128, 0.557);
     --background-color: #f5f5f5;
-    --bgwhite:#fff;
-    --bglight: rgb(245,245,245);
+    --bgwhite:#37474f;
+    --bglight: #263238;
     --bgdarkdark: rgb(60,60,60);
     --bgfooter: rgba(0, 0, 0, .02);
 }
@@ -19,6 +19,7 @@ main{
 }
 body {
     background-color: var(--bglight);
+    color: rgba(255, 255, 255, 0.5);
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -32,13 +33,42 @@ hr{
     border: 0px;
     background-color: rgba(0, 0, 0, 0.2);
 }
+nav {
+    color: #686868;
+    background-color: #37474f;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+nav ul a {
+    color: #686868;
+}
+nav.navbar .brand-logo {
+    position: relative;
+    float: left;
+    font-size: 18px;
+    /*color: rgba(0,0,0,0.87)*/
+}
+nav.navbar .brand-logo i {
+    line-height: inherit;
+    transition: color .2s
+}
+input, select {
+    background-color: transparent !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+input:focus {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+textarea.materialize-textarea {
+    color: rgba(255, 255, 255, 0.5);
+}
 footer {
-    background-color: rgba(0, 0, 0, .02) !important;
-    color: rgba(0, 0, 0, 0.5) !important;
+    background-color: rgba(0, 0, 0, .1) !important;
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 .footer-overlay {
-    background-color: rgba(0, 0, 0, .02);
-    color: rgba(0, 0, 0, 0.5) !important;
+    background-color: rgba(0, 0, 0, .1);
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 .display-block{
     display: block;
@@ -69,7 +99,7 @@ footer {
     text-transform: uppercase;
 }
 .borderless{
-    border: 1px solid transparent;
+    border: 0px solid transparent !important;
 }
 .border-a{
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -244,7 +274,7 @@ footer {
     z-index:997;
     height:calc(100% - 64px);
     width:calc(99% - 250px);
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #263238;
 }
 /* Navbar Page Name */
 .alpha-text-1{ color: rgba(0, 0, 0, 0.1);}
@@ -267,12 +297,12 @@ footer {
 .alpha-w-text-9{ color: rgba(255, 255, 255, 0.9);}
 .navbar-page-name {
     margin-left: 10px;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.5);
 }
 /* materialize */
 .sidenav {
     width: 250px;
-    background-color: #4db6ac;
+    background-color: #37474f;
 }
 .has-fixed-sidenav .fixed-chart {
     left: 250px
@@ -292,28 +322,14 @@ footer {
 }
 .dropdown-content li>a, .dropdown-content li>span {
     font-size: 14px;
-}
-nav {
-    color: #686868;
-    background-color: #4db6ac;
-    width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
-}
-nav ul a {
-    color: #686868;
-}
-nav.navbar .brand-logo {
-    position: relative;
-    float: left;
-    font-size: 18px;
-    /*color: rgba(0,0,0,0.87)*/
-}
-nav.navbar .brand-logo i {
-    line-height: inherit;
-    transition: color .2s
+    color: rgba(255, 255, 255, 0.5);
 }
 .modal {
     border-radius: 4px;
+    background-color: var(--bgwhite);
+}
+.modal .modal-footer {
+    background-color: var(--bgwhite);
 }
 /*  Sidenav  */
 .sidenav .logo-container {
@@ -333,7 +349,7 @@ nav.navbar .brand-logo i {
         -webkit-tap-highlight-color: transparent;
         text-transform: uppercase;
         /**/
-        height: 63px;
+        height: 64px;
         line-height: 64px;
     }
 .sidenav .collapsible > .active .collapsible-header .chevron {
@@ -345,7 +361,7 @@ nav.navbar .brand-logo i {
     width: 24px;
     line-height: 24px;
     margin: 20px 0 0 0;
-    color:rgba(0, 0, 0, 0.7);
+    color:rgba(255, 255, 255, 0.5);
     transition: transform .2s
 }
 .sidenav .collapsible .collapsible-body {
@@ -353,40 +369,41 @@ nav.navbar .brand-logo i {
     background-color: transparent;
 }
 .sidenav .collapsible>li {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.5);
     border-bottom: 1px solid rgba(0,0,0,0.1);
     transition: background-color .2s;
 }
 .sidenav li.active {    
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.8);
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active {
-    color: rgba(0, 0, 0, 8);
-    background-color: teal;  
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #263238;  
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.8);
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a>i.material-icons {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.8);
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a {
-    color: rgba(0,0,0,0.7);
+    color:rgba(255, 255, 255, 0.5);
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a>i.material-icons {
-    color: rgba(0,0,0,0.7);
+    color:rgba(255, 255, 255, 0.5);
     margin: 0 5px 0 0;
 }
 nav .input-field label i {
-    color: rgba(0,0,0,0.4);
+    color: aquamarine !important;
     -webkit-transition: color .3s;
     transition: color .3s;
 }
 nav .input-field label.active i{
-    color: rgba(0, 0, 0, 0.5);    
+    color: rgba(255,255,255,0.5) !important;    
 }
 .card {
     border-radius: 4px;
+    background-color: var(--bgwhite);
 }
 .card-panel {
     border-radius: 4px;
@@ -418,6 +435,77 @@ nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
 /*   Buttoms  */
 .btn, .btn-large, .btn-small {
     border-radius: 4px;
+}
+.btn.disabled, .disabled.btn-large, .disabled.btn-small, .btn-floating.disabled, .btn-large.disabled, .btn-small.disabled, .btn-flat.disabled, .btn:disabled, .btn-large:disabled, .btn-small:disabled, .btn-floating:disabled, .btn-large:disabled, .btn-small:disabled, .btn-flat:disabled, .btn[disabled], .btn-large[disabled], .btn-small[disabled], .btn-floating[disabled], .btn-large[disabled], .btn-small[disabled], .btn-flat[disabled] {
+    pointer-events: none;
+    background-color: #455a64 !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #9F9F9F !important;
+    cursor: default;
+}
+/* Dropdown-Content*/
+.dropdown-content {
+    background-color: var(--bgwhite);
+    margin: 0;
+    display: none;
+    min-width: 100px;
+    overflow-y: auto;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+.divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+/* Collapsible */
+.collapsible-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+    line-height: 1.5;
+    padding: 1rem;
+    /* background-color: #fff; */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.collapsible-body {
+    display: none;
+    border-bottom: 0px solid rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 2rem;
+}
+.collapsible {
+    background-color: var(--bgwhite);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin: .5rem 0 1rem 0;
+}
+.collection {
+    margin: .5rem 0 1rem 0;
+    background-color: var(--bgwhite);
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+.collection .collection-item {
+    background-color: var(--bgwhite);
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 /* Sticky footer styles
 -------------------------------------------------- */

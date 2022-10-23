@@ -11,6 +11,7 @@ namespace Sim.Identity.Entity
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
+        public string Theme { get; set; }
 
         public async Task<IdentityResult> AppUserClaimsAsync(UserManager<ApplicationUser> userManager)
         {
