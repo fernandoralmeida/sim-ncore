@@ -20,7 +20,7 @@
     </div>
     <div class="card">
         <div class="card-header grey-text">Cliente</div>
-        <table class="striped responsive-table">
+        <table class=" responsive-table">
             <!--<caption>Informações do Cliente</caption>-->
             <thead>
                 <tr>
@@ -93,7 +93,7 @@
         <div class="card-header grey-text">Informações</div>
         <div class="row mgn-b-0">
             <div class="input-field col s12 m6 l6">
-                <select id="Input_Setor" class="Input_Setor" ty asp-for="Input.Setor" asp-items="Model.Setores">
+                <select id="Input_Setor" class="Input_Setor" ty asp-for="Input.Setor" asp-items="Model.Setores" autofocus>
                     <option selected>-- Selecione um Setor --</option>
                 </select>
                 <label asp-for="Input.Setor"></label>

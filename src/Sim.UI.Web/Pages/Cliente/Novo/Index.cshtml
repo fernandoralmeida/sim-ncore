@@ -14,22 +14,31 @@
                 Cliente<i class="material-icons left">person</i>
             </div>
             <div class="row">
-                <div class="input-field col s12 m5 l5">
-                    <input asp-for="Input.Nome" id="inputNome" required />
+                <div class="input-field col s12 m4 l4">
+                    <input asp-for="Input.Nome" id="inputNome" autofocus required />
                     <label asp-for="Input.Nome" for="inputNome"></label>                                          
                 </div>
                 <div class="input-field col s12 m4 l4">                    
                     <input asp-for="Input.Nome_Social" id="inputSocial" />
                     <label asp-for="Input.Nome_Social" for="inputSocial"></label>                    
                 </div>
-                <div class="input-field col s12 m3 l3">                    
+                <div class="input-field col s12 m2 l2">                    
                     <select asp-for="Input.Genero" id="inputGenero">
                         <option selected>-- Genero --</option>
                         <option>Feminino</option>
                         <option>Masculino</option>
                     </select>
                     <label asp-for="Input.Genero" for="inputGenero"></label>                    
-                </div>                
+                </div>     
+                <div class="input-field col s12 m2 l2">
+                    <select asp-for="Input.Deficiencia" multiple>
+                        <option value="@Model.Input.Fisica">Física</option>
+                        <option value="@Model.Input.Visual">Visual</option>
+                        <option value="@Model.Input.Auditiva">Auditiva</option>
+                        <option value="@Model.Input.Intelectual">Intelectual</option>
+                    </select>
+                    <label asp-for="Input.Deficiencia"></label>
+                </div>          
             
                 <div class="input-field col s12 m4 l3">                        
                     <input asp-for="Input.Data_Nascimento" id="inputNascimento" required />
@@ -151,7 +160,7 @@
                 </li>
             </ul>            
         </div>
-        <div class="card-action pdn-10">
+        <div class="card pdn-10">
             <button type="submit" role="button" class="waves-effect waves-light btn">Gravar Cadastro</button>
             <a asp-page="/Cliente/Index" role="button" type="button" class="blue-grey lighten-1 right waves-effect waves-light btn">Voltar</a>
         </div>

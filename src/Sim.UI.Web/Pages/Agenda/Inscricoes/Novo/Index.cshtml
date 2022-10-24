@@ -7,7 +7,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-    <div class="card light-green lighten-5">
+    <div class="card">
          <div class="card-header grey-text">Evento<i class="left material-icons">event</i></div>
          <div class="card-content no-padding">
              <div class="row">
@@ -57,7 +57,7 @@
                 @if (Model.Input.Participante == null)
                 {
                     <div class="input-field col s12 m6 l6 valign-wrapper">
-                        <input asp-for="GetCPF" id="inputCPF">
+                        <input asp-for="GetCPF" id="inputCPF" autofocus>
                         <label asp-for="GetCPF"></label>
                         <button asp-page-handler="IncluirPessoa" class="btn waves-effect waves-light" type="submit"><i class="material-icons">person add</i></button>
                     </div>
