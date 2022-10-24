@@ -10,8 +10,8 @@
 @{
     var _user = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name);
     var _lstatus = await MeuStatus.ListUserAsync(User.Identity.Name);
-    var _status = _lstatus.Any() != null ? false : _lstatus.FirstOrDefault().Online;
-    var _idstatus = _lstatus.Any() != null ? Guid.Empty : _lstatus.FirstOrDefault().Id;    
+    var _status = _lstatus.Any() == null ? false : _lstatus.FirstOrDefault().Online;
+    var _idstatus = _lstatus.Any() == null ? Guid.Empty : _lstatus.FirstOrDefault().Id;    
     var DisplayName = _user.Name;
     var DisplayLastName = _user.LastName; 
     var account_color = "";
@@ -28,17 +28,17 @@
             <a class="navbar-page-name ">@ViewData["Title"]</a>
             <ul class="right"> 
                     <li>
-                        <a id="settheme" data-id="@_user.UserName" data-theme="@_changetheme" href="#"><i class="material-icons">@_icon</i></a>
+                        <a id="settheme" data-id="@_user.UserName" data-theme="@_changetheme" href="#"><i class="material-icons online">@_icon</i></a>
                     </li>               
                     @if(SignInManager.IsSignedIn(User))
                     {
                         @if (!_status)
-                        { account_color = "alpha-w-text-8"; }
+                        { account_color = "offline"; }
                         else
-                        { account_color = "alpha-text-7"; }
+                        { account_color = "online"; }
 
                         <li class="dropdown-trigger @LayoutNavPages.LoginNavClass(ViewContext) mgn-r-10" data-target="dropdownuser">
-                            <a id="btnstatus" class="@account_color" href="#">@DisplayName<i class="left material-icons ">person</i></a>
+                            <a id="btnstatus" class="@account_color" href="#">@DisplayName<i class="left material-icons">person</i></a>
                         </li>
                     }
             </ul>
@@ -59,11 +59,11 @@
         var st = document.querySelector('#chkstatus');
         var uid = document.querySelector('#meustatusonline').value;
         const btnstatus = document.querySelector('#btnstatus');
-        btnstatus.classList.remove('alpha-w-text-3');
-        btnstatus.classList.remove('alpha-text-7');
-        if (!st.checked) { $('#btnstatus').addClass('alpha-w-text-3'); }        
+        btnstatus.classList.remove('online');
+        btnstatus.classList.remove('offline');
+        if (!st.checked) { $('#btnstatus').addClass('offline'); }        
         else
-        { $('#btnstatus').addClass('alpha-text-7'); }
+        { $('#btnstatus').addClass('online'); }
         var formData = { id: uid, val: st.checked };
         $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 
         function(returnedData){

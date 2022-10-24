@@ -36,6 +36,21 @@ footer {
     background-color: rgba(0, 0, 0, .02) !important;
     color: rgba(0, 0, 0, 0.5) !important;
 }
+.nav-wrapper .input-field input[type=search] {
+    height: inherit;
+    padding-left: 4rem;
+    width: calc(100% - 4rem);
+    border: 0;
+    -webkit-box-shadow: none;
+    background-color: var(--bgwhite) !important;
+    border-radius: 4px;
+    box-shadow: none;
+}
+.input-field input[type=search]+.label-icon {
+    -webkit-transform: none;
+    transform: none;
+    left: .5rem;
+}
 input, select {
     background-color: transparent !important;
 }
@@ -247,7 +262,8 @@ input, select {
     z-index:997;
     height:calc(100% - 64px);
     width:calc(99% - 250px);
-    background-color: var(--bglight)
+    background-color: var(--bglight);
+    opacity: .9;
 }
 /* Navbar Page Name */
 .alpha-text-1{ color: rgba(0, 0, 0, 0.1);}
@@ -300,7 +316,7 @@ nav {
     color: #686868;
     background-color: #4db6ac;
     width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-bottom: 0px solid rgba(0, 0, 0, .1);
 }
 nav ul a {
     color: #686868;
@@ -722,6 +738,12 @@ nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
     overflow: hidden;
     height: 300px; 
     width: 700px;
+}
+.online {
+    color: rgba(0, 0, 0, 0.5);
+}
+.offline {
+    color: rgba(0, 0, 0, 0.2);
 }
 @media only screen and (max-width: 1210px) {
     .card-chart-m {
