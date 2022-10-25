@@ -8,6 +8,12 @@
 
 <div>
     <form method="post" asp-route="url" novalidate>
+        <div id="dropdownacc" class="dropdown-content rounded-default row">
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Fisica" type="checkbox" /><span class="lever"></span>Física</label></div></div> 
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Visual" type="checkbox" /><span class="lever"></span>Visual</label></div></div> 
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Auditiva" type="checkbox" /><span class="lever"></span>Auditiva</label></div></div> 
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Intelectual" type="checkbox" /><span class="lever"></span>Intelectual</label></div></div> 
+        </div>
         <input asp-for="Input.Id" hidden/>
         <div class="card">
             <div class="card-header alpha-text-5">
@@ -31,7 +37,7 @@
                     <label asp-for="Input.Genero" for="inputGenero"></label>                    
                 </div>     
                 <div class="input-field col s12 m2 l2">
-                    <a href="#" class="dropdown-trigger btn" data-target="dropdownacc"><i class="material-icons">accessible</i></a>
+                    <a class="dropdown-trigger blue-grey waves-effect waves-light btn-small right" data-target="dropdownacc" title="Deficência?">?<i class="material-icons left">accessible</i></a>  
                 </div>            
             
                 <div class="input-field col s12 m4 l3">                        
@@ -107,7 +113,8 @@
             </div>
         </div>
         <div class="card" hidden>
-             <div class="row">
+            <input asp-for="Input.Deficiencia" hidden />
+            <div class="row">
                 <div class="col s12">
                     <div class="col s12 m3 l3">
                         <div class="input-field">
@@ -130,43 +137,12 @@
                 </div>
             </div>           
         </div>
-        <div class="card pdn-10">
-            <div class="card-header alpha-text-5">Informações adicionais<i class="material-icons left">info</i></div>           
-            <ul class="collapsible z-depth-0 borderless">
-                <li>
-                    <div class="collapsible-header"> @Html.DisplayNameFor(model => model.Input.Deficiencia)<input asp-for="Input.Deficiencia" class="form-control" hidden /></div>
-                    <div class="collapsible-body no-padding">
-                        <div class="row mgn-t-12">
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Fisica" checked="@Model.Input.Fisica" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Fisica)</label></div>
-                            </div>
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Visual" checked="@Model.Input.Visual" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Visual)</label></div>
-                            </div>
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Auditiva" checked="@Model.Input.Auditiva" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Auditiva)</label></div>
-                            </div>
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Intelectual" checked="@Model.Input.Intelectual" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Intelectual)</label></div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>            
-        </div>
-        
+       
         <div class="card pdn-10">
             <button type="submit" role="button" class="waves-effect waves-light btn">Gravar Cadastro</button>
             <a asp-page="/Cliente/Index" role="button" type="button" class="blue-grey lighten-1 right waves-effect waves-light btn">Voltar</a>
         </div>
     </form>
-</div>
-
-<div id="dropdownacc" class="dropdown-content rounded-default row">
-    <input asp-for="Input.Fisica" type="checkbox">
-    <input asp-for="Input.Visual" type="checkbox">
-    <input asp-for="Input.Auditiva" type="checkbox">
-    <input asp-for="Input.Intelectual" type="checkbox">
 </div>
 
 @section Scripts {

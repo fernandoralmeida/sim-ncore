@@ -5,7 +5,7 @@ using Sim.Domain.Interface.IService;
 namespace Sim.Domain.Service
 {
 
-    public class ServiceAtendimento : ServiceBase<Atendimento>, IServiceAtendimento
+    public class ServiceAtendimento : ServiceBase<EAtendimento>, IServiceAtendimento
     {
         private readonly IRepositoryAtendimento _atendimento;
         public ServiceAtendimento(IRepositoryAtendimento repositoryAtendimento)
@@ -14,107 +14,107 @@ namespace Sim.Domain.Service
             _atendimento = repositoryAtendimento;
         }
 
-        public async Task<Atendimento> GetAtendimentoAsync(Guid id)
+        public async Task<EAtendimento> GetAtendimentoAsync(Guid id)
         {
             return await _atendimento.GetAtendimentoAsync(id);
         }
 
-        public async Task<Atendimento> GetIdAsync(Guid id)
+        public async Task<EAtendimento> GetIdAsync(Guid id)
         {
             return await _atendimento.GetIdAsync(id);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAllAsync()
+        public async Task<IEnumerable<EAtendimento>> ListAllAsync()
         {
             return await _atendimento.ListAllAsync();
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAtendimentoAtivoAsync(string userid)
+        public async Task<IEnumerable<EAtendimento>> ListAtendimentoAtivoAsync(string userid)
         {
             return await _atendimento.ListAtendimentoAtivoAsync(userid);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAtendimentosAtivosAsync()
+        public async Task<IEnumerable<EAtendimento>> ListAtendimentosAtivosAsync()
         {
             return await _atendimento.ListAtendimentosAtivosAsync();
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAtendimentosCanceladosAsync(string userid)
+        public async Task<IEnumerable<EAtendimento>> ListAtendimentosCanceladosAsync(string userid)
         {
             return await _atendimento.ListAtendimentosCanceladosAsync(userid);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListCanalAsync(string canal)
+        public async Task<IEnumerable<EAtendimento>> ListCanalAsync(string canal)
         {
             return await _atendimento.ListCanalAsync(canal);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListDateAsync(DateTime? dateTime)
+        public async Task<IEnumerable<EAtendimento>> ListDateAsync(DateTime? dateTime)
         {
             return await _atendimento.ListDateAsync(dateTime);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListEmpresaAsync(string cnpj)
+        public async Task<IEnumerable<EAtendimento>> ListEmpresaAsync(string cnpj)
         {
             return await _atendimento.ListEmpresaAsync(cnpj);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListMeusAtendimentosAsync(string userid, DateTime? date)
+        public async Task<IEnumerable<EAtendimento>> ListMeusAtendimentosAsync(string userid, DateTime? date)
         {
             return await _atendimento.ListMeusAtendimentosAsync(userid, date);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListMeusAtendimentosRaeAsync(string userid)
+        public async Task<IEnumerable<EAtendimento>> ListMeusAtendimentosRaeAsync(string userid)
         {
             return await _atendimento.ListMeusAtendimentosRaeAsync(userid);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListMonthAsync(DateTime? month)
+        public async Task<IEnumerable<EAtendimento>> ListMonthAsync(DateTime? month)
         {
             return await _atendimento.ListMonthAsync(month);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListParamAsync(List<object> lparam)
+        public async Task<IEnumerable<EAtendimento>> ListParamAsync(List<object> lparam)
         {
             return await _atendimento.ListParamAsync(lparam);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListPeriodoAsync(DateTime? dataI, DateTime? dataF)
+        public async Task<IEnumerable<EAtendimento>> ListPeriodoAsync(DateTime? dataI, DateTime? dataF)
         {
             return await _atendimento.ListPeriodoAsync(dataI, dataF);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListPessoaAsync(string cpf)
+        public async Task<IEnumerable<EAtendimento>> ListPessoaAsync(string cpf)
         {
             return await _atendimento.ListPessoaAsync(cpf);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(IEnumerable<Atendimento> atendimentos)
+        public async Task<IEnumerable<EAtendimento>> ListRaeNaoLancadosAsync(IEnumerable<EAtendimento> atendimentos)
         {
             return await Task.Run(() => atendimentos.Where(a => a.RaeNaoLancados(a)).OrderByDescending(o => o.Data));
         }
 
-        public async Task<IEnumerable<Atendimento>> ListRaeLancadosAsync(IEnumerable<Atendimento> atendimentos)
+        public async Task<IEnumerable<EAtendimento>> ListRaeLancadosAsync(IEnumerable<EAtendimento> atendimentos)
         {
             return await Task.Run(() => atendimentos.Where(s => s.RaeLancados(s)));
         }
 
-        public async Task<IEnumerable<Atendimento>> ListServicosAsync(string servicos)
+        public async Task<IEnumerable<EAtendimento>> ListServicosAsync(string servicos)
         {
             return await _atendimento.ListServicosAsync(servicos);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListSetorAsync(string setor)
+        public async Task<IEnumerable<EAtendimento>> ListSetorAsync(string setor)
         {
             return await _atendimento.ListSetorAsync(setor);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListUserNameAsync(string username)
+        public async Task<IEnumerable<EAtendimento>> ListUserNameAsync(string username)
         {
             return await _atendimento.ListUserNameAsync(username);
         }
 
-        public async Task<IEnumerable<Atendimento>> ListUserNamePeriodoAsync(string username, DateTime? date)
+        public async Task<IEnumerable<EAtendimento>> ListUserNamePeriodoAsync(string username, DateTime? date)
         {
             return await _atendimento.ListUserNamePeriodoAsync(username, date);
         }
@@ -128,7 +128,7 @@ namespace Sim.Domain.Service
         private readonly List<string> _empresas_mes_servicos = new();
         private readonly List<string> _servicos = new();
 
-        private void ConstruirMeses(Atendimento at_param, string[] serv_param)
+        private void ConstruirMeses(EAtendimento at_param, string[] serv_param)
         {
             _meses.Add(at_param.Data.Value.ToString("MMM"));
 
@@ -148,7 +148,7 @@ namespace Sim.Domain.Service
             }
         }
 
-        private void AppUserMonth(Atendimento at_param, string[] serv_param)
+        private void AppUserMonth(EAtendimento at_param, string[] serv_param)
         {
             _meses.Add(at_param.Owner_AppUser_Id);
 
@@ -192,7 +192,7 @@ namespace Sim.Domain.Service
                     var _meses_t = new List<(string Nome, string Atendimento, string Servico)>();
                     var _l_servicos = new List<(string Servico, int Quantidade)>();
 
-                    foreach (Atendimento at in list.Where(s => s.Servicos != null))
+                    foreach (EAtendimento at in list.Where(s => s.Servicos != null))
                     {
                         string[] servicos = at.Servicos.ToString().Split(new char[] { ';', ',' });
 
@@ -208,7 +208,7 @@ namespace Sim.Domain.Service
                     r_all.ClientePF = ("Pessoas", _pessoas_mes.Count, _pessoas_mes_servicos.Count);
                     r_all.ClientePJ = ("Empresas", _empresas_mes.Count, _empresas_mes_servicos.Count);
 
-                    var mlist = new List<(string Mes, int Atendimentos, int Servicos)>();
+                    var mlist = new List<(string Mes, int EAtendimentos, int Servicos)>();
 
                     foreach (var x in from a in _meses
                                       group a by a into g
@@ -260,7 +260,7 @@ namespace Sim.Domain.Service
 
                     var _meses_t = new List<(string Nome, string Atendimento, string Servico)>();
 
-                    foreach (Atendimento at in list.Where(s => s.Servicos != null && s.Data.Value.Year == periodo.Year))
+                    foreach (EAtendimento at in list.Where(s => s.Servicos != null && s.Data.Value.Year == periodo.Year))
                     {
                         string[] servicos = at.Servicos.ToString().Split(new char[] { ';', ',' });
                         for (int i = 1; i < 13; i++)
@@ -315,7 +315,7 @@ namespace Sim.Domain.Service
 
                     var _meses_t = new List<(string Nome, string Atendimento, string Servico)>();
 
-                    foreach (Atendimento at in list.Where(s => s.Servicos != null && s.Data.Value.Year == periodo.Year))
+                    foreach (EAtendimento at in list.Where(s => s.Servicos != null && s.Data.Value.Year == periodo.Year))
                     {
                         string[] servicos = at.Servicos.ToString().Split(new char[] { ';', ',' });
                         AppUserMonth(at, servicos);
@@ -345,12 +345,12 @@ namespace Sim.Domain.Service
             return r_all;
         }
 
-        public async Task<IEnumerable<Atendimento>> DoListAendimentosAsyncBy(string param)
+        public async Task<IEnumerable<EAtendimento>> DoListAendimentosAsyncBy(string param)
         {
             return await _atendimento.DoListAendimentosAsyncBy(param);
         }
 
-        public async Task<IEnumerable<Atendimento>> DoListByAnoAsync(int ano)
+        public async Task<IEnumerable<EAtendimento>> DoListByAnoAsync(int ano)
         {
             return await _atendimento.DoListByAnoAsync(ano);
         }

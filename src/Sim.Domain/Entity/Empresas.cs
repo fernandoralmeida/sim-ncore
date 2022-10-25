@@ -24,7 +24,7 @@ namespace Sim.Domain.Entity
         public string? Telefone { get; set; }
         public string? Situacao_Cadastral { get; set; }
 
-        public virtual ICollection<Atendimento>? Atendimentos { get; set; }
+        public virtual ICollection<EAtendimento>? Atendimentos { get; set; }
         public virtual ICollection<Inscricao>? Inscricoes { get; set; }
         public virtual ICollection<Empregos>? VagasEmpregos { get; set; }
 

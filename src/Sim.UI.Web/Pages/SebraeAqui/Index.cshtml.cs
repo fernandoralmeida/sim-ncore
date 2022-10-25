@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Sim.Application.Interfaces;
 using Sim.UI.Web.Functions;
 using Microsoft.EntityFrameworkCore;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.SebraeAqui
 {
@@ -12,7 +13,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
 
-        public Pagination<Domain.Entity.Atendimento> PaginationAtendimentos { get; set; }
+        public Pagination<EAtendimento> PaginationAtendimentos { get; set; }
         public IndexModel(IAppServiceAtendimento appServiceAtendimento)
         {
             _appServiceAtendimento = appServiceAtendimento;
@@ -29,14 +30,14 @@ namespace Sim.UI.Web.Pages.SebraeAqui
 
             RegCount = _list.Count();
 
-            IQueryable<Domain.Entity.Atendimento> _atendimentos = _list.OrderBy(o => o.Data).AsQueryable();
+            IQueryable<EAtendimento> _atendimentos = _list.OrderBy(o => o.Data).AsQueryable();
 
             if (pag == null)
                 pag = 1;
 
             var pagesize = 10;
 
-            PaginationAtendimentos = Pagination<Domain.Entity.Atendimento>.Create(_atendimentos.AsNoTracking(), pag ?? 1, pagesize);
+            PaginationAtendimentos = Pagination<EAtendimento>.Create(_atendimentos.AsNoTracking(), pag ?? 1, pagesize);
 
             if (!PaginationAtendimentos.Any())
             {

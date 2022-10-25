@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OfficeOpenXml;
 using Sim.Application.Interfaces;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Atendimento.Export;
 
@@ -19,7 +20,7 @@ public class IndexModel : PageModel
         string nome, string cnpj, string rsocial, string cnae, string svc, string user){
     
         var list = new List<ExportModel>();
-        var _result = new List<Sim.Domain.Entity.Atendimento>();
+        var _result = new List<EAtendimento>();
 
         if(string.IsNullOrEmpty(src)) {  
 
@@ -31,12 +32,12 @@ public class IndexModel : PageModel
             svc = src ?? "";
             user = user ?? "";
 
-            _result = (List<Sim.Domain.Entity.Atendimento>) 
+            _result = (List<EAtendimento>) 
                     await _appServiceAtendimento
                     .ListParamAsync(new List<object>() { d1, d2, cpf, nome, cnpj, rsocial, cnae, svc, user });
         }
         else {            
-            _result = (List<Sim.Domain.Entity.Atendimento>)
+            _result = (List<EAtendimento>)
                     await _appServiceAtendimento.DoListAendimentosAsyncBy(src);
         }
 

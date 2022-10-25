@@ -2,9 +2,9 @@
 namespace Sim.Domain.Entity
 {
 
-    public class Atendimento
+    public class EAtendimento
     {
-        public Atendimento()
+        public EAtendimento()
         {
 
         }
@@ -25,17 +25,17 @@ namespace Sim.Domain.Entity
         public virtual Empresas? Empresa { get; set; }
         public virtual RaeSebrae? Sebrae { get; set; }
 
-        public bool RaeLancados(Atendimento obj)
+        public bool RaeLancados(EAtendimento obj)
         {
             return obj.Anonimo != true && obj.Sebrae != null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == DateTime.Now.Year;
         }
 
-        public bool RaeNaoLancados(Atendimento obj)
+        public bool RaeNaoLancados(EAtendimento obj)
         {
             return obj.Anonimo != true && obj.Sebrae == null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == DateTime.Now.Year;
         }
 
-        public bool BySetor(Atendimento obj, string setor_name)
+        public bool BySetor(EAtendimento obj, string setor_name)
         {
             return obj.Setor == setor_name;
         }

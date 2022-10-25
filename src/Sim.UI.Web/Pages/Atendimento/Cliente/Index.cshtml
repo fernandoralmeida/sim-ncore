@@ -1,8 +1,8 @@
 ﻿@page
-@model Sim.UI.Web.Pages.Cliente.IndexModel
-
+@model Sim.UI.Web.Pages.Atendimento.Cliente.IndexModel
 @{
     ViewData["Title"] = "Clientes";
+    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.AtendimentoAtivo;
 }
 @{ string _isdesabled = "hidden"; }
 @if(Model.Input.ListaPessoas != null)
@@ -30,6 +30,7 @@
 </form>
 
 <div class="card">
+    <div class="card-header">Cliente<i class="material-icons left">person</i></div>
     <table class="responsive-table">
         <thead>
             <tr>
@@ -53,10 +54,7 @@
         </thead>
         <tbody>
 
-            @if (Model.Input.ListaPessoas == null)
-            { }
-            else
-            {
+            @if (Model.Input.ListaPessoas != null)  { 
                 foreach (var item in Model.Input.ListaPessoas)
                 {
                     <tr>
@@ -93,6 +91,68 @@
         </tbody>
     </table>
 </div>
+
+<div class="card">
+    <div class="card-header">Histórico de Atendimentos<i class="material-icons left">access_time</i></div>
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Servicos
+                </th>
+                <th>
+                    Setor
+                </th>
+                <th>
+                    Canal
+                </th>
+                <th>
+                    Descrição
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont1 = 0;
+            }
+            @if(Model.Input.ListaAtendimentos != null) {
+                @foreach (var item in Model.Input.ListaAtendimentos)
+                {
+                    <tr>
+
+                        <td>
+                            @{cont1++;}
+                            @cont1.ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Data)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Servicos)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Setor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Canal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
 <div id="modal_cli" class="modal">
     <div class="modal-content">
         Cliente com CPF <stromg>@Model.Input.Valor</stromg> não encontrado!                

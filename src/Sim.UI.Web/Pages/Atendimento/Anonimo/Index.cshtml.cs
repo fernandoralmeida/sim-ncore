@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.Interfaces;
+using Sim.Domain.Entity;
 using Sim.Domain.Organizacao.Model;
 
 namespace Sim.UI.Web.Pages.Atendimento.Anonimo
@@ -91,7 +92,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Anonimo
                     return RedirectToPage();
                 }
     
-                var _anonimo = new Domain.Entity.Atendimento()
+                var _anonimo = new EAtendimento()
                 {
                     Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Anônimo"),
                     Data = DateTime.Now,

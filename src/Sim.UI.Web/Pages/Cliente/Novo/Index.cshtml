@@ -9,6 +9,12 @@
 
 <div>
     <form method="post" asp-route="url" novalidate>
+        <div id="dropdownacc" class="dropdown-content rounded-default row">
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Fisica" type="checkbox" /><span class="lever"></span>Física</label></div></div> 
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Visual" type="checkbox" /><span class="lever"></span>Visual</label></div></div> 
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Auditiva" type="checkbox" /><span class="lever"></span>Auditiva</label></div></div> 
+            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Intelectual" type="checkbox" /><span class="lever"></span>Intelectual</label></div></div> 
+        </div>
         <div class="card">
             <div class="card-header alpha-text-5">
                 Cliente<i class="material-icons left">person</i>
@@ -31,14 +37,8 @@
                     <label asp-for="Input.Genero" for="inputGenero"></label>                    
                 </div>     
                 <div class="input-field col s12 m2 l2">
-                    <select asp-for="Input.Deficiencia" multiple>
-                        <option value="@Model.Input.Fisica">Física</option>
-                        <option value="@Model.Input.Visual">Visual</option>
-                        <option value="@Model.Input.Auditiva">Auditiva</option>
-                        <option value="@Model.Input.Intelectual">Intelectual</option>
-                    </select>
-                    <label asp-for="Input.Deficiencia"></label>
-                </div>          
+                    <a class="dropdown-trigger blue-grey waves-effect waves-light btn-small right" data-target="dropdownacc" title="Deficência?">?<i class="material-icons left">accessible</i></a> 
+                </div>         
             
                 <div class="input-field col s12 m4 l3">                        
                     <input asp-for="Input.Data_Nascimento" id="inputNascimento" required />

@@ -5,13 +5,13 @@ using Sim.Domain.Interface.IRepository;
 
 namespace Sim.Data.Repository
 {
-    public class RepositoryAtendimento : RepositoryBase<Atendimento>, IRepositoryAtendimento
+    public class RepositoryAtendimento : RepositoryBase<EAtendimento>, IRepositoryAtendimento
     {
         public RepositoryAtendimento(ApplicationContext dbContext)
             :base(dbContext)
         {   }
 
-        public async Task<IEnumerable<Atendimento>> DoListAendimentosAsyncBy(string param)
+        public async Task<IEnumerable<EAtendimento>> DoListAendimentosAsyncBy(string param)
         {
             return await _db.Atendimento
                         .Include(p => p.Pessoa)
@@ -33,7 +33,7 @@ namespace Sim.Data.Repository
                         .ToListAsync();     
         }
 
-        public async Task<IEnumerable<Atendimento>> DoListByAnoAsync(int ano)
+        public async Task<IEnumerable<EAtendimento>> DoListByAnoAsync(int ano)
         {
             return await _db.Atendimento
                         .Include(p => p.Pessoa)
@@ -47,7 +47,7 @@ namespace Sim.Data.Repository
                         .ToListAsync();
         }
 
-        public async Task<Atendimento> GetAtendimentoAsync(Guid id)
+        public async Task<EAtendimento> GetAtendimentoAsync(Guid id)
         {
             var ativo = Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -58,7 +58,7 @@ namespace Sim.Data.Repository
             return await ativo;
         }
 
-        public Task<Atendimento> GetIdAsync(Guid id)
+        public Task<EAtendimento> GetIdAsync(Guid id)
         {
             return Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -67,7 +67,7 @@ namespace Sim.Data.Repository
                 .Where(i => i.Id == id).FirstOrDefault());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAllAsync()
+        public async Task<IEnumerable<EAtendimento>> ListAllAsync()
         {
             return await _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -78,7 +78,7 @@ namespace Sim.Data.Repository
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAtendimentoAtivoAsync(string userid)
+        public async Task<IEnumerable<EAtendimento>> ListAtendimentoAtivoAsync(string userid)
         {
             var ativo = Task.Run(()=> _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -89,7 +89,7 @@ namespace Sim.Data.Repository
             return await ativo;
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAtendimentosAtivosAsync()
+        public async Task<IEnumerable<EAtendimento>> ListAtendimentosAtivosAsync()
         {
             var ativo = Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -100,7 +100,7 @@ namespace Sim.Data.Repository
             return await ativo;
         }
 
-        public async Task<IEnumerable<Atendimento>> ListAtendimentosCanceladosAsync(string userid)
+        public async Task<IEnumerable<EAtendimento>> ListAtendimentosCanceladosAsync(string userid)
         {
             var ativo = Task.Run(()=> _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -111,17 +111,17 @@ namespace Sim.Data.Repository
             return await ativo;
         }
 
-        public async Task<IEnumerable<Atendimento>> ListCanalAsync(string canal)
+        public async Task<IEnumerable<EAtendimento>> ListCanalAsync(string canal)
         {
             return await Task.Run(() => _db.Atendimento.Where(u => u.Canal.Contains(canal)));
         }
 
-        public async Task<IEnumerable<Atendimento>> ListDateAsync(DateTime? dateTime)
+        public async Task<IEnumerable<EAtendimento>> ListDateAsync(DateTime? dateTime)
         {
             return await Task.Run(() => _db.Atendimento.Where(u => u.Data == dateTime));
         }
 
-        public async Task<IEnumerable<Atendimento>> ListEmpresaAsync(string cnpj)
+        public async Task<IEnumerable<EAtendimento>> ListEmpresaAsync(string cnpj)
         {
             return await Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -130,7 +130,7 @@ namespace Sim.Data.Repository
                 .Where(u => u.Empresa.CNPJ == cnpj).OrderBy(d => d.Data).OrderByDescending(o => o.Data));
         }
 
-        public async Task<IEnumerable<Atendimento>> ListMeusAtendimentosAsync(string userid, DateTime? date)
+        public async Task<IEnumerable<EAtendimento>> ListMeusAtendimentosAsync(string userid, DateTime? date)
         {
             return await Task.Run(() => _db.Atendimento
                 .Include(u => u.Pessoa)
@@ -141,7 +141,7 @@ namespace Sim.Data.Repository
                 .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListMeusAtendimentosRaeAsync(string userid)
+        public async Task<IEnumerable<EAtendimento>> ListMeusAtendimentosRaeAsync(string userid)
         {
             return await Task.Run(() => _db.Atendimento
                 .Include(u => u.Pessoa)
@@ -152,7 +152,7 @@ namespace Sim.Data.Repository
                 .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListMonthAsync(DateTime? month)
+        public async Task<IEnumerable<EAtendimento>> ListMonthAsync(DateTime? month)
         {
             return await Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -165,7 +165,7 @@ namespace Sim.Data.Repository
                 .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListParamAsync(List<object> lparam)
+        public async Task<IEnumerable<EAtendimento>> ListParamAsync(List<object> lparam)
         {
             var d1 = lparam[0].ToString();
             var d2 = lparam[1].ToString();
@@ -201,7 +201,7 @@ namespace Sim.Data.Repository
             .ToListAsync();             
         }
 
-        public async Task<IEnumerable<Atendimento>> ListPeriodoAsync(DateTime? dataI, DateTime? dataF)
+        public async Task<IEnumerable<EAtendimento>> ListPeriodoAsync(DateTime? dataI, DateTime? dataF)
         {
             return await Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -213,7 +213,7 @@ namespace Sim.Data.Repository
                 .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListPessoaAsync(string cpf)
+        public async Task<IEnumerable<EAtendimento>> ListPessoaAsync(string cpf)
         {
             return await Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)
@@ -224,25 +224,25 @@ namespace Sim.Data.Repository
                 .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListServicosAsync(string servicos)
+        public async Task<IEnumerable<EAtendimento>> ListServicosAsync(string servicos)
         {
             return await Task.Run(() => _db.Atendimento.Where(u => u.Servicos.Contains(servicos) && u.Status == "Finalizado" && u.Ativo == true)
                                             .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListSetorAsync(string setor)
+        public async Task<IEnumerable<EAtendimento>> ListSetorAsync(string setor)
         {
             return await Task.Run(() => _db.Atendimento.Where(u => u.Setor == setor && u.Status == "Finalizado" && u.Ativo == true)
                                             .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListUserNameAsync(string username)
+        public async Task<IEnumerable<EAtendimento>> ListUserNameAsync(string username)
         {
             return await Task.Run(() => _db.Atendimento.Where(u => u.Owner_AppUser_Id == username && u.Status == "Finalizado" && u.Ativo == true)
                                             .AsNoTrackingWithIdentityResolution());
         }
 
-        public async Task<IEnumerable<Atendimento>> ListUserNamePeriodoAsync(string username, DateTime? date)
+        public async Task<IEnumerable<EAtendimento>> ListUserNamePeriodoAsync(string username, DateTime? date)
         {
             return await Task.Run(() => _db.Atendimento
                 .Include(p => p.Pessoa)

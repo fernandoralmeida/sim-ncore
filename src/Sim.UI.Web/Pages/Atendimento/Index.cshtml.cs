@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Sim.Application.Interfaces;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Atendimento
 {
@@ -35,7 +36,7 @@ namespace Sim.UI.Web.Pages.Atendimento
             [DataType(DataType.Date)]
             public DateTime? DataAtendimento { get; set; }
 
-            public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
+            public IEnumerable<EAtendimento> ListaAtendimento { get; set; }
         }
 
         private async Task LoadAsync(DateTime? date)
@@ -73,7 +74,7 @@ namespace Sim.UI.Web.Pages.Atendimento
             catch (Exception ex)
             {
                 StatusMessage = "Erro: " + ex.Message;
-                Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
+                Input.ListaAtendimento = new List<EAtendimento>();
             }
 
             return Page();
@@ -82,7 +83,7 @@ namespace Sim.UI.Web.Pages.Atendimento
         public async Task<JsonResult> OnGetPreview(string id)
         {
             return new JsonResult(
-                new List<Domain.Entity.Atendimento>
+                new List<EAtendimento>
                 {
                     await _appServiceAtendimento.GetAtendimentoAsync(new Guid(id))
                 });

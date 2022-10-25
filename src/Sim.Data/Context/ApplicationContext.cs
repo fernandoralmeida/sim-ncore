@@ -23,7 +23,7 @@ namespace Sim.Data.Context
         public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<RaeSebrae> Sebrae { get; set; }
         public DbSet<Empregos> Emprego { get; set; }
-        public DbSet<Atendimento> Atendimento { get; set; }
+        public DbSet<EAtendimento> Atendimento { get; set; }
         public DbSet<ECanal> Canal { get; set; }
         public DbSet<EEvento> Evento { get; set; }
         public DbSet<EParceiro> Parceiro { get; set; }
@@ -42,7 +42,7 @@ namespace Sim.Data.Context
             modelBuilder.Entity<DIA>().ToTable("DIA");
             modelBuilder.Entity<Pessoa>().ToTable("Pessoa");
             modelBuilder.Entity<Empresas>().ToTable("Empresa");
-            modelBuilder.Entity<Atendimento>().ToTable("Atendimento");
+            modelBuilder.Entity<EAtendimento>().ToTable("Atendimento");
             modelBuilder.Entity<EParceiro>().ToTable("Parceiros");
             modelBuilder.Entity<ECanal>().ToTable("Canal");
             modelBuilder.Entity<EEvento>().ToTable("Evento");

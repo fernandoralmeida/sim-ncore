@@ -27,7 +27,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         [BindProperty(SupportsGet = true)]
         public string Src { get; set; }
 
-        public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
+        public IEnumerable<EAtendimento> ListaAtendimento { get; set; }
 
         public IndexModel(IAppServiceAtendimento appServiceAtendimento,
             IServiceUser appServiceUser,
@@ -53,7 +53,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
             catch (Exception ex)
             {
                 StatusMessage = "Erro: " + ex.Message;
-                ListaAtendimento = new List<Domain.Entity.Atendimento>();
+                ListaAtendimento = new List<EAtendimento>();
             }
         }
     }

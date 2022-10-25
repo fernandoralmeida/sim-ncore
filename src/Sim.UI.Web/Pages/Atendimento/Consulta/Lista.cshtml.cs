@@ -26,7 +26,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consultas
 
         public ParamModel GetParam { get; set; } 
 
-        public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
+        public IEnumerable<EAtendimento> ListaAtendimento { get; set; }
 
         public async Task OnGet(string p1, string p2, string p3, string p4,string p5, string p6, string p7, string p8, string p9)
         {
@@ -64,7 +64,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consultas
             catch (Exception ex)
             {
                 StatusMessage = "Erro: " + ex.Message;
-                ListaAtendimento = new List<Domain.Entity.Atendimento>();
+                ListaAtendimento = new List<EAtendimento>();
             }
 
 

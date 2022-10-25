@@ -66,13 +66,13 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryEmpresa, RepositoryEmpresa>();
 
             //
-            services.AddScoped<IAppServiceBase<Atendimento>, AppServiceBase<Atendimento>>();
+            services.AddScoped<IAppServiceBase<EAtendimento>, AppServiceBase<EAtendimento>>();
             services.AddScoped<IAppServiceAtendimento, AppServiceAtendimento>();
 
-            services.AddScoped<IServiceBase<Atendimento>, ServiceBase<Atendimento>>();
+            services.AddScoped<IServiceBase<EAtendimento>, ServiceBase<EAtendimento>>();
             services.AddScoped<IServiceAtendimento, ServiceAtendimento>();
 
-            services.AddScoped<IRepositoryBase<Atendimento>, RepositoryBase<Atendimento>>();
+            services.AddScoped<IRepositoryBase<EAtendimento>, RepositoryBase<EAtendimento>>();
             services.AddScoped<IRepositoryAtendimento, RepositoryAtendimento>();
 
             // Status Atendimento

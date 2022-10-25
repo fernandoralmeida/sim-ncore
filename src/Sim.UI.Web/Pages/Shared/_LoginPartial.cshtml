@@ -22,7 +22,7 @@
 <input id="meustatusonline" type="text" value="@_idstatus" hidden/>
 
 <div class="navbar-fixed">
-    <nav class="navbar z-depth-0 borderless">
+    <nav class="navbar z-depth-0">
         <div class="nav-wrapper">
             <a href="#" data-target="sidenav-left" class="sidenav-trigger "><i class="material-icons">menu</i></a>
             <a class="navbar-page-name ">@ViewData["Title"]</a>
@@ -49,7 +49,7 @@
 <div id="dropdownuser" class="dropdown-content rounded-default row">
     <div class="center-align"><a class="grey-text" asp-area="Identity" asp-page="/Account/Manage/Index">Meu Perfil</a></></div>
     <div class="divider"></div>
-    <div class="center-align"><div class="switch" title="Alterar meu status"><label style="font-size:10px;">OFF<input id="chkstatus" checked="@_status" type="checkbox" onclick="myStatus()" /><span class="lever"></span>ON</label></div></div>          
+    <div class="center-align pdn-h-10"><div class="switch" title="Alterar meu status"><label>OFF<input id="chkstatus" checked="@_status" type="checkbox" onclick="myStatus()" /><span class="lever"></span>ON</label></div></div>          
     <div class="divider"></div>
     <div><a asp-area="Identity" asp-page="/Account/Logout" class="grey-text">Sair<i class="left material-icons">logout</i></a></div>
 </div>

@@ -134,12 +134,12 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     return Page();
                 } 
 
-                var _atendimento = new Domain.Entity.Atendimento();
+                var _atendimento = new EAtendimento();
                 var _emprego = new Empregos();
 
                 if(InputSearch.MaskRemove().Length == 11) {
                     var pess = await _appServicePessoa.SingleIdAsync(InputID);
-                    _atendimento = new Domain.Entity.Atendimento() {
+                    _atendimento = new EAtendimento() {
                         Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
                         Data = DateTime.Now,
                         DataF = DateTime.Now,
@@ -169,7 +169,7 @@ namespace Sim.UI.Web.Pages.Pat.Add
                 }
                 else {
                     var emp = await _appServiceEmpresa.SingleIdAsync(InputID);
-                    _atendimento = new Domain.Entity.Atendimento() {
+                    _atendimento = new EAtendimento() {
                         Protocolo = await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento Empresa"),
                         Data = DateTime.Now,
                         DataF = DateTime.Now,

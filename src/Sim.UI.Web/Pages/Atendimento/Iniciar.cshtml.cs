@@ -52,7 +52,7 @@ namespace Sim.UI.Web.Pages.Atendimento
         private async Task<Empresas> GetEmpresa(string cnpj)
         {
             var emp = await _appServiceEmpresa.ConsultaCNPJAsync(cnpj);
-            StatusMessage = emp.Any() ? string.Empty : "Erro: Empresa não cadastrada!";
+            StatusMessage = emp.Any() ? string.Empty : "Erro: Empresa nï¿½o cadastrada!";
             return emp.Any() ? emp.FirstOrDefault() : null;
         }
 
@@ -107,7 +107,7 @@ namespace Sim.UI.Web.Pages.Atendimento
                 return Page();
             }
 
-            var atendimento = new Domain.Entity.Atendimento()
+            var atendimento = new EAtendimento()
             {
                 Protocolo = await GetProtoloco(),
                 Data = DateTime.Now,

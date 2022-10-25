@@ -4,9 +4,9 @@ using Sim.Domain.Entity;
 
 namespace Sim.Data.Config.Entity
 {
-    public class AtendimentoMap : IEntityTypeConfiguration<Atendimento>
+    public class AtendimentoMap : IEntityTypeConfiguration<EAtendimento>
     {
-        public void Configure(EntityTypeBuilder<Atendimento> builder)
+        public void Configure(EntityTypeBuilder<EAtendimento> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Protocolo)

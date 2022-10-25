@@ -11,8 +11,9 @@ $(document).ready(function () {
     $('.dropdown-trigger').dropdown(
         {
             hover:false,
-            restringirWidth:false,
-            coverTrigger:true
+            constrainWidth:false,
+            coverTrigger:false,
+            closeOnClick:false
         });
 
     $('select').formSelect();
@@ -46,3 +47,12 @@ $(document).ready(function () {
     })*/
 });
 
+function CloseDropdown() {
+    $('.dropdown-trigger').dropdown(
+        {
+            hover:false,
+            constrainWidth:false,
+            coverTrigger:false,
+            closeOnClick:true
+        });
+};

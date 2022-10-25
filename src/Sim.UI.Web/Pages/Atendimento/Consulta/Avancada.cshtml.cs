@@ -11,6 +11,7 @@ using Sim.Application.Interfaces;
 using Sim.Identity.Interfaces;
 using Sim.Identity.Entity;
 using OfficeOpenXml;
+using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Atendimento.Consulta
 {
@@ -56,7 +57,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
 
             public string Atendente { get; set; }
 
-            public ICollection<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
+            public ICollection<EAtendimento> ListaAtendimento { get; set; }
         }
 
         public AvancadaModel(IAppServiceAtendimento appServiceAtendimento,
@@ -73,7 +74,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
         {
             Input.DataI = new DateTime(DateTime.Now.Year, 1, 1);
             Input.DataF = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
+            Input.ListaAtendimento = new List<EAtendimento>();
             await LoadUsers();
             await LoadServicos();
         }
@@ -104,12 +105,12 @@ namespace Sim.UI.Web.Pages.Atendimento.Consulta
                     Input.Servico,
                     Input.Atendente  };
 
-                Input.ListaAtendimento = (ICollection<Sim.Domain.Entity.Atendimento>) await _appServiceAtendimento.ListParamAsync(param);
+                Input.ListaAtendimento = (ICollection<EAtendimento>) await _appServiceAtendimento.ListParamAsync(param);
             }
             catch (Exception ex)
             {
                 StatusMessage = "Erro: " + ex.Message;
-                Input.ListaAtendimento = new List<Domain.Entity.Atendimento>();
+                Input.ListaAtendimento = new List<EAtendimento>();
             }
 
             await LoadServicos();

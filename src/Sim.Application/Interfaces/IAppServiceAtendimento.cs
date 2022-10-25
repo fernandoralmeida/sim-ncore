@@ -2,31 +2,31 @@
 
 namespace Sim.Application.Interfaces
 {
-    public interface IAppServiceAtendimento : IAppServiceBase<Atendimento>
+    public interface IAppServiceAtendimento : IAppServiceBase<EAtendimento>
     {
-        Task<Atendimento> GetAtendimentoAsync(Guid id);
-        Task<IEnumerable<Atendimento>> DoListByAnoAsync(int ano);
-        Task<IEnumerable<Atendimento>> DoListAendimentosAsyncBy(string param);
-        Task<IEnumerable<Atendimento>> ListPessoaAsync(string cpf);
-        Task<IEnumerable<Atendimento>> ListEmpresaAsync(string cnpj);
-        Task<IEnumerable<Atendimento>> ListSetorAsync(string setor);
-        Task<IEnumerable<Atendimento>> ListCanalAsync(string canal);
-        Task<IEnumerable<Atendimento>> ListServicosAsync(string servicos);
-        Task<IEnumerable<Atendimento>> ListDateAsync(DateTime? dateTime);
-        Task<IEnumerable<Atendimento>> ListMeusAtendimentosAsync(string userid, DateTime? date);
-        Task<IEnumerable<Atendimento>> ListMeusAtendimentosRaeAsync(string userid);
-        Task<IEnumerable<Atendimento>> ListAtendimentoAtivoAsync(string userid);
-        Task<IEnumerable<Atendimento>> ListAtendimentosCanceladosAsync(string userid);
-        Task<IEnumerable<Atendimento>> ListPeriodoAsync(DateTime? dataI, DateTime? dataF);
-        Task<IEnumerable<Atendimento>> ListMonthAsync(DateTime? month);
-        Task<IEnumerable<Atendimento>> ListUserNameAsync(string username);
-        Task<IEnumerable<Atendimento>> ListUserNamePeriodoAsync(string username, DateTime? date);
-        Task<IEnumerable<Atendimento>> ListAtendimentosAtivosAsync();
-        Task<IEnumerable<Atendimento>> ListParamAsync(List<object> lparam);
-        Task<IEnumerable<Atendimento>> ListRaeLancadosAsync(string username);
-        Task<IEnumerable<Atendimento>> ListRaeNaoLancadosAsync(string username);
-        Task<Atendimento> GetIdAsync(Guid id);
-        Task<IEnumerable<Atendimento>> ListAllAsync();
+        Task<EAtendimento> GetAtendimentoAsync(Guid id);
+        Task<IEnumerable<EAtendimento>> DoListByAnoAsync(int ano);
+        Task<IEnumerable<EAtendimento>> DoListAendimentosAsyncBy(string param);
+        Task<IEnumerable<EAtendimento>> ListPessoaAsync(string cpf);
+        Task<IEnumerable<EAtendimento>> ListEmpresaAsync(string cnpj);
+        Task<IEnumerable<EAtendimento>> ListSetorAsync(string setor);
+        Task<IEnumerable<EAtendimento>> ListCanalAsync(string canal);
+        Task<IEnumerable<EAtendimento>> ListServicosAsync(string servicos);
+        Task<IEnumerable<EAtendimento>> ListDateAsync(DateTime? dateTime);
+        Task<IEnumerable<EAtendimento>> ListMeusAtendimentosAsync(string userid, DateTime? date);
+        Task<IEnumerable<EAtendimento>> ListMeusAtendimentosRaeAsync(string userid);
+        Task<IEnumerable<EAtendimento>> ListAtendimentoAtivoAsync(string userid);
+        Task<IEnumerable<EAtendimento>> ListAtendimentosCanceladosAsync(string userid);
+        Task<IEnumerable<EAtendimento>> ListPeriodoAsync(DateTime? dataI, DateTime? dataF);
+        Task<IEnumerable<EAtendimento>> ListMonthAsync(DateTime? month);
+        Task<IEnumerable<EAtendimento>> ListUserNameAsync(string username);
+        Task<IEnumerable<EAtendimento>> ListUserNamePeriodoAsync(string username, DateTime? date);
+        Task<IEnumerable<EAtendimento>> ListAtendimentosAtivosAsync();
+        Task<IEnumerable<EAtendimento>> ListParamAsync(List<object> lparam);
+        Task<IEnumerable<EAtendimento>> ListRaeLancadosAsync(string username);
+        Task<IEnumerable<EAtendimento>> ListRaeNaoLancadosAsync(string username);
+        Task<EAtendimento> GetIdAsync(Guid id);
+        Task<IEnumerable<EAtendimento>> ListAllAsync();
         Task<BIAtendimentos> ToListBIAtendimentos(DateTime periodo);
         Task<BIAtendimentos> ToListBIAtendimentosSetor(DateTime periodo, string setor);
         Task<BIAtendimentos> ToListBIAtendimentosAppUser(DateTime periodo);

@@ -6,10 +6,8 @@
     ViewData["Title"] = "Power BI";
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Cnae;
 }
-
-<partial name="_NavBar" model="@Model.MunicipioSelecionado" />
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-
+<partial name="_NavBar" model="@Model.MunicipioSelecionado" />
 <div class="row">
     <ul class="collapsible z-depth-0 borderless rounded-default">
             @foreach (var emp in Model.ListCnaes)

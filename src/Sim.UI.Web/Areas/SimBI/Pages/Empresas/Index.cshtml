@@ -14,7 +14,7 @@
 <ul id='dropdown1' class='dropdown-content'>
   @foreach (var item in municipios)
   {
-    <li><a class="submit" asp-route-m="@item.Codigo">@item.Descricao</a></li>
+    <li><a class="submit" asp-route-m="@item.Codigo" onclick="CloseDropdown()">@item.Descricao</a></li>
   }
 </ul>
 <ul id='mobile-demo' class='dropdown-content'>
@@ -186,7 +186,7 @@
         <br />Não contabilizam os CNPJs com CNAE principal "9492800 - Serviços políticos"      
     </div>
     <a href="" id="btn-export" class="light-blue-text pdn-v-10" title="Exportar"><i class="material-icons mgn-t-10">file_download</i></a>    
-</div>    
+</div> 
 
 @section scripts{
     <script>    

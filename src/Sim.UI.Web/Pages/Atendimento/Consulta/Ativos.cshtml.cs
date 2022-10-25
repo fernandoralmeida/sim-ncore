@@ -47,7 +47,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consultas
 
             public string CNPJ { get; set; }
 
-            public IEnumerable<Domain.Entity.Atendimento> ListaAtendimento { get; set; }
+            public IEnumerable<EAtendimento> ListaAtendimento { get; set; }
         }
 
         public async Task OnPostListPendenciasAsync()
