@@ -91,37 +91,34 @@
         </tbody>
     </table>
 </div>
-
-<div class="card">
-    <div class="card-header">Histórico de Atendimentos<i class="material-icons left">access_time</i></div>
-    <table class="responsive-table">
-        <thead>
-            <tr>
-                <th>
-                    #
-                </th>
-                <th>
-                    Data
-                </th>
-                <th>
-                    Servicos
-                </th>
-                <th>
-                    Setor
-                </th>
-                <th>
-                    Canal
-                </th>
-                <th>
-                    Descrição
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                int cont1 = 0;
-            }
-            @if(Model.Input.ListaAtendimentos != null) {
+@if(Model.Input.ListaAtendimentos != null) {
+    <div class="card">
+        <div class="card-header">Histórico de Atendimentos<i class="material-icons left">access_time</i></div>
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Data
+                    </th>
+                    <th>
+                        Servicos
+                    </th>
+                    <th>
+                        Setor
+                    </th>
+                    <th>
+                        Canal
+                    </th>
+                    <th>
+                        Descrição
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int cont1 = 0;}
                 @foreach (var item in Model.Input.ListaAtendimentos)
                 {
                     <tr>
@@ -147,11 +144,12 @@
                         </td>
                     </tr>
                 }
-            }
+            </tbody>
+        </table>
+    </div>    
+}
 
-        </tbody>
-    </table>
-</div>
+
 
 <div id="modal_cli" class="modal">
     <div class="modal-content">
