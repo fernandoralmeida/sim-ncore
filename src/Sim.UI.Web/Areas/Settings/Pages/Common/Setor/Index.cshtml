@@ -37,7 +37,7 @@
         <table class="responsive-table">
             <thead>
                 <tr>
-                    <th>Setor</th>
+                    <th>Unidade</th>
                     <th>Servicos</th>
                     <th>Situação</th>
                     <th>Ações</th>
@@ -50,7 +50,7 @@
                     foreach (var item in Model.Setores)
                     {
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Acronimo)</td>
                             <td>
                                 @if(item.Servicos != null) {
                                     @foreach (var srv in item.Servicos) {

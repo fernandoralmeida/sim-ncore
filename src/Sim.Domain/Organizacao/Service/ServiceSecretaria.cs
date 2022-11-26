@@ -46,7 +46,7 @@ public class ServiceSecretaria : ServiceBase<EOrganizacao>, IServiceSecretaria
         if(lista == null)
             return null;
 
-        return await Task.Run(() => lista.Where(m => m.IsSetorOfSecretaria(m, id)));
+        return await Task.Run(() => lista.Where(m => m.IsSetorOfSecretaria(m, id) || m.IsSecretaria(m)));
     }
     public async Task<EOrganizacao> GetIdAsync(Guid id) {
         return await _secretaria.GetIdAsync(id);
