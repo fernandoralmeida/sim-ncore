@@ -286,7 +286,7 @@ input, select {
 .alpha-w-text-9{ color: rgba(255, 255, 255, 0.9);}
 .navbar-page-name {
     margin-left: 10px;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.8);
 }
 /* materialize */
 .sidenav {
@@ -385,7 +385,7 @@ nav.navbar .brand-logo i {
     width: 24px;
     line-height: 24px;
     margin: 20px 0 0 0;
-    color:rgba(0, 0, 0, 0.7);
+    color:rgba(255, 255, 255, 0.9);
     transition: transform .2s
 }
 .sidenav .collapsible .collapsible-body {
@@ -393,15 +393,15 @@ nav.navbar .brand-logo i {
     background-color: transparent;
 }
 .sidenav .collapsible>li {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     border-bottom: 1px solid rgba(0,0,0,0.1);
     transition: background-color .2s;
 }
 .sidenav li.active {    
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.9);
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active {
-    color: rgba(0, 0, 0, 8);
+    color: rgba(255, 255, 255, .9);
     background-color: var(--bglight);  
 }
 .sidenav .collapsible-body>ul:not(.collapsible)>li.active a, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active a {
@@ -411,10 +411,10 @@ nav.navbar .brand-logo i {
     color: rgba(0, 0, 0, 0.7);
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a {
-    color: rgba(0,0,0,0.7);
+    color: rgba(255,255,255,0.9);
 }
 .sidenav li>a>i, .sidenav li>a>[class^="mdi-"], .sidenav li>a li>a>[class*="mdi-"], .sidenav li>a>i.material-icons {
-    color: rgba(0,0,0,0.7);
+    color: rgba(255,255,255,0.9);
     margin: 0 5px 0 0;
 }
 nav .input-field label i {
@@ -743,10 +743,10 @@ nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
     width: 700px;
 }
 .online {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.8);
 }
 .offline {
-    color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.5);
 }
 @media only screen and (max-width: 1210px) {
     .card-chart-m {

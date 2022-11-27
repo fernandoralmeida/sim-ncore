@@ -1,0 +1,19 @@
+@using Sim.UI.Web.Pages.BancoPovo
+
+<div class="row">
+    <nav class="transparent">
+        <div class="nav-wrapper">
+            <form method="post">        
+                <div class="input-field col s6 m6 l6 no-padding">
+                    <input id="search" type="search" placeholder="Digite aqui para pesquisar" autofocus required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                </div>
+                <ul class="right">
+                    <li class="@NavPage.InicioBPClass(ViewContext)"><a asp-page="/Pat/Index" title="Vagas abertas"><i class="material-icons orange-text">list</i></a></li>
+                    <li class="@NavPage.ConsultaBPClass(ViewContext)"><a asp-page="/Pat/Consulta/Index" title="Ir para vagas preenchidas"><i class="material-icons teal-text">search</i></a></li> 
+                    <li class="@NavPage.NovoBPClass(ViewContext)"><a asp-page="/Pat/Add/Index" title="Abrir nova vaga!"><i class="material-icons blue-text">add</i></a></li>                      
+                </ul>
+            </form>            
+        </div>
+    </nav>
+</div>
