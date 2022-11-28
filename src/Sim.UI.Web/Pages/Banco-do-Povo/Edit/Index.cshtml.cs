@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Sim.UI.Web.Pages.BancoPovo.Edit;
 public class IndexModel : PageModel
 {
+    [BindProperty]
+    public string Search { get; set;}
     public void OnGet()
     {
     }

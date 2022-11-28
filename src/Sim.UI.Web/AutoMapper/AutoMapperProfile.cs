@@ -22,6 +22,7 @@ namespace Sim.UI.Web.AutoMapper
         public AutoMapperProfile()
         {
             CreateMap<Pessoa, InputModelPessoa>().ReverseMap();
+            CreateMap<Pessoa, VMPessoa>().ReverseMap();
             CreateMap<CNPJ, VMEmpresa>().ReverseMap();
             CreateMap<Empresas, VMEmpresa>().ReverseMap();
             CreateMap<EAtendimento, InputModelAtendimento>().ReverseMap();

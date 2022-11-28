@@ -1,0 +1,101 @@
+﻿@page
+@model Sim.UI.Web.Pages.BancoPovo.Add.IndexModel
+@{
+    ViewData["Title"] = "Banco do Povo: Novo Contrato";
+    ViewData["ActivePageBPP"] = Web.Pages.BancoPovo.NavPage.Novo;
+}
+<partial name="_NavPage" model="Model.Search" />
+
+<form method="post">
+    <section>
+        <div class="card">
+            <div class="card-header grey-text">Cliente</div>  
+            @if(Model.ListaPessoas != null) {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>CPF</th>
+                            <th>Nome</th>
+                            <th>Tel</th>
+                            <th>Email</th>
+                            <th>...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListaPessoas) {
+                            <tr>
+                                <td><a class="btn-small blue"><i class="material-icons">add</i></a></td>
+                                <td>@Html.DisplayFor(model => item.CPF)</td>
+                                <td>@Html.DisplayFor(model => item.Nome)</td>
+                                <td>@Html.DisplayFor(model => item.Tel_Movel)</td>
+                                <td>@Html.DisplayFor(model => item.Email)</td>
+                                <td><a class="btn-small red"><i class="material-icons">delete</i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }                   
+      
+            <input asp-for="InputPessoa.Id"  hidden/>     
+            <div class="row no-padding">
+                <div class="col s12 m6 l3 input-field">
+                    <input asp-for="InputPessoa.CPF" disabled />
+                </div>     
+                <div class="col s12 m6 l3 input-field">
+                    <input asp-for="InputPessoa.Nome" disabled />
+                </div>     
+                <div class="col s12 m6 l3 input-field">
+                    <input asp-for="InputPessoa.Tel_Movel" disabled />
+                </div>     
+                <div class="col s12 m6 l3 input-field">
+                    <input asp-for="InputPessoa.Email" disabled />
+                </div>     
+            </div>        
+        </div>
+    </section>
+    <section>
+        <div class="card">
+            <div class="card-header grey-text">Informações</div>
+            <div class="row">
+                <div class="input-field col s12 m6 l3">
+                    <input  />
+                    <label >N Contrato</label>
+                </div>
+                <div class="input-field col s6 m2 l2">
+                    <i class="prefix" style="font-size:20px;">R$</i>
+                    <input asp-format="{0:#,###.00}" onkeypress="return(moeda(this,'.',',',event))" />
+                    <label >Valor</label>
+                </div>
+                <div class="input-field col s6 m3 l3">
+                    <select>
+                        <option>Aguardando Documentos</option>
+                        <option>Aprovado</option>
+                        <option>Cancelado</option>
+                    </select>  
+                    <label >Situação</label>
+                </div>
+                <div class="input-field col s6 m2 l2">
+                    <input />
+                    <label >Data</label>
+                </div> 
+                <div class="input-field col s12 m12 l12">
+                    <input />
+                    <label >Descrição</label>
+                </div> 
+            </div>
+            <div class="card-action">
+                <button id="onbtn" class="btn waves-effect waves-light">Gravar</button>
+                <a asp-page="/Pat/Index" class="btn grey waves-effect waves-light">Voltar</a>
+            </div>   
+        </div>
+    </section>
+</form>
+
+
+@section Scripts {
+    <script src="~/js/jquery.mask.min.js"></script>
+    <script>
+        $('#search').mask('000.000.000-00');
+    </script>
+}
