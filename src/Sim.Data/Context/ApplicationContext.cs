@@ -57,6 +57,7 @@ namespace Sim.Data.Context
             modelBuilder.Entity<RaeSebrae>().ToTable("RaeSebrae");
             modelBuilder.Entity<StatusAtendimento>().ToTable("StatusAtendimento");
             modelBuilder.Entity<EContrato>().ToTable("BPPContratos");
+            modelBuilder.Entity<ERenegociacoes>().ToTable("BPPRenegociacoes");
 
             modelBuilder.ApplyConfiguration(new Config.Entity.AmbulanteMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpregosMap());

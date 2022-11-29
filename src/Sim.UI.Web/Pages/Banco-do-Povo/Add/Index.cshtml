@@ -110,10 +110,7 @@
                     <label asp-for="InputContrato.Descricao"></label>
                 </div>
                 <div class="col s12 m6 l3 input-field">
-                    <select asp-for="InputContrato.Situacao">
-                        <option>Em Andamento</option>
-                        <option>Aprovado</option>
-                        <option>Reprovado</option>
+                    <select asp-for="InputContrato.Situacao" asp-items="Model.ESituacoes">
                     </select>  
                     <label asp-for="InputContrato.Situacao" ></label>
                 </div>

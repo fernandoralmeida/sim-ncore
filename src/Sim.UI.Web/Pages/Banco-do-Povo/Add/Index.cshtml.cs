@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.BancoPovo.Interfaces;
 using Sim.Application.BancoPovo.ViewModel;
 using Sim.Application.Interfaces;
@@ -31,6 +32,9 @@ public class IndexModel : PageModel
     [DisplayName("CPF")]
     [BindProperty]
     public string GetCPF { get; set; }
+
+    public SelectList ESituacoes { get; set; }
+
     public IndexModel(IMapper mapper,
         IAppServiceEmpresa appempresa,
         IAppServicePessoa apppessoa)
@@ -44,8 +48,10 @@ public class IndexModel : PageModel
         InputContrato.Data = DateTime.Now;
         InputContrato.DataSituacao = DateTime.Now;
         InputContrato.Valor = 0;
+        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
     }
     public async Task OnPostPFAsync() {
+        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
         var lp = await _appServicePessoa.ConsultaCPFAsync(GetCPF);
 
         if(lp.Count() == 0)
@@ -56,6 +62,7 @@ public class IndexModel : PageModel
     }
 
     public async Task OnPostPJAsync() {
+        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
         var le = await _appServiceEmpresa.ConsultaCNPJAsync(GetCNPJ);
 
         if(le.Count() == 0)
@@ -66,28 +73,34 @@ public class IndexModel : PageModel
     }
 
     public IActionResult OnPostRemovePF() {
+        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
         InputContrato.Cliente = null;
         return RedirectToPage("/Banco-do-Povo/Add/Index");
     }
 
     public void OnPostRemovePJ() {
+        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
         InputContrato.Empresa = null;
     }
 
     public async Task<IActionResult> OnPostSaveAsync(){
         try{
+            ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
             if (InputContrato.Cliente == null && InputContrato.Empresa == null)
             {
                 StatusMessage = "Erro: Verifique se os campos foram preenchidos corretamente!";
                 return Page();
             }
             
-            await _appContratos.AddAsync(_mapper.Map<EContrato>(InputContrato));
+            var _contrato = _mapper.Map<EContrato>(InputContrato);
+            _contrato.AppUser = User.Identity.Name;
+
+            await _appContratos.AddAsync(_contrato);
 
             return RedirectToPage("/Banco-do-Povo/Index");
         }
         catch (Exception ex) {
-            StatusMessage = "Erro: " + ex.Message;
+            StatusMessage = "Erro: " + ex.Message + "\n" + ex.Data + "\n" + ex.Source + "\n" + ex.InnerException;
             return Page();
         }
     }
