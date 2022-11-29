@@ -1,12 +1,11 @@
 @using Sim.UI.Web.Pages.BancoPovo
-@model ModelExpression
 
 <div class="row">
     <nav class="transparent">
         <div class="nav-wrapper">
             <form method="post">        
                 <div class="input-field col s6 m6 l6 no-padding">
-                    <input id="search" asp-for="ModelExplorer.Model" type="search" placeholder="Digite aqui para pesquisar" autofocus required>
+                    <input id="search" name="src" type="search" placeholder="Digite aqui para pesquisar" autofocus required>
                     <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                 </div>
                 <ul class="right">

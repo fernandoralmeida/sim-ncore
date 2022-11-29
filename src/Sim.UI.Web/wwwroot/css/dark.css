@@ -852,7 +852,8 @@ nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
         z-index:997;
         height:calc(100% - 56px);
         width:100%;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: var(--bglight);
+        opacity: .9;
     }
     .box-container-card{
         display: flex;

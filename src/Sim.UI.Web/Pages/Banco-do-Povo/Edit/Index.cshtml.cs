@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Sim.UI.Web.Pages.BancoPovo.Edit;
+
+[Authorize(Roles = "Administrador,M_BancoPovo")]
 public class IndexModel : PageModel
 {
     [BindProperty]

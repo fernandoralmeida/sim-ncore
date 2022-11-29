@@ -27,6 +27,11 @@ using Sim.Application.WebService.RWS.Services;
 using Sim.Data;
 using Sim.Data.Context;
 using Sim.Data.Repository;
+using Sim.Domain.BancoPovo.Models;
+using Sim.Application.BancoPovo.Interfaces;
+using Sim.Application.BancoPovo.Services;
+using Sim.Domain.BancoPovo.Interfaces;
+using Sim.Domain.BancoPovo.Services;
 
 namespace Sim.IoC
 {
@@ -184,11 +189,21 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryBase<ETipo>, RepositoryBase<ETipo>>();
             services.AddScoped<IRepositoryTipo, RepositoryTipo>();
             //
+            services.AddScoped<IAppServiceBase<EContrato>, AppServiceBase<EContrato>>();
+            services.AddScoped<IAppServiceContratos, AppServiceContrato>();
+
+            services.AddScoped<IServiceBase<EContrato>, ServiceBase<EContrato>>();
+            services.AddScoped<IServiceContratos, ServiceContratos>();
+
+            services.AddScoped<IRepositoryBase<EContrato>, RepositoryBase<EContrato>>();
+            services.AddScoped<IRepositoryContratos, RepositoryBPPContratos>();
+            //
             services.AddScoped<IAppServiceBIEmpregos, AppServiceBIEmpregos>();
             services.AddScoped<IServiceBIEmpregos, ServiceBIEmpregos>();
 
             services.AddScoped<IAppServiceBIAtendimento, AppServiceBIAtendimento>();
             services.AddScoped<IServiceBIAtendimento, ServiceBIAtendimento>();
+
 
             //
             services.AddScoped<IReceitaWS, ReceitaWS>();

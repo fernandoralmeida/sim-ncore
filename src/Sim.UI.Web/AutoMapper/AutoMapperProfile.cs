@@ -14,6 +14,8 @@ using Sim.UI.Web.Pages.Agenda;
 
 using Sim.Domain.Cnpj.Entity;
 using Sim.Application.Cnpj.Views;
+using Sim.Application.BancoPovo.ViewModel;
+using Sim.Domain.BancoPovo.Models;
 
 namespace Sim.UI.Web.AutoMapper
 {
@@ -35,6 +37,8 @@ namespace Sim.UI.Web.AutoMapper
             CreateMap<VMCanal, ECanal>().ReverseMap();
             CreateMap<VMParceiros, EParceiro>().ReverseMap();
             CreateMap<VMBaseReceitaFederal, BaseReceitaFederal>().ReverseMap();
+            CreateMap<VMContrato, EContrato>().ReverseMap();
+            CreateMap<VMRenegociacoes, ERenegociacoes>().ReverseMap();
         }
     }
 }

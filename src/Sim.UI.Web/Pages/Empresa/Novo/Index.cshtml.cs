@@ -7,6 +7,7 @@ using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
 using Sim.Application.WebService.RWS.Services;
 using Sim.UI.Web.Functions;
+using Sim.Application.VM;
 
 namespace Sim.UI.Web.Pages.Empresa.Novo
 {

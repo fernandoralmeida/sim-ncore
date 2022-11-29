@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sim.Domain.Entity;
 using Sim.Domain.Organizacao.Model;
 using Sim.Domain.Evento.Model;
+using Sim.Domain.BancoPovo.Models;
 
 namespace Sim.Data.Context
 {   
@@ -34,6 +35,7 @@ namespace Sim.Data.Context
         public DbSet<ETipo> Tipos { get; set; }
         public DbSet<Contador> Contador { get; set; }
         public DbSet<StatusAtendimento> StatusAtendimento { get; set; }
+        public DbSet<EContrato> BPPContratos { get; set; }
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +56,7 @@ namespace Sim.Data.Context
             modelBuilder.Entity<Contador>().ToTable("Protocolos");
             modelBuilder.Entity<RaeSebrae>().ToTable("RaeSebrae");
             modelBuilder.Entity<StatusAtendimento>().ToTable("StatusAtendimento");
+            modelBuilder.Entity<EContrato>().ToTable("BPPContratos");
 
             modelBuilder.ApplyConfiguration(new Config.Entity.AmbulanteMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpregosMap());
@@ -71,6 +74,8 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.TipoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.ContadorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.StatusAtendimentoMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.BPPContratosMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.BPPRenegociacoesMap());
 
             base.OnModelCreating(modelBuilder);
         }

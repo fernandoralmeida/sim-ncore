@@ -4,27 +4,45 @@
     ViewData["Title"] = "Banco do Povo";
     ViewData["ActivePageBPP"] = Web.Pages.BancoPovo.NavPage.Inicio;
 }
-<partial name="_NavPage" model="Model.Search" />
+<partial name="_NavPage" />
 <div class="card">
     <div class="card-header grey-text">Meus Contratos<i class="material-icons left">text_snippet</i></div>
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Processo</th>
-                <th>Cliente</th>
-                <th>Data</th>
-                <th>Situação</th>
-                <th>Valor</th>
-                <th>CMD</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-
-            </tr>
-        </tbody>
-    </table>
+        @if(Model.MeusContratos != null) {
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Processo</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Situação</th>
+                        <th>Valor</th>
+                        <th>CMD</th>
+                    </tr>
+                </thead>
+                <tbody>     
+                    @{ var _cont = 0; }
+                    @foreach (var item in Model.MeusContratos) {
+                        _cont++;
+                        <tr>
+                            <td>@_cont</td>
+                            <td>@Html.DisplayFor(model => item.Numero)</td>
+                            <td>
+                                @{ 
+                                    var _isempresa = item.Empresa != null ? item.Empresa.Nome_Empresarial : item.Cliente.Nome;
+                                }
+                                @Html.DisplayFor(modelItem => _isempresa)
+                            </td>
+                            <td>@Html.DisplayFor(model => item.Data)</td>
+                            <td>@{ var _situacao = item.Situacao.ToString();}
+                                @Html.DisplayFor(model => _situacao)</td>
+                            <td>@Html.DisplayFor(model => item.Valor)</td>
+                            <td><a class="btn-small waves-effect waves-light blue"><i class="material-icons">manager</i></a></td>
+                        </tr>                        
+                    }       
+                </tbody>
+            </table>
+        }
     <div class="card-action">
         Lista de contratos iniciados para liberação de crédito
     </div>

@@ -9,6 +9,7 @@ using Sim.Domain.Entity;
 using Sim.Application.WebService.RWS.Services;
 using Sim.Domain.Cnpj.Entity;
 using Sim.UI.Web.Functions;
+using Sim.Application.VM;
 
 namespace Sim.UI.Web.Pages.Empresa
 {
@@ -47,7 +48,7 @@ namespace Sim.UI.Web.Pages.Empresa
         {
             try
             {
-                StatusMessage = string.Format("Iniciar Migração");
+                StatusMessage = string.Format("Iniciar Migraï¿½ï¿½o");
             }
             catch (Exception ex)
             {
