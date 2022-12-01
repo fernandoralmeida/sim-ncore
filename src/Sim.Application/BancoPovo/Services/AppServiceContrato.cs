@@ -1,4 +1,3 @@
-using Sim.Domain;
 using Sim.Domain.BancoPovo.Models;
 using Sim.Domain.BancoPovo.Interfaces;
 using Sim.Application.BancoPovo.Interfaces;

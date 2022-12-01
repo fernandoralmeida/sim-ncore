@@ -37,7 +37,7 @@ namespace Sim.UI.Web.AutoMapper
             CreateMap<VMCanal, ECanal>().ReverseMap();
             CreateMap<VMParceiros, EParceiro>().ReverseMap();
             CreateMap<VMBaseReceitaFederal, BaseReceitaFederal>().ReverseMap();
-            CreateMap<VMContrato, EContrato>().ReverseMap();
+            CreateMap<EContrato, VMContrato>().ReverseMap();
             CreateMap<VMRenegociacoes, ERenegociacoes>().ReverseMap();
         }
     }

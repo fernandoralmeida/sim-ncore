@@ -22,22 +22,22 @@
                 </thead>
                 <tbody>     
                     @{ var _cont = 0; }
-                    @foreach (var item in Model.MeusContratos) {
+                    @foreach (var c in Model.MeusContratos) {
                         _cont++;
                         <tr>
                             <td>@_cont</td>
-                            <td>@Html.DisplayFor(model => item.Numero)</td>
+                            <td>@Html.DisplayFor(model => c.Numero)</td>
                             <td>
                                 @{ 
-                                    var _isempresa = item.Empresa != null ? item.Empresa.Nome_Empresarial : item.Cliente.Nome;
+                                    var _isempresa = c.Empresa != null ? c.Empresa.Nome_Empresarial : c.Cliente.Nome;
                                 }
-                                @Html.DisplayFor(modelItem => _isempresa)
+                                @Html.DisplayFor(modelc => _isempresa)
                             </td>
-                            <td>@Html.DisplayFor(model => item.Data)</td>
-                            <td>@{ var _situacao = item.Situacao.ToString();}
+                            <td>@Html.DisplayFor(model => c.Data)</td>
+                            <td>@{ var _situacao = c.Situacao.ToString();}
                                 @Html.DisplayFor(model => _situacao)</td>
-                            <td>@Html.DisplayFor(model => item.Valor)</td>
-                            <td><a class="btn-small waves-effect waves-light blue"><i class="material-icons">manager</i></a></td>
+                            <td>@Html.DisplayFor(model => c.Valor)</td>
+                            <td><a class="btn-small waves-effect waves-light blue"><i class="material-icons">edit_document</i></a></td>
                         </tr>                        
                     }       
                 </tbody>

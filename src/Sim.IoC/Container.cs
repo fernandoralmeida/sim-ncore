@@ -198,6 +198,15 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryBase<EContrato>, RepositoryBase<EContrato>>();
             services.AddScoped<IRepositoryContratos, RepositoryBPPContratos>();
             //
+            services.AddScoped<IAppServiceBase<ERenegociacoes>, AppServiceBase<ERenegociacoes>>();
+            services.AddScoped<IAppServiceRenegociacoes, AppServiceRenegociacoes>();
+
+            services.AddScoped<IServiceBase<ERenegociacoes>, ServiceBase<ERenegociacoes>>();
+            services.AddScoped<IServiceRenegociacoes, ServiceRenegociacoes>();
+
+            services.AddScoped<IRepositoryBase<ERenegociacoes>, RepositoryBase<ERenegociacoes>>();
+            services.AddScoped<IRepositoryRenegociacoes, RepositoryBPPRenegociacoes>();
+            //
             services.AddScoped<IAppServiceBIEmpregos, AppServiceBIEmpregos>();
             services.AddScoped<IServiceBIEmpregos, ServiceBIEmpregos>();
 

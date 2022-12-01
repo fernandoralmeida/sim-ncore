@@ -14,8 +14,6 @@ public class IndexModel : PageModel {
     private readonly IAppServiceContratos _appcontratos;
 
     [BindProperty]
-    public string Search { get; set;}
-
     public IEnumerable<EContrato> MeusContratos { get; set; }
 
     public IndexModel (IMapper mapper,
@@ -23,9 +21,9 @@ public class IndexModel : PageModel {
             _mapper = mapper;
             _appcontratos = appServiceContratos;        
     }
-    public async void OnGetAsync(string p, string src) {
-        var _list = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name);
-        MeusContratos = _list.OrderByDescending(o => o.Data);
+    public async Task OnGetAsync(string p, string src) {        
+        MeusContratos = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name);
+        MeusContratos.OrderByDescending(o => o.Data);
     }
 }
 

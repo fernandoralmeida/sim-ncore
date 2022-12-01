@@ -8,7 +8,7 @@ namespace Sim.Application.BancoPovo.ViewModel;
 public class VMContrato {
 
     [Key]
-    public Guid ID { get; set; }
+    public Guid Id { get; set; }
     public int Numero { get; set; }
 
     [DisplayName("Data")]

@@ -36,6 +36,7 @@ namespace Sim.Data.Context
         public DbSet<Contador> Contador { get; set; }
         public DbSet<StatusAtendimento> StatusAtendimento { get; set; }
         public DbSet<EContrato> BPPContratos { get; set; }
+        public DbSet<ERenegociacoes> BPPRenegociacoes { get; set; }
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
