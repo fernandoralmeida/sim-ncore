@@ -8,6 +8,7 @@ using Sim.Application.BancoPovo.Interfaces;
 using Sim.Application.BancoPovo.ViewModel;
 using Sim.Application.Interfaces;
 using Sim.Domain.BancoPovo.Models;
+using Sim.UI.Web.Functions;
 
 namespace Sim.UI.Web.Pages.BancoPovo.Add;
 
@@ -58,19 +59,64 @@ public class IndexModel : PageModel
         if(lp.Count() == 0)
             StatusMessage = "Erro: Cliente não encontrado!";
 
-        foreach(var p in lp)
-            InputContrato.Cliente = p;              
+        foreach(var p in lp) {
+            var _isOk = await _appContratos.DoListAsync(s => s.Cliente.CPF == GetCPF);
+
+            if (_isOk.Count() > 0) {
+
+                var _apto = _isOk.Where(s => s.Situacao > EContrato.EnSituacao.Aprovado &&
+                                        s.Pagamento == EContrato.EnPagamento.Liquidado);
+
+                if(_apto.Count() > 0) {
+                    InputContrato.Cliente = p;
+                    await CNPJ(p.CPF.MaskRemove());
+                    return;
+                }
+
+                StatusMessage = "Erro: Cliente ja tem crédito ativo por essa instituição!";
+                return;
+
+            } else {
+
+                InputContrato.Cliente = p;
+                await CNPJ(p.CPF.MaskRemove());
+                return;
+
+            }              
+        }          
     }
 
-    public async Task OnPostPJAsync() {
-        
-        var le = await _appServiceEmpresa.ConsultaCNPJAsync(GetCNPJ);
+    private async Task CNPJ(string param) {
+        var le = await _appServiceEmpresa.DoList(s => s.CNPJ == param || s.Nome_Empresarial.Contains(param));
 
         if(le.Count() == 0)
             StatusMessage = "Erro: Empresa não encontrada!";
 
-        foreach(var e in le)
-            InputContrato.Empresa = e;
+        foreach(var p in le) {
+            var _isOk = await _appContratos.DoListAsync(s => s.Empresa.CNPJ == param || s.Empresa.Nome_Empresarial.Contains(param));
+
+            if (_isOk.Count() > 0) {
+
+                var _apto = _isOk.Where(s => s.Situacao > EContrato.EnSituacao.Documentacao &&
+                                        s.Pagamento == EContrato.EnPagamento.Liquidado);
+
+                if(_apto.Count() > 0) {
+                    InputContrato.Empresa = p;
+                    return;
+                }
+
+                StatusMessage = "Erro: Empresa ja tem crédito ativo por essa instituição!";
+                return;
+
+            } else {
+
+                InputContrato.Empresa = p;
+                return;
+            }              
+        }  
+    }
+    public async Task OnPostPJAsync() {
+        await CNPJ(GetCNPJ);
     }
 
     public IActionResult OnPostRemovePF() {

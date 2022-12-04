@@ -25,7 +25,7 @@ public class IndexModel : PageModel {
             _appcontratos = appServiceContratos;        
     }
     public async Task OnGetAsync() {        
-        MeusContratos = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Aprovado && s.Renegociacaoes != null);     
+        MeusContratos = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Aprovado && s.Renegociacaoes.Count() > 0);     
         MeusContratos.OrderByDescending(o => o.Data);
     }
 

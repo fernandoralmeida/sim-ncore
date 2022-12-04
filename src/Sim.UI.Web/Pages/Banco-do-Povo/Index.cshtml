@@ -34,9 +34,12 @@
                                 @Html.DisplayFor(modelc => _isempresa)
                             </td>
                             <td>@Html.DisplayFor(model => c.Data)</td>
-                            <td>
-                                @{ var _situacao = c.Situacao.ToString();}                                
-                                <a class="btn-small waves-effect waves-light blue">@Html.DisplayFor(model => _situacao)</a>
+                            <td class="align-wrapper">
+                                @{ var _situacao = c.Situacao.ToString();}           
+                                
+                                    <select asp-for="InputContrato.Situacao" class="left" asp-items="Model.ESituacoes"></select>
+                                    <button class="btn-small red waves-effect waves-light" type="submit" asp-page-handler="GoSituacao"><i class="material-icons">check_circle</i></button>
+                                
                             </td>
                             <td>@Html.DisplayFor(model => c.Valor)</td>
                             <td><a class="btn-small waves-effect waves-light orange" asp-page="./Edit/Index" asp-route-id="@c.Id"><i class="material-icons">edit_document</i></a></td>
@@ -50,6 +53,21 @@
     </div>
 </div>
 
-<div>
-
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <form method="post">
+            <div class="row">
+                <div class="col s12 m6 l3 input-field">
+                    <select asp-for="InputContrato.Situacao" asp-items="Model.ESituacoes">
+                    </select>  
+                    <label asp-for="InputContrato.Situacao" ></label>
+                    <button class="btn-small red lighten-1 waves-effect waves-light" type="submit" asp-page-handler="GoSituacao"><i class="material-icons">check_circle</i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
 </div>

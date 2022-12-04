@@ -6,7 +6,7 @@
 }
 <partial name="_NavPage" />
 <div class="card">
-    <div class="card-header grey-text">Meus Contratos<i class="material-icons left">text_snippet</i></div>
+    <div class="card-header grey-text">Meus Contratos Inadimplentes<i class="material-icons left">text_snippet</i></div>
         @if(Model.MeusContratos != null) {
             <table>
                 <thead>
@@ -16,6 +16,7 @@
                         <th>Cliente</th>
                         <th>Data</th>
                         <th>Situação</th>
+                        <th>Pagamento</th>
                         <th>Valor</th>
                         <th>CMD</th>
                     </tr>
@@ -38,15 +39,19 @@
                                 @{ var _situacao = c.Situacao.ToString();}                                
                                 <a class="btn-small waves-effect waves-light blue">@Html.DisplayFor(model => _situacao)</a>
                             </td>
+                            <td>
+                                @{ var _pag = c.Pagamento.ToString();}                                
+                                <a class="btn-small waves-effect waves-light red">@Html.DisplayFor(model => _pag)</a>
+                            </td>
                             <td>@Html.DisplayFor(model => c.Valor)</td>
-                            <td><a class="btn-small waves-effect waves-light orange" asp-page="./Edit/Index" asp-route-id="@c.Id"><i class="material-icons">edit_document</i></a></td>
+                            <td><a class="btn-small waves-effect waves-light cyan" title="Renegociar?"><i class="material-icons">currency_exchange</i></a></td>
                         </tr>                        
                     }       
                 </tbody>
             </table>
         }
     <div class="card-action">
-        Lista de contratos iniciados para liberação de crédito
+        Lista de contratos inadimplentes
     </div>
 </div>
 
