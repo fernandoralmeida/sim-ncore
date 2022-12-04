@@ -28,5 +28,9 @@ public class VMContrato {
     public EnPagamento Pagamento { get; set; }
     public string Descricao { get; set; }
     public string AppUser { get; set; }
+
+    [DisplayName("Ultima Alteração")]
+    [DataType(DataType.Date)]
+    public DateTime? UltimaAlteracao { get; set; }
     public virtual ICollection<VMRenegociacoes> Renegociacaoes { get; set; }
 }

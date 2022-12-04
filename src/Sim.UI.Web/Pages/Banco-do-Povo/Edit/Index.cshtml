@@ -9,6 +9,7 @@
 
 <form method="post">
     <section>
+        <input asp-for="InputContrato.Id" />
         <div class="card">
             <div class="card-header grey-text">Cliente<i class="left material-icons">person</i></div>
             <div class="card-content no-padding">
@@ -106,7 +107,7 @@
                     <label asp-for="InputContrato.Valor" >Valor</label>
                 </div>
                 <div class="input-field col s12 m12 l6">
-                    <textarea asp-for="InputContrato.Descricao" class="materialize-textarea" rows="4" id="input_descricao"></textarea>
+                    <textarea asp-for="InputContrato.Descricao" class="materialize-textarea" id="input_descricao"></textarea>
                     <label asp-for="InputContrato.Descricao"></label>
                 </div>
                 <div class="col s12 m6 l3 input-field">
@@ -117,6 +118,19 @@
                 <div class="col s12 m6 l3 input-field">
                     <input asp-for="InputContrato.DataSituacao"/>
                     <label asp-for="InputContrato.DataSituacao"></label>
+                </div>                
+                <div class="col s12 m6 l4 input-field">
+                    <select asp-for="InputContrato.Pagamento" asp-items="Model.EPagamentos">
+                    </select>  
+                    <label asp-for="InputContrato.Pagamento"></label>
+                </div>
+                <div class="col s12 m6 l4 input-field">
+                    <input asp-for="InputContrato.AppUser"/>
+                    <label asp-for="InputContrato.AppUser"></label>
+                </div>
+                <div class="col s12 m6 l4 input-field">
+                    <input asp-for="InputContrato.UltimaAlteracao"/>
+                    <label asp-for="InputContrato.UltimaAlteracao"></label>
                 </div>
             </div>
             <div class="card-action">

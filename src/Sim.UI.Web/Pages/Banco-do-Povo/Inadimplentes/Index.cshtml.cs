@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.BancoPovo.Interfaces;
 using Sim.Domain.BancoPovo.Models;
 
-namespace Sim.UI.Web.Pages.BancoPovo;
+namespace Sim.UI.Web.Pages.BancoPovo.Inadimplentes;
 
 [Authorize(Roles = "Administrador,M_BancoPovo")]
 public class IndexModel : PageModel {
@@ -25,7 +25,7 @@ public class IndexModel : PageModel {
             _appcontratos = appServiceContratos;        
     }
     public async Task OnGetAsync() {        
-        MeusContratos = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Documentacao);   
+        MeusContratos = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Aprovado && s.Pagamento == EContrato.EnPagamento.Inadimplente);      
         MeusContratos.OrderByDescending(o => o.Data);
     }
 

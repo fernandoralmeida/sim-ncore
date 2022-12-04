@@ -49,10 +49,10 @@ public class IndexModel : PageModel
     public void OnGet() {
         InputContrato.Data = DateTime.Now;        
         InputContrato.Valor = 0;
-        //ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        
     }
     public async Task OnPostPFAsync() {
-        //ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        
         var lp = await _appServicePessoa.ConsultaCPFAsync(GetCPF);
 
         if(lp.Count() == 0)
@@ -63,7 +63,7 @@ public class IndexModel : PageModel
     }
 
     public async Task OnPostPJAsync() {
-        //ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        
         var le = await _appServiceEmpresa.ConsultaCNPJAsync(GetCNPJ);
 
         if(le.Count() == 0)
@@ -74,19 +74,19 @@ public class IndexModel : PageModel
     }
 
     public IActionResult OnPostRemovePF() {
-        //ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        
         InputContrato.Cliente = null;
         return RedirectToPage("/Banco-do-Povo/Add/Index");
     }
 
     public void OnPostRemovePJ() {
-        //ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        
         InputContrato.Empresa = null;
     }
 
     public async Task<IActionResult> OnPostSaveAsync(){
         try{
-            //ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+            
             if (InputContrato.Cliente == null && InputContrato.Empresa == null)
             {
                 StatusMessage = "Erro: Verifique se os campos foram preenchidos corretamente!";
@@ -98,6 +98,7 @@ public class IndexModel : PageModel
             _contrato.Pagamento = EContrato.EnPagamento.Documentacao;
             _contrato.Situacao = EContrato.EnSituacao.Documentacao;
             _contrato.DataSituacao = DateTime.Now;
+            _contrato.UltimaAlteracao = DateTime.Now;
 
             if(InputContrato.Cliente != null)
                 _contrato.Cliente = await _appServicePessoa.SingleIdAsync(InputContrato.Cliente.Id);

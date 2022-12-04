@@ -34,24 +34,30 @@ public class IndexModel : PageModel
     public string GetCPF { get; set; }
 
     public SelectList ESituacoes { get; set; }
+    public SelectList EPagamentos { get; set; }
 
     public IndexModel(IMapper mapper,
         IAppServiceEmpresa appempresa,
-        IAppServicePessoa apppessoa)
+        IAppServicePessoa apppessoa,
+        IAppServiceContratos appServiceContratos)
     {
         _mapper = mapper;
         _appServiceEmpresa = appempresa;
         _appServicePessoa = apppessoa;
+        _appContratos = appServiceContratos;
     }
 
-    public void OnGet() {
-        InputContrato.Data = DateTime.Now;
-        InputContrato.DataSituacao = DateTime.Now;
-        InputContrato.Valor = 0;
+    private void LoadSelectors() {
         ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        EPagamentos = new SelectList(Enum.GetNames(typeof(EContrato.EnPagamento)));
+    }
+    public async Task OnGet(Guid id) {
+        LoadSelectors();
+        InputContrato = _mapper.Map<VMContrato>(await _appContratos.GetIdAsync(id));
+        InputContrato.UltimaAlteracao = DateTime.Now;
     }
     public async Task OnPostPFAsync() {
-        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        LoadSelectors();
         var lp = await _appServicePessoa.ConsultaCPFAsync(GetCPF);
 
         if(lp.Count() == 0)
@@ -62,7 +68,7 @@ public class IndexModel : PageModel
     }
 
     public async Task OnPostPJAsync() {
-        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        LoadSelectors();
         var le = await _appServiceEmpresa.ConsultaCNPJAsync(GetCNPJ);
 
         if(le.Count() == 0)
@@ -73,39 +79,33 @@ public class IndexModel : PageModel
     }
 
     public IActionResult OnPostRemovePF() {
-        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        LoadSelectors();
         InputContrato.Cliente = null;
-        return RedirectToPage("/Banco-do-Povo/Add/Index");
+        return RedirectToPage("/Banco-do-Povo/Edit/Index");
     }
 
     public void OnPostRemovePJ() {
-        ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
+        LoadSelectors();
         InputContrato.Empresa = null;
     }
 
     public async Task<IActionResult> OnPostSaveAsync(){
         try{
-            ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
-            if (InputContrato.Cliente == null && InputContrato.Empresa == null)
-            {
+            LoadSelectors();
+            if (InputContrato.Cliente == null && InputContrato.Empresa == null) {
                 StatusMessage = "Erro: Verifique se os campos foram preenchidos corretamente!";
                 return Page();
             }
             
-            var _contrato = _mapper.Map<EContrato>(InputContrato);
-            _contrato.AppUser = User.Identity.Name;
+            var _contrato = _mapper.Map<EContrato>(InputContrato);            
             
             if(InputContrato.Cliente!= null)
                 _contrato.Cliente = await _appServicePessoa.SingleIdAsync(InputContrato.Cliente.Id);
             
             if(InputContrato.Empresa!= null)
-                _contrato.Empresa = await _appServiceEmpresa.SingleIdAsync(InputContrato.Empresa.Id);
-            
-            _contrato.Pagamento = EContrato.EnPagamento.Documentacao;
+                _contrato.Empresa = await _appServiceEmpresa.SingleIdAsync(InputContrato.Empresa.Id);            
 
-            _contrato.Valor = 0.0M;
-
-            await _appContratos.AddAsync(_contrato);
+            await _appContratos.UpdateAsync(_contrato);
 
             return RedirectToPage("/Banco-do-Povo/Index");
         }

@@ -5,7 +5,7 @@ namespace Sim.Domain.BancoPovo.Models;
 public class EContrato {
 
     public enum EnPagamento { Documentacao = 0, Adimplente = 1, Inadimplente = 2, Liquidado = 3 }
-    public enum EnSituacao { Documentacao = 0, Aprovado = 1, Cancelado = 2 }
+    public enum EnSituacao { Documentacao = 0, Aprovado = 1, Reprovado = 2, Cancelado = 3 }
     public EContrato() {
 
     }
@@ -21,5 +21,6 @@ public class EContrato {
     public EnPagamento Pagamento { get; set; }
     public string? Descricao { get; set; }
     public string? AppUser { get; set; }
+    public DateTime? UltimaAlteracao { get; set; }
     public virtual ICollection<ERenegociacoes>? Renegociacaoes { get; set; }
 }
