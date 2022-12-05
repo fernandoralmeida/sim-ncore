@@ -62,6 +62,10 @@ nav.navbar .brand-logo i {
     border-radius: 4px;
     box-shadow: none;
 }
+nav ul li.active {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
 .input-field input[type=search]+.label-icon {
     -webkit-transform: none;
     transform: none;
@@ -71,11 +75,23 @@ input, select {
     background-color: transparent !important;
     color: rgba(255, 255, 255, 0.5) !important;
 }
+select {
+    background-color: var(--bgwhite) !important;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid var(--bglight);
+    border-radius: 2px;
+    height: 3rem;
+}
 input:focus {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 textarea.materialize-textarea {
     color: rgba(255, 255, 255, 0.5);
+}
+select.browser-default {
+    display: block;
+    background-color: var(--bgwhite);
 }
 footer {
     background-color: rgba(0, 0, 0, .1) !important;

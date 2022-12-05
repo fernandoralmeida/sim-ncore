@@ -46,6 +46,10 @@ footer {
     border-radius: 4px;
     box-shadow: none;
 }
+nav ul li.active {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
 .input-field input[type=search]+.label-icon {
     -webkit-transform: none;
     transform: none;

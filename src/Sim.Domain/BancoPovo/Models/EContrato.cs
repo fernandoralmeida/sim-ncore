@@ -4,8 +4,8 @@ namespace Sim.Domain.BancoPovo.Models;
 
 public class EContrato {
 
-    public enum EnPagamento { Documentacao = 0, Adimplente = 1, Inadimplente = 2, Liquidado = 3 }
-    public enum EnSituacao { Documentacao = 0, Aprovado = 1, Reprovado = 2, Cancelado = 3 }
+    public enum EnPagamento { Nulo = 0, Regular = 1, Inadimplente = 2, Liquidado = 3 }
+    public enum EnSituacao { Analise = 0, Aprovado = 1, Reprovado = 2, Cancelado = 3 }
     public EContrato() {
 
     }

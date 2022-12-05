@@ -97,7 +97,7 @@ public class IndexModel : PageModel
 
             if (_isOk.Count() > 0) {
 
-                var _apto = _isOk.Where(s => s.Situacao > EContrato.EnSituacao.Documentacao &&
+                var _apto = _isOk.Where(s => s.Situacao > EContrato.EnSituacao.Analise &&
                                         s.Pagamento == EContrato.EnPagamento.Liquidado);
 
                 if(_apto.Count() > 0) {
@@ -141,8 +141,8 @@ public class IndexModel : PageModel
             
             var _contrato = _mapper.Map<EContrato>(InputContrato);
             _contrato.AppUser = User.Identity.Name;
-            _contrato.Pagamento = EContrato.EnPagamento.Documentacao;
-            _contrato.Situacao = EContrato.EnSituacao.Documentacao;
+            _contrato.Pagamento = EContrato.EnPagamento.Nulo;
+            _contrato.Situacao = EContrato.EnSituacao.Analise;
             _contrato.DataSituacao = DateTime.Now;
             _contrato.UltimaAlteracao = DateTime.Now;
 
