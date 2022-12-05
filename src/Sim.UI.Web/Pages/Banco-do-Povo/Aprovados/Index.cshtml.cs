@@ -49,7 +49,7 @@ public class IndexModel : PageModel {
     }
     public async Task OnGetAsync() {
         LoadSelectors();
-        var _lista = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Aprovado && s.Pagamento == EContrato.EnPagamento.Regular);               
+        var _lista = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Aprovado && s.Pagamento == EContrato.EnPagamento.Regular && s.Renegociacaoes.Count() == 0);               
         MeusContratos = _mapper.Map<IEnumerable<EContrato>, List<VMContrato>>(_lista);      
         TotalCredito = MeusContratos.Totalize();
         MeusContratos.OrderByDescending(o => o.Data);
