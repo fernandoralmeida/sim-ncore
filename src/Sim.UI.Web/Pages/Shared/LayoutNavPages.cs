@@ -7,8 +7,14 @@ namespace Sim.UI.Web.Pages.Shared
     {
         public static string Inicio => "Inicio";
         public static string InicioPAT => "InicioPAT";
+        public static string PATEmpregos => "PATEmpregos";
+        public static string PATReports => "PATReports";
         public static string InicioBPP => "InicioBPP";
+        public static string BPPContratos => "BPPContratos";
+        public static string BPPReports => "BPPReports";
         public static string InicioSA => "InicioSA";
+        public static string SA => "SA";
+        public static string SAReports => "SAReports";
         public static string InicioSE => "InicioSE";
         public static string InicioHome => "InicioHome";
         public static string Atendimento => "Atendimento";
@@ -34,9 +40,15 @@ namespace Sim.UI.Web.Pages.Shared
         public static string LoginPerfil => "LoginPerfil";
         public static string LoginOut => "LoginOut";
         public static string InicioNavClass(ViewContext viewContext) => PageNavClass(viewContext, Inicio);
-        public static string InicioPATNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, InicioPAT);
-        public static string InicioBPPNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, InicioBPP);
-        public static string InicioSANavClass(ViewContext viewContext) => PageNavClassLi(viewContext, InicioSA);
+        public static string InicioPATNavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioPAT);
+        public static string PATEmpregosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PATEmpregos);
+        public static string PATReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PATReports);
+        public static string InicioBPPNavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioBPP);
+        public static string BPPContratosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPContratos);
+        public static string BPPReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPReports);
+        public static string InicioSANavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioSA);
+        public static string SANavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SA);
+        public static string SAReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SAReports);
         public static string InicioSENavClass(ViewContext viewContext) => PageNavClassLi(viewContext, InicioSE);
         public static string InicioHomeNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, InicioHome);
         public static string AtendimentoNavClass(ViewContext viewContext) => PageNavClass(viewContext, Atendimento);

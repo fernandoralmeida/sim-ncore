@@ -15,50 +15,50 @@
 
     <li class="no-padding alpha-text-6">
         <ul class="collapsible collapsible-accordion">
-            <li class="@LayoutNavPages.InicioNavClass(ViewContext)">
-                <div class="collapsible-header"><img src="~/icons/sedempi-166p.svg" width="150px" style="margin-top: 17px;"/><i class="material-icons chevron">chevron_left</i></div>
-                <div class="collapsible-body">
-                    <ul>
-                        <li class="@LayoutNavPages.InicioHomeNavClass(ViewContext) submit"><a class="" asp-page="/Index">Inicio<i class="left material-icons">home</i></a></li>
-                        
-                        @foreach (var item in _setores.Where(s => s.Ativo == true && s.Hierarquia == Domain.Organizacao.Model.EHierarquia.Setor).OrderBy(o => o.Nome)) {
+            <div class="logo-left"><a asp-page="/Index"><img src="~/icons/sedempi-166p.svg" width="150px"/></a></div>
 
-                            var _class = string.Empty;
-                            var _link = string.Empty;
+            @if(User.IsInRole("Administrador") || User.IsInRole("M_Pat")) {
+                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("pat"))){                   
+                    <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)">
+                        <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li class="@LayoutNavPages.PATEmpregosNavClass(ViewContext)"><a class="submit" asp-page="/Pat/Index">Vagas Emprego<i class="left material-icons">chevron_right</i></a></li>   
+                                <li class="@LayoutNavPages.PATReportsNavClass(ViewContext)"><a class="submit" asp-page="/Pat/Reports/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li> 
+                            </ul>
+                        </div>
+                    </li>
+                }
+            }
 
-                            @switch (item.Nome.ToLower())
-                            {
-                                case "pat":
-                                    _class = LayoutNavPages.InicioPATNavClass(ViewContext);
-                                    _link = "/Pat/Index";
-                                    break;
-                                case "sebrae aqui":
-                                    _class = LayoutNavPages.InicioSANavClass(ViewContext);
-                                    _link = "/SebraeAqui/Index";
-                                    break;
-                                case "sala do empeendedor":
-                                    _class = LayoutNavPages.InicioSENavClass(ViewContext);
-                                    _link = "./";
-                                    break;
-                                case "banco do povo":
-                                    _class = LayoutNavPages.InicioBPPNavClass(ViewContext);
-                                    _link = "/Banco-do-Povo/Index";
-                                    break;
-                                default:
-                                    break;
-                            }
+            @if(User.IsInRole("Administrador") || User.IsInRole("M_BancoPovo")) {
+                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("banco do povo"))){                   
+                    <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)">
+                        <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li class="@LayoutNavPages.BPPContratosNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Index">Contratos<i class="left material-icons">chevron_right</i></a></li>   
+                                <li class="@LayoutNavPages.BPPReportsNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Reports/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li> 
+                            </ul>
+                        </div>
+                    </li>
+                }
+            }
 
-                           <li class="@_class"><a class="submit" asp-page="@_link">@item.Nome<i class="left material-icons">chevron_right</i></a></li>                             
-                        }
-                        <!--
-                        <li class="@LayoutNavPages.InicioPATNavClass(ViewContext) submit"><a class="" asp-page="/Pat/Index">PAT<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext) submit"><a class="" href="#" >Banco do Povo<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioSANavClass(ViewContext) submit"><a class="" asp-page="/SebraeAqui/Index">Sebrae Aqui<i class="left material-icons">chevron_right</i></a></li>
-                        <li class="@LayoutNavPages.InicioSENavClass(ViewContext) submit"><a class="" href="#" >Sala do Empreendedor<i class="left material-icons">chevron_right</i></a></li>
-                        -->
-                    </ul>
-                </div>
-            </li>
+            @if(User.IsInRole("Administrador") || User.IsInRole("M_Sebrae")) {
+                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("sebrae aqui"))){                   
+                    <li class="@LayoutNavPages.InicioSANavClass(ViewContext)">
+                        <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Index">Contratos<i class="left material-icons">chevron_right</i></a></li>   
+                                <li class="@LayoutNavPages.SAReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Reports/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li> 
+                            </ul>
+                        </div>
+                    </li>
+                }
+            }
+
             <li class="@LayoutNavPages.AtendimentoNavClass(ViewContext)">
                 <div class="collapsible-header">Atendimentos<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">

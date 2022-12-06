@@ -335,6 +335,11 @@ nav.navbar .brand-logo i {
     line-height: inherit;
     transition: color .2s
 }
+ul .logo-left{
+    padding: 16px;
+    height: 65px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
 .modal {
     border-radius: 4px;
 }
