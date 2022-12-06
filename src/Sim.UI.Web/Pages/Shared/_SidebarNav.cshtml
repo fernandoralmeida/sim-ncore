@@ -109,18 +109,6 @@
                 </div>
             </li>
 
-            @if (User.IsInRole("Administrador"))
-            {
-                <li class="@LayoutNavPages.ConfiguracoesNavClass(ViewContext)">
-                    <div class="collapsible-header">Configurações<i class="material-icons chevron">chevron_left</i></div>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext) submit"><a class="" asp-area="Settings" asp-page="/Common/Index">Sistema<i class="left material-icons">settings</i></a></li>
-                            <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext) submit"><a asp-area="Admin" asp-page="/Manager/Index" class="">Contas<i class="left material-icons">admin_panel_settings</i></a></li>
-                        </ul>
-                    </div>
-                </li>
-            }
         </ul>
     </li>
 </ul>

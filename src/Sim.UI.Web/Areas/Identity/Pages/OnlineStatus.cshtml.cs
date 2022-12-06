@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Sim.UI.Web.Areas.Identity.Pages
 {
@@ -14,7 +15,7 @@ namespace Sim.UI.Web.Areas.Identity.Pages
             _statusAtendimento = statusAtendimento;
         }
 
-        public void OnGet(string id, bool val)
+        public IActionResult OnGet(string id, bool val)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -24,6 +25,8 @@ namespace Sim.UI.Web.Areas.Identity.Pages
                 meustatus.Online = val;
                  _statusAtendimento.UpdateAsync(meustatus).Wait();
             }
+
+            return RedirectToPage();
         }
 
     }
