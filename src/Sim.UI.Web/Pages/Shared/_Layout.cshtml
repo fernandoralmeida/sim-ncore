@@ -13,7 +13,6 @@
     <link rel="shortcut icon" href="~/favicon.ico" />    
     <link rel="stylesheet" href="~/lib/google/material-symbols-rounded.css"/>
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />    
-
     @{
         var _user = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name);
         var _mytheme = _user.Theme == null ? "light" : _user.Theme;
