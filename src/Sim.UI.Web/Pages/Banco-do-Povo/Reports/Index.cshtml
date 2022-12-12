@@ -1,83 +1,118 @@
 ﻿@page
+@using System.Globalization
 @model Sim.UI.Web.Pages.BancoPovo.Reports.IndexModel
 @{
     ViewData["Title"] = "Banco do Povo: Reports";
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.BPPReports;   
 }
 
-<div>
-    <form method="post">
-        <div class="row">
-            <div class="col input-field">
-                <input type="dateOne" />
-            </div>
-            <div class="col input-field">
-                <input type="dateTwo" />
-            </div>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+<form method="post">
+    <div class="row">
+        <div class="col input-field">
+            <input asp-for="InputView.DataInicial" />
         </div>
-    </form>
-</div>
+        <div class="col input-field valign-wrapper">
+            <input asp-for="InputView.DataFinal" />
+            <button class="btn waves-effect waves-light"><i class="material-icons">search</i></button>
+        </div>
+    </div>
+</form>
 
-<div class="row">
-    <div class="box-container-card">
-        <div class="box-column-row">
-            <div class="box-card">
-                <div class="card-header grey-text">Contratos Regulares</div>
-                <div class="box-stretch mgn-10">
-                    <div class="grey-text">
-                        <i class="material-icons">file_upload</i><span class="font-h4 blue-text">00</span>
-                    </div>
-                    <div class="grey-text">
-                        <i class="material-icons">file_download</i><span class="font-h4 red-text">00</span>
-                    </div>
-                </div>                            
-                <div class="box-card-action font-size-12">
-                    <div class="box-between">
-                        <div class="grey-text box-middle">Periodo</div>
+@{
+    var _data1 = Model.InputView.DataInicial.Value.ToString("dd-MM-yyyy");
+    var _data2 = Model.InputView.DataFinal.Value.ToString("dd-MM-yyyy");
+}
 
-                            <div class="grey-text box-middle">00</div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="box-card">
-                <div class="card-header grey-text">Contratos Inadimplente</div>
-                <div class="box-stretch mgn-10">
-                    <div class="grey-text">
-                        <i class="material-icons">file_upload</i><span class="font-h4 blue-text">00</span>
-                    </div>
-                    <div class="grey-text">
-                        <i class="material-icons">file_download</i><span class="font-h4 red-text">00</span>
-                    </div>
-                </div>                            
-                <div class="box-card-action font-size-12">
-                    <div class="box-between">
-                        <div class="grey-text box-middle">Periodo</div>
-
-                            <div class="grey-text box-middle">00</div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="box-card">
-                <div class="card-header grey-text">Contratos Renegociados</div>
-                <div class="box-stretch mgn-10">
-                    <div class="grey-text">
-                        <i class="material-icons">file_upload</i><span class="font-h4 blue-text">00</span>
-                    </div>
-                    <div class="grey-text">
-                        <i class="material-icons">file_download</i><span class="font-h4 red-text">00</span>
-                    </div>
-                </div>                            
-                <div class="box-card-action font-size-12">
-                    <div class="box-between">
-                        <div class="grey-text box-middle">Periodo</div>
-
-                            <div class="grey-text box-middle">00</div>
-                        
+@if(Model.InputView.Relatorios != null) {
+    <div class="row">
+        <div class="box-column">
+            <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Panorama Contratos<i class="material-icons left">view_module</i></div>
+                    <div class="box-around">                            
+                        <a asp-page-handler="Preview" asp-route-id="0" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosEmAnalise.Key</p>                         
+                            <p class="orange-text font-h5">@Model.InputView.Relatorios.ContratosEmAnalise.Value</p>
+                            <p class="orange-text">@Model.InputView.Relatorios.ValorContratosAnalise</p>
+                        </a>       
+                        <a asp-page-handler="Preview" asp-route-id="1" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosAprovadosRegulares.Key</p>                         
+                            <p class="amber-text font-h5">@Model.InputView.Relatorios.ContratosAprovadosRegulares.Value</p>
+                            <p class="amber-text">@Model.InputView.Relatorios.ValorContratosRegulares</p>
+                        </a>   
+                        <a asp-page-handler="Preview" asp-route-id="2" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosAprovadosInadimplente.Key</p>                         
+                            <p class="red-text font-h5">@Model.InputView.Relatorios.ContratosAprovadosInadimplente.Value</p>
+                            <p class="red-text">@Model.InputView.Relatorios.ValorContratosInadimplentes</p>
+                        </a>     
+                        <a asp-page-handler="Preview" asp-route-id="3" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosLiquidados.Key</p>                         
+                            <p class="green-text font-h5">@Model.InputView.Relatorios.ContratosLiquidados.Value</p>
+                            <p class="green-text">...</p>
+                        </a>    
+                        <a asp-page-handler="Preview" asp-route-id="4" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosReprovados.Key</p>                         
+                            <p class="deep-orange-text font-h5">@Model.InputView.Relatorios.ContratosReprovados.Value</p>
+                            <p class="deep-orange-text">...</p>
+                        </a> 
+                        <a asp-page-handler="Preview" asp-route-id="5" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosCancelados.Key</p>                         
+                            <p class="grey-text font-h5">@Model.InputView.Relatorios.ContratosCancelados.Value</p>
+                            <p class="grey-text">...</p>
+                        </a> 
+                        <a asp-page-handler="Preview" asp-route-id="6" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosRenegociados.Key</p>                         
+                            <p class="cyan-text font-h5">@Model.InputView.Relatorios.ContratosRenegociados.Value</p>
+                            <p class="cyan-text">@Model.InputView.Relatorios.ValorContratosRenegociados</p>
+                        </a> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
+
+
+@if(Model.InputView.Relatorios != null) {
+    <div class="card">
+        <div class="card-header grey-text">Contratos<i class="material-icons left">text_snippet</i></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Processo</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Situação</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>     
+                    @{ var _cont = 0; }
+                    @foreach (var c in Model.InputView.Relatorios.ListaContratos) {
+                        _cont++;
+                        <tr>
+                            <td>@_cont</td>
+                            <td>@Html.DisplayFor(model => c.Numero)</td>
+                            <td>
+                                @{ 
+                                    var _isempresa = c.Empresa != null ? c.Empresa.Nome_Empresarial : c.Cliente.Nome;
+                                }
+                                @Html.DisplayFor(modelc => _isempresa)
+                            </td>
+                            <td>@{var _data = c.Data.Value.ToShortDateString();}@Html.DisplayFor(model => _data)</td>
+                            <td>
+                                @{ var _situacao = c.Situacao.ToString();}
+                                @Html.DisplayFor(model => _situacao)                                                         
+                            </td>
+                            <td>@NumberFormatInfo.CurrentInfo.CurrencySymbol @Html.DisplayFor(model => c.Valor)</td>                            
+                        </tr>                        
+                    }       
+                </tbody>
+            </table>
+    </div>
+}
+

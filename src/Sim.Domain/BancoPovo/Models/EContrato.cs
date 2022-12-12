@@ -53,7 +53,7 @@ public class EContrato {
     }
 
     public bool ContratosAprovadosRegulares(EContrato obj) {
-        if(obj.Situacao == EnSituacao.Aprovado && obj.Pagamento == EnPagamento.Regular)
+        if(obj.Situacao == EnSituacao.Aprovado && obj.Pagamento == EnPagamento.Regular && obj.Renegociacaoes.Count() == 0)
             return true;
         else
             return false;
@@ -66,7 +66,7 @@ public class EContrato {
             return false;
     }
 
-    public bool ContratosRenegiciados(EContrato obj) {
+    public bool ContratosRenegociados(EContrato obj) {
         if(obj.Renegociacaoes != null  && obj.Renegociacaoes.Count > 0)
             return true;
         else
@@ -74,9 +74,11 @@ public class EContrato {
     }
 
     public float TaxaInadimplencia(IEnumerable<EContrato> lista) {
+        float _ret = 0.0F;
         float _regulares = lista.Where(s => s.ContratosAprovadosRegulares(s)).Count();
-        float _inadimplentes = lista.Where(s => s.ContratosAprovadosInadimplente(s)).Count();
-        return (_inadimplentes / _regulares) * 100;
+        float _inadimplentes = lista.Where(s => s.ContratosAprovadosInadimplente(s)).Count();   
+        _ret = _inadimplentes / _regulares;
+        return _ret;
     }
 
     public decimal ValorContratosRegulares(IEnumerable<EContrato> lista) {
@@ -105,7 +107,7 @@ public class EContrato {
 
     public decimal ValorContratosRenegociados(IEnumerable<EContrato> lista) {
         var _valor = 0.0M;
-        foreach(EContrato v in lista.Where(s => s.ContratosRenegiciados(s))) {
+        foreach(EContrato v in lista.Where(s => s.ContratosRenegociados(s))) {
             _valor += v.Valor;
         }
         return _valor;
