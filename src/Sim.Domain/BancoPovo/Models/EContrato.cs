@@ -23,4 +23,95 @@ public class EContrato {
     public string? AppUser { get; set; }
     public DateTime? UltimaAlteracao { get; set; }
     public virtual ICollection<ERenegociacoes>? Renegociacaoes { get; set; }
+
+    #region Methods
+
+    public bool ContratosLiquidados(EContrato obj) {        
+        if(obj.Situacao == EnSituacao.Aprovado && obj.Pagamento == EnPagamento.Liquidado)
+            return true;
+        else
+            return false;        
+    }
+    public bool ContratosCancelados(EContrato obj) {        
+        if(obj.Situacao == EnSituacao.Cancelado)
+            return true;
+        else
+            return false;        
+    }
+    public bool ContratosReprovados(EContrato obj) {        
+        if(obj.Situacao == EnSituacao.Reprovado)
+            return true;
+        else
+            return false;        
+    }
+
+    public bool ContratosEmAnalise(EContrato obj) {        
+        if(obj.Situacao == EnSituacao.Analise && obj.Pagamento == EnPagamento.Nulo)
+            return true;
+        else
+            return false;        
+    }
+
+    public bool ContratosAprovadosRegulares(EContrato obj) {
+        if(obj.Situacao == EnSituacao.Aprovado && obj.Pagamento == EnPagamento.Regular)
+            return true;
+        else
+            return false;
+    }
+
+    public bool ContratosAprovadosInadimplente(EContrato obj){
+        if(obj.Situacao == EnSituacao.Aprovado && obj.Pagamento == EnPagamento.Inadimplente)
+            return true;
+        else
+            return false;
+    }
+
+    public bool ContratosRenegiciados(EContrato obj) {
+        if(obj.Renegociacaoes != null  && obj.Renegociacaoes.Count > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public float TaxaInadimplencia(IEnumerable<EContrato> lista) {
+        float _regulares = lista.Where(s => s.ContratosAprovadosRegulares(s)).Count();
+        float _inadimplentes = lista.Where(s => s.ContratosAprovadosInadimplente(s)).Count();
+        return (_inadimplentes / _regulares) * 100;
+    }
+
+    public decimal ValorContratosRegulares(IEnumerable<EContrato> lista) {
+        var _valor = 0.0M;
+        foreach(EContrato v in lista.Where(s => s.ContratosAprovadosRegulares(s))) {
+            _valor += v.Valor;
+        }
+        return _valor;
+    }
+
+    public decimal ValorContratosInadimplentes(IEnumerable<EContrato> lista) {
+        var _valor = 0.0M;
+        foreach(EContrato v in lista.Where(s => s.ContratosAprovadosInadimplente(s))) {
+            _valor += v.Valor;
+        }
+        return _valor;
+    }
+
+    public decimal ValorContratosAnalise(IEnumerable<EContrato> lista) {
+        var _valor = 0.0M;
+        foreach(EContrato v in lista.Where(s => s.ContratosEmAnalise(s))) {
+            _valor += v.Valor;
+        }
+        return _valor;
+    }
+
+    public decimal ValorContratosRenegociados(IEnumerable<EContrato> lista) {
+        var _valor = 0.0M;
+        foreach(EContrato v in lista.Where(s => s.ContratosRenegiciados(s))) {
+            _valor += v.Valor;
+        }
+        return _valor;
+    }
+
+    #endregion
+
+
 }
