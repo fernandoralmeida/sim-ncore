@@ -9,11 +9,11 @@
 
 <div>
     <form method="post" asp-route="url" novalidate>
-        <div id="dropdownacc" class="dropdown-content rounded-default row">
-            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Fisica" type="checkbox" /><span class="lever"></span>Física</label></div></div> 
-            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Visual" type="checkbox" /><span class="lever"></span>Visual</label></div></div> 
-            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Auditiva" type="checkbox" /><span class="lever"></span>Auditiva</label></div></div> 
-            <div class="pdn-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Intelectual" type="checkbox" /><span class="lever"></span>Intelectual</label></div></div> 
+        <div id="dropdownacc" class="dropdown-content rounded-default row pdn-10">
+            <div class="pdn-v-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Fisica" type="checkbox" /><span class="lever"></span>Física</label></div></div> 
+            <div class="pdn-v-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Visual" type="checkbox" /><span class="lever"></span>Visual</label></div></div> 
+            <div class="pdn-v-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Auditiva" type="checkbox" /><span class="lever"></span>Auditiva</label></div></div> 
+            <div class="pdn-v-10"><div class="switch" title="Possui deficiência?"><label><input asp-for="Input.Intelectual" type="checkbox" /><span class="lever"></span>Intelectual</label></div></div> 
         </div>
         <div class="card">
             <div class="card-header alpha-text-5">
@@ -135,30 +135,6 @@
                     </div>
                 </div>
             </div>           
-        </div>
-        <div class="card pdn-10">
-            <div class="card-header alpha-text-5">Informações adicionais<i class="material-icons left">info</i></div>           
-            <ul class="collapsible z-depth-0 borderless">
-                <li>
-                    <div class="collapsible-header"> @Html.DisplayNameFor(model => model.Input.Deficiencia)<input asp-for="Input.Deficiencia" class="form-control" hidden /></div>
-                    <div class="collapsible-body no-padding">
-                        <div class="row mgn-t-12">
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Fisica" checked="@Model.Input.Fisica" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Fisica)</label></div>
-                            </div>
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Visual" checked="@Model.Input.Visual" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Visual)</label></div>
-                            </div>
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Auditiva" checked="@Model.Input.Auditiva" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Auditiva)</label></div>
-                            </div>
-                            <div class="col s6 m6 l3 pdn-h-10">
-                                <div class="switch"><label><input asp-for="Input.Intelectual" checked="@Model.Input.Intelectual" type="checkbox" /><span class="lever"></span>@Html.DisplayNameFor(model => model.Input.Intelectual)</label></div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>            
         </div>
         <div class="card pdn-10">
             <button type="submit" role="button" class="waves-effect waves-light btn">Gravar Cadastro</button>

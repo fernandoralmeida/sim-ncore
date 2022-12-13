@@ -7,7 +7,7 @@
 }
 
 
-<div class="center pdn-10 grey lighten-5 rounded-4">
+<div class="box-card center pdn-10 rounded-4">
     @{if (User.Identity.IsAuthenticated)
         {
             <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
@@ -16,7 +16,7 @@
                         <img class="right" src="~/css/imgs/sim_logo.png" width="100px">
                     </div>
                     <div class="col s6 m6 l6 alpha-text-6 no-padding">
-                        <stron class="left" style="margin-top: 69px;">Web v2.0</stron>
+                        <stron class="left" style="margin-top: 69px;">Web v2.2</stron>
                     </div>
                 </div>     
                 <h6 class="alpha-text-8 mgn-0 no-padding" style="font-size:10px;"><strong>SECRETARIA DE DESENVOLVIMENTO ECONÔMICO, EMPREENDEDORISMO E INOVAÇÃO</strong></h6>

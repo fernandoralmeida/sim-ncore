@@ -344,7 +344,7 @@ ul .logo-left{
     border-radius: 4px;
 }
 .collapsible {
-    background-color: var(--bgwhite);
+    background-color: transparent;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     margin: .5rem 0 1rem 0;
