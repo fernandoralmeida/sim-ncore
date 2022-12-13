@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.BancoPovo.ViewModel;
 using Sim.Application.BancoPovo.Interfaces;
+using System.Globalization;
 
 namespace Sim.UI.Web.Pages.BancoPovo.Reports;
 
-[Authorize(Roles = "Administrador")]
+[Authorize(Roles = "Administrador,M_BancoPovo")]
 public class IndexModel : PageModel
 {
-    private readonly IAppServiceContratos _appconotratos;
+    private readonly IAppServiceContratos _appcontratos;
 
     [TempData]
     public string StatusMessage { get; set; }
@@ -18,7 +19,7 @@ public class IndexModel : PageModel
     public VMReports InputView { get; set; }
 
     public IndexModel(IAppServiceContratos appServiceContratos) {
-        _appconotratos = appServiceContratos;
+        _appcontratos = appServiceContratos;
     }
 
     public void OnGet() {
@@ -28,15 +29,15 @@ public class IndexModel : PageModel
     }
 
     public async Task OnPostAsync() {
-        var _list = await _appconotratos.DoListAsync(s => s.Data >= InputView.DataInicial && s.Data <= InputView.DataFinal);
-        InputView.Relatorios = await _appconotratos.DoReportsAsync(_list);
+        var _list = await _appcontratos.DoListAsync(s => s.Data >= InputView.DataInicial && s.Data <= InputView.DataFinal);
+        InputView.Relatorios = await _appcontratos.DoReportsAsync(_list);
     }
 
     public async Task OnGetPreviewAsync(int? id, DateTime? datai, DateTime? dataf){
         try{
-            var _list = await _appconotratos.DoListAsync(s => s.Data.Value.Date >= datai && s.Data.Value.Date <= dataf);
-            InputView.Relatorios = await _appconotratos.DoReportsAsync(_list);      
-            InputView.DataInicial = datai;
+            var _list = await _appcontratos.DoListAsync(s => s.Data >= datai && s.Data <= dataf);
+            InputView.Relatorios = await _appcontratos.DoReportsAsync(_list);      
+            InputView.DataInicial =  datai;
             InputView.DataFinal = dataf;
             switch(id){
                 case 0:
