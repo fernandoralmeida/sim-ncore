@@ -33,6 +33,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string PowerBIAtendimento => "PowerBIAtendimento";
         public static string PowerBIEmpresas => "PowerBIEmpresas";
         public static string PowerBIPessoas => "PowerBIPessoas";
+        public static string PowerBIEventos => "PowerBIEventos";
         public static string Configuracoes => "Configuracoes";
         public static string ConfigSistema => "ConfigSistema";
         public static string ConfigContas => "ConfigContas";
@@ -67,6 +68,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string PowerBIAtendimentoNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIAtendimento);
         public static string PowerBIEmpresasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIEmpresas);
         public static string PowerBIPessoasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIPessoas);
+        public static string PowerBIEventosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIEventos);
         public static string ConfiguracoesNavClass(ViewContext viewContext) => PageNavClass(viewContext, Configuracoes);
         public static string ConfigSistemaNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, ConfigSistema);
         public static string ConfigContasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, ConfigContas);
