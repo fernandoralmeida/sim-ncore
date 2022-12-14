@@ -5,15 +5,152 @@
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.SAReports;
 }
 
-<div>
-    <form method="post">
-        <div class="row">
-            <div class="col input-field">
-                <input type="date" />
+<form method="post">
+    <nav class="row transparent">
+        <div class="row nav-wrapper">
+            <div class="input-field col s12 m12 l12 no-padding">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="InputAno" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>      
+        </div>
+    </nav>
+</form>
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+    
+<div class="row">
+    <div class="box-container-card">                    
+        <div class="box-column">
+            <div class="box-column-row">
+                @{ var _econt = Model.LReports.Eventos.Value.Value; }
+                <div class="box-card">
+                    <div class="card-header grey-text">Eventos<i class="material-icons left">event</i></div>
+                    <div class="box-around">
+                        <a class="box-cell-item-flex font-size-12">
+                            <p class="grey-text">@Model.LReports.Eventos.Value.Key</p>
+                            <p class="blue-text font-h5">@Model.LReports.Eventos.Value.Value</p>
+                        </a>
+                        <a class="box-cell-item-flex font-size-12">
+                            <p class="grey-text">@Model.LReports.EventosC.Value.Key</p>
+                            <p class="red-text font-h5">@Model.LReports.EventosC.Value.Value</p>
+                        </a>                                                              
+                    </div>
+                </div>
             </div>
-            <div class="col input-field">
-                <input type="date" />
+
+            <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Inscrições<i class="material-icons left">view_list</i></div>
+                    <div class="box-around">
+                        <a class="box-cell-item-flex font-size-12">
+                            <p class="grey-text">@Model.LReports.Participantes.Value.Key</p>
+                            <p class="blue-text font-h6">@Model.LReports.Participantes.Value.Value</p>
+                        </a>
+                        <a class="box-cell-item-flex font-size-12">
+                            <p class="grey-text">@Model.LReports.TaxaPreenchimentoParticipantes.Value.Key</p>
+                            @{
+                                var _t = Model.LReports.Participantes.Value.Value * Model.LReports.TaxaPreenchimentoParticipantes.Value.Value;
+                            }
+                            <p class="blue-text font-h6">@_t</p>
+                            <p class="grey-text">(@Model.LReports.TaxaPreenchimentoParticipantes.Value.Value.ToString("N2")%)</p>
+                        </a>                                                              
+                    </div>
+                </div>                 
+                <div class="box-card">
+                    <div class="card-header grey-text">Panorama<i class="material-icons left">female male</i></div>
+                    <div class="box-around">
+                        @foreach (var op in Model.LReports.ParticipantesGenero)
+                        {
+                            float v1 = op.Value;
+                            float v2 = Model.LReports.Participantes.Value.Value;
+                            float r = (v1 / v2) * 100;
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@op.Key</p>
+                                <p class="blue-text font-h6">@op.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>   
+                        }                            
+                    </div>
+                </div> 
+            </div>
+
+            <div class="box-column-row">
+                <div  class="box-card">
+                    <div class="card-header grey-text">Faixa Etária<i class="material-icons left">groups</i></div>
+                    <div class="box-around">
+                        @foreach (var item in Model.LReports.FaixaEtaria)
+                        {
+                            float v1 = item.Value;
+                            float v2 = _econt;
+                            float r = (v1 / v2) * 100;
+                            
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@item.Key</p>
+                                <p class="blue-text font-h6">@item.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div  class="box-card">
+                    <div class="card-header grey-text">Ocorrências<i class="material-icons left">event_repeat</i></div>
+                    <div class="box-around">
+                        @foreach (var item in Model.LReports.Eventos)
+                        {
+                            float v1 = item.Value;
+                            float v2 = _econt;
+                            float r = (v1 / v2) * 100;
+                            
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@item.Key</p>
+                                <p class="blue-text font-h6">@item.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div  class="box-card">
+                    <div class="card-header grey-text">Por Mês<i class="material-icons left">calendar_month</i></div>
+                    <div class="box-around">
+                        @foreach (var item in Model.LReports.EventosMeses)
+                        {
+                            float v1 = item.Value;
+                            float v2 = _econt;
+                            float r = (v1 / v2) * 100;
+                            
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@item.Key</p>
+                                <p class="blue-text font-h6">@item.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div  class="box-card">
+                    <div class="card-header grey-text">Por Setor<i class="material-icons left">location_on</i></div>
+                    <div class="box-around">
+                        @foreach (var item in Model.LReports.EventosSetores)
+                        {
+                            float v1 = item.Value;
+                            float v2 = _econt;
+                            float r = (v1 / v2) * 100;
+                            
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@item.Key</p>
+                                <p class="blue-text font-h6">@item.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</div>  
