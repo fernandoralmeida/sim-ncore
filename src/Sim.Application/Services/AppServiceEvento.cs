@@ -21,7 +21,7 @@ namespace Sim.Application.Services
         {
             return await Task.Run(() => {
                 var _list = new EBIEventos();              
-                
+
                 _list.EventosR = new KeyValuePair<string, int>("Realizados", lista.Where(s => s.Situacao == EEvento.ESituacao.Finalizado).Count());
                 _list.EventosC = new KeyValuePair<string, int>("Cancelados", lista.Where(s => s.Situacao == EEvento.ESituacao.Cancelado).Count());
 
@@ -36,14 +36,14 @@ namespace Sim.Application.Services
                 foreach (var p in lista) {
                     _partc += p.Inscritos.Count();
                 }
-                _list.Participantes = new KeyValuePair<string, int>("Participantes", _partc);
+                _list.Participantes = new KeyValuePair<string, int>("Inscritos", _partc);
 
                 var _list_faixa = new List<KeyValuePair<string, int>>();
                 var _faixa_etaria = new List<string>();
                 var _genero = new List<string>();
                 var _list_genero = new List<KeyValuePair<string, int>>();
                 var _txparticipante = 0;
-                foreach (var f in lista) {
+                foreach (var f in lista.Where(s => s.Situacao != EEvento.ESituacao.Cancelado)) {
                     foreach (var i in f.Inscritos) {
                         if(i.Presente)
                             _txparticipante++;
@@ -90,7 +90,25 @@ namespace Sim.Application.Services
                 float _tx = _txparticipante;
                 float _p = _partc;
                 float _r_txpart = _tx / _p;
-                _list.TaxaPreenchimentoParticipantes = new KeyValuePair<string, float>("Presença", _r_txpart);
+                _list.TaxaPreenchimentoParticipantes = new KeyValuePair<string, float>("Presentes", _r_txpart);
+
+                var _add_setor = new List<KeyValuePair<string, int>>();
+                foreach (var item in lista
+                                        .Where(s => s.Situacao != EEvento.ESituacao.Cancelado)
+                                        .GroupBy(g => g.Owner)
+                                        .OrderByDescending(o => o.Count())) {
+                    _add_setor.Add(new KeyValuePair<string, int>(item.Key, item.Count()));
+                }
+                _list.EventosSetores = _add_setor;
+
+                var _add_month = new List<KeyValuePair<string, int>>();
+                foreach (var item in lista
+                                        .Where(s => s.Situacao != EEvento.ESituacao.Cancelado)
+                                        .OrderBy(o => o.Data)
+                                        .GroupBy(g => g.Data.Value.ToString("MMM"))) {
+                    _add_month.Add(new KeyValuePair<string, int>(item.Key, item.Count()));                    
+                }
+                _list.EventosMeses = _add_month;
 
                 return _list;
             });

@@ -10,4 +10,6 @@ public class EBIEventos {
     public IEnumerable<KeyValuePair<string, int>>? FaixaEtaria { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? ParticipantesGenero { get; set; } 
     public KeyValuePair<string, float>? TaxaPreenchimentoParticipantes { get; set; } 
+    public IEnumerable<KeyValuePair<string, int>>? EventosSetores { get; set; }
+    public IEnumerable<KeyValuePair<string, int>>? EventosMeses { get; set; }
 } 
