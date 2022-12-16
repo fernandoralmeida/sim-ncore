@@ -22,10 +22,12 @@ public class IndexModel : PageModel
         _appcontratos = appServiceContratos;
     }
 
-    public void OnGet() {
+    public async Task OnGetAsync() {
         InputView = new();
         InputView.DataInicial = new DateTime(year: DateTime.Now.Year, month: 1, day: 1);
         InputView.DataFinal = DateTime.Now;
+        var _list = await _appcontratos.DoListAsync(s => s.Data >= InputView.DataInicial && s.Data <= InputView.DataFinal);
+        InputView.Relatorios = await _appcontratos.DoReportsAsync(_list);
     }
 
     public async Task OnPostAsync() {
@@ -33,12 +35,12 @@ public class IndexModel : PageModel
         InputView.Relatorios = await _appcontratos.DoReportsAsync(_list);
     }
 
-    public async Task OnGetPreviewAsync(int? id, DateTime? datai, DateTime? dataf){
+    public async Task OnPostPreviewAsync(int? id){
         try{
-            var _list = await _appcontratos.DoListAsync(s => s.Data >= datai && s.Data <= dataf);
+            var _list = await _appcontratos.DoListAsync(s => s.Data >= InputView.DataInicial && s.Data <= InputView.DataFinal);
             InputView.Relatorios = await _appcontratos.DoReportsAsync(_list);      
-            InputView.DataInicial =  datai;
-            InputView.DataFinal = dataf;
+            //InputView.DataInicial =  datai;
+            //InputView.DataFinal = dataf;
             switch(id){
                 case 0:
                     InputView.Relatorios.ListaContratos = _list.Where(s => s.ContratosEmAnalise(s));

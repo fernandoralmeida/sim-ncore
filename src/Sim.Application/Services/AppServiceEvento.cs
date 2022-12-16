@@ -22,7 +22,7 @@ namespace Sim.Application.Services
             return await Task.Run(() => {
                 var _list = new EBIEventos();              
 
-                _list.EventosR = new KeyValuePair<string, int>("Realizados", lista.Where(s => s.Situacao == EEvento.ESituacao.Finalizado).Count());
+                _list.EventosR = new KeyValuePair<string, int>("Realizados", lista.Where(s => s.Situacao != EEvento.ESituacao.Cancelado).Count());
                 _list.EventosC = new KeyValuePair<string, int>("Cancelados", lista.Where(s => s.Situacao == EEvento.ESituacao.Cancelado).Count());
 
                 var _nome_eventos = new List<KeyValuePair<string, int>>();

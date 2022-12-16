@@ -19,12 +19,6 @@
             <button class="btn waves-effect waves-light"><i class="material-icons">search</i></button>
         </div>
     </div>
-</form>
-
-@{
-    var _data1 = Model.InputView.DataInicial.Value.ToString("dd-MM-yyyy");
-    var _data2 = Model.InputView.DataFinal.Value.ToString("dd-MM-yyyy");
-}
 
 @if(Model.InputView.Relatorios != null) {
     <div class="row">
@@ -33,48 +27,48 @@
                 <div class="box-card">
                     <div class="card-header grey-text">Panorama Contratos<i class="material-icons left">view_module</i></div>
                     <div class="box-around">                            
-                        <a asp-page-handler="Preview" asp-route-id="0" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                        <button asp-page-handler="Preview" asp-route-id="0" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
                             <p class="grey-text">@Model.InputView.Relatorios.ContratosEmAnalise.Key</p>                         
                             <p class="orange-text font-h5">@Model.InputView.Relatorios.ContratosEmAnalise.Value</p>
                             <p class="orange-text">@Model.InputView.Relatorios.ValorContratosAnalise</p>
-                        </a>       
-                        <a asp-page-handler="Preview" asp-route-id="1" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                        </button>       
+                        <button asp-page-handler="Preview" asp-route-id="1" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
                             <p class="grey-text">@Model.InputView.Relatorios.ContratosAprovadosRegulares.Key</p>                         
                             <p class="amber-text font-h5">@Model.InputView.Relatorios.ContratosAprovadosRegulares.Value</p>
                             <p class="amber-text">@Model.InputView.Relatorios.ValorContratosRegulares</p>
-                        </a>   
-                        <a asp-page-handler="Preview" asp-route-id="2" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                        </button>   
+                        <button asp-page-handler="Preview" asp-route-id="2" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
                             <p class="grey-text">@Model.InputView.Relatorios.ContratosAprovadosInadimplente.Key</p>                         
                             <p class="red-text font-h5">@Model.InputView.Relatorios.ContratosAprovadosInadimplente.Value</p>
                             <p class="red-text">@Model.InputView.Relatorios.ValorContratosInadimplentes</p>
-                        </a>     
-                        <a asp-page-handler="Preview" asp-route-id="3" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                        </button>     
+                        <button asp-page-handler="Preview" asp-route-id="3" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
                             <p class="grey-text">@Model.InputView.Relatorios.ContratosLiquidados.Key</p>                         
                             <p class="green-text font-h5">@Model.InputView.Relatorios.ContratosLiquidados.Value</p>
                             <p class="green-text">...</p>
-                        </a>    
-                        <a asp-page-handler="Preview" asp-route-id="4" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                        </button>    
+                        <button asp-page-handler="Preview" asp-route-id="4" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
                             <p class="grey-text">@Model.InputView.Relatorios.ContratosReprovados.Key</p>                         
                             <p class="deep-orange-text font-h5">@Model.InputView.Relatorios.ContratosReprovados.Value</p>
                             <p class="deep-orange-text">...</p>
-                        </a> 
-                        <a asp-page-handler="Preview" asp-route-id="5" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                        </button> 
+                        <button asp-page-handler="Preview" asp-route-id="5" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
                             <p class="grey-text">@Model.InputView.Relatorios.ContratosCancelados.Key</p>                         
                             <p class="grey-text font-h5">@Model.InputView.Relatorios.ContratosCancelados.Value</p>
                             <p class="grey-text">...</p>
-                        </a> 
-                        <a asp-page-handler="Preview" asp-route-id="6" asp-route-datai="@_data1" asp-route-dataf="@_data2" class="box-cell-item-flex font-size-12">   
+                        </button> 
+                        <button asp-page-handler="Preview" asp-route-id="6" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
                             <p class="grey-text">@Model.InputView.Relatorios.ContratosRenegociados.Key</p>                         
                             <p class="cyan-text font-h5">@Model.InputView.Relatorios.ContratosRenegociados.Value</p>
                             <p class="cyan-text">@Model.InputView.Relatorios.ValorContratosRenegociados</p>
-                        </a> 
+                        </button> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
 }
-
+</form>
 
 @if(Model.InputView.Relatorios != null) {
     <div class="card">
@@ -106,7 +100,7 @@
                             <td>@{var _data = c.Data.Value.ToShortDateString();}@Html.DisplayFor(model => _data)</td>
                             <td>
                                 @{ var _situacao = c.Situacao.ToString();}
-                                @Html.DisplayFor(model => _situacao)                                                         
+                                @Html.DisplayFor(model => _situacao)/@Html.DisplayFor(model => c.Pagamento);                                                         
                             </td>
                             <td>@NumberFormatInfo.CurrentInfo.CurrencySymbol @Html.DisplayFor(model => c.Valor)</td>                            
                         </tr>                        

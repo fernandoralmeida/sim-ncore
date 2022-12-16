@@ -49,7 +49,8 @@ public class AppServiceSebrae : IAppServiceSebrae
             _report.ServicesMonth = _ls_svmonth;
 
             var _list_svc = new List<KeyValuePair<string, int>>();
-            foreach (var item in _getservices.GroupBy(g => g)) {
+            foreach (var item in _getservices.GroupBy(g => g)
+                                                .OrderByDescending(o => o.Count())) {
                 _list_svc.Add(new KeyValuePair<string, int>(item.Key, item.Count()));                
             }
             _report.ListaServicos = _list_svc;

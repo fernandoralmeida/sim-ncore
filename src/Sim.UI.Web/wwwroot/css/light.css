@@ -462,6 +462,10 @@ button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
 }
+.btn-nobg {
+    background-color: transparent;
+    border: 0px;
+}
 /*   Shadow   */
 nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .sidenav {
     -webkit-box-shadow: none;
