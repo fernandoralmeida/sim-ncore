@@ -5,16 +5,19 @@
         <div class="nav-wrapper">
             <ul class="right">
                 <li class="@AdminNavPages.IndexNavClass(ViewContext)">
-                    <a id="lusers" asp-page="./Index">Listar</a>
+                    <a id="lusers" asp-area="Admin" asp-page="./Index">Ativos</a>
+                </li>
+                <li class="@AdminNavPages.BlockNavClass(ViewContext)" hidden>
+                    <a asp-area="Admin" id="lblock" asp-page="./Block/Index">Bloqueados</a>
                 </li>
                 <li class="@AdminNavPages.RegisterNavClass(ViewContext)" hidden>
-                    <a id="regs" asp-page="./Register"><i class="fas fa-user-plus"></i></a>
+                    <a id="regs" asp-area="Admin" asp-page="./Register"><i class="material-icons">add</i></a>
                 </li>
                 <li class="@AdminNavPages.RolesNavClass(ViewContext)">
-                    <a id="roles" asp-page="./Roles">Apolices</a>
+                    <a id="roles" asp-area="Admin" asp-page="./Roles">Apolices</a>
                 </li>
                 <li class="@AdminNavPages.ClaimsNavClass(ViewContext)" hidden>
-                    <a id="claims" asp-page="./Claims">Papeis</a>
+                    <a id="claims" asp-area="Admin" asp-page="./Claims">Papeis</a>
                 </li>
                 <li>
                     <form>

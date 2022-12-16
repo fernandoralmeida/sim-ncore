@@ -35,5 +35,10 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
             await LoadAsync();
             return Page();
         }
+
+        public async Task<IActionResult> OnGetLockUnlock(string id, bool blk) {            
+            var _status = await _appIdentity.lockUnlockAsync(id, blk);
+            return Page();                       
+        }
     }
 }

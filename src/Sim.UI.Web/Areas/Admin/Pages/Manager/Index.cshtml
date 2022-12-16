@@ -66,10 +66,9 @@
                         </label>
                     </td>
                     <td>
-                        <label>
-                            <input type="checkbox" asp-for="@item.LockoutEnabled" />
-                            <span></span>
-                        </label>
+                        <div class="switch">
+                            <label><input class="icheckbox" data-id="@item.UserName" checked="@item.LockoutEnabled" type="checkbox" /><span class="lever"></span></label>
+                        </div>    
                     </td>
                     <td>
                         <a asp-page="./UserRoles" asp-route-id="@item.Id" class="btn btn-small waves-effect waves-light orange" title="Editar"><i class="material-icons">edit</i></a>
@@ -79,3 +78,18 @@
         </tbody>
     </table>
 </form>
+
+@section scripts{
+    <script>
+        $(function(){
+            $(".icheckbox").click(function(){
+                var g_id = $(this).data('id');
+                var chk = $(this).prop("checked");      
+                $.get(`/Admin/Manager?id=${g_id}&blk=${chk}&handler=LockUnlock`, 
+                    function(returnedData){                        
+                });
+            });
+        });
+    </script>
+}
+

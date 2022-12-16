@@ -9,9 +9,9 @@
 
 @{
     var _user = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name);
-    var _lstatus = await MeuStatus.ListUserAsync(User.Identity.Name);
-    var _status = _lstatus.Any() == null ? false : _lstatus.FirstOrDefault().Online;
-    var _idstatus = _lstatus.Any() == null ? Guid.Empty : _lstatus.FirstOrDefault().Id;    
+    var _lstatus = await MeuStatus.MyStatusAsync(User.Identity.Name);   
+    var _status = _lstatus == null ? false : _lstatus.Online;
+    var _idstatus = _lstatus == null ? Guid.Empty : _lstatus.Id;    
     var DisplayName = _user.Name;
     var DisplayLastName = _user.LastName; 
     var account_color = "";
@@ -27,8 +27,7 @@
             <a href="#" data-target="sidenav-left" class="sidenav-trigger "><i class="material-icons">menu</i></a>
             <a class="navbar-page-name ">@ViewData["Title"]</a>
             <ul class="right"> 
-                @if (User.IsInRole("Administrador") || User.IsInRole("Admin_Gloval") || User.IsInRole("Admin_Account"))
-                {
+                @if (User.IsInRole("Administrador") || User.IsInRole("Admin_Gloval") || User.IsInRole("Admin_Account")) {
                     <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)">
                         <a asp-area="Admin" asp-page="/Manager/Index"><i class="material-icons online">manage_accounts</i></a>
                     </li>
@@ -39,8 +38,7 @@
                 <li>
                     <a id="settheme" data-id="@_user.UserName" data-theme="@_changetheme" href="#"><i class="material-icons online">@_icon</i></a>
                 </li>               
-                @if(SignInManager.IsSignedIn(User))
-                {
+                @if(SignInManager.IsSignedIn(User)) {
                     @if (!_status)
                     { account_color = "offline"; }
                     else
@@ -76,8 +74,6 @@
         var formData = { id: uid, val: st.checked };
         $.get('/Identity/OnlineStatus', { id: uid, val : st.checked }, 
         function(returnedData){
-        }).fail(function(){
-            alert("Erro");
         });
     }
 </script>
