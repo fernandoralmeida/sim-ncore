@@ -7,7 +7,7 @@ using Sim.UI.Web.Areas.Admin.ViewModel;
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
 
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Admin_Global")]
     public class RolesModel : PageModel
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -25,7 +25,7 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 
         private async Task LoadAsync()
         {
-            var t = Task.Run(() => _roleManager.Roles);
+            var t = Task.Run(() => _roleManager.Roles.OrderBy(o => o.Name));
             await t;
             Input = new() {
                 Roles = t.Result

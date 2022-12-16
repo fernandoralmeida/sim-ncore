@@ -7,7 +7,7 @@ using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 {
-    [Authorize(Roles = "Administrador,M_Sebrae")]
+    [Authorize(Roles = "Admin_Global,M_Sebrae,M_Sebrae_Admin")]
 
     public class LancarModel : PageModel
     {

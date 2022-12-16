@@ -10,7 +10,7 @@ using Sim.Domain.BancoPovo.Models;
 
 namespace Sim.UI.Web.Pages.BancoPovo;
 
-[Authorize(Roles = "Administrador,M_BancoPovo")]
+[Authorize(Roles = "Admin_Global,M_BancoPovo,M_BancoPovo_Admin")]
 public class IndexModel : PageModel {
 
     private readonly IMapper _mapper;

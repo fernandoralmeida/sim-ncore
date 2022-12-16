@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.Interfaces;
@@ -7,6 +8,7 @@ using Sim.Domain.Organizacao.Model;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Canal;
 
+[Authorize(Roles = "Admin_Global,Admin_Config")]
 public class IndexModel : PageModel
 {
     private readonly IAppServiceSecretaria _appSecretaria;

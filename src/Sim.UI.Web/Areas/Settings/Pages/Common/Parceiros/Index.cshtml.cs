@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using Sim.Domain.Organizacao.Model;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Parceiros;
 
+[Authorize(Roles = "Admin_Global,Admin_Config")]
 public class IndexModel : PageModel
 {
 

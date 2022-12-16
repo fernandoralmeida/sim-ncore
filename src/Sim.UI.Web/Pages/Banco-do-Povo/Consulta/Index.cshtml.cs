@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Sim.UI.Web.Pages.BancoPovo.Consulta;
 
-[Authorize(Roles = "Administrador,M_BancoPovo")]
+[Authorize(Roles = "Admin_Global,M_BancoPovo,M_BancoPovo_Admin")]
 public class IndexModel : PageModel
 {
     [BindProperty]

@@ -8,7 +8,7 @@ using Sim.Domain.Sebrae.Model;
 
 namespace Sim.UI.Web.Pages.Pat.Reports;
 
-[Authorize(Roles = "Administrador")]
+[Authorize(Roles = "Admin_Global,M_Pat,M_Pat_Admin")]
 public class IndexModel : PageModel {
     
     private readonly IAppServiceEvento _appevento;

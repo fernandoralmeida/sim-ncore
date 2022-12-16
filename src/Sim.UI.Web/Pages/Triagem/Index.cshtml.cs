@@ -6,7 +6,7 @@ using Sim.Application.Interfaces;
 
 namespace Sim.UI.Web.Pages.Triagem
 {
-
+    
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

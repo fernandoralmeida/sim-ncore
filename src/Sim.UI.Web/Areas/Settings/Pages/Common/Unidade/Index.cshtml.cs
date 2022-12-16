@@ -5,8 +5,11 @@ using Sim.Application.VM;
 using Sim.Domain.Organizacao.Model;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Unidade;
+
+[Authorize(Roles = "Admin_Global,Admin_Config")]
 public class IndexModel : PageModel
 {
     //private readonly IAppServicePrefeitura _appServicePrefeitura;

@@ -10,7 +10,7 @@ using Sim.Domain.Entity;
 namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 {
 
-    [Authorize(Roles = "Administrador,M_Sebrae")]
+    [Authorize(Roles = "Admin_Global,M_Sebrae,M_Sebrae_Admin")]
     public class LancadosModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;
@@ -42,7 +42,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 
             if (!PaginationAtendimentos.Any())
             {
-                StatusMessage = string.Format("N�o h� atendimentos para lan�ar");
+                StatusMessage = string.Format("Não há atendimentos para lançar");
             }
         }
 

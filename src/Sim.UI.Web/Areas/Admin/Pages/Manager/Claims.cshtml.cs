@@ -5,7 +5,7 @@ using Sim.UI.Web.Areas.Admin.ViewModel;
 
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Admin_Global,Admin_Account")]
     public class ClaimsModel : PageModel
     {
         [TempData]

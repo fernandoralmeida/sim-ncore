@@ -10,7 +10,7 @@ using Sim.UI.Web.Functions;
 
 namespace Sim.UI.Web.Pages.Pat.Add
 {
-    [Authorize(Roles = "Administrador,M_Pat,Admin_Pat")]
+    [Authorize(Roles = "Admin_Global,M_Pat,M_Pat_Admin")]
     public class IndexModel : PageModel
     {   
         private readonly IMapper _mapper;

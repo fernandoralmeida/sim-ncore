@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace Sim.UI.Web.Pages.BancoPovo.Reports;
 
-[Authorize(Roles = "Administrador,M_BancoPovo")]
+[Authorize(Roles = "Admin_Global,M_BancoPovo,M_BancoPovo_Admin")]
 public class IndexModel : PageModel
 {
     private readonly IAppServiceContratos _appcontratos;

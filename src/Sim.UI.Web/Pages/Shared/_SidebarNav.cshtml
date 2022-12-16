@@ -17,7 +17,9 @@
         <ul class="collapsible collapsible-accordion">
             <div class="logo-left"><a asp-page="/Index"><img src="~/icons/sedempi-166p.svg" width="150px"/></a></div>
 
-            @if(User.IsInRole("Administrador") || User.IsInRole("M_Pat")) {
+            @if(User.IsInRole("Admin_Global")
+                || User.IsInRole("M_Pat_Admin")
+                || User.IsInRole("M_Pat")) {
                 @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("pat"))){                   
                     <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)">
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
@@ -31,7 +33,9 @@
                 }
             }
 
-            @if(User.IsInRole("Administrador") || User.IsInRole("M_BancoPovo")) {
+            @if(User.IsInRole("Admin_Global")
+                || User.IsInRole("M_BancoPovo_Admin")
+                || User.IsInRole("M_BancoPovo")) {
                 @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("banco do povo"))){                   
                     <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)">
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
@@ -45,7 +49,9 @@
                 }
             }
 
-            @if(User.IsInRole("Administrador") || User.IsInRole("M_Sebrae")) {
+            @if(User.IsInRole("Admin_Global")
+                || User.IsInRole("M_Sebrae_Admin")
+                || User.IsInRole("M_Sebrae")) {
                 @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("sebrae aqui"))){                   
                     <li class="@LayoutNavPages.InicioSANavClass(ViewContext)">
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>

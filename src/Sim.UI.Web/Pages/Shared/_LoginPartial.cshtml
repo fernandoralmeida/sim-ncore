@@ -27,7 +27,7 @@
             <a href="#" data-target="sidenav-left" class="sidenav-trigger "><i class="material-icons">menu</i></a>
             <a class="navbar-page-name ">@ViewData["Title"]</a>
             <ul class="right"> 
-                @if (User.IsInRole("Administrador"))
+                @if (User.IsInRole("Administrador") || User.IsInRole("Admin_Gloval") || User.IsInRole("Admin_Account"))
                 {
                     <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)">
                         <a asp-area="Admin" asp-page="/Manager/Index"><i class="material-icons online">manage_accounts</i></a>
