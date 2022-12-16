@@ -1,10 +1,12 @@
-﻿using Sim.Domain.Entity;
+﻿using System.Linq.Expressions;
+using Sim.Domain.Entity;
 
 namespace Sim.Application.Interfaces
 {
     public interface IAppServiceAtendimento : IAppServiceBase<EAtendimento>
     {
         Task<EAtendimento> GetAtendimentoAsync(Guid id);
+        Task<IEnumerable<EAtendimento>> DoListAsync(Expression<Func<EAtendimento, bool>> filter = null);
         Task<IEnumerable<EAtendimento>> DoListByAnoAsync(int ano);
         Task<IEnumerable<EAtendimento>> DoListAendimentosAsyncBy(string param);
         Task<IEnumerable<EAtendimento>> ListPessoaAsync(string cpf);

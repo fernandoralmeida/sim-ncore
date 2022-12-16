@@ -1,9 +1,11 @@
 ﻿namespace Sim.Domain.Interface.IRepository
 {
+    using System.Linq.Expressions;
     using Entity;
     public interface IRepositoryAtendimento : IRepositoryBase<EAtendimento>
     {
         Task<EAtendimento> GetAtendimentoAsync(Guid id);
+        Task<IEnumerable<EAtendimento>> DoListAsync(Expression<Func<EAtendimento, bool>>? filter = null);
         Task<IEnumerable<EAtendimento>> DoListByAnoAsync(int ano);
         Task<IEnumerable<EAtendimento>> DoListAendimentosAsyncBy(string param);
         Task<IEnumerable<EAtendimento>> ListPessoaAsync(string cpf);

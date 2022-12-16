@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Sim.Data.Context;
 using Sim.Domain.Entity;
 using Sim.Domain.Interface.IRepository;
@@ -31,6 +32,24 @@ namespace Sim.Data.Repository
                         .AsNoTrackingWithIdentityResolution()
                         .OrderBy(o => o.Data)
                         .ToListAsync();     
+        }
+
+        public async Task<IEnumerable<EAtendimento>> DoListAsync(Expression<Func<EAtendimento, bool>> filter = null)
+        {
+            var _query = _db.Atendimento.AsQueryable();
+
+            if(filter != null)
+                _query = _query
+                    .Where(filter)
+                    .Where(a => a.Status == "Finalizado")
+                    .Where(a => a.Ativo == true)
+                    .Include(p => p.Pessoa)
+                    .Include(e => e.Empresa)
+                    .Include(s => s.Sebrae)
+                    .OrderBy(o => o.Data)
+                    .AsNoTrackingWithIdentityResolution();
+
+            return await _query.ToListAsync();
         }
 
         public async Task<IEnumerable<EAtendimento>> DoListByAnoAsync(int ano)

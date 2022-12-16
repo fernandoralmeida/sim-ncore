@@ -1,6 +1,7 @@
 ﻿using Sim.Domain.Entity;
 using Sim.Domain.Interface.IService;
 using Sim.Application.Interfaces;
+using System.Linq.Expressions;
 
 namespace Sim.Application.Services
 {
@@ -17,6 +18,11 @@ namespace Sim.Application.Services
         public async Task<IEnumerable<EAtendimento>> DoListAendimentosAsyncBy(string param)
         {
             return await _atendimento.DoListAendimentosAsyncBy(param);
+        }
+
+        public async Task<IEnumerable<EAtendimento>> DoListAsync(Expression<Func<EAtendimento, bool>> filter = null)
+        {
+            return await _atendimento.DoListAsync(filter: filter);
         }
 
         public async Task<IEnumerable<EAtendimento>> DoListByAnoAsync(int ano)

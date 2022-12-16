@@ -32,6 +32,8 @@ using Sim.Application.BancoPovo.Interfaces;
 using Sim.Application.BancoPovo.Services;
 using Sim.Domain.BancoPovo.Interfaces;
 using Sim.Domain.BancoPovo.Services;
+using Sim.Application.Sebrae.Interfaces;
+using Sim.Application.Sebrae.Services;
 
 namespace Sim.IoC
 {
@@ -212,8 +214,8 @@ namespace Sim.IoC
 
             services.AddScoped<IAppServiceBIAtendimento, AppServiceBIAtendimento>();
             services.AddScoped<IServiceBIAtendimento, ServiceBIAtendimento>();
-
-
+            //
+            services.AddScoped<IAppServiceSebrae, AppServiceSebrae>();
             //
             services.AddScoped<IReceitaWS, ReceitaWS>();
             //

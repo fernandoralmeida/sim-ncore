@@ -16,31 +16,43 @@ public class AppServiceSebrae : IAppServiceSebrae
             _report.Atendimentos = new KeyValuePair<string, int>("Atendimentos", at.Count());
             _report.Eventos = new KeyValuePair<string, int>("Eventos", ev.Count());
 
+            var _evmonth = new List<KeyValuePair<string, int>>();
+            foreach (var item in ev.Where(s => s.Situacao != EEvento.ESituacao.Cancelado)
+                                    .OrderBy(o => o.Data)
+                                    .GroupBy(g => g.Data.Value.ToString("MMM"))) {
+                _evmonth.Add(new KeyValuePair<string, int>(item.Key, item.Count()));                
+            } 
+            _report.EventosMonth = _evmonth;
+
             var _atmonth = new List<KeyValuePair<string, int>>();
             foreach (var item in at.Where(s => s.Servicos != null)
                                     .OrderBy(o => o.Data)
                                     .GroupBy(g => g.Data.Value.ToString("MMM"))) {
                 _atmonth.Add(new KeyValuePair<string, int>(item.Key, item.Count()));                
             }            
-            
+            _report.AtendimentosMonth = _atmonth;
+
             var _svmonth = new List<string>();
+            var _getservices = new List<string>();
             foreach (var item in at.Where(s => s.Servicos != null).OrderBy(o => o.Data)) {                
                 foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
+                    _getservices.Add(s);
                     _svmonth.Add(item.Data.Value.Date.ToString("MMM"));
                 }               
             }
             _report.Serviços = new KeyValuePair<string, int>("Serviços", _svmonth.Count());
+
             var _ls_svmonth = new List<KeyValuePair<string, int>>();
             foreach (var item in _svmonth.GroupBy(g => g)) {
                 _ls_svmonth.Add(new KeyValuePair<string, int>(item.Key, item.Count()));                
             }
             _report.ServicesMonth = _ls_svmonth;
 
-            var _meis = new List<KeyValuePair<string, int>>();
-            _meis.Add(new KeyValuePair<string, int>("Formalização-MEI", at.Where(s => s.Servicos.Contains("Formalização-MEI")).Count()));
-            _meis.Add(new KeyValuePair<string, int>("Alteração-MEI", at.Where(s => s.Servicos.Contains("Alteração-MEI")).Count()));
-            _meis.Add(new KeyValuePair<string, int>("Baixa-MEI", at.Where(s => s.Servicos.Contains("Baixa-MEI")).Count()));
-            _report.MEIs = _meis;
+            var _list_svc = new List<KeyValuePair<string, int>>();
+            foreach (var item in _getservices.GroupBy(g => g)) {
+                _list_svc.Add(new KeyValuePair<string, int>(item.Key, item.Count()));                
+            }
+            _report.ListaServicos = _list_svc;
 
             var _c = new List<KeyValuePair<string, int>>();
             _c.Add(new KeyValuePair<string, int>("Pessoa Física",at.Where(s => s.Pessoa != null && s.Empresa == null).Count()));
@@ -94,10 +106,17 @@ public class AppServiceSebrae : IAppServiceSebrae
             }
             _report.GeneroCliente = _list_genero;
 
-            _report.ClienteNovo = new KeyValuePair<string, int>("Clientes Novos", at
-                                    .Where(s => s.Pessoa != null & s.Pessoa.Data_Cadastro.Value.Year == DateTime.Now.Year)
-                                    .Count());
-            
+            var _cli = at.Where(s => s.Pessoa != null);
+
+            var _novos_recorrentes = new List<KeyValuePair<string, int>>();
+            _novos_recorrentes.Add(new KeyValuePair<string, int>("Novos", _cli
+                                    .Where(s => s.Pessoa.Data_Cadastro.Value.Year == DateTime.Now.Year)
+                                    .Count()));
+            _novos_recorrentes.Add(new KeyValuePair<string, int>("Recorrentes", _cli
+                                    .Where(s => s.Pessoa.Data_Cadastro.Value.Year < DateTime.Now.Year)
+                                    .Count()));
+
+            _report.Clientes = _novos_recorrentes;
             return _report;
         });
     }
