@@ -102,7 +102,23 @@
 
            <div class="box-column-row">
                 <div  class="box-card">
-                    <div class="card-header grey-text">Perfil Cliente<i class="material-icons left">contact_page</i></div>
+                    <div class="card-header grey-text">Clientes<i class="material-icons left">person</i></div>
+                    <div class="box-around">
+                        @foreach (var op in Model.LReports.Clientes)
+                        {
+                            float v1 = op.Value;
+                            float v2 = Model.LReports.Atendimentos.Value;
+                            float r = (v1 / v2) * 100;
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@op.Key</p>
+                                <p class="blue-text font-h6">@op.Value</p>
+                                <p class="grey-text">(@r.ToString("N2")%)</p>
+                            </a>   
+                        }   
+                    </div>
+                </div>
+                <div  class="box-card">
+                    <div class="card-header grey-text">Perfil<i class="material-icons left">contact_page</i></div>
                     <div class="box-around">
                         @foreach (var item in Model.LReports.PerfilCliente)
                         {
@@ -132,22 +148,6 @@
                                 <p class="grey-text">(@r.ToString("N2")%)</p>
                             </a>   
                         }                            
-                    </div>
-                </div> 
-                <div  class="box-card">
-                    <div class="card-header grey-text">Clientes<i class="material-icons left">person</i></div>
-                    <div class="box-around">
-                        @foreach (var op in Model.LReports.Clientes)
-                        {
-                            float v1 = op.Value;
-                            float v2 = Model.LReports.Atendimentos.Value;
-                            float r = (v1 / v2) * 100;
-                            <a class="box-cell-item-flex font-size-12">
-                                <p class="grey-text">@op.Key</p>
-                                <p class="blue-text font-h6">@op.Value</p>
-                                <p class="grey-text">(@r.ToString("N2")%)</p>
-                            </a>   
-                        }   
                     </div>
                 </div>
             </div>
