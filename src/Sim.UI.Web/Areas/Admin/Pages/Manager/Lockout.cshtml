@@ -1,0 +1,95 @@
+﻿@page
+@model Sim.UI.Web.Areas.Admin.Pages.Manager.LockoutModel
+@{
+    Layout = "_Layout.cshtml";
+
+    ViewData["Title"] = "Contas de Usuário";
+    ViewData["ActivePageAreaAdmin"] = AdminNavPages.Lock;
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+<form class="card">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Email Confirmado
+                </th>
+                <th>
+                    Desbloquear
+                </th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                int cont = 0;
+            }
+
+            @foreach (var item in Model.Input.Users)
+            {
+
+                <tr>
+                    <td>
+                        @{cont++;}
+                        @cont.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" asp-for="@item.EmailConfirmed" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>
+                        <div class="switch">
+                            <label><input class="icheckbox" data-id="@item.UserName" checked="@item.LockoutEnabled" type="checkbox" /><span class="lever"></span></label>
+                        </div>    
+                    </td>
+                    <td>
+                        <a asp-page="./UserRoles" asp-route-id="@item.Id" class="btn btn-small waves-effect waves-light orange" title="Editar"><i class="material-icons">edit</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+@section scripts{
+    <script>
+        $(function(){
+            $(".icheckbox").click(function(){
+                var g_id = $(this).data('id');
+                var chk = $(this).prop("checked");      
+                $.get(`/Admin/Manager?id=${g_id}&blk=${chk}&handler=LockUnlock`, 
+                    function(returnedData){                        
+                });
+            });
+        });
+    </script>
+}
+

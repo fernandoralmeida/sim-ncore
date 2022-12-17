@@ -7,8 +7,8 @@
                 <li class="@AdminNavPages.IndexNavClass(ViewContext)">
                     <a id="lusers" asp-area="Admin" asp-page="./Index">Ativos</a>
                 </li>
-                <li class="@AdminNavPages.BlockNavClass(ViewContext)" hidden>
-                    <a asp-area="Admin" id="lblock" asp-page="./Block/Index">Bloqueados</a>
+                <li class="@AdminNavPages.LockNavClass(ViewContext)">
+                    <a asp-area="Admin" id="lblock" asp-page="./Lockout">Bloqueados</a>
                 </li>
                 <li class="@AdminNavPages.RegisterNavClass(ViewContext)" hidden>
                     <a id="regs" asp-area="Admin" asp-page="./Register"><i class="material-icons">add</i></a>
