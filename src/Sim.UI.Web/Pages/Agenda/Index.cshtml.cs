@@ -62,7 +62,11 @@ namespace Sim.UI.Web.Pages.Agenda
         public async Task OnPostAsync()
         {
             Input.ListaEventosMes = await _appServiceEvento
-                .ListEventosPorMesAsync(await _appServiceEvento.DoListAsync(s => s.Descricao.Contains(Input.Search)));
+                .ListEventosPorMesAsync(await _appServiceEvento
+                .DoListAsync(s => s.Nome.Contains(Input.Search) 
+                                || s.Tipo.Contains(Input.Search)
+                                || s.Parceiro.Contains(Input.Search)
+                                || s.Descricao.Contains(Input.Search)));
         }
 
         private int QuantosDiasFaltam(DateTime dataalvo)

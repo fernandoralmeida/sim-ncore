@@ -10,6 +10,7 @@
     <li class="@AgendaNavPages.EventoAtivoClass(ViewContext)"><a asp-route-m="avl" class="green-text"><i class="material-icons">event_available</i>Disponível</a></li>
     <li class="@AgendaNavPages.EventoFinalizadoClass(ViewContext)"><a asp-route-m="fzd"><i class="material-icons">event</i>Encerrado</a></li>
     <li class="@AgendaNavPages.EventoCanceladoClass(ViewContext)"><a asp-route-m="cld" class="red-text"><i class="material-icons">event_busy</i>Cancelado</a></li>
+    <li class="@AgendaNavPages.SearchClass(ViewContext)"><a asp-route-m="cld" class="red-text"><i class="material-icons">event_busy</i>Participantes</a></li>
 </ul>
 <form method="post">
     <nav class="row navbar transparent">
@@ -26,6 +27,7 @@
                 <li class="@AgendaNavPages.EventoAtivoClass(ViewContext)"><a asp-route-m="avl" class="green-text"><i class="material-icons">event_available</i></a> </li>
                 <li class="@AgendaNavPages.EventoFinalizadoClass(ViewContext)"><a asp-route-m="fzd"><i class="material-icons">event</i></a></li>
                 <li class="@AgendaNavPages.EventoCanceladoClass(ViewContext)"><a asp-route-m="cld" class="red-text"><i class="material-icons">event_busy</i></a></li>
+                <li><a asp-page="/Agenda/Inscricoes/Consulta/Index" class="ambar-text"><i class="material-icons">search</i></a></li>
             </ul>            
         </div>
     </nav>

@@ -198,6 +198,12 @@ namespace Sim.UI.Web.Pages.Pat.Add
                     };
                 } 
 
+                if(_emprego.Pessoa == null && _emprego.Empresa == null){
+                    StatusMessage = "Alerta: Verifique se o formulário foi preenchido corretamente!";
+                    return Page();
+                }
+
+
                 await _appServiceAtendimento.AddAsync(_atendimento);                
                 await _appServiceEmpregos.AddAsync(_emprego);
 

@@ -32,10 +32,7 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
         public IEnumerable<ApplicationUser> Users_Admin_Config { get; set; }
 
         private async Task LoadAsync()
-        { 
-            
-            Users_Admin_Config = new List<ApplicationUser>();
-            
+        {           
             var _adm_global = await _userManager.GetUsersInRoleAsync("Admin_Global"); 
             var _adm_account = await _userManager.GetUsersInRoleAsync("Admin_Account"); 
             var _adm_config = await _userManager.GetUsersInRoleAsync("Admin_Config"); 
@@ -45,7 +42,22 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
             Users_Admin_Config = _adm_config.Where(s => s.LockoutEnabled == false).OrderBy(o => o.UserName);
 
             var _lockout_off = await _appIdentity.ListAllAsync();
-            var _users = _lockout_off.ToList();
+            var _users = _lockout_off.Where(s => s.LockoutEnabled == false).ToList();
+
+            foreach (var u in _lockout_off) {
+                foreach (var g in _adm_global) {
+                    if(g.UserName == u.UserName)
+                        _users.Remove(u);
+                }
+                foreach (var g in _adm_account) {
+                    if(g.UserName == u.UserName)
+                        _users.Remove(u);
+                }
+                foreach (var g in _adm_config) {
+                    if(g.UserName == u.UserName)
+                        _users.Remove(u);
+                }
+            }
 
             Input = new() {
                 Users = _users.OrderBy(o => o.UserName)
