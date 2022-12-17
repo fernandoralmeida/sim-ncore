@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Sim.UI.Web.Areas.Admin.ViewModel;
 using Sim.Identity.Interfaces;
 using Sim.Identity.Entity;
+using Microsoft.AspNetCore.Identity;
 
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
@@ -12,9 +13,12 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
     public class IndexModel : PageModel
     {
         private readonly IServiceUser _appIdentity;
-        public IndexModel(IServiceUser appServiceUser)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public IndexModel(IServiceUser appServiceUser,
+            UserManager<ApplicationUser> userManager)
         {
             _appIdentity = appServiceUser;
+            _userManager = userManager;
         }
 
         [TempData]
@@ -29,13 +33,22 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 
         private async Task LoadAsync()
         { 
-            Users_Admin_Global = new List<ApplicationUser>();
-            Users_Admin_Account = new List<ApplicationUser>();
+            
             Users_Admin_Config = new List<ApplicationUser>();
             
+            var _adm_global = await _userManager.GetUsersInRoleAsync("Admin_Global"); 
+            var _adm_account = await _userManager.GetUsersInRoleAsync("Admin_Account"); 
+            var _adm_config = await _userManager.GetUsersInRoleAsync("Admin_Config"); 
+
+            Users_Admin_Global = _adm_global.Where(s => s.LockoutEnabled == false).OrderBy(o => o.UserName);
+            Users_Admin_Account = _adm_account.Where(s => s.LockoutEnabled == false).OrderBy(o => o.UserName);
+            Users_Admin_Config = _adm_config.Where(s => s.LockoutEnabled == false).OrderBy(o => o.UserName);
+
             var _lockout_off = await _appIdentity.ListAllAsync();
+            var _users = _lockout_off.ToList();
+
             Input = new() {
-                Users = _lockout_off.Where(s => s.LockoutEnabled == false).OrderBy(o => o.UserName)
+                Users = _users.OrderBy(o => o.UserName)
             };
         }
 

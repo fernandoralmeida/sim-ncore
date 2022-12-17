@@ -44,9 +44,9 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
         {
             var roles = _roleManager.Roles.ToList();
             if (User.IsInRole("Admin_Global") || User.IsInRole("Administrador"))
-                RoleList = new SelectList(roles, nameof(IdentityRole.Name));
+                RoleList = new SelectList(roles.OrderBy(o => o.Name), nameof(IdentityRole.Name));
             else
-                RoleList = new SelectList(roles.Where(s => s.Name != "Admin_Global" && s.Name != "Admin_Account" && s.Name != "Administrador"),nameof(IdentityRole.Name));                
+                RoleList = new SelectList(roles.Where(s => s.Name != "Admin_Global" && s.Name != "Admin_Account" && s.Name != "Administrador").OrderBy(o => o.Name),nameof(IdentityRole.Name));                
 
             var u = await _userManager.FindByIdAsync(id);
 
