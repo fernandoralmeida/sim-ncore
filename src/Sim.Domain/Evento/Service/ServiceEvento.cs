@@ -44,7 +44,7 @@ namespace Sim.Domain.Evento.Service
                     var _lista_meses = new List<(string Mes, int Qtde, IEnumerable<EEvento>)>();
                     var _eventos = new List<EEvento>();                    
                 
-                    for(int a = 2020; a <= DateTime.Now.Year; a++ )
+                    for(int a = 2020; a <= (DateTime.Now.Year + 2); a++ )
                     {
                         for (int i = 1; i < 13; i++)
                         {
