@@ -7,7 +7,7 @@ using Sim.UI.Web.Areas.Admin.ViewModel;
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
 
-    [Authorize(Roles = "Administrador,Admin_Global")]
+    [Authorize(Roles = "Admin_Global")]
     public class RolesModel : PageModel
     {
         private readonly RoleManager<IdentityRole> _roleManager;

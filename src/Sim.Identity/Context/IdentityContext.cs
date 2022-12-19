@@ -34,8 +34,7 @@ namespace Sim.Identity.Context
             base.OnModelCreating(modelbuilder);
 
             //Seeding a  'Administrator' role to AspNetRoles table
-            modelbuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "2c5e174e-3b0e-446f-86af-483d56fd7210", Name = "Administrador", NormalizedName = "Administrador".ToUpper() });
-
+            modelbuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "2c5e174e-3b0e-446f-86af-483d56fd7210", Name = "Admin_Global", NormalizedName = "Admin_Global".ToUpper() });
 
             //a hasher to hash the password before seeding the user to the db
             var hasher = new PasswordHasher<ApplicationUser>();

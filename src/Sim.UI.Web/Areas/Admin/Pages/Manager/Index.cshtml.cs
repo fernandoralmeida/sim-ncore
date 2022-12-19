@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
 
-    [Authorize(Roles = "Administrador,Admin_Global,Admin_Account")]
+    [Authorize(Roles = "Admin_Global,Admin_Account")]
     public class IndexModel : PageModel
     {
         private readonly IServiceUser _appIdentity;

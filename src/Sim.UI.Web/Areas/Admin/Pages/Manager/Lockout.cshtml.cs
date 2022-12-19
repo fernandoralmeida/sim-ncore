@@ -3,17 +3,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Sim.UI.Web.Areas.Admin.ViewModel;
 using Sim.Identity.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Sim.Identity.Entity;
 
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
 
-    [Authorize(Roles = "Administrador,Admin_Global,Admin_Account")]
+    [Authorize(Roles = "Admin_Global,Admin_Account")]
     public class LockoutModel : PageModel
     {
         private readonly IServiceUser _appIdentity;
-        public LockoutModel(IServiceUser appServiceUser)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public LockoutModel(IServiceUser appServiceUser,
+            UserManager<ApplicationUser> userManager)
         {
             _appIdentity = appServiceUser;
+            _userManager = userManager;
         }
 
         [TempData]
@@ -22,11 +27,40 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
         [BindProperty]
         public VMListUsers Input { get; set; }
 
+        public IEnumerable<ApplicationUser> Users_Admin_Global { get; set; }
+        public IEnumerable<ApplicationUser> Users_Admin_Account { get; set; }
+        public IEnumerable<ApplicationUser> Users_Admin_Config { get; set; }
+
         private async Task LoadAsync()
-        {   
-            var _lockout = await _appIdentity.ListAllAsync();
+        {           
+            var _adm_global = await _userManager.GetUsersInRoleAsync("Admin_Global"); 
+            var _adm_account = await _userManager.GetUsersInRoleAsync("Admin_Account"); 
+            var _adm_config = await _userManager.GetUsersInRoleAsync("Admin_Config"); 
+
+            Users_Admin_Global = _adm_global.Where(s => s.LockoutEnabled == true).OrderBy(o => o.UserName);
+            Users_Admin_Account = _adm_account.Where(s => s.LockoutEnabled == true).OrderBy(o => o.UserName);
+            Users_Admin_Config = _adm_config.Where(s => s.LockoutEnabled == true).OrderBy(o => o.UserName);
+
+            var _lockout_off = await _appIdentity.ListAllAsync();
+            var _users = _lockout_off.Where(s => s.LockoutEnabled == true).ToList();
+
+            foreach (var u in _lockout_off) {
+                foreach (var g in Users_Admin_Global) {
+                    if(g.UserName == u.UserName)
+                        _users.Remove(u);
+                }
+                foreach (var g in Users_Admin_Account) {
+                    if(g.UserName == u.UserName)
+                        _users.Remove(u);
+                }
+                foreach (var g in Users_Admin_Config) {
+                    if(g.UserName == u.UserName)
+                        _users.Remove(u);
+                }
+            }
+
             Input = new() {
-                Users = _lockout.Where(s => s.LockoutEnabled == true).OrderBy(o => o.UserName)
+                Users = _users.OrderBy(o => o.UserName)
             };
         }
 

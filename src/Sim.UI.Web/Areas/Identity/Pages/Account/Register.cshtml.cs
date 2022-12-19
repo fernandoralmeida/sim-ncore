@@ -12,7 +12,7 @@ using Sim.Identity.Entity;
 
 namespace Sim.UI.Web.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin_Global,Admin_Account")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
