@@ -2,6 +2,7 @@
 using Sim.Domain.Cnpj.Entity;
 using Sim.Domain.Cnpj.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Sim.Data.Cnpj.Repository
 {
@@ -227,5 +228,29 @@ namespace Sim.Data.Cnpj.Repository
 
                 return brf;
             });
+
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<BaseReceitaFederal, bool>> filter = null) =>
+            await Task.Run(() =>
+                {
+                    var brf = new List<BaseReceitaFederal>();   
+                    
+                    var qry = (from est in _db.Estabelecimentos                           
+                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
+                            from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                            from mpo in _db.Municipios.Where(s => s.Codigo == est.Municipio)
+                            from sn in _db.Simples.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
+                            select new { est, emp, atv, sn, mpo }) 
+                            .Distinct()
+                            .AsNoTrackingWithIdentityResolution();
+
+                    foreach (var e in qry)
+                    {
+                        var _cnpj = string.Format("{0}{1}{2}", e.est.CNPJBase, e.est.CNPJOrdem, e.est.CNPJDV);
+
+                        brf.Add(new BaseReceitaFederal(
+                            0, _cnpj, e.emp, e.est, null, e.sn, e.atv, null, null, null, e.mpo, null));
+                    }
+                    return brf;
+                });
     }
 }

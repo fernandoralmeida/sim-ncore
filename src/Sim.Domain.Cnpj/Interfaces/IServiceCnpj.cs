@@ -1,4 +1,5 @@
-﻿using Sim.Domain.Cnpj.Entity;
+﻿using System.Linq.Expressions;
+using Sim.Domain.Cnpj.Entity;
 
 namespace Sim.Domain.Cnpj.Interfaces
 {
@@ -10,6 +11,7 @@ namespace Sim.Domain.Cnpj.Interfaces
         Task<IEnumerable<Municipio>> DoListMinicipiosAsync();
         Task<IEnumerable<Municipio>> DoListMicroRegiaoJahuAsync();
         Task<IEnumerable<BICnae>> DoListBICnaeAsync(string municipio);
+        Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<BaseReceitaFederal, bool>> filter = null);
         Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes);
         Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio);
         Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio);

@@ -1,6 +1,7 @@
 ﻿using Sim.Domain.Cnpj.Entity;
 using Sim.Domain.Cnpj.Interfaces;
 using Sim.Application.Cnpj.Interfaces;
+using System.Linq.Expressions;
 
 namespace Sim.Application.Cnpj.Services
 {
@@ -56,9 +57,12 @@ namespace Sim.Application.Cnpj.Services
             await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
 
         public async Task<IEnumerable<EExport>> DoListExport(string municipio) =>
-            await _cnpj.DoListExport(await DoListEmpresasAsync(municipio));
+            await _cnpj.DoListExport(await DoListAsync());
 
         public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj) =>
             await _cnpj.GetCNPJAsync(cnpj);
+
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<BaseReceitaFederal, bool>> filter = null) =>
+            await _cnpj.DoListAsync(filter);
     }
 }

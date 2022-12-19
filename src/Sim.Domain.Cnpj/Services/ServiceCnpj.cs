@@ -1,6 +1,7 @@
 ﻿using Sim.Domain.Cnpj.Entity;
 using Sim.Domain.Cnpj.Interfaces;
 using Sim.Domain.Cnpj.Extensions;
+using System.Linq.Expressions;
 
 namespace Sim.Domain.Cnpj.Services
 {
@@ -1981,5 +1982,8 @@ namespace Sim.Domain.Cnpj.Services
 
                 return _list;
             });
+
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<BaseReceitaFederal, bool>> filter = null) =>
+            await _cnpj.DoListAsync(filter);
     }
 }
