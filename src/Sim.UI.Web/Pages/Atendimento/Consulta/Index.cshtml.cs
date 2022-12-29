@@ -1,16 +1,10 @@
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 using Sim.Domain.Entity;
 using Sim.Application.Interfaces;
 using Sim.Identity.Interfaces;
-using Sim.Identity.Entity;
-using OfficeOpenXml;
 
 namespace Sim.UI.Web.Pages.Atendimento.Consulta
 {

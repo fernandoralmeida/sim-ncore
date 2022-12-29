@@ -10,7 +10,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Consultas
 {
 
 
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Admin_Global")]
     public class ListaModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;

@@ -10,7 +10,6 @@ using Sim.Domain.Organizacao.Model;
 using Sim.Application.Interfaces;
 using Sim.Identity.Interfaces;
 using Sim.Identity.Entity;
-using OfficeOpenXml;
 using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Atendimento.Consulta
