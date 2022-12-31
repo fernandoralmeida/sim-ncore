@@ -15,16 +15,22 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
         private readonly IAppServiceEvento _appServiceEvento;
         private readonly IAppServicePessoa _appServicePessoa;
         private readonly IAppServiceEmpresa _appServiceEmpresa;
+        private readonly IAppServiceAtendimento _appatendimento;
+        private readonly IAppServiceContador _appcontador;
 
         public IndexModel(IAppServiceInscricao appServiceInscricao,
             IAppServiceEvento appServiceEvento,
             IAppServiceEmpresa appServiceEmpresa,
-            IAppServicePessoa appServicePessoa)
+            IAppServicePessoa appServicePessoa,
+            IAppServiceAtendimento appServiceAtendimento,
+            IAppServiceContador appServiceContador)
         {
             _appServiceEvento = appServiceEvento;
             _appServiceInscricao = appServiceInscricao;
             _appServiceEmpresa = appServiceEmpresa;
             _appServicePessoa = appServicePessoa;
+            _appatendimento = appServiceAtendimento;
+            _appcontador = appServiceContador;
         }
 
         [BindProperty]
@@ -42,7 +48,10 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
 
         [TempData]
         public string StatusMessage { get; set; }
-
+        private async Task<string> GetProtoloco()
+        {        
+            return await _appcontador.GetProtocoloAsync(User.Identity.Name, "Atendimento");
+        }
         public async Task OnGetAsync(int? id)
         {
             
@@ -140,6 +149,25 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
                 };
                 
                 await _appServiceInscricao.AddAsync(inscricao);
+
+                var _at = new EAtendimento(){
+                    Protocolo = await GetProtoloco(),
+                    Owner_AppUser_Id = User.Identity.Name,
+                    Data = DateTime.Now,
+                    DataF = DateTime.Now,
+                    Pessoa = await _appServicePessoa.SingleIdAsync(Input.Participante.Id),
+                    Empresa = Input.Empresa != null ? await _appServiceEmpresa.SingleIdAsync(Input.Empresa.Id) : null,
+                    Setor = inscricao.Evento.Owner,
+                    Servicos = "Inscrição",
+                    Descricao =  string.Format("Incrição no(a) {0} {1}", inscricao.Evento.Tipo, inscricao.Evento.Nome),
+                    Canal = "Presencial",
+                    Ativo = true,
+                    Anonimo = false,
+                    Status = "Finalizado",
+                    Ultima_Alteracao = DateTime.Now
+                };
+
+                await _appatendimento.AddAsync(_at);
 
                 return RedirectToPage("/Agenda/Inscricoes/Index", new { id = inscricao.Evento.Codigo });
 
