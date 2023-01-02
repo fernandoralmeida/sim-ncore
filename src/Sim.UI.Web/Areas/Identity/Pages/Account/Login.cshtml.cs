@@ -91,9 +91,11 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account
                     }
 
                     _logger.LogInformation("Usuário conectado."); 
-                    return LocalRedirect(returnUrl);
 
-                    //return RedirectToPage("/Planner/Index");
+                    if(DateTime.Now.DayOfYear > 10)
+                        return LocalRedirect(returnUrl);
+                    else
+                        return RedirectToPage("/Index");
                 }
                 if (result.RequiresTwoFactor)
                 {

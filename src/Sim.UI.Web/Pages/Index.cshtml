@@ -19,6 +19,12 @@
     <h6 class="mgn-0 no-padding" style="font-size:10px;"><strong>SECRETARIA DE DESENVOLVIMENTO ECONÔMICO, EMPREENDEDORISMO E INOVAÇÃO</strong></h6>
 </div>
 <div class="font-size-12">
+    <h5>Notas sobre atualizações -02/01/2023</h5>
+    <h6>Eventos</h6>
+    <ul>
+        <li>- Quando realizado uma inscrição, automaticamente é gerado um atendimento.</li>
+    </ul>
+    <hr />
     <h5>Notas sobre atualizações -16/12/2022</h5>
     <h6>PAT</h6>
     <ul>
@@ -137,3 +143,24 @@
 
 </div>
 
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Olá! :)</h4>
+        <h5>Que 2023 seja como você sempre sonhou: leve, calmo e cheio de alegrias. Feliz Ano Novo!</h5>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var now = new Date();
+        var start = new Date(now.getFullYear(), 0, 0);
+        var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+        var oneDay = 1000 * 60 * 60 * 24;
+        var day = Math.floor(diff / oneDay);
+        if(day <= 10)
+            alert(`Que ${now.getFullYear()} seja como você sempre sonhou: leve, calmo e cheio de alegrias. Feliz Ano Novo!`); //instance.open();
+    });
+</script>
