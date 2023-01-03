@@ -25,14 +25,14 @@ namespace Sim.Domain.Entity
         public virtual Empresas? Empresa { get; set; }
         public virtual RaeSebrae? Sebrae { get; set; }
 
-        public bool RaeLancados(EAtendimento obj)
+        public bool RaeLancados(EAtendimento obj, int ano)
         {
-            return obj.Anonimo != true && obj.Sebrae != null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == DateTime.Now.Year;
+            return obj.Anonimo != true && obj.Sebrae != null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == ano;
         }
 
-        public bool RaeNaoLancados(EAtendimento obj)
+        public bool RaeNaoLancados(EAtendimento obj, int ano)
         {
-            return obj.Anonimo != true && obj.Sebrae == null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == DateTime.Now.Year;
+            return obj.Anonimo != true && obj.Sebrae == null && obj.Status != "Cancelado" && obj.Setor == "Sebrae Aqui" && obj.Data.Value.Year == ano;
         }
 
         public bool BySetor(EAtendimento obj, string setor_name)

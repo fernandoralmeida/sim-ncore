@@ -150,6 +150,8 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
                 
                 await _appServiceInscricao.AddAsync(inscricao);
 
+                //var _setor = string.Empty;
+
                 var _at = new EAtendimento(){
                     Protocolo = await GetProtoloco(),
                     Owner_AppUser_Id = User.Identity.Name,
@@ -158,8 +160,8 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
                     Pessoa = await _appServicePessoa.SingleIdAsync(Input.Participante.Id),
                     Empresa = Input.Empresa != null ? await _appServiceEmpresa.SingleIdAsync(Input.Empresa.Id) : null,
                     Setor = inscricao.Evento.Owner,
-                    Servicos = "Inscrição",
-                    Descricao =  string.Format("Incrição no(a) {0} {1}", inscricao.Evento.Tipo, inscricao.Evento.Nome),
+                    Servicos = "Inscrição em Evento",
+                    Descricao =  string.Format("Incrição Nº:{0}, Evento: {1} {2}", inscricao.Numero, inscricao.Evento.Tipo, inscricao.Evento.Nome),
                     Canal = "Presencial",
                     Ativo = true,
                     Anonimo = false,

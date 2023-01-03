@@ -7,7 +7,23 @@
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<partial name="_SebraeAquiNav" />
+<div class="row no-padding">
+    <div class="col s6 m6 l6 no-padding">
+        <nav class="transparent">
+            <form method="get">
+                <div class="nav-wrapper">             
+                    <div class="input-field no-padding">
+                        <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Src" type="search" required>
+                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    </div>            
+                </div>
+            </form>
+        </nav>
+    </div>
+    <div class="col s6 m6 l6 no-padding">
+        <partial name="_SebraeAquiNav" model="@Model.Src" />
+    </div>
+</div>
 <div class="card">
     <table class="responsive-table">
         <thead>
@@ -65,7 +81,7 @@
                         @Html.DisplayFor(modelItem => item.Canal)
                     </td>
                     <td>
-                        <a asp-page="./Rae/Lancar" class="btn-small waves-effect waves-light" asp-route-id="@item.Id">Lançar</a>
+                        <a asp-page="./Rae/Lancar" class="btn-small waves-effect waves-light" asp-route-y="@Model.Src" asp-route-id="@item.Id">Lançar</a>
                     </td>
                 </tr>
             }
@@ -77,10 +93,10 @@
     }
     <div class="card-action center">        
         <span class="left">Página @Model.PaginationAtendimentos.PageIndex de @Model.PaginationAtendimentos.TotalPages - @Model.RegCount Reg.</span>
-        <a asp-page="./Index" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
+        <a asp-page="./Index" asp-route-Src="@Model.Src" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex - 1)" class="btn-small waves-effect waves-light @prevDisabled">
             <i class="material-icons">navigate_before</i>
         </a>
-        <a asp-page="./Index" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
+        <a asp-page="./Index" asp-route-Src="@Model.Src" asp-route-pag="@(Model.PaginationAtendimentos.PageIndex + 1)" class="btn-small waves-effect waves-light @nextDisabled">
             <i class="material-icons">navigate_next</i> 
         </a>        
     </div>

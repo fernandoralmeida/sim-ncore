@@ -23,10 +23,16 @@ namespace Sim.UI.Web.Pages.SebraeAqui
         public string StatusMessage { get; set; }
 
         public int RegCount { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        public int Src { get; set; }
                
-        public async Task OnGetAsync(int? pag)
+        public async Task OnGetAsync(int Src, int? pag)
         {
-            var _list = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name);
+            if(Src == 0 )
+                Src = DateTime.Now.Year;
+
+            var _list = await _appServiceAtendimento.ListRaeNaoLancadosAsync(User.Identity.Name, Src);
 
             RegCount = _list.Count();
 

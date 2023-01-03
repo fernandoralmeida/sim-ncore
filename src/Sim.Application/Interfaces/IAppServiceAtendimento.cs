@@ -25,8 +25,8 @@ namespace Sim.Application.Interfaces
         Task<IEnumerable<EAtendimento>> ListUserNamePeriodoAsync(string username, DateTime? date);
         Task<IEnumerable<EAtendimento>> ListAtendimentosAtivosAsync();
         Task<IEnumerable<EAtendimento>> ListParamAsync(List<object> lparam);
-        Task<IEnumerable<EAtendimento>> ListRaeLancadosAsync(string username);
-        Task<IEnumerable<EAtendimento>> ListRaeNaoLancadosAsync(string username);
+        Task<IEnumerable<EAtendimento>> ListRaeLancadosAsync(string username, int ano);
+        Task<IEnumerable<EAtendimento>> ListRaeNaoLancadosAsync(string username, int ano);
         Task<EAtendimento> GetIdAsync(Guid id);
         Task<IEnumerable<EAtendimento>> ListAllAsync();
         Task<BIAtendimentos> ToListBIAtendimentos(DateTime periodo);

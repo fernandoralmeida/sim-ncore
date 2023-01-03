@@ -57,7 +57,8 @@
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
                         <div class="collapsible-body">
                             <ul>
-                                <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Index">Lançamentos<i class="left material-icons">chevron_right</i></a></li>   
+                                @{ var _year = DateTime.Now.Year; }
+                                <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Index" asp-route-Src="@_year">Lançamentos<i class="left material-icons">chevron_right</i></a></li>   
                                 <li class="@LayoutNavPages.SAReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Reports/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li>
                                 <li class="@LayoutNavPages.SEReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/SalaEmpreendedor/Index">Relatórios SE<i class="left material-icons">chevron_right</i></a></li> 
                             </ul>

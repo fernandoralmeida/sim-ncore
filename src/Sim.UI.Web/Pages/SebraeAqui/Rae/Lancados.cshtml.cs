@@ -25,9 +25,14 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 
         public int RegCount { get; set; }
 
-        public async Task OnGetAsync(int? pag)
+        [BindProperty(SupportsGet = true)]
+        public int Src { get; set; }
+        public async Task OnGetAsync(int Src, int? pag)
         {
-            var _list = await _appServiceAtendimento.ListRaeLancadosAsync(User.Identity.Name);
+            if(Src == 0)
+                Src = DateTime.Now.Year;
+
+            var _list = await _appServiceAtendimento.ListRaeLancadosAsync(User.Identity.Name, Src);
 
             RegCount = _list.Count();
 

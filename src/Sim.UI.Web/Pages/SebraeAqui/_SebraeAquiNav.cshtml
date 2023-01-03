@@ -1,10 +1,11 @@
 ﻿@using Sim.UI.Web.Pages.SebraeAqui
+@model int;
 
-<nav class="row navbar transparent">
+<nav class="navbar transparent">
     <div class="nav-wrapper">
       <ul class="right">
-          <li class="@SebraeAquiNavPages.InicioNavClass(ViewContext)"><a asp-page="/SebraeAqui/Index">Não Lançados</a></li>
-          <li class="@SebraeAquiNavPages.LancadosNavClass(ViewContext)"><a asp-page="/SebraeAqui/Rae/Lancados">Lançados</a></li>
+          <li class="@SebraeAquiNavPages.InicioNavClass(ViewContext)"><a asp-page="/SebraeAqui/Index" asp-route-Src="@Model">Não Lançados</a></li>
+          <li class="@SebraeAquiNavPages.LancadosNavClass(ViewContext)"><a asp-page="/SebraeAqui/Rae/Lancados" asp-route-Src="@Model">Lançados</a></li>
       </ul>
     </div>
 </nav>

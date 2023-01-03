@@ -21,12 +21,15 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
         [BindProperty(SupportsGet = true)]
         public Pages.Atendimento.InputModelAtendimento Input { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int Ano { get; set; }
+
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
+        public async Task<IActionResult> OnGetAsync(int y, Guid id)
         {
-
+            Ano = y;
             var atendimento = await _appServiceAtendimento.GetAtendimentoAsync(id);
 
             Input = new()
@@ -65,7 +68,7 @@ namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 
                 await _appServiceAtendimento.UpdateAsync(atsebrae);
 
-                return RedirectToPage("/SebraeAqui/Index");
+                return RedirectToPage("/SebraeAqui/Index", new { Src = Ano });
 
             }
             catch (Exception ex)
