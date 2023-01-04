@@ -1983,7 +1983,7 @@ namespace Sim.Domain.Cnpj.Services
                 return _list;
             });
 
-        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<BaseReceitaFederal, bool>> filter = null) =>
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<Estabelecimento, bool>> filter = null) =>
             await _cnpj.DoListAsync(filter);
     }
 }

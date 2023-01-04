@@ -229,12 +229,12 @@ namespace Sim.Data.Cnpj.Repository
                 return brf;
             });
 
-        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<BaseReceitaFederal, bool>> filter = null) =>
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<Estabelecimento, bool>> filter = null) =>
             await Task.Run(() =>
                 {
-                    var brf = new List<BaseReceitaFederal>();   
+                    var brf = new List<BaseReceitaFederal>();                       
                     
-                    var qry = (from est in _db.Estabelecimentos                           
+                    var qry = (from est in _db.Estabelecimentos.Where(filter)                           
                             from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
                             from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                             from mpo in _db.Municipios.Where(s => s.Codigo == est.Municipio)

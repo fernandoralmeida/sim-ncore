@@ -57,12 +57,12 @@ namespace Sim.Application.Cnpj.Services
             await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
 
         public async Task<IEnumerable<EExport>> DoListExport(string municipio) =>
-            await _cnpj.DoListExport(await DoListAsync());
+            await _cnpj.DoListExport(await DoListAsync(s => s.Municipio == municipio && s.SituacaoCadastral == "02"));
 
         public async Task<BaseReceitaFederal> GetCNPJAsync(string cnpj) =>
             await _cnpj.GetCNPJAsync(cnpj);
 
-        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<BaseReceitaFederal, bool>> filter = null) =>
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<Estabelecimento, bool>> filter = null) =>
             await _cnpj.DoListAsync(filter);
     }
 }
