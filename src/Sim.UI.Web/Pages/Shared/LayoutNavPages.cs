@@ -12,6 +12,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string InicioBPP => "InicioBPP";
         public static string BPPContratos => "BPPContratos";
         public static string BPPReports => "BPPReports";
+        public static string BPPRepContracts => "BPPRepContracts";
         public static string InicioSA => "InicioSA";
         public static string SA => "SA";
         public static string SAReports => "SAReports";
@@ -48,6 +49,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string InicioBPPNavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioBPP);
         public static string BPPContratosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPContratos);
         public static string BPPReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPReports);
+        public static string BPPRepContractsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPRepContracts);
         public static string InicioSANavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioSA);
         public static string SANavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SA);
         public static string SAReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SAReports);

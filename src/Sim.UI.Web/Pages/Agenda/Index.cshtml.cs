@@ -31,6 +31,7 @@ namespace Sim.UI.Web.Pages.Agenda
 
         public async Task Load(EEvento.ESituacao situacao, string m)
         {
+            var _eventos_vencidos = false;
             EEvento.ESituacao sto = EEvento.ESituacao.Ativo;
             switch(m)
             {
@@ -52,6 +53,16 @@ namespace Sim.UI.Web.Pages.Agenda
             }
             Input.ListaEventosMes = await _appServiceEvento
                 .ListEventosPorMesAsync(await _appServiceEvento.DoListAsync(s => s.Situacao == sto));
+
+            foreach(var item in Input.ListaEventosMes){
+                foreach(var evento in item.Item3){
+                    if(evento.Data <= DateTime.Now && evento.Situacao == EEvento.ESituacao.Ativo)
+                        _eventos_vencidos = true;
+                }
+            }
+
+            if(_eventos_vencidos)
+                StatusMessage = "Alerta: Há eventos vencidos não finalizados!";
         }
 
         public async Task OnGetAsync(string m)

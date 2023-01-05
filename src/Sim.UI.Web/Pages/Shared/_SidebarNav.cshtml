@@ -26,7 +26,7 @@
                         <div class="collapsible-body">
                             <ul>
                                 <li class="@LayoutNavPages.PATEmpregosNavClass(ViewContext)"><a class="submit" asp-page="/Pat/Index">Vagas Emprego<i class="left material-icons">chevron_right</i></a></li>   
-                                <li class="@LayoutNavPages.PATReportsNavClass(ViewContext)"><a class="submit" asp-page="/Pat/Reports/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li> 
+                                <li class="@LayoutNavPages.PATReportsNavClass(ViewContext)"><a class="submit" asp-page="/Pat/Reports/Index">Indicadores<i class="left material-icons">chevron_right</i></a></li> 
                             </ul>
                         </div>
                     </li>
@@ -41,8 +41,9 @@
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
                         <div class="collapsible-body">
                             <ul>
-                                <li class="@LayoutNavPages.BPPContratosNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Index">Contratos<i class="left material-icons">chevron_right</i></a></li>   
-                                <li class="@LayoutNavPages.BPPReportsNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Reports/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li> 
+                                <li class="@LayoutNavPages.BPPContratosNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Index">Contratos<i class="left material-icons">chevron_right</i></a></li>
+                                <li class="@LayoutNavPages.BPPRepContractsNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Contracts/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li>   
+                                <li class="@LayoutNavPages.BPPReportsNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Reports/Index">Indicadores<i class="left material-icons">chevron_right</i></a></li>                                                             
                             </ul>
                         </div>
                     </li>
@@ -59,8 +60,8 @@
                             <ul>
                                 @{ var _year = DateTime.Now.Year; }
                                 <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Index" asp-route-Src="@_year">Lançamentos<i class="left material-icons">chevron_right</i></a></li>   
-                                <li class="@LayoutNavPages.SAReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Reports/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li>
-                                <li class="@LayoutNavPages.SEReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/SalaEmpreendedor/Index">Relatórios SE<i class="left material-icons">chevron_right</i></a></li> 
+                                <li class="@LayoutNavPages.SAReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Reports/Index">Indicadores<i class="left material-icons">chevron_right</i></a></li>
+                                <li class="@LayoutNavPages.SEReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/SalaEmpreendedor/Index">Sala Empreendedor<i class="left material-icons">chevron_right</i></a></li> 
                             </ul>
                         </div>
                     </li>

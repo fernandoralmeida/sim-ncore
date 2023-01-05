@@ -1,0 +1,112 @@
+﻿@page
+@using System.Globalization
+@model Sim.UI.Web.Pages.BancoPovo.Contracts.IndexModel
+@{
+    ViewData["Title"] = "Banco do Povo: Rel. Contratos";
+    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.BPPRepContracts;   
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+<form method="post">
+    <div class="row">
+        <div class="col input-field">
+            <input asp-for="InputView.DataInicial" />
+        </div>
+        <div class="col input-field valign-wrapper">
+            <input asp-for="InputView.DataFinal" />
+            <button class="btn waves-effect waves-light"><i class="material-icons">search</i></button>
+        </div>
+    </div>
+
+@if(Model.InputView.Relatorios != null) {
+    <div class="row">
+        <div class="box-column">
+            <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Panorama Contratos<i class="material-icons left">view_module</i></div>
+                    <div class="box-around">                            
+                        <button asp-page-handler="Preview" asp-route-id="0" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosEmAnalise.Key</p>                         
+                            <p class="orange-text font-h5">@Model.InputView.Relatorios.ContratosEmAnalise.Value</p>
+                            <p class="orange-text">@Model.InputView.Relatorios.ValorContratosAnalise</p>
+                        </button>       
+                        <button asp-page-handler="Preview" asp-route-id="1" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosAprovadosRegulares.Key</p>                         
+                            <p class="amber-text font-h5">@Model.InputView.Relatorios.ContratosAprovadosRegulares.Value</p>
+                            <p class="amber-text">@Model.InputView.Relatorios.ValorContratosRegulares</p>
+                        </button>   
+                        <button asp-page-handler="Preview" asp-route-id="2" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosAprovadosInadimplente.Key</p>                         
+                            <p class="red-text font-h5">@Model.InputView.Relatorios.ContratosAprovadosInadimplente.Value</p>
+                            <p class="red-text">@Model.InputView.Relatorios.ValorContratosInadimplentes</p>
+                        </button>     
+                        <button asp-page-handler="Preview" asp-route-id="3" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosLiquidados.Key</p>                         
+                            <p class="green-text font-h5">@Model.InputView.Relatorios.ContratosLiquidados.Value</p>
+                            <p class="green-text">...</p>
+                        </button>    
+                        <button asp-page-handler="Preview" asp-route-id="4" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosReprovados.Key</p>                         
+                            <p class="deep-orange-text font-h5">@Model.InputView.Relatorios.ContratosReprovados.Value</p>
+                            <p class="deep-orange-text">...</p>
+                        </button> 
+                        <button asp-page-handler="Preview" asp-route-id="5" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosCancelados.Key</p>                         
+                            <p class="grey-text font-h5">@Model.InputView.Relatorios.ContratosCancelados.Value</p>
+                            <p class="grey-text">...</p>
+                        </button> 
+                        <button asp-page-handler="Preview" asp-route-id="6" class="box-cell-item-flex font-size-12 btn-nobg waves-effect">   
+                            <p class="grey-text">@Model.InputView.Relatorios.ContratosRenegociados.Key</p>                         
+                            <p class="cyan-text font-h5">@Model.InputView.Relatorios.ContratosRenegociados.Value</p>
+                            <p class="cyan-text">@Model.InputView.Relatorios.ValorContratosRenegociados</p>
+                        </button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</form>
+
+@if(Model.InputView.Relatorios != null) {
+    <div class="card">
+        <div class="card-header grey-text">Contratos<i class="material-icons left">text_snippet</i></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Processo</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Situação</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>     
+                    @{ var _cont = 0; }
+                    @foreach (var c in Model.InputView.Relatorios.ListaContratos) {
+                        _cont++;
+                        <tr>
+                            <td>@_cont</td>
+                            <td>@Html.DisplayFor(model => c.Numero)</td>
+                            <td>
+                                @{ 
+                                    var _isempresa = c.Empresa != null ? c.Empresa.Nome_Empresarial : c.Cliente.Nome;
+                                }
+                                @Html.DisplayFor(modelc => _isempresa)
+                            </td>
+                            <td>@{var _data = c.Data.Value.ToShortDateString();}@Html.DisplayFor(model => _data)</td>
+                            <td>
+                                @{ var _situacao = c.Situacao.ToString();}
+                                @Html.DisplayFor(model => _situacao)/@Html.DisplayFor(model => c.Pagamento);                                                         
+                            </td>
+                            <td>@NumberFormatInfo.CurrentInfo.CurrencySymbol @Html.DisplayFor(model => c.Valor)</td>                            
+                        </tr>                        
+                    }       
+                </tbody>
+            </table>
+    </div>
+}
+
