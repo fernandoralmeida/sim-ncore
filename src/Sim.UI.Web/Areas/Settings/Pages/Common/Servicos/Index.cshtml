@@ -61,7 +61,7 @@
 
 </div>
 
-  <div id="modal1" class="modal">
+  <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
         <div class="row">
             <div class="col s12" hidden>
@@ -71,7 +71,7 @@
                 <span class="pdn-10">Alterar Serviço<i class="material-icons left">edit_square</i></span>
             </div>
             <div class="input-field col s12 m4 l4">
-                <select id="dominioid" asp-for="Input.Dominio" asp-items="Model.Dominios" ></select>
+                <select id="dominioid" asp-for="Input.Dominio" asp-items="Model.AllDominios" ></select>
                 <label>Dominio</label>                         
             </div>   
             <div class="input-field col s12 m8 l8">

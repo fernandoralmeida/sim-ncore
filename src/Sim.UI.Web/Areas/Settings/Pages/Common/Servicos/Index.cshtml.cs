@@ -39,14 +39,17 @@ public class IndexModel : PageModel
     public Guid SetDominio { get; set; }
     public IEnumerable<EServico> Servicos { get; set; }
     public SelectList Dominios { get; set; }
+    public SelectList AllDominios { get; set; }
     
     public async Task OnLoadAsync(Guid id, Guid dm) {
         var _list = await _appdominio.ListAllAsync();
-        var _setores = await _appdominio.DoList(s => s.Id == id || s.Id == dm);
+        var _setores = await _appdominio.DoList(s => s.Id == id);
+        var _all_setores = await _appdominio.DoList(s => s.Id == dm || s.Dominio == dm);
         Dominios = new SelectList(_setores, nameof(EOrganizacao.Id), nameof(EOrganizacao.Acronimo));
+        AllDominios = new SelectList(_all_setores, nameof(EOrganizacao.Id), nameof(EOrganizacao.Acronimo));
         ReturnID = dm;
         SetorID = id;
-        Servicos = await _appservicos.DoListAsync(s => s.Dominio.Id == id || s.Dominio.Id == dm || s.Dominio == null);
+        Servicos = await _appservicos.DoListAsync(s => s.Dominio.Id == id || s.Dominio == null);
     }
 
     public async Task OnGetAsync(string id, string dm) {
