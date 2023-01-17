@@ -54,6 +54,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions {
     FallBackToParentCultures= false
 });
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
+CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.CreateSpecificCulture("pt-BR");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
