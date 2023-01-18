@@ -31,11 +31,13 @@
                     <li class="@LayoutNavPages.ConfigContasNavClass(ViewContext)">
                         <a asp-area="Admin" asp-page="/Manager/Index"><i class="material-icons online">manage_accounts</i></a>
                     </li>
+                }
+                @if (User.IsInRole("Admin_Config") || User.IsInRole("Admin_Global")) {
                     <li class="@LayoutNavPages.ConfigSistemaNavClass(ViewContext)">
                         <a asp-area="Settings" asp-page="/Common/Index"><i class="material-icons online">settings</i></a>
                     </li>
                 }
-                <li>
+                 <li>
                     <a id="settheme" data-id="@_user.UserName" data-theme="@_changetheme" href="#"><i class="material-icons online">@_icon</i></a>
                 </li>               
                 @if(SignInManager.IsSignedIn(User)) {
