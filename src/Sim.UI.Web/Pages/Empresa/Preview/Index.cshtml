@@ -155,7 +155,7 @@
     </table>
 }
 
-@if (Model.Input.Socios.Count() > 0 && User.IsInRole("Administrador") || User.IsInRole("M_RFB"))
+@if (Model.Input.Socios.Count() > 0 && User.IsInRole("Admin_Global") || User.IsInRole("M_RFB"))
 {
     <table>
         <thead>

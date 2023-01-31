@@ -8,8 +8,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <div>
-    <form class="row" asp-page-handler="RWS" method="post">
-
+    <form class="row" method="post">
         <div class="card">
             <div class="row">
                 <div class="col s12">
@@ -17,13 +16,15 @@
                         <label asp-for="Input.Id"></label>
                         <input asp-for="Input.Id" />
                     </div>
-                    <div class="col left-align valign-wrapper">
+                    <div class="col left-align">
+                        <a asp-page="/Empresa/Index" class="btn grey waves-effect right mgn-t-12"><i
+                                class="material-icons">arrow_back</i></a>
+                    </div>
+                    <div class="col s12 m4 l4">
                         <div class="input-field">
-                            <input asp-for="Input.CNPJ" id="inputCNPJ" autofocus>
-                            <label asp-for="Input.CNPJ" for="inputCNPJ"></label>                            
-                        </div>
-                        <button asp-page-handler="RWS" class="btn waves-effect right" type="submit">Sincronizar</button>|
-                        <a asp-page="/Empresa/Index" class="btn grey waves-effect right"><i class="material-icons">arrow_back</i></a>
+                            <input asp-for="Input.CNPJ" id="inputCNPJ">
+                            <label asp-for="Input.CNPJ" for="inputCNPJ"></label>
+                        </div>                        
                     </div>
                     <div class="col s12 m3 l3">
                         <div class="input-field">
@@ -73,7 +74,8 @@
                 <div class="col s12">
                     <div class="col s12 ">
                         <div class="input-field">
-                            <textarea asp-for="Input.Atividade_Secundarias" rows="4" class="materialize-textarea" id="inputSecundaria"></textarea>
+                            <textarea asp-for="Input.Atividade_Secundarias" rows="4" class="materialize-textarea"
+                                id="inputSecundaria"></textarea>
                             <label asp-for="Input.Atividade_Secundarias" for="inputSecundaria"></label>
                         </div>
                     </div>
@@ -155,10 +157,9 @@
 
         <div class="card" hidden>
             <div class="card-action">
-                        <a asp-page="./Index" role="button" type="button" class="btn btn-large blue-grey lighten-1 waves-effect right">Voltar</a>
-                    
-                        <button type="submit" role="button" class="btn btn-large waves-effect">Gravar Cadastro</button>
-                    
+                <a asp-page="./Index" role="button" type="button"
+                    class="btn btn-large blue-grey lighten-1 waves-effect right">Voltar</a>
+                <button type="submit" role="button" class="btn btn-large waves-effect">Gravar Cadastro</button>
             </div>
         </div>
     </form>
@@ -166,7 +167,9 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script src="~/js/jquery.cep.js"></script>
     <script src="~/js/jquery.mask.min.js"></script>
     <script src="~/js/jquery.validation.js"></script>

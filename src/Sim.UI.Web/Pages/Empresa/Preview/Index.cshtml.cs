@@ -28,5 +28,7 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync(string id) =>
         Input = _mapper.Map<VMBaseReceitaFederal>(await _empresaApp.GetCNPJAsync(id)); 
+
+
 }
 

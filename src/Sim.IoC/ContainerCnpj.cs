@@ -15,6 +15,10 @@ using Sim.Application.Cnpj;
 using Sim.Application.Cnpj.Interfaces;
 using Sim.Application.Cnpj.Services;
 
+using Sim.Application.WebService.RFB.Interfaces;
+using Sim.Application.WebService.RFB.Services;
+
+
 namespace Sim.IoC
 {
     public static class ContainerCnpj
@@ -33,6 +37,8 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<BaseReceitaFederal>, RepositoryBase<BaseReceitaFederal>>();
             services.AddScoped<IRepositoryCnpj, RepositoryCnpj>();
+
+            services.AddScoped<IServiceRFB, ServiceRFB>();
 
             services.AddScoped<ApplicationContextCnpj>();
         }

@@ -119,6 +119,7 @@
                 var data = google.visualization.arrayToDataTable(dataArray);  
                 var options = {       
                     legend:'left',
+                    backgroundColor:'transparent',
                     animation: {
                         duration: 1000,
                         easing: 'out'
@@ -136,6 +137,7 @@
                 var mdata = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
                     legend:'left',
+                    backgroundColor: 'transparent',
                     animation: {
                         duration: 1000,
                         easing: 'out'
@@ -156,6 +158,7 @@
                         width: '80%'  
                     },
                     seriesType: 'bars', 
+                    backgroundColor:'transparent',
                     colors: ['#2196f3','#20b2aa'],                   
                     legend:'top'
                 };
@@ -189,6 +192,7 @@
                 var mdata = google.visualization.arrayToDataTable(dataArray);  
                 var options = {
                     legend:'left',
+                    backgroundColor: 'transparent',
                     animation: {
                         duration: 1000,
                         easing: 'out'
@@ -209,6 +213,7 @@
                         width: '80%'  
                     },
                     seriesType: 'bars',
+                    backgroundColor:'transparent',
                     colors: ['#2196f3','#20b2aa'],                    
                     legend:'top'
                 };
@@ -225,7 +230,8 @@
                     chartArea: {  
                         width: '80%'  
                     },
-                    seriesType: 'bars',  
+                    seriesType: 'bars', 
+                    backgroundColor:'transparent', 
                     colors: ['#20b2aa']
                 };
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_services'));  
@@ -250,6 +256,7 @@
                         easing: 'out'
                     },
                     colors: ['#2196f3','#20b2aa'],
+                    backgroundColor:'transparent',
                     legend: { position: 'bottom' }
                 };  
                 var chart = new google.visualization.AreaChart(document.getElementById('chart_month'));  
