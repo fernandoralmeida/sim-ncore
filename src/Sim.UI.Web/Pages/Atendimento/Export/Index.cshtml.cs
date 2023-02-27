@@ -29,7 +29,7 @@ public class IndexModel : PageModel
             cnpj = cnpj ?? "";
             rsocial = rsocial ?? "";
             cnae =  cnae ?? "";
-            svc = src ?? "";
+            svc = svc ?? "";
             user = user ?? "";
 
             _result = (List<EAtendimento>) 
