@@ -17,7 +17,7 @@ public class IndexModel : PageModel
     }
 
     public async Task<IActionResult> OnGetAsync(string src, DateTime? d1, DateTime? d2, string cpf,
-        string nome, string cnpj, string rsocial, string cnae, string svc, string user){
+        string nome, string cnpj, string rsocial, string cnae, string svc, string user, string setor){
     
         var list = new List<ExportModel>();
         var _result = new List<EAtendimento>();
@@ -31,10 +31,11 @@ public class IndexModel : PageModel
             cnae =  cnae ?? "";
             svc = svc ?? "";
             user = user ?? "";
+            setor = setor ?? "";
 
             _result = (List<EAtendimento>) 
                     await _appServiceAtendimento
-                    .ListParamAsync(new List<object>() { d1, d2, cpf, nome, cnpj, rsocial, cnae, svc, user });
+                    .ListParamAsync(new List<object>() { d1, d2, cpf, nome, cnpj, rsocial, cnae, svc, user, setor });
         }
         else {            
             _result = (List<EAtendimento>)
@@ -50,7 +51,9 @@ public class IndexModel : PageModel
             list.Add(new ExportModel
             {
                 N = cont++,
-                Data = at.Data.Value.ToString("MMM-yyyy"),
+                Data = $"{at.Data.Value:yyyy-MM-dd}",
+                Inicio = $"{at.Data.Value:HH:mm}",
+                Termino = $"{at.DataF.Value:HH:mm}",
                 Cliente = _cliente,
                 Empresa = at.Empresa != null ? at.Empresa.CNPJ : "",
                 Atividade = at.Empresa != null ? at.Empresa.Atividade_Principal : "", 

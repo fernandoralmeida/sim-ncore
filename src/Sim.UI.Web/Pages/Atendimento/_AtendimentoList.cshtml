@@ -49,15 +49,7 @@
                     <a class="modal-trigger" href="#viewmodal" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Protocolo)</a>
                 </td>
                 <td>
-                    @{
-                        var d1 = Convert.ToDateTime(item.Data);
-                        var d2 = Convert.ToDateTime(item.DataF);
-                        var datainicial = d1.ToShortTimeString();
-                        var datafinal = d2.ToShortTimeString();
-                    }
-
-                    @Html.DisplayFor(modelItem => datainicial)
-                    @Html.DisplayFor(modelItem => datafinal)
+                    @Html.DisplayFor(modelItem => item.Data)
                 </td>
                 <td class="t-uppercase">
                     @Html.DisplayFor(modelItem => item.Pessoa.Nome)

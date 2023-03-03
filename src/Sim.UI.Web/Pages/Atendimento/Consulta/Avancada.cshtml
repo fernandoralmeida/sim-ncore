@@ -5,8 +5,8 @@
     ViewData["Title"] = "Consultas por Periodos";
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.AtendimentoConsulta;
 
-    var data1 = Model.Input.DataI.Value.ToString("MM-dd-yyyy");
-    var data2 = Model.Input.DataF.Value.ToString("MM-dd-yyyy");
+    var data1 = Model.Input.DataI.ToString("MM-dd-yyyy HH:mm");
+    var data2 = Model.Input.DataF.ToString("MM-dd-yyyy HH:mm");
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -17,14 +17,12 @@
         <div class="col s12 mgn-b-0">
             <div class="input-field col s6 m4 l2">
                 <input asp-for="Input.DataI" />
-                <label asp-for="Input.DataI"></label>
             </div>
             <div class="input-field col s6 m4 l2">
                 <input asp-for="Input.DataF" />
-                <label asp-for="Input.DataF"></label>
             </div>
             <div class="input-field col s6 m4 l2">
-                <input asp-for="Input.CPF" id="inputCPF" autofocus/>
+                <input asp-for="Input.CPF" id="inputCPF" />
                 <label asp-for="Input.CPF"></label>
             </div>
             <div class="input-field col s6 m4 l2">
@@ -42,6 +40,12 @@
             <div class="input-field col s6 m4 l2">
                 <input asp-for="Input.CNAE" id="inputCNAE" />
                 <label asp-for="Input.CNAE"></label>
+            </div>
+            <div class="input-field col s6 m4 l2">
+                <select asp-for="Input.Setor" asp-items="@Model.ListaSetores">
+                    <option selected></option>
+                </select>
+                <label asp-for="Input.Setor"></label>
             </div>
             <div class="input-field col s6 m4 l2">
                 <select asp-for="Input.Servico" asp-items="@Model.ListaServicos">
@@ -69,7 +73,7 @@
     @{ var _isdisabled = Model.Input.ListaAtendimento.Any()? null : "disabled"; }    
 
     <div class="card-action">
-        <a asp-page="/Atendimento/Export/Index" asp-route-src="" asp-route-d1="@data1" asp-route-d2="@data2" asp-route-cpf="@Model.Input.CPF" asp-route-nome="@Model.Input.Nome" asp-route-cnpj="@Model.Input.CNPJ" asp-route-rsocial="@Model.Input.RazaSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-svc="@Model.Input.Servico" asp-route-user="@Model.Input.Atendente" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
+        <a asp-page="/Atendimento/Export/Index" asp-route-src="" asp-route-d1="@data1" asp-route-d2="@data2" asp-route-cpf="@Model.Input.CPF" asp-route-nome="@Model.Input.Nome" asp-route-cnpj="@Model.Input.CNPJ" asp-route-rsocial="@Model.Input.RazaSocial" asp-route-cnae="@Model.Input.CNAE" asp-route-svc="@Model.Input.Servico" asp-route-user="@Model.Input.Atendente" asp-route-sto="@Model.Input.Setor" class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar"><i class="material-icons">description file_download</i></a>
     </div>
     
 </div>
@@ -77,8 +81,8 @@
 @section scripts{
     <script src="~/js/jquery.mask.min.js"></script>
     <script>
-        $('#inputDataI').mask('00/00/0000', { placeholder: "data inicial" });
-        $('#inputDataF').mask('00/00/0000', { placeholder: "data final" });
+        //$('#inputDataI').mask('00/00/0000', { placeholder: "data inicial" });
+        //$('#inputDataF').mask('00/00/0000', { placeholder: "data final" });
         $('#inputCPF').mask('000.000.000-00');
         $('#inputCNPJ').mask('00.000.000/0000-00');
         $('#inputCNAE').mask('00.00-0-00');

@@ -4,6 +4,8 @@
     {
         public int N { get; set; }
         public string Data { get; set; }
+        public string Inicio { get; set; }
+        public string Termino { get; set; }
         public string Cliente { get; set; }
         public object Empresa { get; set; }
         public string Atividade { get; set; }

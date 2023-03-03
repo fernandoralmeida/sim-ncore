@@ -200,13 +200,14 @@ namespace Sim.Data.Repository
             var cnae = lparam[6] != null ? (string)lparam[6] : "";
             var servico = lparam[7] != null ? (string)lparam[7] : "";
             var user = lparam[8] != null ? (string)lparam[8] : "";
+            var setor = lparam[9] != null ? (string)lparam[9] : "";
 
 
             return await _db.Atendimento
             .Include(p => p.Pessoa)
             .Include(e => e.Empresa)
             .Include(s => s.Sebrae)
-            .Where(a => a.Data.Value.Date >= dataI && a.Data.Value.Date <= dataF)
+            .Where(a => a.Data >= dataI && a.Data <= dataF)
             .Where(a => a.Status == "Finalizado" && a.Ativo == true)
             .Where(a => a.Pessoa.CPF.Contains(cpf))
             .Where(a => a.Pessoa.Nome.Contains(nome))
@@ -215,6 +216,7 @@ namespace Sim.Data.Repository
             .Where(a => a.Empresa.CNAE_Principal.Contains(cnae))
             .Where(a => a.Servicos.Contains(servico))
             .Where(a => a.Owner_AppUser_Id.Contains(user))
+            .Where(a => a.Setor.Contains(setor))
             .AsNoTrackingWithIdentityResolution()
             .OrderBy(o => o.Data)
             .ToListAsync();             
