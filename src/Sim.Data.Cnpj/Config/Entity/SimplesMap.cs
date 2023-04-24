@@ -10,7 +10,7 @@ namespace Sim.Data.Cnpj.Config.Entity
         {
             builder.HasNoKey();
             builder.Property(c => c.CNPJBase)
-                .HasColumnType("varchar(10)");
+                .HasColumnType("varchar(8)");
             builder.Property(c => c.OpcaoSimples)
                 .HasColumnType("varchar(2)");
             builder.Property(c => c.DataOpcaoSimples)

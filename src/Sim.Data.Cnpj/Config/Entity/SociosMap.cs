@@ -10,17 +10,19 @@ namespace Sim.Data.Cnpj.Config.Entity
         {
             builder.HasNoKey();
             builder.Property(c => c.CNPJBase)
-                .HasColumnType("varchar(10)");
+                .HasColumnType("varchar(8)");
             builder.Property(c => c.IdentificadorSocio)
                 .HasColumnType("varchar(2)");
             builder.Property(c => c.NomeRazaoSocio)
                 .HasColumnType("varchar(255)");
             builder.Property(c => c.CnpjCpfSocio)
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(15)");
             builder.Property(c => c.QualificacaoSocio)
                 .HasColumnType("varchar(4)");
             builder.Property(c => c.DataEntradaSociedade)
                 .HasColumnType("varchar(10)");
+            builder.Property(c => c.Pais)
+                .HasColumnType("varchar(5)");
             builder.Property(c => c.RepresentanteLegal)
                 .HasColumnType("varchar(50)");
             builder.Property(c => c.NomeRepresentante)

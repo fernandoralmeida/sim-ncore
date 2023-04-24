@@ -10,12 +10,12 @@
 
     ViewData["ActivePage"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.PowerBI;
     ViewData["ActivePageLi"] = Sim.UI.Web.Pages.Shared.LayoutNavPages.PowerBIEmpresas;
+    @RenderSection("chead", required: false)
 }
 
 <div >
     @RenderBody()
 </div>
-
 
 @section Scripts {
     @RenderSection("Scripts", required: false)

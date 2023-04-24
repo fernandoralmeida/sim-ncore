@@ -10,9 +10,9 @@ namespace Sim.Data.Cnpj.Config.Entity
         {
             builder.HasNoKey();
             builder.Property(c => c.Codigo)
-                .HasColumnType("varchar(10)");
+                .HasColumnType("varchar(2)");
             builder.Property(c => c.Descricao)
-                .HasColumnType("varchar(max)");
+                .HasColumnType("varchar(MAX)");
         }
     }
 }

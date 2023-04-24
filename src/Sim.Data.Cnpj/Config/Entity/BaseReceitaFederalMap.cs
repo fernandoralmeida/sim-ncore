@@ -10,7 +10,7 @@ namespace Sim.Data.Cnpj.Config.Entity
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.CNPJ)
-                .HasColumnType("varchar(256)");
+                .HasColumnType("varchar(18)");
         }
     }
 }

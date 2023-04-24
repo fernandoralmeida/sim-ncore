@@ -52,7 +52,7 @@ namespace Sim.UI.Web.Pages.Atendimento
         private async Task<Empresas> GetEmpresa(string cnpj)
         {
             var emp = await _appServiceEmpresa.ConsultaCNPJAsync(cnpj);
-            StatusMessage = emp.Any() ? string.Empty : "Erro: Empresa n�o cadastrada!";
+            StatusMessage = emp.Any() ? string.Empty : "Erro: Empresa não cadastrada!";
             return emp.Any() ? emp.FirstOrDefault() : null;
         }
 
@@ -73,7 +73,7 @@ namespace Sim.UI.Web.Pages.Atendimento
                 Input.Pessoa = await GetPessoa((Guid)id);           
                 
                 foreach(var e in await _appServiceEmpresa
-                    .ConsultaRazaoSocialAsync(Input.Pessoa.CPF.MaskRemove()))
+                    .ConsultaRazaoSocialAsync(Input.Pessoa.Nome))
                     Input.Empresa = e;
                 if (Input.Empresa != null)
                     if (Input.Empresa.Situacao_Cadastral == "BAIXADA")

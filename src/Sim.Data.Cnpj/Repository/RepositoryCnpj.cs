@@ -24,7 +24,7 @@ namespace Sim.Data.Cnpj.Repository
                 var qrysco = (from sco in _db.Socios.Where(s => s.NomeRazaoSocio.Contains(param))
                             from emp in _db.Empresas.Where(s => s.CNPJBase == sco.CNPJBase)
                             from est in _db.Estabelecimentos.Where(s => s.CNPJBase == sco.CNPJBase)
-                            from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                            from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                             from mnp in _db.Municipios.Where(s => s.Codigo == est.Municipio)
                             from sn in _db.Simples.Where(s=>s.CNPJBase == emp.CNPJBase).DefaultIfEmpty()                           
                             select new { emp, est, atv, mnp, sn })
@@ -40,7 +40,7 @@ namespace Sim.Data.Cnpj.Repository
 
                 var qryemp = (from emp in _db.Empresas.Where(s => s.RazaoSocial.Contains(param))
                             from est in _db.Estabelecimentos.Where(s => s.CNPJBase == emp.CNPJBase)
-                            from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                            from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                             from mnp in _db.Municipios.Where(s => s.Codigo == est.Municipio)
                             from sn in _db.Simples.Where(s=>s.CNPJBase == emp.CNPJBase).DefaultIfEmpty()                           
                             select new { emp, est, atv, mnp, sn })
@@ -64,7 +64,7 @@ namespace Sim.Data.Cnpj.Repository
 
                 var qry = (from est in _db.Estabelecimentos.Where(s => s.Municipio == municipio)                           
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
-                           from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                           from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                            from mpo in _db.Municipios.Where(s => s.Codigo == est.Municipio)
                            from sn in _db.Simples.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
                            select new { est, emp, atv, sn, mpo }) 
@@ -93,7 +93,7 @@ namespace Sim.Data.Cnpj.Repository
                 var cnpjdv = cnpj.Remove(0, 12);
 
                 var qry = (from est in _db.Estabelecimentos
-                        from atv in _db.CNAEs
+                        from atv in _db.Cnaes
                         .Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                         from msc in _db.MotivoSituacaoCadastral
                         .Where(s => est.MotivoSituacaoCadastral == s.Codigo)
@@ -153,7 +153,7 @@ namespace Sim.Data.Cnpj.Repository
                                         s.CnaeFiscalPrincipal.CompareTo(atividadef) <= 0 &&
                                         s.Municipio.Contains(municipio))
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
-                           from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                           from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                                //from sn in _db.Simples.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
                            select new { est, emp, atv })                           
                            .Distinct()
@@ -185,7 +185,7 @@ namespace Sim.Data.Cnpj.Repository
                 var qry = (from est in _db.Estabelecimentos.Where(s => s.Bairro == bairro &&
                                         s.Municipio.Contains(municipio))
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
-                           from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                           from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
 
                            select new { est, emp, atv })                           
                            .Distinct()
@@ -211,7 +211,7 @@ namespace Sim.Data.Cnpj.Repository
                 var qry = (from est in _db.Estabelecimentos.Where(s => s.Logradouro == logradouro &&
                                         s.Municipio.Contains(municipio))
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
-                           from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                           from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
 
                            select new { est, emp, atv })                           
                            .Distinct()
@@ -236,7 +236,7 @@ namespace Sim.Data.Cnpj.Repository
                     
                     var qry = (from est in _db.Estabelecimentos.Where(filter)                           
                             from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
-                            from atv in _db.CNAEs.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
+                            from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                             from mpo in _db.Municipios.Where(s => s.Codigo == est.Municipio)
                             from sn in _db.Simples.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
                             select new { est, emp, atv, sn, mpo }) 

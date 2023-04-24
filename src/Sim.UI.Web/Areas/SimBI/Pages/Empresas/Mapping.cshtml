@@ -1,4 +1,4 @@
-@page
+@page "/bi/maps/empresas"
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.MappingModel
 
 @{
@@ -12,13 +12,14 @@
 
 <script type='text/javascript'>  
     var map;
-    var lat;// = -22.2990589;
-    var lgt;// = -48.5575769;
+    var lat;// = -22.2918278;
+    var lgt;// = -48.5709375;
+    var _cty = "'" + @Model.Municipio + "'"
     function loadMapScenario() {  
         map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
             credentials: 'AlXdA1VRF-rK-z0FQtFy5cAcfQgSy2rF9EQRdIeIaMWFddCAOgF3CsdTULcdR7_9',  
-            mapTypeId: Microsoft.Maps.MapTypeId.aerial,  
-            location: 'Jau-SP',
+            mapTypeId: Microsoft.Maps.MapTypeId.street,  
+            location: _cty,
             zoom: 15  
         });  
 
@@ -121,7 +122,7 @@
 
 
 <div class="row font-size-12 mgn-t-10">
-    Informações extraidas da base de dados da RFB em 10-10-2022
+    Informações extraidas da base de dados da RFB
 </div>
 
 <!-- Modal Structure -->
@@ -157,7 +158,7 @@
                 var param1 = $("#id_mcp").val(); 
                 $("#idcellboxcontent").empty();
                 $("#idcellboxcontent").append('<p class="mgn-l-10 grey-text">...carregando!</p>');
-                $.getJSON(`/SimBI/Empresas/Mapping?bro=${param0}&mcp=${param1}&a=Ativa&handler=LAgrupados`, (data) => {
+                $.getJSON(`/bi/maps/empresas?bro=${param0}&mcp=${param1}&a=Ativa&handler=LAgrupados`, (data) => {
                     $("#idcellboxcontent").empty();
                     data.forEach(function(item) {                          
                         $("#idcellboxcontent").append(
@@ -168,7 +169,7 @@
                         );
                     });
                 });
-                $.getJSON(`/SimBI/Empresas/Mapping?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
+                $.getJSON(`/bi/maps/empresas?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
                     data.forEach(function(item) {
                         
                     });

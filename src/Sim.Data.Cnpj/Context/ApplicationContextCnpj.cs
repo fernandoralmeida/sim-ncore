@@ -14,7 +14,7 @@ namespace Sim.Data.Cnpj.Context
         public ApplicationContextCnpj(DbContextOptions<ApplicationContextCnpj> options) : base(options)
         {  }
 
-        public DbSet<CNAE> CNAEs { get; set; }
+        public DbSet<CNAE> Cnaes { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Estabelecimento> Estabelecimentos { get; set; }
         public DbSet<MotivoSituacaoCadastral> MotivoSituacaoCadastral { get; set; }

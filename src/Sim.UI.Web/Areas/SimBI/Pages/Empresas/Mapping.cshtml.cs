@@ -13,6 +13,7 @@ public class MappingModel : PageModel {
     private readonly IAppServiceCnpj _appEmpresa;
     [TempData]
     public string StatusMessage { get; set; }
+    public string Municipio { get; set; }
     public string MunicipioSelecionado {get;set;}
     [BindProperty(SupportsGet = true)]
     public string ZonaSelecionada { get; set; }
@@ -34,7 +35,12 @@ public class MappingModel : PageModel {
         if(string.IsNullOrEmpty(m))            
             MunicipioSelecionado ="6607";
         else
+        {
             MunicipioSelecionado = m;
+            var _ml = await _appEmpresa.DoListMicroRegiaoJahuAsync();
+            var _c = _ml.Where(n => n.Codigo.Contains(m)).SingleOrDefault().Descricao;
+            Municipio = $"{_c}-SP";
+        }
 
         var _list = await _appEmpresa.DoListMappingZonasAsync(MunicipioSelecionado, "Ativa");
         Zonas =  new SelectList(_list);
