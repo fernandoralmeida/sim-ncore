@@ -21,5 +21,6 @@ namespace Sim.Application.Cnpj.Interfaces
         Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(string zona, string municipio, string situacao);
         Task<IEnumerable<string>> DoListMappingZonasAsync(string municipio, string situacao);
         Task<IEnumerable<EExport>> DoListExport(string municipio);
+        Task<IEnumerable<(int Value, string Key, string Code)>> DoListCnaesAsync(Expression<Func<Estabelecimento, bool>> filter = null);
     }
 }

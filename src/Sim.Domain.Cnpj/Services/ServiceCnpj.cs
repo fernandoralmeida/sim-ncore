@@ -9,9 +9,9 @@ namespace Sim.Domain.Cnpj.Services
     {
         private readonly IRepositoryCnpj _cnpj;
 
-        public ServiceCnpj(IRepositoryCnpj cnpj):base(cnpj)
+        public ServiceCnpj(IRepositoryCnpj cnpj) : base(cnpj)
         {
-            _cnpj = cnpj;   
+            _cnpj = cnpj;
         }
 
         public async Task<IEnumerable<BaseReceitaFederal>> DoListBaseRazaoSociosAsync(string param)
@@ -23,30 +23,34 @@ namespace Sim.Domain.Cnpj.Services
             await _cnpj.DoListEmpresasAsync(municipio);
 
         public async Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(IEnumerable<BaseReceitaFederal> obj) =>
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
 
                 var _list = new List<KeyValuePair<string, int>>();
 
-                    foreach(var nome in obj
-                                        .OrderBy(o => o.Estabelecimento.TipoLogradouro + " " + o.Estabelecimento.Logradouro)
-                                        .GroupBy(g => g.Estabelecimento.TipoLogradouro + " " + g.Estabelecimento.Logradouro)) {                       
-                        _list.Add(new KeyValuePair<string, int>(key: nome.Key, value: nome.Count()));
-                    }                  
-                    
+                foreach (var nome in obj
+                                    .OrderBy(o => o.Estabelecimento.TipoLogradouro + " " + o.Estabelecimento.Logradouro)
+                                    .GroupBy(g => g.Estabelecimento.TipoLogradouro + " " + g.Estabelecimento.Logradouro))
+                {
+                    _list.Add(new KeyValuePair<string, int>(key: nome.Key, value: nome.Count()));
+                }
+
                 return _list;
             });
-        
+
         public async Task<IEnumerable<string>> DoListMappingZonasAsync(IEnumerable<BaseReceitaFederal> obj) =>
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
 
                 var _list = new List<string>();
 
-                    foreach(var nome in obj
-                                        .OrderBy(o => o.Estabelecimento.Bairro)
-                                        .GroupBy(g => g.Estabelecimento.Bairro)) {                       
-                        _list.Add(nome.Key);
-                    }                  
-                    
+                foreach (var nome in obj
+                                    .OrderBy(o => o.Estabelecimento.Bairro)
+                                    .GroupBy(g => g.Estabelecimento.Bairro))
+                {
+                    _list.Add(nome.Key);
+                }
+
                 return _list;
             });
 
@@ -58,9 +62,10 @@ namespace Sim.Domain.Cnpj.Services
         public async Task<IEnumerable<BICnae>> DoListBICnaeAsync(string municipio)
         {
 
-            var emp = await _cnpj.DoListByCnaeAsync("0000000","9999999", municipio);
+            var emp = await _cnpj.DoListByCnaeAsync("0000000", "9999999", municipio);
 
-            return await Task.Run(() => {
+            return await Task.Run(() =>
+            {
 
                 var l_full_cnae = new List<BICnae>();
 
@@ -71,8 +76,8 @@ namespace Sim.Domain.Cnpj.Services
                 var subclasse = new List<string>();
 
                 foreach (BaseReceitaFederal e in emp.Where(s => s.Estabelecimento.SituacaoCadastral == "Ativa"))
-                        subclasse.Add(string.Format("{0} - {1}", e.AtividadePrincipal.Codigo, e.AtividadePrincipal.Descricao));
-               
+                    subclasse.Add(string.Format("{0} - {1}", e.AtividadePrincipal.Codigo, e.AtividadePrincipal.Descricao));
+
 
                 var s_subclasse = from x in subclasse
                                   group x by x into g
@@ -84,7 +89,9 @@ namespace Sim.Domain.Cnpj.Services
                 var sub_sec_count = 0;
 
                 //agro
-                var agro = new CnaeSecao() { ListaClasse = new(),
+                var agro = new CnaeSecao()
+                {
+                    ListaClasse = new(),
                     Secao = new(),
                     FaixaInicial = "0100000",
                     FaixaFinal = "0399999"
@@ -203,7 +210,9 @@ namespace Sim.Domain.Cnpj.Services
                     l_secao.ListaSecao.Add(indextrativa);
 
                 //Ind Transf
-                var indetransf = new CnaeSecao() { ListaClasse = new(),
+                var indetransf = new CnaeSecao()
+                {
+                    ListaClasse = new(),
                     Secao = new(),
                     FaixaInicial = "1000000",
                     FaixaFinal = "3399999"
@@ -1350,10 +1359,11 @@ namespace Sim.Domain.Cnpj.Services
 
         public async Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes)
         {
-            var t = await _cnpj.DoListEmpresasAsync(municipio);            
+            var t = await _cnpj.DoListEmpresasAsync(municipio);
 
-            return await Task.Run(() => {
-                
+            return await Task.Run(() =>
+            {
+
                 var r_empresas = new List<BIEmpresas>();
 
                 try
@@ -1833,7 +1843,7 @@ namespace Sim.Domain.Cnpj.Services
                                     group x by x into g
                                     let count = g.Count()
                                     orderby g.Key ascending
-                                    select new { Value = g.Key.Remove(0,2), Count = count };
+                                    select new { Value = g.Key.Remove(0, 2), Count = count };
 
                     var l_var_mes = new List<KeyValuePair<string, int>>();
                     foreach (var x in c_var_mes)
@@ -1870,9 +1880,9 @@ namespace Sim.Domain.Cnpj.Services
 
                 }
                 catch (Exception ex) { throw new Exception(ex.Message); }
-                
+
                 return r_empresas;
-           
+
             });
         }
 
@@ -1917,7 +1927,8 @@ namespace Sim.Domain.Cnpj.Services
         }
 
         public async Task<IEnumerable<ELocalizacao>> DoListZonaJsonAsync(string zona, string municipio, string situacao) =>
-            await Task.Run(async () => {
+            await Task.Run(async () =>
+            {
                 var emp = await DoListByZonaAsync(zona, municipio);
 
                 var lista = new List<ELocalizacao>();
@@ -1932,9 +1943,10 @@ namespace Sim.Domain.Cnpj.Services
                 }
                 return lista;
             });
-        
+
         public async Task<IEnumerable<ELocalizacao>> DoListLogradouroJsonAsync(string logradouro, string municipio, string situacao) =>
-            await Task.Run(async () => {
+            await Task.Run(async () =>
+            {
                 var emp = await DoListByLogradouroAsync(logradouro, municipio);
 
                 var lista = new List<ELocalizacao>();
@@ -1948,7 +1960,7 @@ namespace Sim.Domain.Cnpj.Services
                     ));
                 }
                 return lista;
-            });   
+            });
 
         public async Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio) =>
             await _cnpj.DoListByZonaAsync(zona, municipio);
@@ -1956,10 +1968,12 @@ namespace Sim.Domain.Cnpj.Services
             await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
 
         public async Task<IEnumerable<EExport>> DoListExport(IEnumerable<BaseReceitaFederal> obj) =>
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 var _list = new List<EExport>();
                 var cont = 0;
-                foreach (var item in obj) {
+                foreach (var item in obj)
+                {
                     _list.Add(new EExport(
                         contador: cont++,
                         cnpj: item.CNPJ.Mask("##.###.###/####-##"),
@@ -1975,7 +1989,7 @@ namespace Sim.Domain.Cnpj.Services
                         cnae: item.AtividadePrincipal.Codigo.Mask("##.##-#/##"),
                         atividade: item.AtividadePrincipal.Descricao,
                         porte: item.Empresa.PorteEmpresa,
-                        regimefiscal: item.SimplesNacional == null ? item.Empresa.RegimeFiscal("","") : item.Empresa.RegimeFiscal(item.SimplesNacional.OpcaoSimples, item.SimplesNacional.OpcaoMEI),
+                        regimefiscal: item.SimplesNacional == null ? item.Empresa.RegimeFiscal("", "") : item.Empresa.RegimeFiscal(item.SimplesNacional.OpcaoSimples, item.SimplesNacional.OpcaoMEI),
                         setor: item.Estabelecimento.SetorProdutivo(item.AtividadePrincipal.Codigo)
                     ));
                 }
@@ -1985,5 +1999,27 @@ namespace Sim.Domain.Cnpj.Services
 
         public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<Estabelecimento, bool>> filter = null) =>
             await _cnpj.DoListAsync(filter);
+
+        public async Task<IEnumerable<(int Value, string Key, string Code)>> DoListCnaesAsync(Expression<Func<Estabelecimento, bool>> filter = null) =>
+            await Task.Run(async () =>
+            {
+
+                var _return = new List<(int Value, string Key, string Code)>();
+                var _list = new List<string>();
+
+                foreach (var _e in await _cnpj.DoListAsync(filter))
+                {
+                    _list.Add($"{_e.AtividadePrincipal.Codigo} - {_e.AtividadePrincipal.Descricao}");
+                }
+
+                foreach (var _v in _list.GroupBy(s => s))
+                {
+                    string[] cnae = _v.Key.Split(" - ");
+                    _return.Add((_v.Count(), _v.Key, cnae[0]));
+                }
+
+                return _return.OrderByDescending(s => s.Value).ToList();
+            });
+
     }
 }

@@ -3,6 +3,7 @@ using Sim.Domain.Entity;
 namespace Sim.Domain.Evento.Model;
 
 public class EBIEventos {
+    public KeyValuePair<string, int>? EventosP { get; set; }
     public KeyValuePair<string, int>? EventosR { get; set; }
     public KeyValuePair<string, int>? EventosC { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? Eventos { get; set; }

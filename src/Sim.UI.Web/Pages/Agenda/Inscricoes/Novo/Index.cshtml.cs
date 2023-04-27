@@ -164,7 +164,6 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
                     Descricao =  string.Format("Incrição Nº:{0}, Evento: {1} {2}", inscricao.Numero, inscricao.Evento.Tipo, inscricao.Evento.Nome),
                     Canal = "Presencial",
                     Ativo = true,
-                    Anonimo = false,
                     Status = "Finalizado",
                     Ultima_Alteracao = DateTime.Now
                 };

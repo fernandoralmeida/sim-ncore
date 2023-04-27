@@ -53,7 +53,7 @@ public class EContrato {
     }
 
     public bool ContratosAprovadosRegulares(EContrato obj) {
-        if(obj.Situacao == EnSituacao.Aprovado && obj.Pagamento == EnPagamento.Regular && obj.Renegociacaoes.Count() == 0)
+        if(obj.Situacao == EnSituacao.Aprovado && obj.Pagamento == EnPagamento.Regular && obj.Renegociacaoes!.Count() == 0)
             return true;
         else
             return false;

@@ -1,0 +1,9 @@
+.row-grid {
+    background-color: orange;
+    height: 100px;
+    width: 100px;
+}
+
+.card-normalize-h {
+    min-height: 150px;
+}

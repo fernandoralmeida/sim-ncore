@@ -1,51 +1,101 @@
-@page
+@page "/bi/empresas/cnaes/{m}"
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.CnaesModel
 
 @{
-     Layout = "_Layout.cshtml";
+    Layout = "_Layout.cshtml";
     ViewData["Title"] = "Power BI";
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Cnae;
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <partial name="_NavBar" model="@Model.MunicipioSelecionado" />
+
+<div class="row">
+    @foreach (var item in Model.ListCnaes)
+    {
+        @foreach (var item1 in item.ListaSecao)
+        {
+            <div class="row mgn-b-0 border-b font-size-12 mgn-h-2">
+                <strong>@item1.Secao.Key <a href="">@item1.Secao.Value</a></strong>
+            </div>
+            <div class="row">
+                @foreach (var item2 in item1.ListaClasse)
+                {
+                    var _classname = item2.Classe.Key.Remove(0, 2).Trim();
+                    var _cnaei = item2.Classe.Key.Remove(2, item2.Classe.Key.Length - 2) + "00000";
+                    var _cnaef = item2.Classe.Key.Remove(2, item2.Classe.Key.Length - 2) + "99999";
+                    var _count = item2.ListaSubClasse.Count();
+                    var _emp = 0;
+                    var _href = $"/bi/empresas/lista/{_cnaei}/{_cnaef}/{Model.MunicipioSelecionado}";
+                    foreach(var count in item2.ListaSubClasse)
+                    {
+                        _emp += count.Value;
+                    }
+
+                    <div class="col s6 m3 l4">
+                        <div class="card border-a hoverable" title="@_classname">
+                            <div class="card-content">
+                                <ul>                                    
+                                    <li class="truncate">@_classname</li>
+                                    <li><a class="modal-trigger orange-text" href="#viewmodal"
+                                        data-cnaei="@_cnaei" data-munic="@Model.MunicipioSelecionado"
+                                        data-cnaef="@_cnaef">Subclasses [@_count]</a></li>
+                                    <li><a href="@_href" target="_blank" >Empresas [@_emp]</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> 
+                }
+            </div>
+        }
+    }
+</div>
+
 <div class="row">
     <ul class="collapsible z-depth-0 borderless rounded-default">
-            @foreach (var emp in Model.ListCnaes)
+        @foreach (var emp in Model.ListCnaes)
+        {
+            @foreach (var s in emp.ListaSecao)
             {
-                @foreach (var s in emp.ListaSecao)
-                {
-                    <li>
-                        <div class="collapsible-header">@s.Secao.Key<span class="new badge blue" data-badge-caption="">@s.Secao.Value</span></div>
-                        <div class="collapsible-body pdn-10">
-                            <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@s.FaixaInicial" data-cnaef="@s.FaixaFinal" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
-                            <ul class="collapsible z-depth-0 mgn-10">
-                                @foreach (var d in s.ListaClasse)
-                                {
+                <li>
+                    <div class="collapsible-header">@s.Secao.Key<span class="new badge blue"
+                            data-badge-caption="">@s.Secao.Value</span></div>
+                    <div class="collapsible-body pdn-10">
+                        <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@s.FaixaInicial"
+                                data-cnaef="@s.FaixaFinal" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
+                        <ul class="collapsible z-depth-0 mgn-10">
+                            @foreach (var d in s.ListaClasse)
+                            {
+                                
+                                string cnaei = d.Classe.Key.Remove(2, d.Classe.Key.Length - 2) + "00000";
+                                string cnaef = d.Classe.Key.Remove(2, d.Classe.Key.Length - 2) + "99999";
 
-                                    string cnaei = d.Classe.Key.Remove(2, d.Classe.Key.Length - 2) + "00000";
-                                    string cnaef = d.Classe.Key.Remove(2, d.Classe.Key.Length - 2) + "99999";
+                                <li>
+                                    <div class="collapsible-header">@d.Classe.Key<span class="new badge blue-grey darken-1"
+                                            data-badge-caption="">@d.Classe.Value</span></div>
+                                    <div class="collapsible-body">
+                                        <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal"
+                                                data-cnaei="@cnaei" data-munic="@Model.MunicipioSelecionado"
+                                                data-cnaef="@cnaef">Listar Subclasse</a></div>
+                                        <ul class="collection">
+                                            @foreach (var sc in d.ListaSubClasse)
+                                            {
+                                                string[] cnae = sc.Key.Split(" - ");
+                                                var codigo = cnae[0];
 
-                                    <li>
-                                        <div class="collapsible-header">@d.Classe.Key<span class="new badge blue-grey darken-1" data-badge-caption="">@d.Classe.Value</span></div>
-                                        <div class="collapsible-body">
-                                            <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@cnaei" data-munic="@Model.MunicipioSelecionado" data-cnaef="@cnaef">Listar Subclasse</a></div>
-                                            <ul class="collection">
-                                                @foreach (var sc in d.ListaSubClasse)
-                                                {
-                                                    string[] cnae = sc.Key.Split(" - ");
-                                                    var codigo = cnae[0];
-
-                                                    <li class="collection-item"><a class="modal-trigger" href="#viewmodal" data-cnaei="@codigo" data-cnaef="@codigo" data-munic="@Model.MunicipioSelecionado"  title="Ver empresas"><span class="new badge" data-badge-caption="">@sc.Value</span></a>@sc.Key</li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </li>
-                }
-            }        
+                                                <li class="collection-item"><a class="modal-trigger" href="#viewmodal"
+                                                        data-cnaei="@codigo" data-cnaef="@codigo"
+                                                        data-munic="@Model.MunicipioSelecionado" title="Ver empresas"><span
+                                                            class="new badge" data-badge-caption="">@sc.Value</span></a>@sc.Key</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+            }
+        }
     </ul>
 </div>
 <div class="row font-size-12 mgn-t-10">
@@ -54,66 +104,36 @@
 <!-- Modal Structure -->
 <div id="viewmodal" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <div class="loadingpage"></div>
-        <table class="" style="font-size:12px;">
-        <thead>
-          <tr>
-              <th>#</th>
-              <th>CNPJ</th>
-              <th>Razão Social</th>
-              <th>Tel</th>
-              <th>Email</th>
-              <th>Cnae</th>
-          </tr>
-        </thead>
-        <tbody class="showcollection"></tbody>
-      </table>
+        <ul class="collection showcollection"></ul>        
     </div>
     <div class="modal-footer">
-        <a id="btn-export" href="" class="btn waves-effect waves-light green" title="Exportar"><i class="material-icons">description file_download</i></a>
+        <a id="btn-export" href="" class="btn waves-effect waves-light green" title="Exportar"><i
+                class="material-icons">description file_download</i></a>
         <a href="#!" class="modal-close btn waves-effect">Fechar</a>
     </div>
 </div>
 
 @section scripts{
-    <script>        
+    <script>
         $(function () {
             $(".btnsubmit").click(function () {
                 $('#formbiemp').submit();
-                $(this).prop('disabled', true);                
+                $(this).prop('disabled', true);
             });
             $(".modal-trigger").click(function () {
-                var param0 = $(this).data('cnaei');
-                var param1 = $(this).data('cnaef');
-                var param2 = $(this).data('munic');;
-                var cont = 0;
-                var a = document.getElementById('btn-export');
-                a.href = `/SimBI/Empresas/Export?ci=${param0}&cf=${param1}&m=${param2}&a=Ativa`;
-
+                var p1 = $(this).data('cnaei');
+                var p2 = $(this).data('cnaef');
+                var p3 = $(this).data('munic');
                 $(".showcollection").empty();
-                $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
-                $.getJSON(`/SimBI/Empresas/Cnaes?ci=${param0}&cf=${param1}&m=${param2}&a=Ativa&handler=Preview`, function (data) {
-                    $(".loadingpage").empty();
+                $.getJSON(`/bi/empresas/cnaes/${p3}?ci=${p1}&cf=${p2}&m=${p3}&handler=SubClasses`, function (data) {                    
                     $.each(data, function (i, item) {
-
                         var v1 = item.item1;
-                        var vm = v1.slice(0,2) + "." + v1.slice(2,5) + "." + v1.slice(5,8) + "/" + v1.slice(8,12) + "-" + v1.slice(12,14);
                         var v2 = item.item2;
-                        var v3 = item.item3 != null? item.item3: "";
-                        var v4 = item.item4 != null? item.item4: "";
-                        var v5 = item.item5;
-                        
-                        cont++;
-
-                        $(".showcollection").append(                            
-                            `<tr>
-                            <td>${cont}</td>
-                            <td><a href="/Censo/Empresas/Detalhe?id=${v1}" target="_blank">${vm}</a></td>
-                            <td>${v2}</td>
-                            <td>${v3}</td>
-                            <td>${v4}</td>
-                            <td>${v5}</td>
-                            </tr>`                        
+                        var v3 = item.item3;
+                        $(".showcollection").append(
+                            `<li class="collection-item">
+                                <div>${v2}<a href="/bi/empresas/lista/${v3}/${v3}/${p3}" class="secondary-content" target="_blank"><span class="new badge" data-badge-caption="${v1} Empresas"></span></a></div>
+                            </li>`
                         );
                     });
                 });

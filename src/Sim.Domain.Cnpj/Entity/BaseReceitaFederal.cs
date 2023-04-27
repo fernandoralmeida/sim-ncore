@@ -27,6 +27,18 @@
             MotivoSituacaoCadastral = motivoSituacaoCadastral;
             Cidade = municipio;
             QualificacaoSocio = qualificacaoSocio;
+
+            if (simplesnacional != null)
+            {
+                if (simplesnacional.OpcaoMEI == "Sim")
+                    Fiscal = "Optante MEI";
+                else if (simplesnacional.OpcaoMEI == "Não" && simplesnacional.OpcaoSimples == "Sim")
+                    Fiscal = "Optante Simples";
+                else if (simplesnacional.OpcaoSimples == "Não")
+                    Fiscal = "Regime Próprio";
+            }
+            else
+                Fiscal = "Regime Próprio";
         }
         public int Id { get; private set; }
         public string CNPJ { get; private set; }
@@ -40,6 +52,7 @@
         public virtual MotivoSituacaoCadastral MotivoSituacaoCadastral { get; private set; }
         public virtual Municipio Cidade { get; private set; }
         public virtual QualificacaoSocio QualificacaoSocio { get; private set; }
+        public string Fiscal { get; private set; }
 
         public bool EmpresaNula(BaseReceitaFederal obj)
         {
@@ -53,17 +66,17 @@
 
         public bool EmpresaSuspensa(BaseReceitaFederal obj)
         {
-            return obj.Estabelecimento.SituacaoCadastral == "Suspensa"; 
+            return obj.Estabelecimento.SituacaoCadastral == "Suspensa";
         }
 
         public bool EmpresaInapta(BaseReceitaFederal obj)
         {
-            return obj.Estabelecimento.SituacaoCadastral == "Inapta"; 
+            return obj.Estabelecimento.SituacaoCadastral == "Inapta";
         }
-        
+
         public bool EmpresaBaixada(BaseReceitaFederal obj)
         {
-            return obj.Estabelecimento.SituacaoCadastral == "Baixada"; 
+            return obj.Estabelecimento.SituacaoCadastral == "Baixada";
         }
 
         public bool OptanteSimplesNacional(BaseReceitaFederal obj)
@@ -75,7 +88,7 @@
             return obj.SimplesNacional != null && obj.SimplesNacional.OpcaoMEI == "Sim";
         }
 
-        public bool OptanteSimplesNacionalNaoMEI (BaseReceitaFederal obj)
+        public bool OptanteSimplesNacionalNaoMEI(BaseReceitaFederal obj)
         {
             return obj.SimplesNacional != null && obj.SimplesNacional.OpcaoSimples == "Sim" && obj.SimplesNacional.OpcaoMEI == "Não";
         }

@@ -238,8 +238,9 @@ namespace Sim.Data.Cnpj.Repository
                             from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
                             from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)
                             from mpo in _db.Municipios.Where(s => s.Codigo == est.Municipio)
+                            from nj in _db.NaturezaJuridica.Where(s => s.Codigo == emp.NaturezaJuridica)
                             from sn in _db.Simples.Where(s => s.CNPJBase == est.CNPJBase).DefaultIfEmpty()
-                            select new { est, emp, atv, sn, mpo }) 
+                            select new { est, emp, atv, sn, mpo, nj }) 
                             .Distinct()
                             .AsNoTrackingWithIdentityResolution();
 
@@ -248,7 +249,7 @@ namespace Sim.Data.Cnpj.Repository
                         var _cnpj = string.Format("{0}{1}{2}", e.est.CNPJBase, e.est.CNPJOrdem, e.est.CNPJDV);
 
                         brf.Add(new BaseReceitaFederal(
-                            0, _cnpj, e.emp, e.est, null, e.sn, e.atv, null, null, null, e.mpo, null));
+                            0, _cnpj, e.emp, e.est, null, e.sn, e.atv, null, e.nj, null, e.mpo, null));
                     }
                     return brf;
                 });

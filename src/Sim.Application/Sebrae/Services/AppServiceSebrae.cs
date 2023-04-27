@@ -14,10 +14,10 @@ public class AppServiceSebrae : IAppServiceSebrae
             var _report = new EReports();
 
             _report.Atendimentos = new KeyValuePair<string, int>("Atendimentos", at.Count());
-            _report.Eventos = new KeyValuePair<string, int>("Eventos", ev.Count());
+            _report.Eventos = new KeyValuePair<string, int>("Eventos", ev.Where(s => s.Data <= DateTime.Now).Count());
 
             var _evmonth = new List<KeyValuePair<string, int>>();
-            foreach (var item in ev.Where(s => s.Situacao != EEvento.ESituacao.Cancelado)
+            foreach (var item in ev.Where(s => s.Situacao != EEvento.ESituacao.Cancelado && s.Data <= DateTime.Now)
                                     .OrderBy(o => o.Data)
                                     .GroupBy(g => g.Data.Value.ToString("MMM"))) {
                 _evmonth.Add(new KeyValuePair<string, int>(item.Key, item.Count()));                

@@ -21,5 +21,6 @@ namespace Sim.Domain.Cnpj.Interfaces
         Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(IEnumerable<BaseReceitaFederal> obj);
         Task<IEnumerable<string>> DoListMappingZonasAsync(IEnumerable<BaseReceitaFederal> obj);
         Task<IEnumerable<EExport>> DoListExport(IEnumerable<BaseReceitaFederal> obj);
+        Task<IEnumerable<(int Value, string Key, string Code)>> DoListCnaesAsync(Expression<Func<Estabelecimento, bool>> filter = null);
     }
 }

@@ -11,32 +11,39 @@
     <nav class="row transparent">
         <div class="row nav-wrapper">
             <div class="input-field col s12 m12 l12 no-padding">
-                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="InputAno" type="search" required>
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)"
+                    asp-for="InputAno" type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-            </div>      
+            </div>
         </div>
     </nav>
 </form>
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-    
+
 <div class="row">
-    <div class="box-container-card">                    
+    <div class="box-container-card">
         <div class="box-column">
             <div class="box-column-row">
-                @{ var _econt = Model.LEventos.EventosR.Value.Value; }
+                @{
+                    var _econt = Model.LEventos.EventosP.Value.Value;
+                }
                 <div class="box-card">
                     <div class="card-header grey-text">Eventos<i class="material-icons left">event</i></div>
                     <div class="box-around">
                         <a class="box-cell-item-flex font-size-12">
+                            <p class="grey-text">@Model.LEventos.EventosP.Value.Key</p>
+                            <p class="blue-text font-h5">@Model.LEventos.EventosP.Value.Value</p>
+                        </a>
+                        <a class="box-cell-item-flex font-size-12">
                             <p class="grey-text">@Model.LEventos.EventosR.Value.Key</p>
-                            <p class="blue-text font-h5">@Model.LEventos.EventosR.Value.Value</p>
+                            <p class="green-text font-h5">@Model.LEventos.EventosR.Value.Value</p>
                         </a>
                         <a class="box-cell-item-flex font-size-12">
                             <p class="grey-text">@Model.LEventos.EventosC.Value.Key</p>
                             <p class="red-text font-h5">@Model.LEventos.EventosC.Value.Value</p>
-                        </a>                                                              
+                        </a>
                     </div>
                 </div>
             </div>
@@ -52,15 +59,17 @@
                         <a class="box-cell-item-flex font-size-12">
                             <p class="grey-text">@Model.LEventos.TaxaPreenchimentoParticipantes.Value.Key</p>
                             @{
-                                var _t = Model.LEventos.Participantes.Value.Value * Model.LEventos.TaxaPreenchimentoParticipantes.Value.Value;
+                                var _t = Model.LEventos.Participantes.Value.Value *
+                                Model.LEventos.TaxaPreenchimentoParticipantes.Value.Value;
                             }
                             <p class="blue-text font-h6">@_t</p>
-                            <p class="grey-text">(@Model.LEventos.TaxaPreenchimentoParticipantes.Value.Value.ToString("N2")%)</p>
-                        </a>                                                              
+                            <p class="grey-text">
+                                (@Model.LEventos.TaxaPreenchimentoParticipantes.Value.Value.ToString("N2")%)</p>
+                        </a>
                     </div>
-                </div>                 
+                </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Panorama<i class="material-icons left">female male</i></div>
+                    <div class="card-header grey-text">Gêneros<i class="material-icons left">transgender</i></div>
                     <div class="box-around">
                         @foreach (var op in Model.LEventos.ParticipantesGenero)
                         {
@@ -71,14 +80,14 @@
                                 <p class="grey-text">@op.Key</p>
                                 <p class="blue-text font-h6">@op.Value</p>
                                 <p class="grey-text">(@r.ToString("N2")%)</p>
-                            </a>   
-                        }                            
+                            </a>
+                        }
                     </div>
-                </div> 
+                </div>
             </div>
 
             <div class="box-column-row">
-                <div  class="box-card">
+                <div class="box-card">
                     <div class="card-header grey-text">Faixa Etária<i class="material-icons left">groups</i></div>
                     <div class="box-around">
                         @foreach (var item in Model.LEventos.FaixaEtaria)
@@ -86,7 +95,7 @@
                             float v1 = item.Value;
                             float v2 = _econt;
                             float r = (v1 / v2) * 100;
-                            
+
                             <a class="box-cell-item-flex font-size-12">
                                 <p class="grey-text">@item.Key</p>
                                 <p class="blue-text font-h6">@item.Value</p>
@@ -97,7 +106,7 @@
                 </div>
             </div>
             <div class="box-column-row">
-                <div  class="box-card">
+                <div class="box-card">
                     <div class="card-header grey-text">Ocorrências<i class="material-icons left">event_repeat</i></div>
                     <div class="box-around">
                         @foreach (var item in Model.LEventos.Eventos)
@@ -105,7 +114,7 @@
                             float v1 = item.Value;
                             float v2 = _econt;
                             float r = (v1 / v2) * 100;
-                            
+
                             <a class="box-cell-item-flex font-size-12">
                                 <p class="grey-text">@item.Key</p>
                                 <p class="blue-text font-h6">@item.Value</p>
@@ -116,7 +125,7 @@
                 </div>
             </div>
             <div class="box-column-row">
-                <div  class="box-card">
+                <div class="box-card">
                     <div class="card-header grey-text">Por Mês<i class="material-icons left">calendar_month</i></div>
                     <div class="box-around">
                         @foreach (var item in Model.LEventos.EventosMeses)
@@ -124,7 +133,7 @@
                             float v1 = item.Value;
                             float v2 = _econt;
                             float r = (v1 / v2) * 100;
-                            
+
                             <a class="box-cell-item-flex font-size-12">
                                 <p class="grey-text">@item.Key</p>
                                 <p class="blue-text font-h6">@item.Value</p>
@@ -135,7 +144,7 @@
                 </div>
             </div>
             <div class="box-column-row">
-                <div  class="box-card">
+                <div class="box-card">
                     <div class="card-header grey-text">Por Setor<i class="material-icons left">location_on</i></div>
                     <div class="box-around">
                         @foreach (var item in Model.LEventos.EventosSetores)
@@ -143,7 +152,7 @@
                             float v1 = item.Value;
                             float v2 = _econt;
                             float r = (v1 / v2) * 100;
-                            
+
                             <a class="box-cell-item-flex font-size-12">
                                 <p class="grey-text">@item.Key</p>
                                 <p class="blue-text font-h6">@item.Value</p>
@@ -155,6 +164,6 @@
             </div>
         </div>
     </div>
-</div>    
+</div>
 
 

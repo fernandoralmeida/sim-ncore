@@ -28,14 +28,14 @@ namespace Sim.UI.Web.Pages.Atendimento
         }
 
         [DisplayName("CPF")]
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public string GetCPF { get; set; }
 
         [DisplayName("CNPJ")]
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public string GetCNPJ { get; set; }
 
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public InputModelAtendimento Input { get; set; }
 
         [TempData]
@@ -112,7 +112,9 @@ namespace Sim.UI.Web.Pages.Atendimento
                 Protocolo = await GetProtoloco(),
                 Data = DateTime.Now,
                 Status = "Ativo",
+                Anonimo = false,
                 Ativo = true,
+                Ultima_Alteracao = DateTime.Now,
                 Owner_AppUser_Id = User.Identity.Name
             };
 
@@ -121,6 +123,7 @@ namespace Sim.UI.Web.Pages.Atendimento
                 atendimento.Pessoa = await _appServicePessoa.GetIdAsync(Input.Pessoa.Id);
                 if (Input.Empresa != null)
                     atendimento.Empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id);
+
                 await _appServiceAtendimento.AddAsync(atendimento);
 
             }

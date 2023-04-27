@@ -40,5 +40,13 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
         {
             return new JsonResult(await _appEmpresa.DoListCnaeEmpresasJsonAsync(ci, cf, m, a));
         }
+        public async Task<JsonResult> OnGetSubClasses(string ci, string cf, string m)
+        {
+            return new JsonResult(await _appEmpresa
+                .DoListCnaesAsync(s => 
+                    s.CnaeFiscalPrincipal.CompareTo(ci) >= 0 && 
+                    s.CnaeFiscalPrincipal.CompareTo(cf) <= 0 && 
+                    s.Municipio == m && s.SituacaoCadastral == "02"));
+        }
     }
 }

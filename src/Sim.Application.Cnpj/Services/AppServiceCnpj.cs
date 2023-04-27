@@ -64,5 +64,9 @@ namespace Sim.Application.Cnpj.Services
 
         public async Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<Estabelecimento, bool>> filter = null) =>
             await _cnpj.DoListAsync(filter);
+
+        public async Task<IEnumerable<(int Value, string Key, string Code)>> DoListCnaesAsync(Expression<Func<Estabelecimento, bool>> filter = null)
+            => await _cnpj.DoListCnaesAsync(filter);
+        
     }
 }
