@@ -48,9 +48,9 @@ namespace Sim.Domain.Evento.Service
                     {
                         for (int i = 1; i < 13; i++)
                         {
-                            _eventos = eventos.Where(s => s.Data.Value.Month == i && s.Data.Value.Year == a).OrderBy(o => o.Data).ToList();
+                            _eventos = eventos.Where(s => s.Data!.Value.Month == i && s.Data.Value.Year == a).OrderBy(o => o.Data).ToList();
                             if(_eventos.Any())
-                                _lista_meses.Add((string.Format("{0} {1}", a, _eventos.FirstOrDefault().Data.Value.ToString("MMM")), _eventos.Count, _eventos));
+                                _lista_meses.Add((string.Format("{0} {1}", a, _eventos.FirstOrDefault()!.Data!.Value.ToString("MMM")), _eventos.Count, _eventos));
                         }
 
                     }
@@ -59,7 +59,7 @@ namespace Sim.Domain.Evento.Service
             }
             catch
             {
-                return null;
+                return null!;
             }
         }
 

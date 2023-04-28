@@ -50,54 +50,6 @@
     }
 </div>
 
-<div class="row">
-    <ul class="collapsible z-depth-0 borderless rounded-default">
-        @foreach (var emp in Model.ListCnaes)
-        {
-            @foreach (var s in emp.ListaSecao)
-            {
-                <li>
-                    <div class="collapsible-header">@s.Secao.Key<span class="new badge blue"
-                            data-badge-caption="">@s.Secao.Value</span></div>
-                    <div class="collapsible-body pdn-10">
-                        <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal" data-cnaei="@s.FaixaInicial"
-                                data-cnaef="@s.FaixaFinal" data-munic="@Model.MunicipioSelecionado">Listar Classe</a></div>
-                        <ul class="collapsible z-depth-0 mgn-10">
-                            @foreach (var d in s.ListaClasse)
-                            {
-                                
-                                string cnaei = d.Classe.Key.Remove(2, d.Classe.Key.Length - 2) + "00000";
-                                string cnaef = d.Classe.Key.Remove(2, d.Classe.Key.Length - 2) + "99999";
-
-                                <li>
-                                    <div class="collapsible-header">@d.Classe.Key<span class="new badge blue-grey darken-1"
-                                            data-badge-caption="">@d.Classe.Value</span></div>
-                                    <div class="collapsible-body">
-                                        <div class="mgn-10 right-align"><a class="modal-trigger" href="#viewmodal"
-                                                data-cnaei="@cnaei" data-munic="@Model.MunicipioSelecionado"
-                                                data-cnaef="@cnaef">Listar Subclasse</a></div>
-                                        <ul class="collection">
-                                            @foreach (var sc in d.ListaSubClasse)
-                                            {
-                                                string[] cnae = sc.Key.Split(" - ");
-                                                var codigo = cnae[0];
-
-                                                <li class="collection-item"><a class="modal-trigger" href="#viewmodal"
-                                                        data-cnaei="@codigo" data-cnaef="@codigo"
-                                                        data-munic="@Model.MunicipioSelecionado" title="Ver empresas"><span
-                                                            class="new badge" data-badge-caption="">@sc.Value</span></a>@sc.Key</li>
-                                            }
-                                        </ul>
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </li>
-            }
-        }
-    </ul>
-</div>
 <div class="row font-size-12 mgn-t-10">
     Informações extraidas da base de dados da RFB
 </div>

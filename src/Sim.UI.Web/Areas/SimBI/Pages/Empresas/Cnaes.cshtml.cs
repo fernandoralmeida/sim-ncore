@@ -17,6 +17,15 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
         public string StatusMessage { get; set; }
 
         public string MunicipioSelecionado {get;set;}
+        
+        [BindProperty]
+        public InputModel Input { get; set; }
+
+        public class InputModel
+        {
+            public string Municipio { get; set; }
+            public string Ano { get; set; }
+        }
 
         public CnaesModel(IAppServiceCnpj appEmpresa)
         {
@@ -24,7 +33,7 @@ namespace Sim.UI.Web.Areas.SimBI.Pages.Empresas
             ListCnaes = new List<BICnae>();
         }
 
-        public async Task OnGetAsync(string? m)
+        public async Task OnGetAsync(string m)
         {     
             StatusMessage = "";   
 

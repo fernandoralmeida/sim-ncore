@@ -42,7 +42,7 @@ namespace Sim.UI.Web.Pages.Atendimento
         public string StatusMessage { get; set; }
 
         private async Task<string> GetProtoloco()
-        {        
+        {
             return await _appServiceContador.GetProtocoloAsync(User.Identity.Name, "Atendimento");
         }
         private async Task<Pessoa> GetPessoa(Guid id)
@@ -70,9 +70,9 @@ namespace Sim.UI.Web.Pages.Atendimento
 
             if (id != null)
             {
-                Input.Pessoa = await GetPessoa((Guid)id);           
-                
-                foreach(var e in await _appServiceEmpresa
+                Input.Pessoa = await GetPessoa((Guid)id);
+
+                foreach (var e in await _appServiceEmpresa
                     .ConsultaRazaoSocialAsync(Input.Pessoa.Nome))
                     Input.Empresa = e;
                 if (Input.Empresa != null)
@@ -102,38 +102,36 @@ namespace Sim.UI.Web.Pages.Atendimento
 
         public async Task<IActionResult> OnPostSaveAsync()
         {
-            if (Input.Pessoa == null)
-            {
-                return Page();
-            }
-
-            var atendimento = new EAtendimento()
-            {
-                Protocolo = await GetProtoloco(),
-                Data = DateTime.Now,
-                Status = "Ativo",
-                Anonimo = false,
-                Ativo = true,
-                Ultima_Alteracao = DateTime.Now,
-                Owner_AppUser_Id = User.Identity.Name
-            };
-
             try
             {
-                atendimento.Pessoa = await _appServicePessoa.GetIdAsync(Input.Pessoa.Id);
-                if (Input.Empresa != null)
-                    atendimento.Empresa = await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id);
+                if (Input.Pessoa == null)
+                {
+                    return Page();
+                }
+
+                var atendimento = new EAtendimento()
+                {
+                    Protocolo = await GetProtoloco(),
+                    Data = DateTime.Now,
+                    Status = "Ativo",
+                    Anonimo = false,
+                    Ativo = true,
+                    Ultima_Alteracao = DateTime.Now,
+                    Owner_AppUser_Id = User.Identity.Name,
+                    Pessoa = await _appServicePessoa.GetIdAsync(Input.Pessoa.Id),
+                    Empresa = Input.Empresa == null ? null : await _appServiceEmpresa.GetIdAsync(Input.Empresa.Id)
+                };
 
                 await _appServiceAtendimento.AddAsync(atendimento);
 
+                return RedirectToPage("/Atendimento/Novo/Index");
             }
             catch (Exception ex)
             {
                 StatusMessage = "Erro: " + ex.Message;
+                return Page();
             }
-
-            return RedirectToPage("/Atendimento/Novo/Index");
-        }       
+        }
 
     }
 }

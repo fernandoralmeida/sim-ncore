@@ -1,4 +1,4 @@
-@page "/bi/empresas/maps/{m}"
+@page "/bi/empresas/mapa/{m}"
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.MappingModel
 
 @{
@@ -157,7 +157,7 @@
                 var param1 = $("#id_mcp").val(); 
                 $("#idcellboxcontent").empty();
                 $("#idcellboxcontent").append('<p class="mgn-l-10 grey-text">...carregando!</p>');
-                $.getJSON(`/bi/empresas/maps/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=LAgrupados`, (data) => {
+                $.getJSON(`/bi/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=LAgrupados`, (data) => {
                     $("#idcellboxcontent").empty();
                     data.forEach(function(item) {                          
                         $("#idcellboxcontent").append(
@@ -168,7 +168,7 @@
                         );
                     });
                 });
-                $.getJSON(`/bi/empresas/maps/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
+                $.getJSON(`/bi/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
                     data.forEach(function(item) {
                         
                     });

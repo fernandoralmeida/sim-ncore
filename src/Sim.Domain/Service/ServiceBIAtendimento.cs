@@ -20,7 +20,7 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
 
             foreach(var item in _at.Where(s => s.Servicos != null))
             { 
-                string[] servicos = item.Servicos.ToString().Split(new char[] { ';', ',' });                    
+                string[] servicos = item.Servicos!.ToString().Split(new char[] { ';', ',' });                    
                 foreach(var s in servicos) {
                     src ++;
                 }                
@@ -38,10 +38,10 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
             var _at = await _atendimento.DoListByAnoAsync(ano);
 
             foreach(var item in _at.Where(s => s.Servicos != null && s.Canal != null)) {
-                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
-                    _count_sv.Add(item.Canal);
+                foreach(var s in item.Servicos!.Split(new char[] {';', ','})) {
+                    _count_sv.Add(item.Canal!);
                 } 
-                _count_at.Add(item.Canal);  
+                _count_at.Add(item.Canal!);  
             }
 
             foreach(var x in from a in _count_at
@@ -66,7 +66,7 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
             foreach(var item in _at.Where(s => s.Servicos != null)
                                     .GroupBy(s => s.Canal)
                                     .OrderByDescending(s => s.Count())) {
-                _list.Add(new EChart(item.Key, item.Count(), string.Empty));              
+                _list.Add(new EChart(item.Key!, item.Count(), string.Empty));              
             }
 
             return _list;
@@ -103,8 +103,8 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
             var _at =  await _atendimento.DoListByAnoAsync(ano);
 
             foreach (var item in _at.Where(s => s.Servicos != null)) {
-                _atcount.Add(item.Data.Value.Date.ToString("MMM"));
-                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
+                _atcount.Add(item.Data!.Value.Date.ToString("MMM"));
+                foreach(var s in item.Servicos!.Split(new char[] {';', ','})) {
                     _svcount.Add(item.Data.Value.Date.ToString("MMM"));
                 }               
             }
@@ -131,7 +131,7 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
 
             foreach(var item in _at.Where(s => s.Servicos != null))
             { 
-                string[] servicos = item.Servicos.ToString().Split(new char[] { ';', ',' });                    
+                string[] servicos = item.Servicos!.ToString().Split(new char[] { ';', ',' });                    
                 foreach(var s in servicos) {
                     _servicos.Add(s);
                 }                
@@ -159,10 +159,10 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
             var _at = await _atendimento.DoListByAnoAsync(ano);
 
             foreach(var item in _at.Where(s => s.Servicos != null)) {
-                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
-                    _count_sv.Add(item.Setor);
+                foreach(var s in item.Servicos!.Split(new char[] {';', ','})) {
+                    _count_sv.Add(item.Setor!);
                 } 
-                _count_at.Add(item.Setor);  
+                _count_at.Add(item.Setor!);  
             }
 
             foreach(var x in from a in _count_at
@@ -187,7 +187,7 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
             foreach(var item in _at.Where(s => s.Servicos != null)
                                     .GroupBy(s => s.Setor)
                                     .OrderByDescending(s => s.Count())) {
-                _list.Add(new EChart(item.Key, item.Count(), string.Empty));              
+                _list.Add(new EChart(item.Key!, item.Count(), string.Empty));              
             }
 
             return _list;
@@ -203,10 +203,10 @@ public class ServiceBIAtendimento : IServiceBIAtendimento {
             var _at = await _atendimento.DoListByAnoAsync(ano);
 
             foreach(var item in _at.Where(s => s.Servicos != null)) {                        
-                foreach(var s in item.Servicos.Split(new char[] {';', ','})) {
-                    _count_sv.Add(item.Owner_AppUser_Id);
+                foreach(var s in item.Servicos!.Split(new char[] {';', ','})) {
+                    _count_sv.Add(item.Owner_AppUser_Id!);
                 } 
-                _count_at.Add(item.Owner_AppUser_Id);              
+                _count_at.Add(item.Owner_AppUser_Id!);              
             }
 
             foreach(var x in from a in _count_at

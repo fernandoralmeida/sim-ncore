@@ -40,13 +40,13 @@
 
         public async Task<IEnumerable<(string servico, string value)>> ToListJson(string setor)
         {
-            var list = await DoListAsync(s => s.Dominio.Nome == setor || s.Dominio.Hierarquia == EHierarquia.Secretaria);
+            var list = await DoListAsync(s => s.Dominio!.Nome == setor || s.Dominio.Hierarquia == EHierarquia.Secretaria);
 
             var servicelist = new List<(string canal, string value)>();
 
             foreach (var item in list.OrderBy(s => s.Nome))
             {
-                servicelist.Add(new() { canal = item.Nome, value = item.Nome });
+                servicelist.Add(new() { canal = item.Nome!, value = item.Nome! });
             }
 
             return servicelist;

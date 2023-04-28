@@ -14,7 +14,7 @@ namespace Sim.UI.Web.Pages.BancoPovo.Add;
 
 [Authorize(Roles = "Admin_Global,M_BancoPovo,M_BancoPovo_Admin")]
 public class IndexModel : PageModel
-{   
+{
     private readonly IMapper _mapper;
     private readonly IAppServiceEmpresa _appServiceEmpresa;
     private readonly IAppServicePessoa _appServicePessoa;
@@ -22,7 +22,7 @@ public class IndexModel : PageModel
 
     [TempData]
     public string StatusMessage { get; set; }
-    
+
     [BindProperty(SupportsGet = true)]
     public VMContrato InputContrato { get; set; }
 
@@ -47,60 +47,62 @@ public class IndexModel : PageModel
         _appContratos = appServiceContratos;
     }
 
-    public void OnGet() {
-        InputContrato.Data = DateTime.Now;        
+    public void OnGet()
+    {
+        InputContrato.Data = DateTime.Now;
         InputContrato.Valor = 0;
-        
+
     }
-    public async Task OnPostPFAsync() {
-        
+    public async Task OnPostPFAsync()
+    {
+
         var lp = await _appServicePessoa.ConsultaCPFAsync(GetCPF);
 
-        if(lp.Count() == 0)
+        if (lp.Count() == 0)
             StatusMessage = "Erro: Cliente não encontrado!";
 
-        foreach(var p in lp) {
-            var _isOk = await _appContratos.DoListAsync(s => s.Cliente.CPF == GetCPF);
+        foreach (var p in lp)
+        {
+            var _contracts = await _appContratos
+                                    .DoListAsync(s => 
+                                    s.Cliente.CPF == GetCPF &&
+                                    s.Situacao < EContrato.EnSituacao.Reprovado &&
+                                    s.Pagamento < EContrato.EnPagamento.Liquidado);
 
-            if (_isOk.Count() > 0) {
 
-                var _apto = _isOk.Where(s => s.Situacao > EContrato.EnSituacao.Aprovado &&
-                                        s.Pagamento == EContrato.EnPagamento.Liquidado);
-
-                if(_apto.Count() > 0) {
-                    InputContrato.Cliente = p;
-                    await CNPJ(p.CPF.MaskRemove());
-                    return;
-                }
-
+            if (_contracts.Count() > 0)
+            {
                 StatusMessage = "Erro: Cliente ja tem crédito ativo por essa instituição!";
                 return;
-
-            } else {
-
+            }
+            else
+            {
                 InputContrato.Cliente = p;
                 await CNPJ(p.CPF.MaskRemove());
                 return;
-
-            }              
-        }          
+            }
+        }
     }
 
-    private async Task CNPJ(string param) {
+    private async Task CNPJ(string param)
+    {
         var le = await _appServiceEmpresa.DoList(s => s.CNPJ == param || s.Nome_Empresarial.Contains(param));
 
-        if(le.Count() == 0)
+        if (le.Count() == 0)
             StatusMessage = "Erro: Empresa não encontrada!";
 
-        foreach(var p in le) {
+        foreach (var p in le)
+        {
             var _isOk = await _appContratos.DoListAsync(s => s.Empresa.CNPJ == param || s.Empresa.Nome_Empresarial.Contains(param));
 
-            if (_isOk.Count() > 0) {
+            if (_isOk.Count() > 0)
+            {
 
                 var _apto = _isOk.Where(s => s.Situacao > EContrato.EnSituacao.Analise &&
                                         s.Pagamento == EContrato.EnPagamento.Liquidado);
 
-                if(_apto.Count() > 0) {
+                if (_apto.Count() > 0)
+                {
                     InputContrato.Empresa = p;
                     return;
                 }
@@ -108,37 +110,44 @@ public class IndexModel : PageModel
                 StatusMessage = "Erro: Empresa ja tem crédito ativo por essa instituição!";
                 return;
 
-            } else {
+            }
+            else
+            {
 
                 InputContrato.Empresa = p;
                 return;
-            }              
-        }  
+            }
+        }
     }
-    public async Task OnPostPJAsync() {
+    public async Task OnPostPJAsync()
+    {
         await CNPJ(GetCNPJ);
     }
 
-    public IActionResult OnPostRemovePF() {
-        
+    public IActionResult OnPostRemovePF()
+    {
+
         InputContrato.Cliente = null;
         return RedirectToPage("/Banco-do-Povo/Add/Index");
     }
 
-    public void OnPostRemovePJ() {
-        
+    public void OnPostRemovePJ()
+    {
+
         InputContrato.Empresa = null;
     }
 
-    public async Task<IActionResult> OnPostSaveAsync(){
-        try{
-            
+    public async Task<IActionResult> OnPostSaveAsync()
+    {
+        try
+        {
+
             if (InputContrato.Cliente == null && InputContrato.Empresa == null)
             {
                 StatusMessage = "Erro: Verifique se os campos foram preenchidos corretamente!";
                 return Page();
             }
-            
+
             var _contrato = _mapper.Map<EContrato>(InputContrato);
             _contrato.AppUser = User.Identity.Name;
             _contrato.Pagamento = EContrato.EnPagamento.Nulo;
@@ -146,17 +155,18 @@ public class IndexModel : PageModel
             _contrato.DataSituacao = DateTime.Now;
             _contrato.UltimaAlteracao = DateTime.Now;
 
-            if(InputContrato.Cliente != null)
+            if (InputContrato.Cliente != null)
                 _contrato.Cliente = await _appServicePessoa.SingleIdAsync(InputContrato.Cliente.Id);
 
-            if(InputContrato.Empresa != null)
+            if (InputContrato.Empresa != null)
                 _contrato.Empresa = await _appServiceEmpresa.SingleIdAsync(InputContrato.Empresa.Id);
 
             await _appContratos.AddAsync(_contrato);
 
             return RedirectToPage("/Banco-do-Povo/Index");
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             StatusMessage = "Erro: " + ex.Message + "\n" + ex.Data + "\n" + ex.Source + "\n" + ex.InnerException;
             return Page();
         }

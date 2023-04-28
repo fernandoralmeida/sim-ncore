@@ -24,12 +24,12 @@
 
         public async Task<IEnumerable<(string canal, string value)>> DoListJson(string setor)
         {
-            var list = await DoListAsync(s => s.Dominio.Nome == setor);
+            var list = await DoListAsync(s => s.Dominio!.Nome == setor);
             var canallist = new List<(string canal, string value)>();
 
             foreach(var item in list)
             {
-                canallist.Add(new() { canal = item.Nome, value = item.Nome });
+                canallist.Add(new() { canal = item.Nome!, value = item.Nome! });
             }
 
             return canallist;

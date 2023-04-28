@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/bpp/contratos/aprovados/"
 @using System.Globalization
 @model Sim.UI.Web.Pages.BancoPovo.Aprovados.IndexModel
 @{
@@ -94,7 +94,7 @@
                 var _id = document.getElementById('idservico').value;
                 var _dom = document.getElementById('dominioid').value;  
                 var _nom = document.getElementById('inputmodalnome').value;                 
-                $.get(`/Settings/Common/Servicos?id=${_id}&dominio=${_dom}&nome=${_nom}&handler=Manager`);
+                $.get(`/configuracoes/servicos/?id=${_id}&dominio=${_dom}&nome=${_nom}&handler=Manager`);
             });
         });
     </script>

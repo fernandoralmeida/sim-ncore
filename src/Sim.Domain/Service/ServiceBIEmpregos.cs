@@ -18,7 +18,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var t_vagas = 0;
             
 
-            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {
+            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {
                 t_vagas += item.Vagas;
                 if(item.Status == "Ativo" || item.Status == "Ativa")
                     vagas += item.Vagas;                                              
@@ -34,7 +34,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
         return await Task.Run(async () => {
             var vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {
+            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {
                 vagas += item.Vagas;               
             }
 
@@ -50,7 +50,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var vagas = 0;
             var t_vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {
+            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {
                 t_vagas += item.Vagas;
                 if(item.Status == "Finalizado" || item.Status == "Finalizada")
                     vagas += item.Vagas;               
@@ -75,7 +75,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
             var _return = new List<EChart>();
 
-            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {
+            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {
                 t_vagas += item.Vagas;
                 if(item.Status == "Ativo" || item.Status == "Ativa")
                     switch(item.Genero)
@@ -118,7 +118,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             int t_vagas = 0;
             var _return = new List<EChart>();
 
-            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {
+            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {
                 t_vagas += item.Vagas;
                 switch(item.Genero)
                 {
@@ -153,11 +153,11 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
         return await Task.Run(async () => {
             var _return = new List<EChart>();
             var _inc = new List<string>();
-            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano);
+            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano);
 
             foreach(var item in _rp.Where(s => s.Status == "Ativo" || s.Status == "Ativa")) {
                 for(int i = 0; i < item.Vagas; i++)
-                    _inc.Add(item.Inclusivo);
+                    _inc.Add(item.Inclusivo!);
             }
 
             foreach(var item in _inc.GroupBy(g => g)
@@ -174,11 +174,11 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
         return await Task.Run(async () => {
             var _return = new List<EChart>();
             var _inc = new List<string>();
-            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano);
+            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano);
 
             foreach(var item in _rp.Where(s => s.Status != "Cancelado" || s.Status == "Cancelada")) {
                 for(int i = 0; i < item.Vagas; i++)
-                    _inc.Add(item.Inclusivo);
+                    _inc.Add(item.Inclusivo!);
             }
 
             foreach(var item in _inc.GroupBy(g => g)
@@ -195,11 +195,11 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
         return await Task.Run(async () => {
             var _return = new List<EChart>();
             var _exp = new List<string>();
-            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano);
+            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano);
 
             foreach(var item in _rp.Where(s => s.Status == "Ativo" || s.Status == "Ativa")) {
                 for(int i = 0; i < item.Vagas; i++)
-                    _exp.Add(item.Experiencia);
+                    _exp.Add(item.Experiencia!);
             }
 
             foreach(var item in _exp.GroupBy(g => g)
@@ -216,11 +216,11 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
         return await Task.Run(async () => {
             var _return = new List<EChart>();
             var _exp = new List<string>();
-            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano);
+            var _rp = await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano);
 
             foreach(var item in _rp.Where(s => s.Status != "Cancelado" || s.Status == "Cancelada")) {
                 for(int i = 0; i < item.Vagas; i++)
-                    _exp.Add(item.Experiencia);
+                    _exp.Add(item.Experiencia!);
             }
 
             foreach(var item in _exp.GroupBy(g => g)
@@ -239,7 +239,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var _list = new List<string>();
             var t_vagas = 0;
 
-            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {  
+            foreach(var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {  
                 t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {
                     if(item.Ocupacao != null)
@@ -267,10 +267,10 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var _month = new List<string>();
             var t_vagas = 0;
 
-            foreach (var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {
+            foreach (var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {
                 t_vagas += item.Vagas;
                 for(int i = 0; i < item.Vagas; i++) {     
-                    _month.Add(item.Data.Value.Date.ToString("MMM"));                    
+                    _month.Add(item.Data!.Value.Date.ToString("MMM"));                    
                 }                
             }
 
@@ -294,7 +294,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
             var _setor = new List<string>();
             var t_vagas = 0;
 
-            foreach (var item in await _repositoryEmpregos.DoListAsync(s => s.Data.Value.Year == ano)) {
+            foreach (var item in await _repositoryEmpregos.DoListAsync(s => s.Data!.Value.Year == ano)) {
                 t_vagas += item.Vagas;
                 if (item.Empresa != null) {
                     if (item.Empresa.CNAE_Principal != null) {

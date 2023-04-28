@@ -25,7 +25,7 @@ namespace Sim.Domain.Service
 
         public async Task<IEnumerable<Empregos>> DoListEmpregosAsyncByAno(int ano)
         {
-            return await DoListAsync(s => s.Data.Value.Year == ano);
+            return await DoListAsync(s => s.Data!.Value.Year == ano);
         }
 
         public async Task<Empregos> GetEmpregoByIdAsync(Guid id)

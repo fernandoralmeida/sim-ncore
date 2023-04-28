@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/atendimento/alteracoes/"
 @model Sim.UI.Web.Pages.Atendimento.Manager.IndexModel
 @{
     ViewData["Title"] = "Atendimento";
@@ -153,7 +153,7 @@
                 var getSetor = $("#Input_Setor").val(); 
                 
                 $("#Input_Servicos").empty();
-                $.getJSON(`/Atendimento/Novo/Index?handler=Servicos&getSetor=${getSetor}`, (data) => {
+                $.getJSON(`/atendimento/novo/?handler=Servicos&getSetor=${getSetor}`, (data) => {
                     data.forEach(function(item) {
                         $("#Input_Servicos").append(`<option>${item.item1}</option>`);
                     });

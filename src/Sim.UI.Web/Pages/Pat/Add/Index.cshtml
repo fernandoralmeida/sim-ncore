@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/pat/vagas/nova/"
 @model Sim.UI.Web.Pages.Pat.Add.IndexModel
 @{
     ViewData["Title"] = "Vagas";
@@ -162,7 +162,7 @@
                 var p = document.getElementById("inputCNPJ").value;
                 $(".showcollection").empty();
                 $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
-                $.getJSON(`/Pat/Add?cnpj=${p}&handler=AddEmpresa`, function (data) {
+                $.getJSON(`/pat/vagas/nova/?cnpj=${p}&handler=AddEmpresa`, function (data) {
                     $(".loadingpage").empty();                    
                     $.each(data, function (i, item) {      
                         let v1 = item.item1;

@@ -131,7 +131,7 @@ namespace Sim.Domain.Service
 
         private void ConstruirMeses(EAtendimento at_param, string[] serv_param)
         {
-            _meses.Add(at_param.Data.Value.ToString("MMM"));
+            _meses.Add(at_param.Data!.Value.ToString("MMM"));
 
             if (at_param.Empresa != null)
                 _empresas_mes.Add(at_param.Data.Value.ToString("MMM") + " Empresas");
@@ -151,7 +151,7 @@ namespace Sim.Domain.Service
 
         private void AppUserMonth(EAtendimento at_param, string[] serv_param)
         {
-            _meses.Add(at_param.Owner_AppUser_Id);
+            _meses.Add(at_param.Owner_AppUser_Id!);
 
             if (at_param.Empresa != null)
                 _empresas_mes.Add(at_param.Owner_AppUser_Id + " Empresas");
@@ -195,13 +195,13 @@ namespace Sim.Domain.Service
 
                     foreach (EAtendimento at in list.Where(s => s.Servicos != null))
                     {
-                        string[] servicos = at.Servicos.ToString().Split(new char[] { ';', ',' });
+                        string[] servicos = at.Servicos!.ToString().Split(new char[] { ';', ',' });
 
                         foreach (var s in servicos)
                             _servicos.Add(s);
 
                         for (int i = 1; i < 13; i++)
-                            if (at.Data.Value.Month == i)
+                            if (at.Data!.Value.Month == i)
                                 ConstruirMeses(at, servicos);
                     }
 
@@ -261,11 +261,11 @@ namespace Sim.Domain.Service
 
                     var _meses_t = new List<(string Nome, string Atendimento, string Servico)>();
 
-                    foreach (EAtendimento at in list.Where(s => s.Servicos != null && s.Data.Value.Year == periodo.Year))
+                    foreach (EAtendimento at in list.Where(s => s.Servicos != null && s.Data!.Value.Year == periodo.Year))
                     {
-                        string[] servicos = at.Servicos.ToString().Split(new char[] { ';', ',' });
+                        string[] servicos = at.Servicos!.ToString().Split(new char[] { ';', ',' });
                         for (int i = 1; i < 13; i++)
-                            if (at.Data.Value.Month == i)
+                            if (at.Data!.Value.Month == i)
                                 ConstruirMeses(at, servicos);
                     }
 
@@ -316,9 +316,9 @@ namespace Sim.Domain.Service
 
                     var _meses_t = new List<(string Nome, string Atendimento, string Servico)>();
 
-                    foreach (EAtendimento at in list.Where(s => s.Servicos != null && s.Data.Value.Year == periodo.Year))
+                    foreach (EAtendimento at in list.Where(s => s.Servicos != null && s.Data!.Value.Year == periodo.Year))
                     {
-                        string[] servicos = at.Servicos.ToString().Split(new char[] { ';', ',' });
+                        string[] servicos = at.Servicos!.ToString().Split(new char[] { ';', ',' });
                         AppUserMonth(at, servicos);
                     }
 

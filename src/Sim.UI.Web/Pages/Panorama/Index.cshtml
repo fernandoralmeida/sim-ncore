@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/panorama/"
 @model Sim.UI.Web.Pages.Panorama.IndexModel;
 @using Microsoft.AspNetCore.Identity
 @using Sim.Identity.Entity
@@ -99,7 +99,7 @@
         }, 60000);
 
         function DoAtendimentos() {
-            $.getJSON(`/Panorama/?handler=Atendimentos`, (data) => {
+            $.getJSON(`/panorama/?handler=Atendimentos`, (data) => {
                 $('#_atendimentos').empty();
                 $('#_servicos').empty();
                 $('#_atendimentos').append(data.value1);
@@ -108,7 +108,7 @@
         }
 
         function DoCharts() { 
-            $.getJSON(`/Panorama/?handler=Clientes`, (data) => {
+            $.getJSON(`/panorama/?handler=Clientes`, (data) => {
                 var dataArray = [['Cliente','Aten.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
@@ -125,7 +125,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_cliente'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/Panorama/?handler=CanalPercent`, (data) => {
+            $.getJSON(`/panorama/?handler=CanalPercent`, (data) => {
                 var dataArray = [['Canal','Aten.','Perc.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -142,7 +142,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart_canal_p'));  
                 chart.draw(mdata, options);
             }); 
-            $.getJSON(`/Panorama/?handler=Canal`, (data) => {
+            $.getJSON(`/panorama/?handler=Canal`, (data) => {
                 var dataArray = [['Canal','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
@@ -159,7 +159,7 @@
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_canal'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/Panorama/?handler=SetoresPercent`, (data) => {
+            $.getJSON(`/panorama/?handler=SetoresPercent`, (data) => {
                 var dataArray = [['Setor','Aten.','Perc.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -176,7 +176,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart_setores_p'));  
                 chart.draw(mdata, options);
             });  
-            $.getJSON(`/Panorama/?handler=Setores`, (data) => {
+            $.getJSON(`/panorama/?handler=Setores`, (data) => {
                 var dataArray = [['Setor','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
@@ -193,7 +193,7 @@
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_setores'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/Panorama/?handler=Servicos`, (data) => {
+            $.getJSON(`/panorama/?handler=Servicos`, (data) => {
                 var dataArray = [['Serviço','Valor']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
@@ -210,7 +210,7 @@
                 chart.draw(data, options);
             });
             /**/
-            $.getJSON(`/Panorama/?handler=Anual`, (data) => {
+            $.getJSON(`/panorama/?handler=Anual`, (data) => {
                 var dataArray = [['Mês','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
@@ -236,7 +236,7 @@
         }
 
         function DoUserList() {
-            $.getJSON(`/Panorama/?handler=Users`, (data) => {
+            $.getJSON(`/panorama/?handler=Users`, (data) => {
                 $('#cardcontainer').empty();
                 $('#cardcontainer').append('<div class="card-header grey-text">Usuários<i class="material-icons left">account_circle</i></div>');
                 $.each(data, function (i, item) {                   

@@ -14,7 +14,6 @@ namespace Sim.Data.Config.Entity
             builder.HasIndex(c => c.Protocolo).IsUnique();
             builder.Property(c => c.Protocolo)
                 .IsRequired();
-
             builder.Property(c => c.Setor)
                 .HasColumnType("varchar(max)");
             builder.Property(c => c.Canal)
@@ -25,8 +24,6 @@ namespace Sim.Data.Config.Entity
                 .HasColumnType("varchar(max)");
             builder.Property(c => c.Status)
                 .HasColumnType("varchar(max)");
-            builder.Property(c => c.Anonimo)
-                .HasDefaultValue(false);
 
         }
     }

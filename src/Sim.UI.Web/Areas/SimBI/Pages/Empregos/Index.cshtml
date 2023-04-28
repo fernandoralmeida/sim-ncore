@@ -1,4 +1,4 @@
-@page
+@page "/bi/empregos/"
 @model Sim.UI.Web.Areas.Empregos.IndexModel;
 
 @{
@@ -137,7 +137,7 @@
         
         function DoPieChart() {    
             var y = document.getElementById('search').value; 
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Experiencia`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=Experiencia`, (data) => {
                 var dataArray = [['Experiência','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -156,7 +156,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_exp'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=ExperienciaAc`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=ExperienciaAc`, (data) => {
                 var dataArray = [['Experiência','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -175,7 +175,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_expAc'));  
                 chart.draw(data, options);
             });   
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Inclusao`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=Inclusao`, (data) => {
                 var dataArray = [['Inclusica','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -194,7 +194,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_inclusao'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=InclusaoAc`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=InclusaoAc`, (data) => {
                 var dataArray = [['Gênero','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -213,7 +213,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_inclusaoAc'));  
                 chart.draw(data, options);
             });   
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=EmpregosAtivosByGeneroAc`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=EmpregosAtivosByGeneroAc`, (data) => {
                 var dataArray = [['Gênero','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -232,7 +232,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_generoAc'));  
                 chart.draw(data, options);
             });  
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=EmpregosAtivosByGenero`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=EmpregosAtivosByGenero`, (data) => {
                 var dataArray = [['Gênero','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -251,7 +251,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_genero'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Setores`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=Setores`, (data) => {
                 var dataArray = [['Setor','Vagas','Percent']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -270,7 +270,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart_setores'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/SimBI/Empregos/?ano=${y}&handler=Anual`, (data) => {
+            $.getJSON(`/bi/empregos?ano=${y}&handler=Anual`, (data) => {
                 var dataArray = [['Mês','Vagas']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 

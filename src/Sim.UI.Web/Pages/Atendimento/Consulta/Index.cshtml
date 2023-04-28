@@ -1,4 +1,4 @@
-@page
+@page "/atendimento/consulta/"
 @model Sim.UI.Web.Pages.Atendimento.Consulta.IndexModel
 @{
 
@@ -44,7 +44,7 @@
             $(".modal-trigger").click(function () {
                 var customerId = $(this).data('id');
                 $(".modal-content").empty();
-                $.getJSON(`/Atendimento?id=${customerId}&handler=Preview`, (data) => {
+                $.getJSON(`/atendimento?id=${customerId}&handler=Preview`, (data) => {
                     $.each(data, function (i, item) {
                         $(".modal-content").append(`<div>Protocolo: ${item.protocolo}</div>`);
                         $(".modal-content").append(`<div>Data: ${item.data}</div>`);

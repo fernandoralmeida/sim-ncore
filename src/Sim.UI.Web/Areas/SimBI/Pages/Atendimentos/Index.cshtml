@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/bi/atendimentos/"
 @model Sim.UI.Web.Areas.SimBI.Pages.Atendimentos.IndexModel
 
 @{
@@ -111,7 +111,7 @@
         
         function DoCharts() {    
             var y = document.getElementById('search').value; 
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Clientes`, (data) => {
+            $.getJSON(`/bi/atendimentos?ano=${y}&handler=Clientes`, (data) => {
                 var dataArray = [['Cliente','Aten.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
@@ -129,7 +129,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chart_cliente'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=CanalPercent`, (data) => {
+            $.getJSON(`/bi/atendimentos?ano=${y}&handler=CanalPercent`, (data) => {
                 var dataArray = [['Canal','Aten.','Perc.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -147,7 +147,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart_canal_p'));  
                 chart.draw(mdata, options);
             }); 
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Canal`, (data) => {
+            $.getJSON(`/bi/atendimentos?ano=${y}&handler=Canal`, (data) => {
                 var dataArray = [['Canal','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
@@ -167,7 +167,7 @@
             });
 
             /*
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Setores`, (data) => {
+            $.getJSON(`/bi/atendimentos/?ano=${y}&handler=Setores`, (data) => {
                 var dataArray = [['Setor','Atendimento','Servico']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
@@ -184,7 +184,7 @@
                 materialChart.draw(mdata, materialOptions);
             });
             */   
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=SetoresPercent`, (data) => {
+            $.getJSON(`/bi/atendimentos?ano=${y}&handler=SetoresPercent`, (data) => {
                 var dataArray = [['Setor','Aten.','Perc.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value, item.percent]); 
@@ -202,7 +202,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart_setores_p'));  
                 chart.draw(mdata, options);
             });  
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Setores`, (data) => {
+            $.getJSON(`/bi/atendimentos?ano=${y}&handler=Setores`, (data) => {
                 var dataArray = [['Setor','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 
@@ -220,7 +220,7 @@
                 var chart = new google.visualization.ComboChart(document.getElementById('chart_setores'));  
                 chart.draw(data, options);
             });
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Servicos`, (data) => {
+            $.getJSON(`/bi/atendimentos?ano=${y}&handler=Servicos`, (data) => {
                 var dataArray = [['Serviço','Valor']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value]); 
@@ -238,7 +238,7 @@
                 chart.draw(data, options);
             });
             /**/
-            $.getJSON(`/SimBI/Atendimentos/?ano=${y}&handler=Anual`, (data) => {
+            $.getJSON(`/bi/atendimentos?ano=${y}&handler=Anual`, (data) => {
                 var dataArray = [['Mês','Aten.','Serv.']];
                 $.each(data, function (i, item) {
                     dataArray.push([item.label, item.value1, item.value2]); 

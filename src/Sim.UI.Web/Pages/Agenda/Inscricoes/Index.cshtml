@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/agenda/eventos/inscricoes/"
 @model Sim.UI.Web.Pages.Agenda.Inscricoes.IndexModel
 @{
     ViewData["Title"] = "Lista de Participantes";
@@ -102,7 +102,7 @@
                 var g_id = $(this).data('id');
                 var e_id = $(this).data('cd');
                 var chk = $(this).prop("checked");                
-                $.get(`/Agenda/Inscricoes/Status?id=${g_id}&ide=${e_id}&st=${chk}`, 
+                $.get(`/agenda/eventos/inscricoes/status/?id=${g_id}&ide=${e_id}&st=${chk}`, 
                     function(returnedData){                        
                 }).fail(function(erroData){
                     alert("Erro");
@@ -111,7 +111,7 @@
             $(".modal-trigger").click(function () {
                 var customerId = $(this).data('id');
                 $(".modal-content").empty();
-                $.getJSON(`/Agenda/Inscricoes/Index?id=${customerId}&handler=DetalheInscrito`, (data) => {
+                $.getJSON(`/agenda/eventos/inscricoes/?id=${customerId}&handler=DetalheInscrito`, (data) => {
                     $.each(data, function (i, item) {
                         $(".modal-content").append(`<div>Código: ${item.evento.codigo}</div>`);
                         $(".modal-content").append(`<div>Evento: ${item.evento.tipo} ${item.evento.nome}</div>`);

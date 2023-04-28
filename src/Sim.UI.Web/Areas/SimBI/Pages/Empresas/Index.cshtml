@@ -23,6 +23,7 @@
     <li class="@EmpNavPages.MappNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Mapping" asp-route-m="@Model.Input.Municipio">Mapa</a></li>
     <li><a class='dropdown-trigger' href='#' data-target='dropdown1'><i class="material-icons">arrow_drop_down</i>@nome.SingleOrDefault().Descricao</a></li>
 </ul>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
 <form method="post">
     <nav class="row transparent">
         <div class="row nav-wrapper">
@@ -40,8 +41,6 @@
         </div>
     </nav>
 </form>
-
-<partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <div class="row">
     @foreach (var emp in Model.ListEmpresas)

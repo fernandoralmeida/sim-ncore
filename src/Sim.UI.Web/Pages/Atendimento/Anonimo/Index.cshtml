@@ -1,4 +1,4 @@
-@page
+@page "/atendimento/anonimo/"
 @model Sim.UI.Web.Pages.Atendimento.Anonimo.IndexModel
 @{
     ViewData["Title"] = "Anônimo";
@@ -65,7 +65,7 @@
             document.querySelector('#Input_Setor').addEventListener("change", function() {
                 var getSetor = $("#Input_Setor").val();                 
                 $("#Input_Servicos").empty();
-                $.getJSON(`/Atendimento/Novo/Index?handler=Servicos&getSetor=${getSetor}`, (data) => {
+                $.getJSON(`/atendimento/novo/?handler=Servicos&getSetor=${getSetor}`, (data) => {
                     data.forEach(function(item) {
                         $("#Input_Servicos").append(`<option>${item.item1}</option>`);
                     });
