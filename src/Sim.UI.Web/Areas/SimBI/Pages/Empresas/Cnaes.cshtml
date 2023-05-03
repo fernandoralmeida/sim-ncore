@@ -1,5 +1,7 @@
 @page "/bi/empresas/cnaes/{m}"
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.CnaesModel
+@using Sim.UI.Web.Areas.SimBI.Pages.Empresas
+@inject Sim.Application.Cnpj.Interfaces.IAppServiceCnpj appServiceCnpj;
 
 @{
     Layout = "_Layout.cshtml";
@@ -7,7 +9,38 @@
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Cnae;
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<partial name="_NavBar" model="@Model.MunicipioSelecionado" />
+
+@{ var municipios = await appServiceCnpj.DoListMicroRegiaoJahuAsync();}
+<ul id='dropdown1' class='dropdown-content'>
+  @foreach (var item in municipios)
+  {
+    <li><a class="submit" asp-route-m="@item.Codigo" onclick="CloseDropdown()">@item.Descricao</a></li>
+  }
+</ul>
+<ul id='mobile-demo' class='dropdown-content'>
+    <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.MunicipioSelecionado">Empresas</a></li>
+    <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.MunicipioSelecionado">Cnaes</a></li>
+    <li class="@EmpNavPages.MappNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Mapping" asp-route-m="@Model.MunicipioSelecionado">Mapa</a></li>
+    <li><a class='dropdown-trigger' href='#' data-target='dropdown1'><i class="material-icons">arrow_drop_down</i>@Model.Municipio</a></li>
+</ul>
+
+<form method="post">    
+    <nav class="row transparent">
+        <div class="row nav-wrapper">
+            <div class="input-field col s6 m6 l6 no-padding">
+                <input id="search" placeholder="Digite aqui para pesquisar!" onkeypress="handle(event)" asp-for="Search" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>             
+            <a class='right dropdown-trigger hide-on-large-only' href='#' data-target='mobile-demo'><i class="material-icons alpha-text-5">menu arrow_drop_down</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li class="@EmpNavPages.EmpNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Index" asp-route-m="@Model.MunicipioSelecionado">Empresas</a></li>
+                <li class="@EmpNavPages.CnaeNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Cnaes" asp-route-m="@Model.MunicipioSelecionado">Cnaes</a></li>
+                <li class="@EmpNavPages.MappNavClass(ViewContext)"><a class="submit" asp-area="SimBI" asp-page="./Mapping" asp-route-m="@Model.MunicipioSelecionado">Mapa</a></li>
+                <li><a class='dropdown-trigger' href='#' data-target='dropdown1'>@Model.Municipio<i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+        </div>
+    </nav>
+</form>
 
 <div class="row">
     @foreach (var item in Model.ListCnaes)

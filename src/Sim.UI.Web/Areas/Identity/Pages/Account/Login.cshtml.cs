@@ -58,7 +58,6 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
 
-            // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -74,16 +73,12 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);               
                 if (result.Succeeded)
                 {
                     var first_name = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
 
-                    User.AddIdentity(new System.Security.Claims.ClaimsIdentity() { Label = first_name.Name });
-
-                                       
+                    User.AddIdentity(new System.Security.Claims.ClaimsIdentity() { Label = first_name.Name });                                       
 
                     if(first_name.LockoutEnabled){
                         _logger.LogWarning("Conta de usuário bloqueada!");
@@ -113,7 +108,6 @@ namespace Sim.UI.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }

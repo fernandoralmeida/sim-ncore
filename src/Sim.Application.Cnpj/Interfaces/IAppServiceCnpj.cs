@@ -10,8 +10,8 @@ namespace Sim.Application.Cnpj.Interfaces
         Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio);
         Task<IEnumerable<Municipio>> DoListMinicipiosAsync();
         Task<IEnumerable<Municipio>> DoListMicroRegiaoJahuAsync();
-        Task<IEnumerable<BICnae>> DoListBICnaeAsync(string municipio);
-        Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<Estabelecimento, bool>> filter = null);
+        Task<IEnumerable<BICnae>> DoListBICnaeAsync(IEnumerable<BaseReceitaFederal> param);
+        Task<IEnumerable<BaseReceitaFederal>> DoListAsync(Expression<Func<Estabelecimento, bool>>? filter = null);
         Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes);
         Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio, string situacao);
         Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio, string situacao);
@@ -21,6 +21,7 @@ namespace Sim.Application.Cnpj.Interfaces
         Task<IEnumerable<KeyValuePair<string, int>>> DoListMappingLogradourosAsync(string zona, string municipio, string situacao);
         Task<IEnumerable<string>> DoListMappingZonasAsync(string municipio, string situacao);
         Task<IEnumerable<EExport>> DoListExport(string municipio);
-        Task<IEnumerable<(int Value, string Key, string Code)>> DoListCnaesAsync(Expression<Func<Estabelecimento, bool>> filter = null);
+        Task<IEnumerable<(int Value, string Key, string Code)>> DoListCnaesAsync(Expression<Func<Estabelecimento, bool>>? filter = null);
+        Task<IEnumerable<BaseReceitaFederal>> DoListCNAEAsync(string municipio, Expression<Func<CNAE, bool>> param = null);
     }
 }

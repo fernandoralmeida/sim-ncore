@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sim.Identity.Context;
-using Sim.Identity.Entity;
 using Sim.Identity.Interfaces;
 using Sim.Identity.Repository;
 
@@ -14,7 +13,8 @@ public static class Container {
         if (services == null) throw new ArgumentNullException(nameof(services));
 
         services.AddDbContext<IdentityContext>(options =>
-            options.UseSqlServer(config.GetConnectionString(connection)));       
+            options.UseSqlServer(config.GetConnectionString(connection)));
+
     }
 
     public static void IdentityConfig(this IServiceCollection services){
@@ -37,5 +37,6 @@ public static class Container {
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
             options.Lockout.MaxFailedAccessAttempts = 5;
         });
+
     }
 }

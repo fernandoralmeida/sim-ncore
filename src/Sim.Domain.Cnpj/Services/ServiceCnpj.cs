@@ -59,11 +59,8 @@ namespace Sim.Domain.Cnpj.Services
             return await _cnpj.GetCNPJAsync(cnpj);
         }
 
-        public async Task<IEnumerable<BICnae>> DoListBICnaeAsync(string municipio)
+        public async Task<IEnumerable<BICnae>> DoListBICnaeAsync(IEnumerable<BaseReceitaFederal> param)
         {
-
-            var emp = await _cnpj.DoListByCnaeAsync("0000000", "9999999", municipio);
-
             return await Task.Run(() =>
             {
 
@@ -75,7 +72,7 @@ namespace Sim.Domain.Cnpj.Services
 
                 var subclasse = new List<string>();
 
-                foreach (BaseReceitaFederal e in emp.Where(s => s.Estabelecimento.SituacaoCadastral == "Ativa"))
+                foreach (BaseReceitaFederal e in param)
                     subclasse.Add(string.Format("{0} - {1}", e.AtividadePrincipal.Codigo, e.AtividadePrincipal.Descricao));
 
 
@@ -2021,5 +2018,7 @@ namespace Sim.Domain.Cnpj.Services
                 return _return.OrderByDescending(s => s.Value).ToList();
             });
 
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListCNAEAsync(string municipio, Expression<Func<CNAE, bool>> param = null)
+            => await _cnpj.DoListCNAEAsync(municipio, param);
     }
 }

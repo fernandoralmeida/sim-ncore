@@ -117,7 +117,7 @@
             $('#settheme').click(function () {
                 var t = $(this).data('theme');   
                 var u = $(this).data('id');  
-                $.get(`/Identity/Account/Manage?id=${u}&theme=${t}&handler=SetTheme`);
+                $.get(`/perfil/?id=${u}&theme=${t}&handler=SetTheme`);
                 window.location.reload();
             });
         });

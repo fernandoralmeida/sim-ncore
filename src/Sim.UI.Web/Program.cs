@@ -10,7 +10,7 @@ using Sim.IoC;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLocalization();
-var cultureInfoBR = new[]{ new CultureInfo("pt-BR")};
+var cultureInfoBR = new[] { new CultureInfo("pt-BR") };
 
 builder.Services.IdentityDataBase(builder.Configuration, "IdentityContextConnection");
 
@@ -38,6 +38,11 @@ builder.Services.RegisterServicesCNPJ();
 
 builder.Services.AddScoped<HttpContextAccessor>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+                {
+                    options.LoginPath = new PathString("/contas/autenticacao/entrar");
+                });
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -48,10 +53,11 @@ if (!app.Environment.IsDevelopment())
 else
     app.UseDeveloperExceptionPage();
 
-app.UseRequestLocalization(new RequestLocalizationOptions {
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
     DefaultRequestCulture = new RequestCulture("pt-BR"),
     SupportedCultures = cultureInfoBR,
-    FallBackToParentCultures= false
+    FallBackToParentCultures = false
 });
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
 CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.CreateSpecificCulture("pt-BR");
