@@ -7,9 +7,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="pt-br">
-    <!---->
+    <!--
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    
+    -->
     <link rel="shortcut icon" href="~/favicon.ico" />    
     <link rel="stylesheet" href="~/lib/google/material-symbols-rounded.css"/>
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />    
@@ -17,9 +17,9 @@
         var _user = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name);
         var _mytheme = _user.Theme == null ? "light" : _user.Theme;
         @if(_mytheme == "dark")
-        { <link rel="stylesheet" href="~/css/dark.css"> }
+        { <link rel="stylesheet" href="~/css/dark.css" asp-append-version="true"> }
         else
-        { <link rel="stylesheet" href="~/css/light.css"> }
+        { <link rel="stylesheet" href="~/css/light.css" asp-append-version="true"> }
     }
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIM - @ViewData["Title"]</title>
