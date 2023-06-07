@@ -10,7 +10,7 @@ using Sim.Domain.Entity;
 namespace Sim.UI.Web.Pages.SebraeAqui.Rae
 {
 
-    [Authorize(Roles = "Admin_Global,M_Sebrae,M_Sebrae_Admin")]
+    [Authorize(Roles = $"{Web.Areas.Admin.Pages.Admin.Global},SEDEMPI Sebrae Aqui")]
     public class LancadosModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;

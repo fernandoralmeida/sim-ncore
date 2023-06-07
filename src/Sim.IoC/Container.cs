@@ -35,6 +35,12 @@ using Sim.Domain.BancoPovo.Services;
 using Sim.Application.Sebrae.Interfaces;
 using Sim.Application.Sebrae.Services;
 
+using Sim.Domain.Customer.Models;
+using Sim.Domain.Customer.Interfaces;
+using Sim.Domain.Customer.Services;
+using Sim.Application.Customer.Interfaces;
+using Sim.Application.Customer.Services;
+
 namespace Sim.IoC
 {
     public static class Container
@@ -218,6 +224,13 @@ namespace Sim.IoC
             services.AddScoped<IAppServiceSebrae, AppServiceSebrae>();
             //
             services.AddScoped<IReceitaWS, ReceitaWS>();
+            //
+            services.AddScoped<IAppServiceBase<EBind>, AppServiceBase<EBind>>();
+            services.AddScoped<IAppServiceBind, AppServiceBind>();
+            services.AddScoped<IServiceBase<EBind>, ServiceBase<EBind>>();
+            services.AddScoped<IServiceBind, ServiceBind>();
+            services.AddScoped<IRepositoryBase<EBind>, RepositoryBase<EBind>>();
+            services.AddScoped<IRepositoryBind, RepositoryBind>();
             //
             services.AddScoped<ApplicationContext>();     
 

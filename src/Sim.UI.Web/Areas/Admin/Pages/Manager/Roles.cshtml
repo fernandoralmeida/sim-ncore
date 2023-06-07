@@ -7,55 +7,73 @@
     ViewData["ActivePageAreaAdmin"] = AdminNavPages.Roles;
 }
 
-
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
-    
+
     <div class="card">
         <div class="row">
-            <div class="input-field col s12 m12 l12 valign-wrapper">
-                <input asp-for="Input.Name"/>
-                <label asp-for="Input.Name"></label>
-                <button class="btn waves-effect" type="submit"><i class="material-icons">description add</i></button>
+            <div class="input-field col s3 m3 l3 valign-wrapper">
+                <select asp-for="Funcao" asp-items="Model.Funcoes">
+                    <option selected>-- Funções --</option>
+                </select>
+                <label asp-for="Funcao"></label>
+                <button asp-page-handler="AddFunc" class="btn waves-effect" type="submit"><i
+                        class="material-icons">description add</i></button>
+            </div>
+            <div class="input-field col s3 m3 l3">
+                <select asp-for="Org" asp-items="Model.Orgs"></select>
+                <label asp-for="Org"></label>
+            </div>
+            <div class="input-field col s3 m3 l3">
+                <select asp-for="Division" asp-items="Model.Divisions"></select>
+                <label asp-for="Division"></label>
+            </div>
+            <div class="input-field col s3 m3 l3 valign-wrapper">
+                <select asp-for="Modulo" asp-items="Model.Modulos"></select>
+                <label asp-for="Modulo"></label>
+                <button asp-page-handler="AddMod" class="btn waves-effect" type="submit"><i
+                        class="material-icons">description add</i></button>
             </div>
         </div>
-    </div>    
-    
+    </div>
+
     <div class="card">
-        
-            <table class="responsive-table">
-                <thead>
-                    <tr>
-                        <th>
-                            Função
-                        </th>
-                        <th>
-                            ID
-                        </th>
-                        <th>Comando</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.Input.Roles != null)
+
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>
+                        Função
+                    </th>
+                    <th>
+                        ID
+                    </th>
+                    <th>Comando</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Input.Roles != null)
+                {
+                    foreach (var item in Model.Input.Roles)
                     {
-                        foreach (var item in Model.Input.Roles)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                </td>
-                                <td>
-                                    <button type="submit" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-small materialize-red waves-effect waves-light" title="Excluir Role"><i class="material-icons">remove</i></button>                                                                    
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                <button type="submit" asp-page-handler="Remove" asp-route-id="@item.Id"
+                                    class="btn btn-small materialize-red waves-effect waves-light" title="Excluir Role"><i
+                                        class="material-icons">remove</i></button>
+                            </td>
+                        </tr>
                     }
-                </tbody>
-            </table>        
+                }
+            </tbody>
+        </table>
     </div>
 
 </form>

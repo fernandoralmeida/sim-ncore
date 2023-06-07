@@ -6,9 +6,6 @@ namespace Sim.UI.Web.Pages.Shared
     public class LayoutNavPages
     {
         public static string Inicio => "Inicio";
-        public static string InicioPAT => "InicioPAT";
-        public static string PATEmpregos => "PATEmpregos";
-        public static string PATReports => "PATReports";
         public static string InicioBPP => "InicioBPP";
         public static string BPPContratos => "BPPContratos";
         public static string BPPReports => "BPPReports";
@@ -27,10 +24,13 @@ namespace Sim.UI.Web.Pages.Shared
         public static string Clientes => "Clientes";
         public static string ClientesEmpresas => "ClientesEmpresas";
         public static string ClientesPessoas => "ClientesPessoas";
+        public static string ClientesVincular => "ClientesVincular";
         public static string Agenda => "Agenda";
         public static string AgendaEventos => "AgendaEventos";
         public static string AgendaPlanner => "AgendaPlanner";
         public static string PowerBI => "PowerBI";
+        public static string PowerBIPat => "PowerBIPat";
+        public static string PowerBIBpp => "PowerBIBpp";
         public static string PowerBIEmpregos => "PowerBIEmpregos";
         public static string PowerBIAtendimento => "PowerBIAtendimento";
         public static string PowerBIEmpresas => "PowerBIEmpresas";
@@ -43,9 +43,6 @@ namespace Sim.UI.Web.Pages.Shared
         public static string LoginPerfil => "LoginPerfil";
         public static string LoginOut => "LoginOut";
         public static string InicioNavClass(ViewContext viewContext) => PageNavClass(viewContext, Inicio);
-        public static string InicioPATNavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioPAT);
-        public static string PATEmpregosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PATEmpregos);
-        public static string PATReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PATReports);
         public static string InicioBPPNavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioBPP);
         public static string BPPContratosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPContratos);
         public static string BPPReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPReports);
@@ -64,11 +61,14 @@ namespace Sim.UI.Web.Pages.Shared
         public static string ClientesNavClass(ViewContext viewContext) => PageNavClass(viewContext, Clientes);
         public static string ClientesEmpresasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, ClientesEmpresas);
         public static string ClientesPessoasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, ClientesPessoas);
+        public static string ClentesVincularNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, ClientesVincular);
         public static string AgendaNavClass(ViewContext viewContext) => PageNavClass(viewContext, Agenda);
         public static string AgendaEventosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AgendaEventos);
         public static string AgendaPlannerNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, AgendaPlanner);
         public static string PowerBINavClass(ViewContext viewContext) => PageNavClass(viewContext, PowerBI);
-        public static string PowerBIEmpregrosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIEmpregos);
+        public static string PowerBIPatNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIPat);
+        public static string PowerBIBppNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIBpp);
+        public static string PowerBIEmpregosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIEmpregos);
         public static string PowerBIAtendimentoNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIAtendimento);
         public static string PowerBIEmpresasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIEmpresas);
         public static string PowerBIPessoasNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PowerBIPessoas);

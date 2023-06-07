@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Sim.Domain.Entity;
 using Sim.Domain.Organizacao.Model;
 using Sim.Domain.Evento.Model;
 using Sim.Domain.BancoPovo.Models;
+using Sim.Domain.Customer.Models;
 
 namespace Sim.Data.Context
-{   
+{
 
     public class ApplicationContext : DbContext
     {
@@ -16,8 +15,9 @@ namespace Sim.Data.Context
         { }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
-        {  }
+        { }
 
+        public DbSet<EBind> Vinculos { get; set; }
         public DbSet<Ambulante> Ambulante { get; set; }
         public DbSet<DIA> DIA { get; set; }
         public DbSet<Empresas> Empresa { get; set; }
@@ -36,13 +36,14 @@ namespace Sim.Data.Context
         public DbSet<Contador> Contador { get; set; }
         public DbSet<StatusAtendimento> StatusAtendimento { get; set; }
         public DbSet<EContrato> BPPContratos { get; set; }
-        public DbSet<ERenegociacoes> BPPRenegociacoes { get; set; }
-       
+        public DbSet<ERenegociacoes> BPPRenegociacoes { get; set; }        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Ambulante>().ToTable("Ambulante");
             modelBuilder.Entity<Empregos>().ToTable("Empregos");
             modelBuilder.Entity<DIA>().ToTable("DIA");
+            modelBuilder.Entity<EBind>().ToTable("Vinculos");
             modelBuilder.Entity<Pessoa>().ToTable("Pessoa");
             modelBuilder.Entity<Empresas>().ToTable("Empresa");
             modelBuilder.Entity<EAtendimento>().ToTable("Atendimento");
@@ -58,13 +59,14 @@ namespace Sim.Data.Context
             modelBuilder.Entity<RaeSebrae>().ToTable("RaeSebrae");
             modelBuilder.Entity<StatusAtendimento>().ToTable("StatusAtendimento");
             modelBuilder.Entity<EContrato>().ToTable("BPPContratos");
-            modelBuilder.Entity<ERenegociacoes>().ToTable("BPPRenegociacoes");
+            modelBuilder.Entity<ERenegociacoes>().ToTable("BPPRenegociacoes");            
 
             modelBuilder.ApplyConfiguration(new Config.Entity.AmbulanteMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpregosMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.AtendimentoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.CanalMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.DIAMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.BindMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpresaMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.PessoaMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.PlannerMap());
@@ -77,7 +79,7 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.ContadorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.StatusAtendimentoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.BPPContratosMap());
-            modelBuilder.ApplyConfiguration(new Config.Entity.BPPRenegociacoesMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.BPPRenegociacoesMap());            
 
             base.OnModelCreating(modelBuilder);
         }

@@ -8,7 +8,7 @@ using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.SebraeAqui
 {
-    [Authorize(Roles = "Admin_Global,M_Sebrae,M_Sebrae_Admin")]
+    [Authorize(Roles = $"{Web.Areas.Admin.Pages.Admin.Global},SEDEMPI Sebrae Aqui")]
     public class IndexModel : PageModel
     {
         private readonly IAppServiceAtendimento _appServiceAtendimento;

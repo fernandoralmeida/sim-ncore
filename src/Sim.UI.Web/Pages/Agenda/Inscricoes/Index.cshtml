@@ -4,7 +4,7 @@
     ViewData["Title"] = "Lista de Participantes";
 }
 
-<div class="row">
+<div class="row card">
     <div class="col s12">
         Código: @Model.Input.Codigo
         <br /><span>@Model.Input.Tipo @Model.Input.Nome - @Model.Input.Formato</span>
@@ -82,7 +82,7 @@
         </table>
     </form>
     <div class="card-action">
-        <a asp-page="/Agenda/Index" class="btn grey waves-effect waves-light">Voltar</a>
+        <a asp-page="/Agenda/Index" asp-route-m="ativos" class="btn grey waves-effect waves-light">Voltar</a>
         <a asp-page="/Agenda/Inscricoes/Lista/Index" asp-route-id="@Model.Input.Codigo" class="btn waves-effect waves-light right" target="_blank">Visualizar Lista</a>
     </div>
 </div>

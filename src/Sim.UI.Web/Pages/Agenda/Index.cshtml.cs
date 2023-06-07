@@ -35,15 +35,15 @@ namespace Sim.UI.Web.Pages.Agenda
             EEvento.ESituacao sto = EEvento.ESituacao.Ativo;
             switch(m)
             {
-                case "avl":
+                case "ativos":
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoAtivo;
                     sto = EEvento.ESituacao.Ativo;
                     break;
-                case "fzd":
+                case "finalizados":
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoFinalizado;
                     sto = EEvento.ESituacao.Finalizado;
                     break;
-                case "cld":
+                case "cancelados":
                     ViewData["ActivePageEvento"] = AgendaNavPages.EventoCancelado;
                     sto = EEvento.ESituacao.Cancelado;
                     break;

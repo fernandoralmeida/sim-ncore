@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
 
-    [Authorize(Roles = "Admin_Global,Admin_Account")]
+    [Authorize(Roles = $"{Admin.Global},{Admin.Account}")]
     public class IndexModel : PageModel
     {
         private readonly IServiceUser _appIdentity;
@@ -33,9 +33,9 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 
         private async Task LoadAsync()
         {           
-            var _adm_global = await _userManager.GetUsersInRoleAsync("Admin_Global"); 
-            var _adm_account = await _userManager.GetUsersInRoleAsync("Admin_Account"); 
-            var _adm_config = await _userManager.GetUsersInRoleAsync("Admin_Config"); 
+            var _adm_global = await _userManager.GetUsersInRoleAsync(Admin.Global); 
+            var _adm_account = await _userManager.GetUsersInRoleAsync(Admin.Account); 
+            var _adm_config = await _userManager.GetUsersInRoleAsync(Admin.Settings); 
 
             Users_Admin_Global = _adm_global.Where(s => s.LockoutEnabled == false).OrderBy(o => o.UserName);
             Users_Admin_Account = _adm_account.Where(s => s.LockoutEnabled == false).OrderBy(o => o.UserName);

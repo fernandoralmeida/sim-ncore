@@ -9,7 +9,7 @@
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 @{int cont = 0;}
-@if(User.IsInRole("Admin_Global") || User.IsInRole("Administrador")){
+@if(User.IsInRole(Admin.Global)){
     <div class="row">
         <div class="box-column">
             <div class="box-column-row">
@@ -254,7 +254,7 @@
             $(".icheckbox").click(function(){
                 var g_id = $(this).data('id');
                 var chk = $(this).prop("checked");      
-                $.get(`/Admin/Manager?id=${g_id}&blk=${chk}&handler=LockUnlock`, 
+                $.get(`/gerencia/contas/?id=${g_id}&blk=${chk}&handler=LockUnlock`, 
                     function(returnedData){                        
                 });
             });

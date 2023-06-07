@@ -17,48 +17,30 @@
         <ul class="collapsible collapsible-accordion">
             <div class="logo-left"><a asp-page="/Index"><img src="~/icons/sedempi-166p.svg" width="150px"/></a></div>
 
-            @if(User.IsInRole("M_Pat_Admin")
-                || User.IsInRole("M_Pat")) {
-                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("pat"))){                   
-                    <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)">
-                        <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li class="@LayoutNavPages.PATEmpregosNavClass(ViewContext)"><a class="submit" asp-page="/Pat/Index">Vagas Emprego<i class="left material-icons">chevron_right</i></a></li>   
-                                <li class="@LayoutNavPages.PATReportsNavClass(ViewContext)"><a class="submit" asp-page="/Pat/Reports/Index">Indicadores<i class="left material-icons">chevron_right</i></a></li> 
-                            </ul>
-                        </div>
-                    </li>
-                }
-            }
-
-            @if(User.IsInRole("M_BancoPovo_Admin")
-                || User.IsInRole("M_BancoPovo")) {
+            @if(User.IsInRole(Areas.Admin.Pages.Admin.Global)
+                || User.IsInRole("SEDEMPI Banco do Povo")) {
                 @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("banco do povo"))){                   
                     <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)">
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
                         <div class="collapsible-body">
                             <ul>
-                                <li class="@LayoutNavPages.BPPContratosNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Index">Contratos<i class="left material-icons">chevron_right</i></a></li>
-                                <li class="@LayoutNavPages.BPPRepContractsNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Contracts/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li>   
-                                <li class="@LayoutNavPages.BPPReportsNavClass(ViewContext)"><a class="submit" asp-page="/Banco-do-povo/Reports/Index">Indicadores<i class="left material-icons">chevron_right</i></a></li>                                                             
+                                <li class="@LayoutNavPages.BPPContratosNavClass(ViewContext)"><a class="submit" asp-page="/BancodoPovo/Index">Contratos<i class="left material-icons">chevron_right</i></a></li>
+                                <li class="@LayoutNavPages.BPPRepContractsNavClass(ViewContext)"><a class="submit" asp-page="/BancodoPovo/Contracts/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li>                                                     
                             </ul>
                         </div>
                     </li>
                 }
             }
 
-            @if(User.IsInRole("M_Sebrae_Admin")
-                || User.IsInRole("M_Sebrae")) {
+            @if(User.IsInRole(Areas.Admin.Pages.Admin.Global)
+                || User.IsInRole("SEDEMPI Sebrae Aqui")) {
                 @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("sebrae aqui"))){                   
                     <li class="@LayoutNavPages.InicioSANavClass(ViewContext)">
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
                         <div class="collapsible-body">
                             <ul>
                                 @{ var _year = DateTime.Now.Year; }
-                                <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Index" asp-route-Src="@_year">Lançamentos<i class="left material-icons">chevron_right</i></a></li>   
-                                <li class="@LayoutNavPages.SAReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Reports/Index">Indicadores<i class="left material-icons">chevron_right</i></a></li>
-                                <li class="@LayoutNavPages.SEReportsNavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/SalaEmpreendedor/Index">Sala Empreendedor<i class="left material-icons">chevron_right</i></a></li> 
+                                <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Index" asp-route-Src="@_year">Lançamentos<i class="left material-icons">chevron_right</i></a></li>
                             </ul>
                         </div>
                     </li>
@@ -92,6 +74,7 @@
                     <ul>
                         <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext) submit"><a asp-page="/Cliente/Index" class="">Pessoas<i class="left material-icons">group</i></a></li>
                         <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext) submit"><a asp-page="/Empresa/Index" class="">Empresas<i class="left material-icons">domain</i></a></li>
+                        <li class="@LayoutNavPages.ClentesVincularNavClass(ViewContext) submit"><a asp-page="/Bind/Index" class="">Víncular<i class="left material-icons">link</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -99,18 +82,17 @@
                 <div class="collapsible-header">Agenda<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext) submit"><a asp-page="/Agenda/Index" class="">Eventos<i class="left material-icons">event</i></a></li>
+                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext) submit"><a asp-page="/Agenda/Index" asp-route-m="ativos" class="">Eventos<i class="left material-icons">event</i></a></li>
                         <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext) submit"><a asp-page="/Planner/Index" class="">e-Planner<i class="left material-icons">description</i></a></li>
                     </ul>
                 </div>
             </li>
             <li class="@LayoutNavPages.PowerBINavClass(ViewContext)">
-                <div class="collapsible-header">Power BI<i class="material-icons chevron">chevron_left</i></div>
+                <div class="collapsible-header">Indicadores<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.PowerBIEventosNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Eventos/Index" class="">Eventos<i class="left  material-icons">event</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIEmpregrosNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Empregos/Index" class="">Empregos<i class="left  material-icons">engineering</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Atendimentos/Index" class="">Atendimentos<i class="left  material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEventosNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Eventos/Index" class="">Eventos<i class="left  material-icons">event</i></a></li>                        
+                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Atendimentos/Index" asp-route-ano="@DateTime.Now.Year" asp-route-m="" class="">Atendimentos<i class="left  material-icons">access_time</i></a></li>
                         <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Empresas/Index" class="">Empresas<i class="left material-icons">domain</i></a></li>
                     </ul>
                 </div>

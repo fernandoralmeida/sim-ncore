@@ -47,7 +47,7 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
         {
 
             var _org = await _appSecretaria.DoList(s => s.Hierarquia == EHierarquia.Secretaria);
-            var _setores = await _appSecretaria.DoList(s => s.Hierarquia == EHierarquia.Setor && s.Dominio ==  _org.FirstOrDefault().Id);
+            var _setores = await _appSecretaria.DoList(s => s.Hierarquia == EHierarquia.Setor && s.Dominio == _org.FirstOrDefault().Id);
             Setores = new SelectList(_setores, nameof(EOrganizacao.Nome), nameof(EOrganizacao.Nome), null);
 
             var t = await _appServiceTipo.DoListAsync();
@@ -92,7 +92,7 @@ namespace Sim.UI.Web.Pages.Agenda.Eventos
 
                 await _appServiceEvento.AddAsync(_mapper.Map<EEvento>(Input));
 
-                return RedirectToPage("/Agenda/Index");
+                return RedirectToPage("/Agenda/Index", new { m = "ativos" });
             }
             catch (Exception ex)
             {

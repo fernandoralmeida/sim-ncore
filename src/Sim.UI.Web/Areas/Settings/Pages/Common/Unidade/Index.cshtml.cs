@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Unidade;
 
-[Authorize(Roles = "Admin_Global,Admin_Config")]
+[Authorize(Roles = $"{Areas.Admin.Pages.Admin.Global},{Areas.Admin.Pages.Admin.Settings}")]
 public class IndexModel : PageModel
 {
     //private readonly IAppServicePrefeitura _appServicePrefeitura;

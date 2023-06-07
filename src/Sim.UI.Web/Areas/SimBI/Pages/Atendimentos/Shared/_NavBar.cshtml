@@ -1,0 +1,38 @@
+@model (string Ano, string Active)
+@inject Sim.Application.Interfaces.IAppServiceSecretaria _appOrganizacao
+
+<ul id="dropdown1" class="dropdown-content">
+  @for (int i = DateTime.Now.Year; i >= 2010; i--)
+  {
+    <li><a class="submit" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@i" asp-route-m="@Model.Active"
+        onclick="CloseDropdown()">@i</a></li>
+  }
+</ul>
+
+@{
+  var _org = await _appOrganizacao.DoList();
+  var _unidades = _org.Where(s => s.Hierarquia == Sim.Domain.Organizacao.Model.EHierarquia.Secretaria);
+  var _setores = new List<Sim.Domain.Organizacao.Model.EOrganizacao>();
+  @if (_unidades.Any())
+    _setores = _appOrganizacao.DoListHierarquia2from1Async(_org, _unidades.FirstOrDefault().Id).Result.ToList();
+}
+
+<ul id="dropdown2" class="dropdown-content">
+  @foreach (var item in _setores)
+  {
+    <li><a class="submit" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano" asp-route-m="@item.Acronimo"
+        onclick="CloseDropdown()">@item.Acronimo</a></li>
+  }
+</ul>
+
+<nav class="row transparent">
+  <div class="nav-wrapper">
+    <ul>
+      <li class="right"><a class="submit" asp-page="/Atendimentos/Index" asp-route-ano="@Model.Ano" asp-route-m="">Gráficos</a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@Model.Ano<i
+            class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">@Model.Active<i
+            class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+  </div>
+</nav>

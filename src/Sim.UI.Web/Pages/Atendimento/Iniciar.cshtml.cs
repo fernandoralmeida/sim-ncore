@@ -73,7 +73,7 @@ namespace Sim.UI.Web.Pages.Atendimento
                 Input.Pessoa = await GetPessoa((Guid)id);
 
                 foreach (var e in await _appServiceEmpresa
-                    .ConsultaRazaoSocialAsync(Input.Pessoa.Nome))
+                    .ConsultaRazaoSocialAsync(Input.Pessoa.CPF.MaskRemove()))
                     Input.Empresa = e;
                 if (Input.Empresa != null)
                     if (Input.Empresa.Situacao_Cadastral == "BAIXADA")

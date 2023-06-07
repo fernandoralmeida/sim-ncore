@@ -12,7 +12,7 @@ using Sim.Identity.Entity;
 namespace Sim.UI.Web.Areas.Admin.Pages.Manager
 {
 
-    [Authorize(Roles = "Admin_Global,Admin_Account")]
+    [Authorize(Roles = $"{Admin.Global},{Admin.Account}")]
     public class UserRolesModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -32,6 +32,9 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
         public VMUserRoles Input { get; set; }
 
         [BindProperty]
+        public string Modulos { get; set; }
+
+        [BindProperty]
         public string ResetCode { get; set; }
 
         [Required]
@@ -43,10 +46,10 @@ namespace Sim.UI.Web.Areas.Admin.Pages.Manager
         private async Task LoadAsync(string id)
         {
             var roles = _roleManager.Roles.ToList();
-            if (User.IsInRole("Admin_Global"))
+            if (User.IsInRole(Admin.Global))
                 RoleList = new SelectList(roles.OrderBy(o => o.Name), nameof(IdentityRole.Name));
             else
-                RoleList = new SelectList(roles.Where(s => s.Name != "Admin_Global" && s.Name != "Admin_Account" && s.Name != "Administrador").OrderBy(o => o.Name),nameof(IdentityRole.Name));                
+                RoleList = new SelectList(roles.Where(s => s.Name != Admin.Global && s.Name != Admin.Account).OrderBy(o => o.Name),nameof(IdentityRole.Name));                
 
             var u = await _userManager.FindByIdAsync(id);
 

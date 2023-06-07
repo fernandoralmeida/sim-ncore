@@ -8,7 +8,7 @@ using Sim.Domain.Organizacao.Model;
 
 namespace Sim.UI.Web.Areas.Settings.Pages.Common.Canal;
 
-[Authorize(Roles = "Admin_Global,Admin_Config")]
+[Authorize(Roles = $"{Areas.Admin.Pages.Admin.Global},{Areas.Admin.Pages.Admin.Settings}")]
 public class IndexModel : PageModel
 {
     private readonly IAppServiceSecretaria _appSecretaria;

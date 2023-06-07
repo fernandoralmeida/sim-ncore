@@ -61,6 +61,7 @@ public class IndexModel : PageModel
                 Servico = at.Servicos != null ? at.Servicos: "",
                 Descricao = at.Descricao != null ? at.Descricao: "",
                 Setor = at.Setor != null ? at.Setor: "",
+                Canal = at.Canal != null ? at.Canal: "",
                 Atendente = at.Owner_AppUser_Id
             });
         }

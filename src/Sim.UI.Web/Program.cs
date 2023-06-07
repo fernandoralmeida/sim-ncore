@@ -40,7 +40,8 @@ builder.Services.AddScoped<HttpContextAccessor>();
 
 builder.Services.ConfigureApplicationCookie(options =>
                 {
-                    options.LoginPath = new PathString("/contas/autenticacao/entrar");
+                    options.LoginPath = new PathString("/contas/autenticacao/entrar"); 
+                    options.AccessDeniedPath = new PathString("/contas/acessonegado/");
                 });
 
 var app = builder.Build();
