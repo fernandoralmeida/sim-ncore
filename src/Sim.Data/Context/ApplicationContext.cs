@@ -17,7 +17,7 @@ namespace Sim.Data.Context
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         { }
 
-        public DbSet<EBind> Vinculos { get; set; }
+        public DbSet<EBindings> Vinculos {get;set;}
         public DbSet<Ambulante> Ambulante { get; set; }
         public DbSet<DIA> DIA { get; set; }
         public DbSet<Empresas> Empresa { get; set; }
@@ -43,7 +43,7 @@ namespace Sim.Data.Context
             modelBuilder.Entity<Ambulante>().ToTable("Ambulante");
             modelBuilder.Entity<Empregos>().ToTable("Empregos");
             modelBuilder.Entity<DIA>().ToTable("DIA");
-            modelBuilder.Entity<EBind>().ToTable("Vinculos");
+            modelBuilder.Entity<EBindings>().ToTable("Vinculos");
             modelBuilder.Entity<Pessoa>().ToTable("Pessoa");
             modelBuilder.Entity<Empresas>().ToTable("Empresa");
             modelBuilder.Entity<EAtendimento>().ToTable("Atendimento");
@@ -66,7 +66,7 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.AtendimentoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.CanalMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.DIAMap());
-            modelBuilder.ApplyConfiguration(new Config.Entity.BindMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.BindingsMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpresaMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.PessoaMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.PlannerMap());

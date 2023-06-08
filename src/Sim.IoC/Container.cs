@@ -225,12 +225,12 @@ namespace Sim.IoC
             //
             services.AddScoped<IReceitaWS, ReceitaWS>();
             //
-            services.AddScoped<IAppServiceBase<EBind>, AppServiceBase<EBind>>();
-            services.AddScoped<IAppServiceBind, AppServiceBind>();
-            services.AddScoped<IServiceBase<EBind>, ServiceBase<EBind>>();
-            services.AddScoped<IServiceBind, ServiceBind>();
-            services.AddScoped<IRepositoryBase<EBind>, RepositoryBase<EBind>>();
-            services.AddScoped<IRepositoryBind, RepositoryBind>();
+            services.AddScoped<IAppServiceBase<EBindings>, AppServiceBase<EBindings>>();
+            services.AddScoped<IAppServiceBindings, AppServiceBindings>();
+            services.AddScoped<IServiceBase<EBindings>, ServiceBase<EBindings>>();
+            services.AddScoped<IServiceBindings, ServiceBindings>();
+            services.AddScoped<IRepositoryBase<EBindings>, RepositoryBase<EBindings>>();
+            services.AddScoped<IRepositoryBindings, RepositoryBindings>();
             //
             services.AddScoped<ApplicationContext>();     
 

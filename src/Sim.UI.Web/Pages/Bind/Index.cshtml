@@ -3,44 +3,26 @@
 
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Víncular";
+    ViewData["Title"] = "Vínculos";
     ViewData["ActivePage"] = Web.Pages.Shared.LayoutNavPages.Clientes;
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.ClientesVincular;
 }
 
 <partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="loadingpage"></div>
+
 <form method="post">
-    <section>
-        <div class="card">
-            <div class="card-header grey-text">Vincular Pessoa | Empresa</div>
-            <div class="row no-padding mgn-b-0">
-                <input asp-for="Id2" id="inputId2" hidden />
-                <div class="col s12 m6 l4 input-field valign-wrapper">
-                    <input asp-for="GetCNPJ" id="inputCNPJ" autofocus />
-                    <label>CNPJ</label>
-                    <a id="addempresa" class="waves-effect waves-light btn"><i class="material-icons">add</i></a>
-                </div>
-                <div class="col s12 m6 l8 input-field">
-                    <input asp-for="NomeEmpresarial" id="inputNE" required />
-                </div>
-                <input asp-for="Id1" id="inputId1" hidden />
-                <div class="col s12 m4 l4 input-field valign-wrapper">
-                    <input asp-for="GetCPF" id="inputCPF" />
-                    <label>CPF</label>
-                    <a id="addcustomer" class="waves-effect waves-light btn"><i class="material-icons">add</i></a>
-                </div>
-                <div class="col s12 m5 l5 input-field">
-                    <input asp-for="Nome" id="inputNome" required />
-                </div>
-                <div class="col s12 m3 l3 input-field valign-wrapper">
-                    <select asp-for="VinculoSelecionado" asp-items="Model.Vinculos"></select>
-                    <label>Tipo Vínculo</label>
-                    <button class="waves-effect waves-light btn"><i class="material-icons">link</i></button>
-                </div>
+    <nav class="row transparent">
+        <div class="nav-wrapper">
+            <div class="input-field col s6 m6 l6 no-padding">
+                <input id="search" placeholder="Digite o CPF ou CNPJ aqui para pesquisar!" onkeypress="handle(event)"
+                    asp-for="Search" type="search" autofocus required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>
+            <ul class="right">
+                <li><a asp-page="./Add"><i class="material-icons blue-text">add</i></a></li>
+            </ul>
         </div>
-    </section>
+    </nav>
 </form>
 
 <div class="card">
@@ -49,9 +31,9 @@
             <tr>
                 <th>#</th>
                 <th>Empresa</th>
+                <th>Pessoa</th>
                 <th>Vínculo</th>
-                <th>Pesso</th>
-                <th>#</th>
+                <th>Manager</th>
             </tr>
         </thead>
         <tbody>
@@ -67,13 +49,14 @@
                         <td>@Html.DisplayFor(model => item.Empresa.CNPJ)<br>@Html.DisplayFor(model =>
                     item.Empresa.Nome_Empresarial)
                         </td>
-                        <td>@Html.DisplayFor(model => _vinculo)</td>
                         <td>@Html.DisplayFor(model => item.Pessoa.CPF)<br>@Html.DisplayFor(model =>
                     item.Pessoa.Nome)</td>
+                        <td>@Html.DisplayFor(model => _vinculo)</td>
                         <td>
-                            <a class="waves-effect waves-light orange btn-small" href="#"><i class="material-icons">edit</i></a>
+                            <a class="waves-effect waves-light orange btn-small" asp-page="./edit" asp-route-id="@item.Id"><i
+                                    class="material-icons">edit</i></a>
                             |
-                            <a class="waves-effect waves-light red btn-small" href="#"><i class="material-icons">remove</i></a>
+                            <a class="waves-effect waves-light red btn-small" href="#"><i class="material-icons">delete</i></a>
                         </td>
                     </tr>
                 }
@@ -81,40 +64,3 @@
         </tbody>
     </table>
 </div>
-
-@section Scripts {
-    <script src="~/js/jquery.mask.min.js"></script>
-    <script>
-        $('#inputCNPJ').mask('00.000.000/0000-00');
-        $('#inputCPF').mask('000.000.000-00');
-
-        $(function () {
-            $("#addcustomer").click(function () {
-                var p = document.getElementById("inputCPF").value;
-                $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
-                $.getJSON(`/bindings/?doc=${p}&handler=AddPessoa`, function (data) {
-                    $(".loadingpage").empty();
-                    $.each(data, function (i, item) {
-                        let v1 = item.item1;
-                        let v2 = item.item3;
-                        document.getElementById("inputNome").value = v2;
-                        document.getElementById("inputId1").value = v1;
-                    });
-                });
-            });
-            $("#addempresa").click(function () {
-                var p = document.getElementById("inputCNPJ").value;
-                $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
-                $.getJSON(`/bindings/?doc=${p}&handler=AddEmpresa`, function (data) {
-                    $(".loadingpage").empty();
-                    $.each(data, function (i, item) {
-                        let v1 = item.item1;
-                        let v2 = item.item3;
-                        document.getElementById("inputNE").value = v2;
-                        document.getElementById("inputId2").value = v1;
-                    });
-                });
-            });
-        });
-    </script>
-}

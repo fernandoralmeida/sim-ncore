@@ -4,10 +4,10 @@ using Sim.Domain.Customer.Models;
 
 namespace Sim.Data.Config.Entity;
 
-public class BindMap : IEntityTypeConfiguration<EBind>
+public class BindingsMap : IEntityTypeConfiguration<EBindings>
 {
-    public void Configure(EntityTypeBuilder<EBind> builder)
+    public void Configure(EntityTypeBuilder<EBindings> builder)
     {
-        builder.HasKey(c => c.Id);        
+        builder.HasKey(c => c.Id);
     }
 }

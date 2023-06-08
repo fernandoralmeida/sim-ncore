@@ -5,16 +5,16 @@ using Sim.Domain.Customer.Models;
 
 namespace Sim.Application.Customer.Services;
 
-public class AppServiceBind : AppServiceBase<EBind> , IAppServiceBind
+public class AppServiceBindings : AppServiceBase<EBindings> , IAppServiceBindings
 {
-    private readonly IServiceBind _repository;
+    private readonly IServiceBindings _repository;
 
-    public AppServiceBind(IServiceBind repository)
+    public AppServiceBindings(IServiceBindings repository)
         :base(repository)
     {
         _repository = repository;
     }
 
-    public async Task<IEnumerable<EBind>> DoListAsync(Expression<Func<EBind, bool>> param = null)
+    public async Task<IEnumerable<EBindings>> DoListAsync(Expression<Func<EBindings, bool>> param = null)
         => await _repository.DoListAsync(param);
 }   
