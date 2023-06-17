@@ -30,6 +30,9 @@ namespace Sim.Application.Services
             return await _empresa.DoListAsyncBy(param);
         }
 
+        public async Task<IEnumerable<Empresas>> DoListOnlyUnlinkeds()
+            => await _empresa.DoListOnlyUnlinkeds();
+
         public async Task<Empresas> GetIdAsync(Guid id)
         {
             return await _empresa.GetIdAsync(id);

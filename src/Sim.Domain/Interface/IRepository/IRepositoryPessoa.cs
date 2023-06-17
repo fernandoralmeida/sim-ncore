@@ -9,5 +9,6 @@
         Task<IEnumerable<Pessoa>> ListTop10Async();
         Task<Pessoa> GetIdAsync(Guid id);
         Task<IEnumerable<Pessoa>> ListAllAsync();
+        Task<IEnumerable<Pessoa>> DoListOnlyUnlinkeds();
     }
 }

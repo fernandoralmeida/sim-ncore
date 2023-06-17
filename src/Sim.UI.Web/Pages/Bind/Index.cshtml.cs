@@ -38,5 +38,12 @@ public class IndexModel : PageModel
     public async Task OnPostAsync()
         => Listar = await _bindings.DoListAsync(s => s.Pessoa.CPF == Search || s.Empresa.CNPJ == Search);
 
+    public async Task<JsonResult> OnGetDelete(Guid id)
+    {
+        var _result = await _bindings.DoListAsync(s => s.Id == id);
+        await _bindings.RemoveAsync(await _bindings.SingleIdAsync(id));
+        return new JsonResult(_result);
+    }
+
 
 }

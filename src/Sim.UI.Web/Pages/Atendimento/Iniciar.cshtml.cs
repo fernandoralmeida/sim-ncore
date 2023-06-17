@@ -5,6 +5,8 @@ using System.ComponentModel;
 using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
 using Sim.UI.Web.Functions;
+using Sim.Application.Customer.Interfaces;
+using Sim.Domain.Customer.Models;
 
 namespace Sim.UI.Web.Pages.Atendimento
 {
@@ -15,16 +17,19 @@ namespace Sim.UI.Web.Pages.Atendimento
         private readonly IAppServicePessoa _appServicePessoa;
         private readonly IAppServiceEmpresa _appServiceEmpresa;
         private readonly IAppServiceContador _appServiceContador;
+        private readonly IAppServiceBindings _bindings;
 
         public IniciarModel(IAppServiceAtendimento appServiceAtendimento,
             IAppServicePessoa appServicePessoa,
             IAppServiceEmpresa appServiceEmpresa,
-            IAppServiceContador appServiceContador)
+            IAppServiceContador appServiceContador,
+            IAppServiceBindings appServiceBindings)
         {
             _appServiceAtendimento = appServiceAtendimento;
             _appServicePessoa = appServicePessoa;
             _appServiceEmpresa = appServiceEmpresa;
             _appServiceContador = appServiceContador;
+            _bindings = appServiceBindings;
         }
 
         [DisplayName("CPF")]
@@ -37,6 +42,8 @@ namespace Sim.UI.Web.Pages.Atendimento
 
         [BindProperty]
         public InputModelAtendimento Input { get; set; }
+
+        public bool HasBind = false;
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -56,7 +63,7 @@ namespace Sim.UI.Web.Pages.Atendimento
             return emp.Any() ? emp.FirstOrDefault() : null;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task OnGetAsync(Guid? id)
         {
             Input = new();
 
@@ -65,16 +72,16 @@ namespace Sim.UI.Web.Pages.Atendimento
             if (at.Any())
             {
                 StatusMessage = "Um atendimento encontra-se ativo, finalize antes de iniciar outro atendimento.";
-                return RedirectToPage("/Atendimento/Novo/Index");
+                RedirectToPage("/Atendimento/Novo/Index");
             }
 
             if (id != null)
             {
                 Input.Pessoa = await GetPessoa((Guid)id);
 
-                foreach (var e in await _appServiceEmpresa
-                    .ConsultaRazaoSocialAsync(Input.Pessoa.CPF.MaskRemove()))
-                    Input.Empresa = e;
+                foreach (var e in await _bindings.DoListAsync(s => s.Pessoa.Id == id))
+                    Input.Empresa = e.Empresa;
+
                 if (Input.Empresa != null)
                     if (Input.Empresa.Situacao_Cadastral == "BAIXADA")
                     {
@@ -82,8 +89,6 @@ namespace Sim.UI.Web.Pages.Atendimento
                         Input.Empresa = null;
                     }
             }
-
-            return Page();
         }
 
         public async Task<IActionResult> OnPostIncluirEmpresaAsync()
@@ -93,11 +98,21 @@ namespace Sim.UI.Web.Pages.Atendimento
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRemoverEmpresaAsync()
+        public async Task OnPostRemoverEmpresaAsync()
         {
             Input.Empresa = null;
             Input.Pessoa = await GetPessoa(Input.Pessoa.Id);
-            return Page();
+        }
+
+        public async Task<IActionResult> OnPostBindingsAsync(Guid pid, Guid eid)
+        {
+            var _e = await _appServiceEmpresa.SingleIdAsync(eid);
+            var _p = await _appServicePessoa.SingleIdAsync(pid);
+            await _bindings.AddAsync(new EBindings() { Empresa = _e, Pessoa = _p, Vinculo = TBindings.Proprietario });
+            foreach (var intem in await _bindings.DoListAsync(s => s.Pessoa.Id == _p.Id && s.Empresa.Id == _e.Id))
+                StatusMessage = "Vinculo realizado com sucesso!";
+
+            return RedirectToPage("/Atendimento/Novo/Index");
         }
 
         public async Task<IActionResult> OnPostSaveAsync()
@@ -123,6 +138,16 @@ namespace Sim.UI.Web.Pages.Atendimento
                 };
 
                 await _appServiceAtendimento.AddAsync(atendimento);
+
+                if (Input.Empresa != null)
+                {
+                    var _result = await _bindings.DoListAsync(s => s.Pessoa.Id == Input.Pessoa.Id && s.Empresa.Id == Input.Empresa.Id);
+                    if (_result.Count() < 1)
+                    {
+                        HasBind = true;                        
+                        return Page();
+                    }
+                }
 
                 return RedirectToPage("/Atendimento/Novo/Index");
             }

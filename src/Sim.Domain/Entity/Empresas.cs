@@ -28,6 +28,7 @@ public class Empresas
     public virtual ICollection<EAtendimento>? Atendimentos { get; set; }
     public virtual ICollection<Inscricao>? Inscricoes { get; set; }
     public virtual ICollection<Empregos>? VagasEmpregos { get; set; }
+    public virtual ICollection<EBindings>? Vinculos { get; set; }
 
     public bool UltimasFormalizacoes(Empresas obj)
     {

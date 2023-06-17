@@ -1,59 +1,74 @@
-@page "/bindings/edit/{id}"
-@model Sim.UI.Web.Pages.Bind.EditModel
+@page "/bindings/admin/"
+@model Sim.UI.Web.Pages.Bind.AdminModel
 
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Alterar Vínculo";
+    ViewData["Title"] = "Administrar Vínculos";
     ViewData["ActivePage"] = Web.Pages.Shared.LayoutNavPages.Clientes;
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.ClientesVincular;
 }
 
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-@if (Model._result == false)
-{
-    <form method="post">
-        <section>
-            <input asp-for="EditID" hidden />
-            <div class="card">
-                <div class="card-header grey-text">Vinculo Pessoa | Empresa</div>
-                <div class="row no-padding mgn-b-0">
-                    <input asp-for="Id2" id="inputId2" hidden />
-                    <div class="col s12 m6 l4 input-field">
-                        <input asp-for="GetCNPJ" id="inputCNPJ" readonly />
-                        <label>CNPJ</label>
+<form method="post">
+    <div class="row">
+
+    </div>
+    @if (Model.Vinculos != null)
+    {
+        <div class="row">
+            <div class="box-column">
+                <div class="box-column-row">
+                    <div class="box-card">
+                        <div class="card-header grey-text">Clientes não Vínculados<i
+                                class="material-icons left">view_module</i>
+                        </div>
+                        <div class="box-around">
+                            @if (Model.NotBindings != null)
+                            {
+                                @foreach (var item in Model.NotBindings)
+                                {
+                                    <div class="box-cell-item-flex font-size-12 btn-nobg waves-effect">
+                                        <p class="grey-text">@item.Item1</p>
+                                        <p class="orange-text font-h5">@item.Item2</p>
+                                    </div>
+                                }
+                            }
+                            <button asp-page-handler="Bindings"
+                                class="box-cell-item-flex font-size-12 btn-nobg waves-effect">
+                                <p class="grey-text">Verificar</p>
+                                <p class="orange-text font-h5">Iniciar Vinculos</p>
+                            </button>
+                        </div>
                     </div>
-                    <div class="col s12 m6 l8 input-field">
-                        <input asp-for="NomeEmpresarial" id="inputNE" readonly />
-                    </div>
-                    <input asp-for="Id1" id="inputId1" hidden />
-                    <div class="col s12 m4 l4 input-field valign-wrapper">
-                        <input asp-for="GetCPF" id="inputCPF" readonly />
-                        <label>CPF</label>
-                    </div>
-                    <div class="col s12 m5 l5 input-field">
-                        <input asp-for="Nome" id="inputNome" readonly />
-                    </div>
-                    <div class="col s12 m3 l3 input-field">
-                        <select asp-for="VinculoSelecionado" asp-items="Model.Vinculos"></select>
-                        <label>Tipo Vínculo</label>
-                    </div>
-                </div>
-                <div class="card-action">
-                    <a asp-page="./Index" class="waves-effect waves-light btn blue-grey"><i
-                            class="material-icons">arrow_back</i></a>
-                    <button class="waves-effect waves-light btn right"><i class="material-icons">save</i></button>
                 </div>
             </div>
-        </section>
-    </form>
-}
-else
-{
-    <div class="row">
-        <a class="waves-effect waves-light btn blue-grey" asp-page="./Index"><i class="material-icons">arrow_back</i></a>
-    </div>
+        </div>
+        <div class="row">
+            <div class="box-column">
+                <div class="box-column-row">
+                    <div class="box-card">
+                        <div class="card-header grey-text">Panorama Vínculos<i class="material-icons left">view_module</i>
+                        </div>
+                        <div class="box-around">
+                            @foreach (var item in Model.Vinculos)
+                            {
+                                <button asp-page-handler="Preview" asp-route-id="@item.Item3"
+                                    class="box-cell-item-flex font-size-12 btn-nobg waves-effect">
+                                    <p class="grey-text">@item.Item1</p>
+                                    <p class="orange-text font-h5">@item.Item2</p>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</form>
 
+@if (Model.Listar != null)
+{
     <div class="card">
+        <div class="card-header grey-text">Vínculos<i class="material-icons left">text_snippet</i></div>
         <table>
             <thead>
                 <tr>

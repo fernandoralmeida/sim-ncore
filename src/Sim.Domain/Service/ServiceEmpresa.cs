@@ -29,6 +29,9 @@ namespace Sim.Domain.Service
             return await _repositoryEmpresa.DoListAsyncBy(param);
         }
 
+        public async Task<IEnumerable<Empresas>> DoListOnlyUnlinkeds()
+            => await _repositoryEmpresa.DoListOnlyUnlinkeds();
+
         public async Task<Empresas> GetIdAsync(Guid id)
         {
             return await _repositoryEmpresa.GetIdAsync(id);

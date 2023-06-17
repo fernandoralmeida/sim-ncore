@@ -3,7 +3,7 @@
 
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
-    ViewData["Title"] = "novo Vínculo";
+    ViewData["Title"] = "Novo Vínculo";
     ViewData["ActivePage"] = Web.Pages.Shared.LayoutNavPages.Clientes;
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.ClientesVincular;
 }
@@ -89,7 +89,9 @@ else
                                 <a class="waves-effect waves-light orange btn-small" asp-page="./edit" asp-route-id="@item.Id"><i
                                         class="material-icons">edit</i></a>
                                 |
-                                <a class="waves-effect waves-light red btn-small" href="#"><i class="material-icons">remove</i></a>
+                                <a href="#" class="waves-effect waves-light red btn-small bindremove" data-id="@item.Id"><i
+                                        class="material-icons">delete</i></a>
+
                             </td>
                         </tr>
                     }
@@ -129,6 +131,17 @@ else
                         let v2 = item.item3;
                         document.getElementById("inputNE").value = v2;
                         document.getElementById("inputId2").value = v1;
+                    });
+                });
+            });
+            $(".bindremove").click(function () {
+                var _id = $(this).data('id');
+                $(".loadingpage").append(`<div class="progress"><div class="indeterminate"></div></div>`);
+                $.getJSON(`/bindings/?id=${_id}&handler=Delete`, function (data) {
+                    $(".loadingpage").empty();
+                    $.each(data, function (i, item) {
+                        alert(`Víncuilo ID:${_id} | ${item.empresa.nome_Empresarial} <> ${item.pessoa.nome} Removido!`);
+                        location.reload();
                     });
                 });
             });

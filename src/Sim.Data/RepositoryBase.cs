@@ -44,8 +44,7 @@ namespace Sim.Data
 
             if(filter != null)
                 _query = _query
-                    .Where(filter)
-                    .AsNoTrackingWithIdentityResolution();
+                    .Where(filter);
 
             return await _query.ToListAsync();
         }

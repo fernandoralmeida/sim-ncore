@@ -8,7 +8,7 @@ namespace Sim.Application.Services
     {
         private readonly IServicePessoa _pessoa;
 
-        public AppServicePessoa(IServicePessoa pessoa):base(pessoa)
+        public AppServicePessoa(IServicePessoa pessoa) : base(pessoa)
         {
             _pessoa = pessoa;
         }
@@ -27,6 +27,9 @@ namespace Sim.Application.Services
         {
             return await _pessoa.DoListAsyncBy(param);
         }
+
+        public async Task<IEnumerable<Pessoa>> DoListOnlyUnlinkeds()
+            => await _pessoa.DoListOnlyUnlinkeds();
 
         public async Task<Pessoa> GetIdAsync(Guid id)
         {

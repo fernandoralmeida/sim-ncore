@@ -9,9 +9,7 @@ namespace Sim.Data.Repository
     {
         public RepositoryPessoa(ApplicationContext dbContext)
             :base(dbContext)
-        {
-
-        }
+        {  }
 
         public async Task<IEnumerable<Pessoa>> ConsultaCPFAsync(string cpf)
         {
@@ -36,6 +34,13 @@ namespace Sim.Data.Repository
                                         .AsNoTrackingWithIdentityResolution()
                                         .ToListAsync();
         }
+
+        public async Task<IEnumerable<Pessoa>> DoListOnlyUnlinkeds()
+            => await _db.Pessoa
+                        .Include(v => v.Vinculos)
+                        .Where(s => s.Vinculos.Any() == false)
+                        .OrderBy(s => s.Nome)
+                        .ToListAsync();
 
         public async Task<Pessoa> GetIdAsync(Guid id)
         {

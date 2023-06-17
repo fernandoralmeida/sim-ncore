@@ -36,6 +36,13 @@ namespace Sim.Data.Repository
                 .ToListAsync();  
         }
 
+        public async Task<IEnumerable<Empresas>> DoListOnlyUnlinkeds()
+            => await _db.Empresa
+                        .Include(v => v.Vinculos)
+                        .Where(s => s.Vinculos.Any() == false)
+                        .OrderBy(o => o.Nome_Empresarial)
+                        .ToListAsync();
+
         public async Task<Empresas> GetIdAsync(Guid id)
         {
             return await _db.Empresa
@@ -61,7 +68,6 @@ namespace Sim.Data.Repository
 
             if(cnpj == "" && razaosocial == "" && cnae == "" && logradouro == "" && bairro == "")
                 return new List<Empresas>();
-
 
             return await _db.Empresa.Where(s => s.CNPJ.Contains(cnpj))
                 .Where(s => s.Nome_Empresarial.Contains(razaosocial))

@@ -39,5 +39,6 @@ public class Pessoa
     public virtual ICollection<EAtendimento>? Atendimentos { get; set; }
     public virtual ICollection<Ambulante>? Ambulante { get; set; }
     public virtual ICollection<Inscricao>? Inscricoes { get; set; }
+    public virtual ICollection<EBindings>? Vinculos { get; set; }
 }
 

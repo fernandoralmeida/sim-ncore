@@ -64,7 +64,8 @@
                     @Html.DisplayFor(modelItem => item.Canal)
                 </td>
                 <td>
-                    <a class="btn btn-small waves-effect" asp-page="/Atendimento/Manager/Index" asp-route-id="@item.Id"><i class="material-icons">edit</i></a>
+                    <a class="btn-floating btn-small waves-effect waves-light orange" asp-page="/Atendimento/Manager/Index"
+                        asp-route-id="@item.Id"><i class="material-icons">edit</i></a>
                 </td>
             </tr>
             }

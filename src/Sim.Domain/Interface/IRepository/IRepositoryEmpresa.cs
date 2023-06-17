@@ -12,5 +12,6 @@
         Task<IEnumerable<Empresas>> ListEmpresasAsync(List<object> lparam);
         Task<Empresas> GetIdAsync(Guid id);
         Task<IEnumerable<Empresas>> ListAllAsync();
+        Task<IEnumerable<Empresas>> DoListOnlyUnlinkeds();
     }
 }

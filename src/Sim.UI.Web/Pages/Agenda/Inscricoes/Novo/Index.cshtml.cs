@@ -5,6 +5,7 @@ using Sim.Domain.Entity;
 using Sim.Application.Interfaces;
 using Sim.UI.Web.Functions;
 using System.ComponentModel;
+using Sim.Application.Customer.Interfaces;
 
 namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
 {
@@ -17,13 +18,15 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
         private readonly IAppServiceEmpresa _appServiceEmpresa;
         private readonly IAppServiceAtendimento _appatendimento;
         private readonly IAppServiceContador _appcontador;
+        private readonly IAppServiceBindings _bindings;
 
         public IndexModel(IAppServiceInscricao appServiceInscricao,
             IAppServiceEvento appServiceEvento,
             IAppServiceEmpresa appServiceEmpresa,
             IAppServicePessoa appServicePessoa,
             IAppServiceAtendimento appServiceAtendimento,
-            IAppServiceContador appServiceContador)
+            IAppServiceContador appServiceContador,
+            IAppServiceBindings appServiceBindings)
         {
             _appServiceEvento = appServiceEvento;
             _appServiceInscricao = appServiceInscricao;
@@ -31,6 +34,7 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
             _appServicePessoa = appServicePessoa;
             _appatendimento = appServiceAtendimento;
             _appcontador = appServiceContador;
+            _bindings = appServiceBindings;
         }
 
         [BindProperty]
@@ -82,8 +86,8 @@ namespace Sim.UI.Web.Pages.Agenda.Inscricoes.Novo
 
                     if (Input.Participante != null)
                     {
-                        var e = await _appServiceEmpresa.ConsultaRazaoSocialAsync(Input.Participante.CPF.MaskRemove());
-                        Input.Empresa = e.FirstOrDefault();
+                        foreach (var e in await _bindings.DoListAsync(s => s.Pessoa.Id == Input.Participante.Id))
+                            Input.Empresa = e.Empresa;
                     }
                 }
             }
