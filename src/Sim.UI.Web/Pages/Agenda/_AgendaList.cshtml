@@ -41,7 +41,7 @@
                         cor = "blue-grey";
                     }
                 }
-
+                <!---->
                 <div class="col s12 m6 l4">
                     @{
                         var disabledbutton = l.Data.Value.AddDays(1) < DateTime.Now ? "disabled" : "";
@@ -49,13 +49,13 @@
 
                     <div class="card hoverable">
                         <div class="card-image @cor lighten-3 waves">
-                            <div class="card-title-panel @cor-text text-darken-4 truncate t-uppercase pdn-h-10 pdn-v-20">
-                                <a class="btn-floating btn-small waves-effect waves-@cor white" asp-page="/Agenda/Eventos/Edit/Index"
-                                    asp-route-id="@l.Id" title="Editar"><i class="material-icons @cor-text">edit</i></a>
-                                @l.Nome
+                            <div class="card-title-panel @cor-text text-darken-4 truncate t-uppercase pdn-h-10 pdn-v-30">
+                                <a class="btn-floating btn-small halfway-fab waves-effect waves-light @cor lighten-2 left"
+                                    asp-page="/Agenda/Eventos/Edit/Index"                       asp-route-id="@l.Id" title="Editar"><i class="material-icons white-text">edit</i></a>
+                                <span class="mgn-l-4">@l.Nome</span> 
                             </div>
                         </div>
-                        <div class="card-content truncate border-l border-r pdn-b-0 pdn-t-10">
+                        <div class="card-content truncate border-l border-r pdn-b-0">
                             @l.Tipo [<span class="@cor-text">@l.Situacao.ToString()</span>], @l.Owner
                             <br />@l.Data.Value
                             <br />@l.Formato, @l.Vagas() vagas.
