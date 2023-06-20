@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sim.Application.BancoPovo.Interfaces;
 using Sim.Application.BancoPovo.ViewModel;
+using Sim.Application.Customer.Interfaces;
 using Sim.Application.Interfaces;
 using Sim.Domain.BancoPovo.Models;
 using Sim.UI.Web.Functions;
@@ -19,6 +20,7 @@ public class IndexModel : PageModel
     private readonly IAppServiceEmpresa _appServiceEmpresa;
     private readonly IAppServicePessoa _appServicePessoa;
     private readonly IAppServiceContratos _appContratos;
+    private readonly IAppServiceBindings _bindings;
 
     [TempData]
     public string StatusMessage { get; set; }
@@ -39,12 +41,14 @@ public class IndexModel : PageModel
     public IndexModel(IMapper mapper,
         IAppServiceEmpresa appempresa,
         IAppServicePessoa apppessoa,
-        IAppServiceContratos appServiceContratos)
+        IAppServiceContratos appServiceContratos,
+        IAppServiceBindings bindings)
     {
         _mapper = mapper;
         _appServiceEmpresa = appempresa;
         _appServicePessoa = apppessoa;
         _appContratos = appServiceContratos;
+        _bindings = bindings;
     }
 
     public void OnGet()
@@ -78,7 +82,10 @@ public class IndexModel : PageModel
             else
             {
                 InputContrato.Cliente = p;
-                await CNPJ(p.CPF.MaskRemove());
+
+                foreach (var e in await _bindings.DoListAsync(s => s.Pessoa.Id == p.Id))
+                    await CNPJ(e.Empresa.CNPJ);
+
                 return;
             }
         }
@@ -86,7 +93,7 @@ public class IndexModel : PageModel
 
     private async Task CNPJ(string param)
     {
-        var le = await _appServiceEmpresa.DoList(s => s.CNPJ == param || s.Nome_Empresarial.Contains(param));
+        var le = await _appServiceEmpresa.DoList(s => s.CNPJ == param);
 
         if (le.Count() == 0)
             StatusMessage = "Erro: Empresa não encontrada!";
@@ -128,7 +135,7 @@ public class IndexModel : PageModel
     {
 
         InputContrato.Cliente = null;
-        return RedirectToPage("/Banco-do-Povo/Add/Index");
+        return RedirectToPage("/BancodoPovo/Add/Index");
     }
 
     public void OnPostRemovePJ()
@@ -163,7 +170,7 @@ public class IndexModel : PageModel
 
             await _appContratos.AddAsync(_contrato);
 
-            return RedirectToPage("/Banco-do-Povo/Index");
+            return RedirectToPage("/Bancodopovo/Index");
         }
         catch (Exception ex)
         {

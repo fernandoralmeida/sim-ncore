@@ -81,7 +81,7 @@ public class IndexModel : PageModel
     public IActionResult OnPostRemovePF() {
         LoadSelectors();
         InputContrato.Cliente = null;
-        return RedirectToPage("/Banco-do-Povo/Edit/Index");
+        return RedirectToPage("/BancodoPovo/Edit/Index");
     }
 
     public void OnPostRemovePJ() {

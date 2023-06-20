@@ -40,7 +40,7 @@ namespace Sim.UI.Web.Pages.Atendimento
         [BindProperty]
         public string GetCNPJ { get; set; }
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public InputModelAtendimento Input { get; set; }
 
         public bool HasBind = false;
@@ -95,6 +95,14 @@ namespace Sim.UI.Web.Pages.Atendimento
         {
             Input.Pessoa = await GetPessoa(Input.Pessoa.Id);
             Input.Empresa = await GetEmpresa(GetCNPJ);
+
+            if (Input.Empresa != null)
+            {
+                var _result = await _bindings.DoListAsync(s => s.Pessoa.Id == Input.Pessoa.Id && s.Empresa.Id == Input.Empresa.Id);
+                if (_result.Count() < 1)
+                    HasBind = true;
+            }
+
             return Page();
         }
 
@@ -104,15 +112,16 @@ namespace Sim.UI.Web.Pages.Atendimento
             Input.Pessoa = await GetPessoa(Input.Pessoa.Id);
         }
 
-        public async Task<IActionResult> OnPostBindingsAsync(Guid pid, Guid eid)
+        public async Task OnPostBindingsAsync(Guid pid, Guid eid)
         {
             var _e = await _appServiceEmpresa.SingleIdAsync(eid);
             var _p = await _appServicePessoa.SingleIdAsync(pid);
             await _bindings.AddAsync(new EBindings() { Empresa = _e, Pessoa = _p, Vinculo = TBindings.Proprietario });
             foreach (var intem in await _bindings.DoListAsync(s => s.Pessoa.Id == _p.Id && s.Empresa.Id == _e.Id))
+            {
                 StatusMessage = "Vinculo realizado com sucesso!";
-
-            return RedirectToPage("/Atendimento/Novo/Index");
+                HasBind = false;
+            }
         }
 
         public async Task<IActionResult> OnPostSaveAsync()
@@ -138,16 +147,6 @@ namespace Sim.UI.Web.Pages.Atendimento
                 };
 
                 await _appServiceAtendimento.AddAsync(atendimento);
-
-                if (Input.Empresa != null)
-                {
-                    var _result = await _bindings.DoListAsync(s => s.Pessoa.Id == Input.Pessoa.Id && s.Empresa.Id == Input.Empresa.Id);
-                    if (_result.Count() < 1)
-                    {
-                        HasBind = true;                        
-                        return Page();
-                    }
-                }
 
                 return RedirectToPage("/Atendimento/Novo/Index");
             }

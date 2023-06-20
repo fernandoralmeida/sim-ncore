@@ -61,5 +61,18 @@ public class IndexModel : PageModel {
         MeusContratos = _mapper.Map<IEnumerable<EContrato>, List<VMContrato>>(_list_src);
         MeusContratos.OrderByDescending(o => o.Data);
     }
+
+    public async Task OnPostGoSituacaoAsync()
+    {
+        LoadSelectors();
+
+        var _upsituacao = await _appcontratos.SingleIdAsync(GetID);
+
+        _upsituacao.Situacao = GetSituacao;
+        _upsituacao.Pagamento = GetPagamento;
+        _upsituacao.DataSituacao = DateTime.Now;
+
+        await _appcontratos.UpdateAsync(_upsituacao);
+    }
 }
 

@@ -69,9 +69,9 @@
                     {
                         <button asp-page-handler="Bindings" asp-route-pid="@Model.Input.Pessoa.Id"
                             asp-route-eid="@Model.Input.Empresa.Id" type="submit" class="btn waves-effect waves-light blue"
-                            title="Víncular">Víncular e ir para o
-                            Atendimento</button>
-                        <a asp-page="/Atendimento/Novo/Index" class="btn waves-effect">Ir para o Atendimento</a>
+                            title="Víncular">Víncular Cliente | Empresa</button>
+                        <button asp-page-handler="Save" type="submit" class="btn waves-effect">Iniciar Atendimento</button>
+                        <a asp-page="/Atendimento/Index" class="grey btn waves-effect">Cancelar</a>
                     }
                     else
                     {

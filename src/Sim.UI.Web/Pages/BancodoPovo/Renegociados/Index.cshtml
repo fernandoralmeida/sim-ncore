@@ -32,19 +32,19 @@
                             <td>@_cont</td>
                             <td>@Html.DisplayFor(model => c.Numero)</td>
                             <td>
-                                @{ 
-                                    var _isempresa = c.Empresa != null ? c.Empresa.Nome_Empresarial : c.Cliente.Nome;
-                                }
-                                @Html.DisplayFor(modelc => _isempresa)
+                            @Html.DisplayFor(Model => c.Cliente.Nome)
+                            <br>@Html.DisplayFor(Model => c.Empresa.CNPJ) @Html.DisplayFor(Model => c.Empresa.Nome_Empresarial)
                             </td>
                             <td>@Html.DisplayFor(model => c.Data) ~ @Html.DisplayFor(model => c.DataSituacao)</td>
                             <td>
-                                @{ var _situacao = c.Situacao.ToString();}                                
+                                @{ var _situacao = c.Situacao.ToString();
+                                    var _cor = c.Pagamento == Domain.BancoPovo.Models.EContrato.EnPagamento.Inadimplente ? "red" : "green";
+                                }                                
                                 <a class="btn-small waves-effect waves-light blue modal-trigger showmodal" data-id="@c.Id" data-stc="@c.Situacao" data-pgt="@c.Pagamento" href="#modal1">@Html.DisplayFor(model => _situacao)</a>
                             </td>
                             <td>
                                 @{ var _pag = c.Pagamento.ToString();}                                
-                                <a class="btn-small waves-effect waves-light green modal-trigger showmodal" data-id="@c.Id" data-stc="@c.Situacao" data-pgt="@c.Pagamento" href="#modal1">@Html.DisplayFor(model => _pag)</a>
+                                <a class="btn-small waves-effect waves-light @_cor modal-trigger showmodal" data-id="@c.Id" data-stc="@c.Situacao" data-pgt="@c.Pagamento" href="#modal1">@Html.DisplayFor(model => _pag)</a>
                             </td>
                             <td>@Html.DisplayFor(model => c.Valor)</td>
                             <td>
@@ -100,7 +100,7 @@
                 var _id = document.getElementById('idservico').value;
                 var _dom = document.getElementById('dominioid').value;  
                 var _nom = document.getElementById('inputmodalnome').value;                 
-                $.get(`/Settings/Common/Servicos?id=${_id}&dominio=${_dom}&nome=${_nom}&handler=Manager`);
+                $.get(`/configuracoes/servicos/?id=${_id}&dominio=${_dom}&nome=${_nom}&handler=Manager`);
             });
         });
     </script>

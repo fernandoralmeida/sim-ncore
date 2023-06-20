@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.UI.Api", "src\Sim.UI.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.UI.Painel", "src\Sim.UI.Painel\Sim.UI.Painel.csproj", "{8821344D-7EDF-4B50-86FA-9C7E4B4D9255}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sim.Migradata", "src\Sim.Migradata\Sim.Migradata.csproj", "{823E867A-1DA8-494B-A759-4E63EFA2EF69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{8821344D-7EDF-4B50-86FA-9C7E4B4D9255}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8821344D-7EDF-4B50-86FA-9C7E4B4D9255}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8821344D-7EDF-4B50-86FA-9C7E4B4D9255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{823E867A-1DA8-494B-A759-4E63EFA2EF69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{823E867A-1DA8-494B-A759-4E63EFA2EF69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{823E867A-1DA8-494B-A759-4E63EFA2EF69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{823E867A-1DA8-494B-A759-4E63EFA2EF69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +114,7 @@ Global
 		{52028954-F46E-4102-A396-C2F3E477ACCE} = {48439217-427F-463C-A4C3-0CAC735895F7}
 		{5E617D2B-DEAF-4511-A4E9-20C1CCEC05C8} = {B55D5524-E537-4E51-B5F6-98374027A555}
 		{8821344D-7EDF-4B50-86FA-9C7E4B4D9255} = {B55D5524-E537-4E51-B5F6-98374027A555}
+		{823E867A-1DA8-494B-A759-4E63EFA2EF69} = {B55D5524-E537-4E51-B5F6-98374027A555}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFA1287D-4898-4A02-B904-6DE18B4E3926}
