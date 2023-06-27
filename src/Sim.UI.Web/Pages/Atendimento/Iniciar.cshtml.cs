@@ -63,7 +63,7 @@ namespace Sim.UI.Web.Pages.Atendimento
             return emp.Any() ? emp.FirstOrDefault() : null;
         }
 
-        public async Task OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             Input = new();
 
@@ -72,7 +72,7 @@ namespace Sim.UI.Web.Pages.Atendimento
             if (at.Any())
             {
                 StatusMessage = "Um atendimento encontra-se ativo, finalize antes de iniciar outro atendimento.";
-                RedirectToPage("/Atendimento/Novo/Index");
+                return RedirectToPage("/Atendimento/Novo/Index");
             }
 
             if (id != null)
@@ -89,6 +89,8 @@ namespace Sim.UI.Web.Pages.Atendimento
                         Input.Empresa = null;
                     }
             }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostIncluirEmpresaAsync()
@@ -147,6 +149,8 @@ namespace Sim.UI.Web.Pages.Atendimento
                 };
 
                 await _appServiceAtendimento.AddAsync(atendimento);
+
+                StatusMessage = "Lembre-se de incentivar os clientes a responderem nossa pesquisa de satisfação!";
 
                 return RedirectToPage("/Atendimento/Novo/Index");
             }

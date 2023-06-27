@@ -12,29 +12,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLocalization();
 var cultureInfoBR = new[] { new CultureInfo("pt-BR") };
 
-builder.Services.IdentityDataBase(builder.Configuration, "IdentityContextConnection");
-
-builder.Services.AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<IdentityContext>();
-
-builder.Services.IdentityConfig();
-
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
-
 builder.Services.AddControllersWithViews()
                 .AddNewtonsoftJson(op =>
                 op.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-builder.Services.DataBaseConfig(builder.Configuration, "App_____ContextConnection");
-builder.Services.DataBaseConfigCNPJ(builder.Configuration, "RFB_____ContextConnection");
+builder.Services.IdentityDataBase(builder.Configuration, "ACC_DB");
+builder.Services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<IdentityContext>();
+builder.Services.IdentityConfig();
+
+builder.Services.DataBaseConfig(builder.Configuration, "APP_DB");
+builder.Services.RegisterServices();
+builder.Services.DataBaseConfigCNPJ(builder.Configuration, "RFB_DB");
+builder.Services.RegisterServicesCNPJ();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
-
-builder.Services.RegisterServices();
-builder.Services.RegisterServicesCNPJ();
 
 builder.Services.AddScoped<HttpContextAccessor>();
 

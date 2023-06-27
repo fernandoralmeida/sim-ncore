@@ -124,6 +124,11 @@
                 window.location.reload();
             });
         });
+        $(function () {
+            $('.submitmsgpesquisa').click(function() {
+                alert("Lembre-se de incentivar os clientes a responderem nossa pesquisa de satisfação!");
+            });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

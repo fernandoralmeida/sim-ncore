@@ -46,18 +46,19 @@ namespace Sim.IoC
     public static class Container
     {
 
+
         public static void DataBaseConfig(this IServiceCollection services, IConfiguration config, string connection)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            ApplicationContext.GetConnection(config.GetConnectionString(connection));            
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));                        
+            services.AddDbContext<ApplicationContext>(options =>
+            options.UseSqlServer(Environment.GetEnvironmentVariable(config.GetConnectionString(connection))!));
         }
 
         public static void RegisterServices(this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-           
+
             //
             services.AddScoped<IAppServiceBase<Pessoa>, AppServiceBase<Pessoa>>();
             services.AddScoped<IAppServicePessoa, AppServicePessoa>();
@@ -136,7 +137,7 @@ namespace Sim.IoC
 
             services.AddScoped<IRepositoryBase<ECanal>, RepositoryBase<ECanal>>();
             services.AddScoped<IRepositoryCanal, RepositoryCanal>();
-            
+
             //
             services.AddScoped<IAppServiceBase<Contador>, AppServiceBase<Contador>>();
             services.AddScoped<IAppServiceContador, AppServiceContador>();
@@ -232,7 +233,7 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryBase<EBindings>, RepositoryBase<EBindings>>();
             services.AddScoped<IRepositoryBindings, RepositoryBindings>();
             //
-            services.AddScoped<ApplicationContext>();     
+            services.AddScoped<ApplicationContext>();
 
         }
     }

@@ -15,16 +15,16 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
-builder.Services.IdentityDataBase(builder.Configuration, "IdentityContextConnection");
+builder.Services.IdentityDataBase(builder.Configuration, "ACC_DB");
 
 builder.Services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>();
                 
 builder.Services.IdentityConfig();
-builder.Services.DataBaseConfig(builder.Configuration, "App_____ContextConnection");
+builder.Services.DataBaseConfig(builder.Configuration, "APP_DB");
 builder.Services.RegisterServices();
-builder.Services.DataBaseConfigCNPJ(builder.Configuration, "RFB_____ContextConnection");
+builder.Services.DataBaseConfigCNPJ(builder.Configuration, "RFB_DB");
 builder.Services.RegisterServicesCNPJ();
 
 builder.Services.AddControllers();
