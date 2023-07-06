@@ -13,6 +13,8 @@ namespace Sim.Data.Cnpj.Context
 
         public ApplicationContextCnpj(DbContextOptions<ApplicationContextCnpj> options) : base(options)
         {  }
+
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -20,6 +22,7 @@ namespace Sim.Data.Cnpj.Context
                 optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("Sim_Data_RFB"));
             }
         }
+        */
         public DbSet<CNAE> Cnaes { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Estabelecimento> Estabelecimentos { get; set; }

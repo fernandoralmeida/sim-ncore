@@ -15,7 +15,7 @@ public static class Container
         if (services == null) throw new ArgumentNullException(nameof(services));
 
         services.AddDbContext<IdentityContext>(options =>
-            options.UseSqlServer(Environment.GetEnvironmentVariable(config.GetConnectionString(connection))));
+            options.UseSqlServer(config.GetConnectionString(connection)));
     }
 
     public static void IdentityConfig(this IServiceCollection services)

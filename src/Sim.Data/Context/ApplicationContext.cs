@@ -4,20 +4,20 @@ using Sim.Domain.Organizacao.Model;
 using Sim.Domain.Evento.Model;
 using Sim.Domain.BancoPovo.Models;
 using Sim.Domain.Customer.Models;
+using Sim.Domain.Sebrae.Model;
 
 namespace Sim.Data.Context
 {
 
     public class ApplicationContext : DbContext
     {
-        private static string _connectionstring = Environment.GetEnvironmentVariable("Sim_Data_APP"); 
         public ApplicationContext()
         { }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         { }
 
-        public DbSet<EBindings> Vinculos {get;set;}
+        public DbSet<EBindings> Vinculos { get; set; }
         public DbSet<Ambulante> Ambulante { get; set; }
         public DbSet<DIA> DIA { get; set; }
         public DbSet<Empresas> Empresa { get; set; }
@@ -36,7 +36,8 @@ namespace Sim.Data.Context
         public DbSet<Contador> Contador { get; set; }
         public DbSet<StatusAtendimento> StatusAtendimento { get; set; }
         public DbSet<EContrato> BPPContratos { get; set; }
-        public DbSet<ERenegociacoes> BPPRenegociacoes { get; set; }        
+        public DbSet<ERenegociacoes> BPPRenegociacoes { get; set; }
+        public DbSet<ESimples> Simples { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,7 +60,8 @@ namespace Sim.Data.Context
             modelBuilder.Entity<RaeSebrae>().ToTable("RaeSebrae");
             modelBuilder.Entity<StatusAtendimento>().ToTable("StatusAtendimento");
             modelBuilder.Entity<EContrato>().ToTable("BPPContratos");
-            modelBuilder.Entity<ERenegociacoes>().ToTable("BPPRenegociacoes");            
+            modelBuilder.Entity<ERenegociacoes>().ToTable("BPPRenegociacoes");
+            modelBuilder.Entity<ESimples>().ToTable("Simples");
 
             modelBuilder.ApplyConfiguration(new Config.Entity.AmbulanteMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.EmpregosMap());
@@ -79,23 +81,20 @@ namespace Sim.Data.Context
             modelBuilder.ApplyConfiguration(new Config.Entity.ContadorMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.StatusAtendimentoMap());
             modelBuilder.ApplyConfiguration(new Config.Entity.BPPContratosMap());
-            modelBuilder.ApplyConfiguration(new Config.Entity.BPPRenegociacoesMap());            
+            modelBuilder.ApplyConfiguration(new Config.Entity.BPPRenegociacoesMap());
+            modelBuilder.ApplyConfiguration(new Config.Entity.Simples());
 
             base.OnModelCreating(modelBuilder);
         }
 
-        public static void GetConnection(string connection)
-        {
-            _connectionstring = connection;
-        }
-
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_connectionstring);
+                optionsBuilder.UseSqlServer(@"Server=127.0.0.1,1433\\sql1;Database=Sim-Application-db20210001;User Id=sa;Password=sql@1234;");
             }
-        }
+        }*/
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

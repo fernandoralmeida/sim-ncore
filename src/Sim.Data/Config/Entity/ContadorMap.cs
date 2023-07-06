@@ -11,9 +11,7 @@ namespace Sim.Data.Config.Entity
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Numero)
-                .ValueGeneratedOnAdd()
-                .HasValueGenerator<GeradorProtocolo>()
-                .HasColumnType("varchar(max)"); 
+                .HasColumnType("varchar(max)");
 
             builder
                 .Property(c => c.Modulo)

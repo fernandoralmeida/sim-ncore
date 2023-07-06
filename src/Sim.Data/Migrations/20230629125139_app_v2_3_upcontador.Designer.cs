@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sim.Data.Context;
 
@@ -11,9 +12,10 @@ using Sim.Data.Context;
 namespace Sim.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230629125139_app_v2_3_upcontador")]
+    partial class app_v2_3_upcontador
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -777,31 +779,6 @@ namespace Sim.Data.Migrations
                     b.ToTable("Servico", (string)null);
                 });
 
-            modelBuilder.Entity("Sim.Domain.Sebrae.Model.ESimples", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Chave")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Documento")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<Guid?>("EmpresaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Exercicio")
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmpresaId");
-
-                    b.ToTable("Simples", (string)null);
-                });
-
             modelBuilder.Entity("AmbulantePessoa", b =>
                 {
                     b.HasOne("Sim.Domain.Entity.Ambulante", null)
@@ -956,15 +933,6 @@ namespace Sim.Data.Migrations
                         .HasForeignKey("DominioId");
 
                     b.Navigation("Dominio");
-                });
-
-            modelBuilder.Entity("Sim.Domain.Sebrae.Model.ESimples", b =>
-                {
-                    b.HasOne("Sim.Domain.Entity.Empresas", "Empresa")
-                        .WithMany()
-                        .HasForeignKey("EmpresaId");
-
-                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("Sim.Domain.BancoPovo.Models.EContrato", b =>

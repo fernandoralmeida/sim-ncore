@@ -13,6 +13,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string InicioSA => "InicioSA";
         public static string SA => "SA";
         public static string SAReports => "SAReports";
+        public static string SASimples => "SASimples";
         public static string SEReports => "SEReports";
         public static string InicioSE => "InicioSE";
         public static string InicioHome => "InicioHome";
@@ -50,6 +51,7 @@ namespace Sim.UI.Web.Pages.Shared
         public static string InicioSANavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioSA);
         public static string SANavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SA);
         public static string SAReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SAReports);
+        public static string SASimplesNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SASimples);
         public static string SEReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, SEReports);
         public static string InicioSENavClass(ViewContext viewContext) => PageNavClassLi(viewContext, InicioSE);
         public static string InicioHomeNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, InicioHome);

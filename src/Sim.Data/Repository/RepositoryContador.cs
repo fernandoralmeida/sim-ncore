@@ -12,11 +12,14 @@ namespace Sim.Data.Repository
 
         public async Task<string> GetProtocoloAsync(string appuserid, string moduloname)
         {
+            var _protocolo = $"{DateTime.Now:yyyy}-{DateTime.Now.DayOfYear:000}-{DateTime.Now:HHmmss.ff}";
+
             var str = string.Empty;
             var t = Task.Run(() =>
             {
                 var p = new Contador()
                 {
+                    Numero = _protocolo,
                     Modulo = moduloname,
                     AppUserId = appuserid,
                     Data = DateTime.Now
@@ -25,7 +28,7 @@ namespace Sim.Data.Repository
                 _db.Contador.Add(p);
                 _db.SaveChanges();
 
-                var protocolo = _db.Contador.Where(s => s.AppUserId == appuserid).OrderBy(c => c.Numero).LastOrDefault();
+                var protocolo = _db.Contador.Where(s => s.AppUserId == appuserid && s.Data == p.Data).OrderByDescending(d => d.Data).LastOrDefault();
 
                 str = protocolo.Numero.ToString();
             });

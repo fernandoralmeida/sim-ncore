@@ -26,7 +26,7 @@ namespace Sim.IoC
         public static void DataBaseConfigCNPJ(this IServiceCollection services, IConfiguration config, string connection)
         {
             services.AddDbContext<ApplicationContextCnpj>(options =>
-            options.UseSqlServer(Environment.GetEnvironmentVariable(config.GetConnectionString(connection))!));
+            options.UseSqlServer(config.GetConnectionString(connection)));
         }
         public static void RegisterServicesCNPJ(this IServiceCollection services)
         {

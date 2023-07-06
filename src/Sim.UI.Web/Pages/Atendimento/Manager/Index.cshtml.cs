@@ -151,7 +151,7 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
 
             try
             {
-                var atold = await _appServiceAtendimento.GetIdAsync(id);
+                var atold = await _appServiceAtendimento.GetIdAsync(id);   
                 await _appServiceAtendimento.RemoveAsync(atold);
 
                 return RedirectToPage("/Atendimento/Index");

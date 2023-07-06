@@ -111,10 +111,10 @@ public class AppServiceSebrae : IAppServiceSebrae
 
             var _novos_recorrentes = new List<KeyValuePair<string, int>>();
             _novos_recorrentes.Add(new KeyValuePair<string, int>("Novos", _cli
-                                    .Where(s => s.Pessoa.Data_Cadastro.Value.Year == DateTime.Now.Year)
+                                    .Where(s => s.Pessoa.Data_Cadastro.Value.Year == s.Data.Value.Year)
                                     .Count()));
             _novos_recorrentes.Add(new KeyValuePair<string, int>("Recorrentes", _cli
-                                    .Where(s => s.Pessoa.Data_Cadastro.Value.Year < DateTime.Now.Year)
+                                    .Where(s => s.Pessoa.Data_Cadastro.Value.Year < s.Data.Value.Year)
                                     .Count()));
 
             _report.Clientes = _novos_recorrentes;

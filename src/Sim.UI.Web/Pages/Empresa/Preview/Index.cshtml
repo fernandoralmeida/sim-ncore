@@ -1,5 +1,6 @@
 ﻿@page "/empresa/detalhes/"
 @model Sim.UI.Web.Pages.Empresa.Preview.IndexModel
+@using Sim.UI.Web.Areas.Admin.Pages
 
 @{
     Layout = "/Pages/Shared/__LayoutModal.cshtml";
@@ -155,7 +156,7 @@
     </table>
 }
 
-@if (Model.Input.Socios.Count() > 0 && User.IsInRole("Admin_Global") || User.IsInRole("M_RFB"))
+@if (Model.Input.Socios.Count() > 0 && User.IsInRole(Admin.Global))
 {
     <table>
         <thead>
@@ -174,7 +175,6 @@
             @{
 
                 int cont = 0;
-
             }
 
             @foreach (var item in Model.Input.Socios)

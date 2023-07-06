@@ -1,21 +1,24 @@
-﻿@page "/atendimento/alteracoes/"
+﻿@page "/atendimento/alteracoes/{id?}"
 @model Sim.UI.Web.Pages.Atendimento.Manager.IndexModel
+@using Sim.Application.Interfaces
+
 @{
     ViewData["Title"] = "Atendimento";
     ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.AtendimentoAtivo;
 }
 
-<!--<partial name="_StatusMessage" model="Model.StatusMessage" />-->
+<partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <form method="post">
     <div class="row" hidden>
         <div class="input-group">
             <span class="input-group-text">Atendimento</span>
-            <input type="text" asp-for="Input.Protocolo" class="form-control" readonly>
-            <input type="text" asp-for="Input.Data" class="form-control" readonly>
-            <input type="text" asp-for="Input.DataF" class="form-control" readonly>
-            <input type="text" asp-for="Input.Status" class="form-control" readonly>
-            <input type="text" asp-for="Input.Id" class="form-control" readonly>
+            <input asp-for="Input.Protocolo" readonly>
+            <input asp-for="Input.Data" readonly>
+            <input asp-for="Input.DataF" readonly>
+            <input asp-for="Input.Status" readonly>
+            <input asp-for="Input.Id" readonly>
+            <input asp-for="Input.Owner_AppUser_Id" readonly>
         </div>
     </div>
     <div class="card">
@@ -48,8 +51,9 @@
                     <tr>
                         <td>
                             <!--
-                            <a href="#" id="clickbutton" class="btn" data-secao="Pessoa" data-acao="Details" data-id="@Model.Input.Pessoa.Id" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="fas fa-eye"></i></a>-->
-                            <a class="btn-floating btn-small waves-effect" asp-page="/Cliente/Manager/Index" asp-route-id="@Model.Input.Pessoa.Id"><i class="material-icons">edit</i></a>
+                                <a href="#" id="clickbutton" class="btn" data-secao="Pessoa" data-acao="Details" data-id="@Model.Input.Pessoa.Id" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="fas fa-eye"></i></a>-->
+                            <a class="btn-floating btn-small waves-effect" asp-page="/Cliente/Manager/Index"
+                                asp-route-id="@Model.Input.Pessoa.Id"><i class="material-icons">edit</i></a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => Model.Input.Pessoa.CPF)
@@ -71,7 +75,8 @@
                     <tr>
                         <td>
                             <!--<a href="#" class="btn viewbutton" data-secao="Empresa" data-acao="Perfil" data-id="@Model.Input.Empresa.Id" data-bs-toggle="modal" data-bs-target="#viewmodal"><i class="fas fa-eye"></i></a>-->
-                            <a class="btn-floating btn-small waves-effect" asp-page="/Empresa/Update" asp-route-id="@Model.Input.Empresa.Id"><i class="material-icons">edit</i></a>
+                            <a class="btn-floating btn-small waves-effect" asp-page="/Empresa/Update"
+                                asp-route-id="@Model.Input.Empresa.Id"><i class="material-icons">edit</i></a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => Model.Input.Empresa.CNPJ)
@@ -119,20 +124,19 @@
             </div>
         </div>
         <div class="card-action">
-            <button id="onbtn" type="submit" role="button" class="btn waves-effect waves-light" asp-page-handler="Alterar" asp-route-id="@Model.Input.Id">Alterar Atendimento</button>
-            @{
-                if (User.IsInRole("Administrador"))
-                {
-                    <button type="submit" role="button" class="btn waves-effect waves-light red right" asp-page-handler="Excluir" asp-route-id="@Model.Input.Id">Excluir Atendimento</button>
-                }
-            }
+            <button id="onbtn" type="submit" role="button" class="btn waves-effect waves-light"
+                asp-page-handler="Alterar" asp-route-id="@Model.Input.Id">Alterar Atendimento</button>
+
+            <button type="submit" role="button" class="btn waves-effect waves-light red right"
+                asp-page-handler="Excluir" asp-route-id="@Model.Input.Id">Excluir Atendimento</button>
         </div>
     </div>
 
 </form>
 
 <!-- Modal -->
-<div class="modal fade" id="viewmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewmodalLabel" aria-hidden="true">
+<div class="modal fade" id="viewmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="viewmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -149,19 +153,19 @@
 @section scripts{
     <script>
         $(function () {
-            document.querySelector('#Input_Setor').addEventListener("change", function() {
-                var getSetor = $("#Input_Setor").val(); 
-                
+            document.querySelector('#Input_Setor').addEventListener("change", function () {
+                var getSetor = $("#Input_Setor").val();
+
                 $("#Input_Servicos").empty();
                 $.getJSON(`/atendimento/novo/?handler=Servicos&getSetor=${getSetor}`, (data) => {
-                    data.forEach(function(item) {
+                    data.forEach(function (item) {
                         $("#Input_Servicos").append(`<option>${item.item1}</option>`);
                     });
                     $("#Input_Servicos").trigger('contentChanged');
                 });
             });
-            
-            $('#Input_Servicos').on('contentChanged', function() {
+
+            $('#Input_Servicos').on('contentChanged', function () {
                 $(this).formSelect();
             });
 
@@ -174,12 +178,14 @@
                 if (selectedValues.length > 0) {
                     document.getElementById("ServicosSelecionados").value = selectedValues;
                 }
-                
+
                 return true;
             });
         });
     </script>
 
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script src="~/js/jquery.validation.js"></script>
 }

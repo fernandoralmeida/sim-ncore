@@ -40,6 +40,9 @@ using Sim.Domain.Customer.Interfaces;
 using Sim.Domain.Customer.Services;
 using Sim.Application.Customer.Interfaces;
 using Sim.Application.Customer.Services;
+using Sim.Domain.Sebrae.Model;
+using Sim.Domain.Sebrae.Interfaces;
+using Sim.Domain.Sebrae.Services;
 
 namespace Sim.IoC
 {
@@ -51,8 +54,7 @@ namespace Sim.IoC
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddDbContext<ApplicationContext>(options =>
-            options.UseSqlServer(Environment.GetEnvironmentVariable(config.GetConnectionString(connection))!));
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(config.GetConnectionString(connection)));
         }
 
         public static void RegisterServices(this IServiceCollection services)
@@ -232,6 +234,13 @@ namespace Sim.IoC
             services.AddScoped<IServiceBindings, ServiceBindings>();
             services.AddScoped<IRepositoryBase<EBindings>, RepositoryBase<EBindings>>();
             services.AddScoped<IRepositoryBindings, RepositoryBindings>();
+
+            services.AddScoped<IAppServiceBase<ESimples>, AppServiceBase<ESimples>>();
+            services.AddScoped<IAppServiceSimples, AppServiceSimples>();
+            services.AddScoped<IServiceBase<ESimples>, ServiceBase<ESimples>>();
+            services.AddScoped<IServiceSimples, ServiceSimples>();
+            services.AddScoped<IRepositoryBase<ESimples>, RepositoryBase<ESimples>>();
+            services.AddScoped<IRepositorySimples, RepositorySimples>();
             //
             services.AddScoped<ApplicationContext>();
 
