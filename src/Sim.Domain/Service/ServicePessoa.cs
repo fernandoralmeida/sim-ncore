@@ -1,6 +1,7 @@
 ﻿using Sim.Domain.Entity;
 using Sim.Domain.Interface.IRepository;
 using Sim.Domain.Interface.IService;
+using Sim.Domain.Validations;
 
 namespace Sim.Domain.Service
 {
@@ -8,13 +9,17 @@ namespace Sim.Domain.Service
     {
         private readonly IRepositoryPessoa _repositoryPessoa;
 
-        public ServicePessoa(IRepositoryPessoa repositoryPessoa):base(repositoryPessoa)
+        public ServicePessoa(IRepositoryPessoa repositoryPessoa) : base(repositoryPessoa)
         {
             _repositoryPessoa = repositoryPessoa;
         }
 
         public async Task<IEnumerable<Pessoa>> ConsultaCPFAsync(string cpf)
         {
+            if (!string.IsNullOrEmpty(cpf))
+                if (cpf.Length == 11)
+                    cpf = cpf.Mask("###.###.###-##");
+
             return await _repositoryPessoa.ConsultaCPFAsync(cpf);
         }
 

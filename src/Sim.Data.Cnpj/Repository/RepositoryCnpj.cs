@@ -210,7 +210,7 @@ namespace Sim.Data.Cnpj.Repository
 
                 var brf = new List<BaseReceitaFederal>();
 
-                var qry = (from est in _db.Estabelecimentos.Where(s => s.Logradouro == logradouro &&
+                var qry = (from est in _db.Estabelecimentos.Where(s => s.Logradouro.Contains(logradouro) &&
                                         s.Municipio.Contains(municipio))
                            from emp in _db.Empresas.Where(s => s.CNPJBase == est.CNPJBase)
                            from atv in _db.Cnaes.Where(s => est.CnaeFiscalPrincipal == s.Codigo)

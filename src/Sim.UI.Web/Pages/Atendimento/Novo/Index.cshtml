@@ -144,7 +144,7 @@
                 var getSetor = $("#Input_Setor").val(); 
                                 
                 $("#Input_Servicos").empty();
-                $.getJSON(`/atendimento/novo/?handler=Servicos&getSetor=${getSetor}`, (data) => {
+                $.getJSON(`/api/v1/servicos/${getSetor}`, (data) => {
                     data.forEach(function(item) {
                         $("#Input_Servicos").append(`<option>${item.item1}</option>`);
                     });

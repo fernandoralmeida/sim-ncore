@@ -78,16 +78,6 @@ namespace Sim.UI.Web.Pages.Atendimento.Novo
             return Page();
         }
 
-        public async Task<JsonResult> OnGetCanais()
-        {
-            return new JsonResult(await _appServiceCanal.DoListJson(GetSetor));
-        }
-
-        public async Task<JsonResult> OnGetServicos()
-        {
-            return new JsonResult(await _appServiceServico.ToListJson(GetSetor));
-        }
-
         public async Task<IActionResult> OnPostAsync()
         {
 

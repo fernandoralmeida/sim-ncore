@@ -23,7 +23,6 @@ namespace Sim.UI.Web.Pages.Atendimento
             };
         }
 
-
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -80,13 +79,5 @@ namespace Sim.UI.Web.Pages.Atendimento
             return Page();
         }
 
-        public async Task<JsonResult> OnGetPreview(string id)
-        {
-            return new JsonResult(
-                new List<EAtendimento>
-                {
-                    await _appServiceAtendimento.GetAtendimentoAsync(new Guid(id))
-                });
-        }
     }
 }

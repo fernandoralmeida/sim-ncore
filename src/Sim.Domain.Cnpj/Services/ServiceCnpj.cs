@@ -2020,5 +2020,21 @@ namespace Sim.Domain.Cnpj.Services
 
         public async Task<IEnumerable<BaseReceitaFederal>> DoListCNAEAsync(string municipio, Expression<Func<CNAE, bool>> param = null)
             => await _cnpj.DoListCNAEAsync(municipio, param);
+
+        public async Task<IEnumerable<string>> DoListMappingLogradourosIIAsync(IEnumerable<BaseReceitaFederal> obj)
+            => await Task.Run(() =>
+            {
+
+                var _list = new List<string>();
+
+                foreach (var nome in obj
+                                    .OrderBy(o => o.Estabelecimento.TipoLogradouro + " " + o.Estabelecimento.Logradouro)
+                                    .GroupBy(g => g.Estabelecimento.TipoLogradouro + " " + g.Estabelecimento.Logradouro))
+                {
+                    _list.Add(nome.Key);
+                }
+
+                return _list;
+            });
     }
 }

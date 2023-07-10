@@ -102,9 +102,18 @@
         <div class="box-column-3">
             <div class="box-column-row">
                 <div class="box-card">
+                    <div class="card-header grey-text">Ruas<i class="material-icons left">location_on</i></div>
+                    <div class="pdn-h-10 valign-wrapper">
+                        <input id="id_mcp" asp-for="MunicipioSelecionado" hidden>
+                        <input id="input_rua" asp-for="RuaSelecionada" />
+                        <button id="input_btn" class="btn-small"><i class="material-icons">search</i></button>
+                    </div>                
+                </div>
+            </div>
+            <div class="box-column-row">
+                <div class="box-card">
                     <div class="card-header grey-text">Zonas<i class="material-icons left">location_on</i></div>
                     <div class="pdn-h-10">
-                        <input id="id_mcp" asp-for="MunicipioSelecionado" hidden>
                         <select id="input_zona" asp-for="ZonaSelecionada" asp-items="Model.Zonas"></select>
                     </div>                
                 </div>
@@ -157,7 +166,30 @@
                 var param1 = $("#id_mcp").val(); 
                 $("#idcellboxcontent").empty();
                 $("#idcellboxcontent").append('<p class="mgn-l-10 grey-text">...carregando!</p>');
-                $.getJSON(`/bi/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=LAgrupados`, (data) => {
+                $.getJSON(`/api/v1/empresas-zona-map/${param1}/${param0}`, (data) => {
+                    $("#idcellboxcontent").empty();
+                    data.forEach(function(item) {                          
+                        $("#idcellboxcontent").append(
+                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="#">                           
+                                ${item.key}<strong class="light-green-text"> ${item.value} </strong>-Empresa                         
+                            </a>
+                            <div class="divider"></div>`
+                        );
+                    });
+                });
+                $.getJSON(`/bi/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
+                    data.forEach(function(item) {
+                        
+                    });
+                    
+                });
+            }); 
+            document.querySelector('#input_btn').addEventListener("click", function() {
+                var param0 = $("#input_rua").val(); 
+                var param1 = $("#id_mcp").val(); 
+                $("#idcellboxcontent").empty();
+                $("#idcellboxcontent").append('<p class="mgn-l-10 grey-text">...carregando!</p>');
+                $.getJSON(`/api/v1/empresas-logradouro-map/${param1}/${param0}`, (data) => {
                     $("#idcellboxcontent").empty();
                     data.forEach(function(item) {                          
                         $("#idcellboxcontent").append(

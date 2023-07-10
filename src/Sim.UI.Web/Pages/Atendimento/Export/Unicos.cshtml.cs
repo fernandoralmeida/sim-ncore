@@ -1,27 +1,27 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OfficeOpenXml;
 using Sim.Application.Interfaces;
 using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Atendimento.Export;
 
 [Authorize]
-public class IndexModel : PageModel
+public class UnicosModel : PageModel
 {
-    private readonly IAppServiceAtendimento _appServiceAtendimento;
+    private readonly IAppServiceAtendimento _atendimentos;
 
-    public IndexModel(IAppServiceAtendimento appServiceAtendimento)
+    public UnicosModel(IAppServiceAtendimento appServiceAtendimento)
     {
-        _appServiceAtendimento = appServiceAtendimento;
+        _atendimentos = appServiceAtendimento;
     }
 
     public async Task<IActionResult> OnGetAsync(string src, DateTime? d1, DateTime? d2, string cpf,
-        string nome, string cnpj, string rsocial, string cnae, string svc, string user, string sto)
+    string nome, string cnpj, string rsocial, string cnae, string svc, string user, string sto)
     {
 
         var list = new List<ExportModel>();
+        var singlelist = new List<ExportModel>();
         var _result = new List<EAtendimento>();
 
         if (string.IsNullOrEmpty(src))
@@ -37,13 +37,13 @@ public class IndexModel : PageModel
             sto = sto ?? "";
 
             _result = (List<EAtendimento>)
-                    await _appServiceAtendimento
+                    await _atendimentos
                     .ListParamAsync(new List<object>() { d1, d2, cpf, nome, cnpj, rsocial, cnae, svc, user, sto });
         }
         else
         {
             _result = (List<EAtendimento>)
-                    await _appServiceAtendimento.DoListAendimentosAsyncBy(src);
+                    await _atendimentos.DoListAendimentosAsyncBy(src);
         }
 
         var cont = 1;
@@ -51,9 +51,9 @@ public class IndexModel : PageModel
         {
 
             var _pj = at.Empresa != null ? at.Empresa.Nome_Empresarial : "Anônimo";
-            var _cliente = at.Pessoa != null ? at.Pessoa.Nome : _pj;
+            var _cliente = at.Pessoa != null ? at.Pessoa.Nome.Trim() : _pj;
 
-
+            if (!list.Any(s => s.Cliente == _cliente) && _cliente != "Anônimo")
                 list.Add(new ExportModel
                 {
                     N = cont++,
@@ -80,10 +80,9 @@ public class IndexModel : PageModel
 
         }
 
-        var _file = await new Functions.ExportFile().ToExcel(list, $"lista-atend-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}");
+        var _file = await new Functions.ExportFile().ToExcel(list, $"lista-atend-single-{User.Identity.Name}-{DateTime.Now:yyyyMMddHHmmss}");
 
         return File(_file.StremFile, _file.ContentType, _file.Name);
 
     }
-
 }

@@ -105,16 +105,6 @@ namespace Sim.UI.Web.Pages.Atendimento.Manager
             return Page();
         }
 
-        public async Task<JsonResult> OnGetCanais()
-        {
-            return new JsonResult(await _appServiceCanal.DoListJson(GetSetor));
-        }
-
-        public JsonResult OnGetServicos()
-        {
-            return new JsonResult(_appServiceServico.ListServicoOwnerAsync(GetSetor).Result);
-        }
-
         public async Task<IActionResult> OnPostAlterarAsync(Guid id)
         {
 

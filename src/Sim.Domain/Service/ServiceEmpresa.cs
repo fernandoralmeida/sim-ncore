@@ -1,6 +1,7 @@
 ﻿using Sim.Domain.Entity;
 using Sim.Domain.Interface.IRepository;
 using Sim.Domain.Interface.IService;
+using Sim.Domain.Validations;
 
 namespace Sim.Domain.Service
 {
@@ -16,6 +17,10 @@ namespace Sim.Domain.Service
 
         public async Task<IEnumerable<Empresas>> ConsultaCNPJAsync(string cnpj)
         {
+            if (!string.IsNullOrEmpty(cnpj))
+                if (cnpj.Length == 14)
+                    cnpj = cnpj.Mask("##.###.###/####-##");
+
             return await _repositoryEmpresa.ConsultaCNPJAsync(cnpj);
         }
 

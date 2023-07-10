@@ -55,8 +55,11 @@ namespace Sim.Application.Cnpj.Services
         public async Task<IEnumerable<BaseReceitaFederal>> DoListByZonaAsync(string zona, string municipio, string situacao) =>
             await _cnpj.DoListByZonaAsync(zona, municipio);
 
-        public async Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio, string situacao) =>
-            await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
+        public async Task<IEnumerable<BaseReceitaFederal>> DoListByLogradouroAsync(string logradouro, string municipio, string situacao)
+        {
+            var _list = await _cnpj.DoListByLogradouroAsync(logradouro, municipio);
+            return _list.Where(s => s.Estabelecimento.SituacaoCadastral == situacao);
+        }
 
         public async Task<IEnumerable<EExport>> DoListExport(string municipio) =>
             await _cnpj.DoListExport(await DoListAsync(s => s.Municipio == municipio && s.SituacaoCadastral == "02"));
@@ -72,5 +75,25 @@ namespace Sim.Application.Cnpj.Services
 
         public async Task<IEnumerable<BaseReceitaFederal>> DoListCNAEAsync(string municipio, Expression<Func<CNAE, bool>>? param = null)
             => await _cnpj.DoListCNAEAsync(municipio, param);
+
+        public async Task<IEnumerable<KeyValuePair<string, int>>> DoMappingLogradourosAsync(string logradouro, string municipio, string situacao)
+        {
+            var _r = await _cnpj.DoListAsync(
+                s => s.Municipio == municipio &&
+                s.SituacaoCadastral == situacao &&
+                s.Logradouro.Contains(logradouro));
+
+            return await _cnpj.DoListMappingLogradourosAsync(_r);
+        }
+
+        public async Task<IEnumerable<KeyValuePair<string, int>>> DoMappingLogradourosByZonaAsync(string zona, string municipio, string situacao)
+        {
+            var _r = await _cnpj.DoListAsync(
+                s => s.Municipio == municipio &&
+                s.SituacaoCadastral == situacao &&
+                s.Bairro.Contains(zona));
+
+            return await _cnpj.DoListMappingLogradourosAsync(_r);
+        }
     }
 }

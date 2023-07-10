@@ -97,7 +97,7 @@ public class BIController : ControllerBase {
                     var t = await _appServiceStatusAtendimento.ListUserAsync(s.UserName);
 
                     if(t.Any())
-                        if (t.FirstOrDefault().Online)
+                        if (t.FirstOrDefault()!.Online)
                         {
                             var ativo = await _appAtendimento.ListAtendimentoAtivoAsync(s.UserName);
 
