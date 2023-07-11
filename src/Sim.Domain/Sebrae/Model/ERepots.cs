@@ -7,8 +7,10 @@ public class EReports {
     public IEnumerable<KeyValuePair<string, int>>? ServicesMonth { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? EventosMonth { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? ListaServicos { get; set; }
+    public IEnumerable<KeyValuePair<string, int>>? PerfilAtendimento { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? PerfilCliente { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? FaixaEtariaCliente { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? GeneroCliente { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? Clientes { get; set; }
+    public IEnumerable<KeyValuePair<string, int>>? Empresas { get; set; }
  }
