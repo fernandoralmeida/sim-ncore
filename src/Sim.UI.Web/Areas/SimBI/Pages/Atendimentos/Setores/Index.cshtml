@@ -15,7 +15,7 @@
             <div class="box-column-row">
 
                 <div class="box-card">
-                    <div class="card-header grey-text">Panorama<i class="material-icons left">receipt_long</i></div>
+                    <div class="card-header grey-text">Atendimentos<i class="material-icons left">receipt_long</i></div>
                     <div class="box-around">
                         <a class="box-cell-item-flex font-size-12">
                             <p class="grey-text">@Model.LReports.Atendimentos.Key</p>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Perfil do Atendimento<i class="material-icons left">contact_page</i></div>
+                    <div class="card-header grey-text">Perfil dos Atendimento<i class="material-icons left">contact_page</i></div>
                     <div class="box-around">
                         @foreach (var item in Model.LReports.PerfilAtendimento)
                         {
@@ -70,6 +70,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="box-column-row">
                 <div class="box-card">
                     <div class="card-header grey-text">Serviços Realizados<i
@@ -90,6 +91,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="box-column-row">
                 <div class="box-card">
                     <div class="card-header grey-text">Eventos Realizados<i
@@ -113,7 +115,7 @@
 
             <div class="box-column-row">
                 <div class="box-card">
-                    <div class="card-header grey-text">Clientes<i class="material-icons left">person</i></div>
+                    <div class="card-header grey-text">Clientes Distintos<i class="material-icons left">person</i></div>
                     <div class="box-around">
                         @{
                             float _soma = 0.0F;
@@ -135,7 +137,7 @@
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Empresas<i class="material-icons left">factory</i></div>
+                    <div class="card-header grey-text">Empresas Distintas<i class="material-icons left">factory</i></div>
                     <div class="box-around">
                         @{
                             float _soma_emp = 0.0F;
@@ -178,7 +180,7 @@
                     </div>
                 </div>
                 <div class="box-card">
-                    <div class="card-header grey-text">Genero<i class="material-icons left">female male</i></div>
+                    <div class="card-header grey-text">Genero<i class="material-icons left">transgender</i></div>
                     <div class="box-around">
                         @{
                             float _soma_gen = 0.0F;
@@ -199,6 +201,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="box-column-row">
                 <div class="box-card">
                     <div class="card-header grey-text">Faixa Etária<i class="material-icons left">groups</i></div>

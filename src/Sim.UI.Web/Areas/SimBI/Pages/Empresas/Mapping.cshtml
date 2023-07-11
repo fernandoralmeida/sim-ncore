@@ -170,7 +170,7 @@
                     $("#idcellboxcontent").empty();
                     data.forEach(function(item) {                          
                         $("#idcellboxcontent").append(
-                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="#">                           
+                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="/bi/empresas/lista-mapa/${item.key}/${param1}/${param0}" target="_blank">                           
                                 ${item.key}<strong class="light-green-text"> ${item.value} </strong>-Empresa                         
                             </a>
                             <div class="divider"></div>`
@@ -193,7 +193,7 @@
                     $("#idcellboxcontent").empty();
                     data.forEach(function(item) {                          
                         $("#idcellboxcontent").append(
-                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="#">                           
+                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="/bi/empresas/lista-mapa/${item.key}/${param1}" target="_blank">                           
                                 ${item.key}<strong class="light-green-text"> ${item.value} </strong>-Empresa                         
                             </a>
                             <div class="divider"></div>`

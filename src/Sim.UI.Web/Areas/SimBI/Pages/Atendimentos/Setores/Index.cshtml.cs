@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.Interfaces;
 using Sim.Application.Sebrae.Interfaces;
+using Sim.Domain.Entity;
 using Sim.Domain.Evento.Model;
 using Sim.Domain.Sebrae.Model;
 
@@ -44,10 +45,23 @@ public class IndexModel : PageModel
         if (m == null)
             m = "SEDEMPI";
 
+
         NavBar = (Ano.ToString(), m);
 
-        var _list_ev = await _appevento.DoListAsync(s => s.Data.Value.Year == Ano && s.Owner == m && s.Situacao != EEvento.ESituacao.Cancelado);
-        var _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano && s.Setor == m);
+        IEnumerable<EEvento> _list_ev;
+        IEnumerable<EAtendimento> _list_at;
+
+        if (m == "SEDEMPI")
+        {
+            _list_ev = await _appevento.DoListAsync(s => s.Data.Value.Year == Ano && s.Situacao != EEvento.ESituacao.Cancelado);
+            _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano);
+        }
+        else
+        {
+            _list_ev = await _appevento.DoListAsync(s => s.Data.Value.Year == Ano && s.Owner == m && s.Situacao != EEvento.ESituacao.Cancelado);
+            _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano && s.Setor == m);
+        }
+
         LReports = await _appsebrae.DoReportAsync(_list_at, _list_ev);
     }
 }

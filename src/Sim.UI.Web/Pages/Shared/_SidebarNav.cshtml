@@ -95,7 +95,7 @@
                 <div class="collapsible-body">
                     <ul>
                         <li class="@LayoutNavPages.PowerBIEventosNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Eventos/Index" class="">Eventos<i class="left  material-icons">event</i></a></li>                        
-                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Atendimentos/Index" asp-route-ano="@DateTime.Now.Year" asp-route-m="" class="">Atendimentos<i class="left  material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@DateTime.Now.Year" asp-route-m="SEDEMPI" class="">Atendimentos<i class="left  material-icons">access_time</i></a></li>
                         <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Empresas/Index" class="">Empresas<i class="left material-icons">domain</i></a></li>
                     </ul>
                 </div>

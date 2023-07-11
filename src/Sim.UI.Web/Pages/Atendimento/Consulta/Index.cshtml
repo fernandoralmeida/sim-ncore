@@ -34,11 +34,19 @@
             class="btn-small waves-effect waves-light green @_isdisabled" title="Exportar todos os atendimentos"><i
                 class="material-icons">description file_download</i></a>
         <a asp-page="/Atendimento/Export/Unicos" asp-route-src="@Model.Src"
-            class="btn-small waves-effect waves-light blue @_isdisabled" title="Exportar atendimentos únicos por cliente"><i
+            class="btn-small waves-effect waves-light blue @_isdisabled" title="Exportar Clientes Distintos"><i
                 class="material-icons">description file_download</i></a>
         <a asp-page="/Atendimento/Export/Novos" asp-route-src="@Model.Src"
             class="btn-small waves-effect waves-light purple @_isdisabled"
-            title="Exportar atendimentos únicos por novos clientes"><i class="material-icons">description file_download</i></a>
+            title="Exportar Clentes Distintos Novos"><i class="material-icons">description file_download</i></a>
+        <a asp-page="/Atendimento/Export/EmpresasDistintas" asp-route-src="@Model.Src"
+            class="btn-small waves-effect waves-light orange @_isdisabled"
+            title="Exportar Empresas Distintas"><i class="material-icons">description
+                file_download</i></a>
+        <a asp-page="/Atendimento/Export/EmpresasDistintasNovas" asp-route-src="@Model.Src"
+            class="btn-small waves-effect waves-light amber @_isdisabled"
+            title="Exportar Empresas Distintas Novas"><i class="material-icons">description
+                file_download</i></a>
     </div>
 </div>
 

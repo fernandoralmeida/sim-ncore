@@ -47,36 +47,32 @@ public class UnicosModel : PageModel
         }
 
         var cont = 1;
-        foreach (var at in _result)
+
+        foreach (var at in _result.Where(s => s.Pessoa != null).DistinctBy(s => s.Pessoa))
         {
-
-            var _pj = at.Empresa != null ? at.Empresa.Nome_Empresarial : "Anônimo";
-            var _cliente = at.Pessoa != null ? at.Pessoa.Nome.Trim() : _pj;
-
-            if (!list.Any(s => s.Cliente == _cliente) && _cliente != "Anônimo")
-                list.Add(new ExportModel
-                {
-                    N = cont++,
-                    Data = $"{at.Data.Value:yyyy-MM-dd}",
-                    Inicio = $"{at.Data.Value:HH:mm}",
-                    Termino = $"{at.DataF.Value:HH:mm}",
-                    Cliente = _cliente,
-                    Empresa = at.Empresa != null ? at.Empresa.CNPJ : "",
-                    CNAE = at.Empresa != null ? at.Empresa.CNAE_Principal : "",
-                    Atividade = at.Empresa != null ? at.Empresa.Atividade_Principal : "",
-                    Logradouro_PF = at.Pessoa != null ? at.Pessoa.Logradouro : "",
-                    Bairro_PF = at.Pessoa != null ? at.Pessoa.Bairro : "",
-                    Municipio_PF = at.Pessoa != null ? at.Pessoa.Cidade : "",
-                    Logradouro_PJ = at.Empresa != null ? at.Empresa.Logradouro : "",
-                    Bairro_PJ = at.Empresa != null ? at.Empresa.Bairro : "",
-                    Municipio_PJ = at.Empresa != null ? at.Empresa.Municipio : "",
-                    Contato = at.Pessoa != null ? at.Pessoa.Tel_Movel : "",
-                    Servico = at.Servicos != null ? at.Servicos : "",
-                    Descricao = at.Descricao != null ? at.Descricao : "",
-                    Setor = at.Setor != null ? at.Setor : "",
-                    Canal = at.Canal != null ? at.Canal : "",
-                    Atendente = at.Owner_AppUser_Id
-                });
+            list.Add(new ExportModel
+            {
+                N = cont++,
+                Data = $"{at.Data.Value:yyyy-MM-dd}",
+                Inicio = $"{at.Data.Value:HH:mm}",
+                Termino = $"{at.DataF.Value:HH:mm}",
+                Cliente = at.Pessoa != null ? at.Pessoa.Nome.ToUpper() : "",
+                Empresa = at.Empresa != null ? at.Empresa.CNPJ : "",
+                CNAE = at.Empresa != null ? at.Empresa.CNAE_Principal : "",
+                Atividade = at.Empresa != null ? at.Empresa.Atividade_Principal : "",
+                Logradouro_PF = at.Pessoa != null ? at.Pessoa.Logradouro : "",
+                Bairro_PF = at.Pessoa != null ? at.Pessoa.Bairro : "",
+                Municipio_PF = at.Pessoa != null ? at.Pessoa.Cidade : "",
+                Logradouro_PJ = at.Empresa != null ? at.Empresa.Logradouro : "",
+                Bairro_PJ = at.Empresa != null ? at.Empresa.Bairro : "",
+                Municipio_PJ = at.Empresa != null ? at.Empresa.Municipio : "",
+                Contato = at.Pessoa != null ? at.Pessoa.Tel_Movel : "",
+                Servico = at.Servicos != null ? at.Servicos : "",
+                Descricao = at.Descricao != null ? at.Descricao : "",
+                Setor = at.Setor != null ? at.Setor : "",
+                Canal = at.Canal != null ? at.Canal : "",
+                Atendente = at.Owner_AppUser_Id
+            });
 
         }
 

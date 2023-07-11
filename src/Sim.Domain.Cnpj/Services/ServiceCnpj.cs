@@ -29,8 +29,8 @@ namespace Sim.Domain.Cnpj.Services
                 var _list = new List<KeyValuePair<string, int>>();
 
                 foreach (var nome in obj
-                                    .OrderBy(o => o.Estabelecimento.TipoLogradouro + " " + o.Estabelecimento.Logradouro)
-                                    .GroupBy(g => g.Estabelecimento.TipoLogradouro + " " + g.Estabelecimento.Logradouro))
+                                    .OrderBy(o => o.Estabelecimento.Logradouro)
+                                    .GroupBy(g => g.Estabelecimento.Logradouro))
                 {
                     _list.Add(new KeyValuePair<string, int>(key: nome.Key, value: nome.Count()));
                 }

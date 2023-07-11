@@ -7,11 +7,11 @@ using Sim.Domain.Entity;
 namespace Sim.UI.Web.Pages.Atendimento.Export;
 
 [Authorize]
-public class NovosModel : PageModel
+public class EmpresasDistintasNovasModel : PageModel
 {
     private readonly IAppServiceAtendimento _atendimentos;
 
-    public NovosModel(IAppServiceAtendimento appServiceAtendimento)
+    public EmpresasDistintasNovasModel(IAppServiceAtendimento appServiceAtendimento)
     {
         _atendimentos = appServiceAtendimento;
     }
@@ -47,10 +47,11 @@ public class NovosModel : PageModel
         }
 
         var cont = 1;
+
         foreach (var at in _result
-                                .Where(s => s.Pessoa != null)
-                                .Where(s => s.Pessoa.Data_Cadastro.Value.Year == s.Data.Value.Year)
-                                .DistinctBy(s => s.Pessoa))
+                            .Where(s => s.Empresa != null)
+                            .Where(s => s.Empresa.Data_Abertura.Value.Year == s.Data.Value.Year)
+                            .DistinctBy(s => s.Empresa))
         {
             list.Add(new ExportModel
             {
@@ -58,8 +59,8 @@ public class NovosModel : PageModel
                 Data = $"{at.Data.Value:yyyy-MM-dd}",
                 Inicio = $"{at.Data.Value:HH:mm}",
                 Termino = $"{at.DataF.Value:HH:mm}",
-                Cliente = at.Pessoa != null ? at.Pessoa.Nome.ToUpper().Trim() : "",
-                Empresa = at.Empresa != null ? at.Empresa.CNPJ : "",
+                Cliente = at.Pessoa != null ? at.Pessoa.Nome.ToUpper() : "",
+                Empresa = at.Empresa != null ? $"{at.Empresa.Nome_Empresarial} ({at.Empresa.CNPJ})" : "",
                 CNAE = at.Empresa != null ? at.Empresa.CNAE_Principal : "",
                 Atividade = at.Empresa != null ? at.Empresa.Atividade_Principal : "",
                 Logradouro_PF = at.Pessoa != null ? at.Pessoa.Logradouro : "",

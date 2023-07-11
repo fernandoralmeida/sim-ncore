@@ -80,19 +80,35 @@
             asp-route-rsocial="@Model.Input.RazaSocial" asp-route-cnae="@Model.Input.CNAE"
             asp-route-svc="@Model.Input.Servico" asp-route-user="@Model.Input.Atendente"
             asp-route-sto="@Model.Input.Setor" class="btn-small waves-effect waves-light green @_isdisabled"
-            title="Exportar atendimentos"><i class="material-icons">description file_download</i></a>
+            title="Exportar Atendimentos"><i class="material-icons">description file_download</i></a>
         <a asp-page="/Atendimento/Export/Unicos" asp-route-src="" asp-route-d1="@data1" asp-route-d2="@data2"
             asp-route-cpf="@Model.Input.CPF" asp-route-nome="@Model.Input.Nome" asp-route-cnpj="@Model.Input.CNPJ"
             asp-route-rsocial="@Model.Input.RazaSocial" asp-route-cnae="@Model.Input.CNAE"
             asp-route-svc="@Model.Input.Servico" asp-route-user="@Model.Input.Atendente"
             asp-route-sto="@Model.Input.Setor" class="btn-small waves-effect waves-light blue @_isdisabled"
-            title="Exportar atendimentos únicos por cliente"><i class="material-icons">description file_download</i></a>
+            title="Exportar Clientes Distintos"><i class="material-icons">description file_download</i></a>
         <a asp-page="/Atendimento/Export/Novos" asp-route-src="" asp-route-d1="@data1" asp-route-d2="@data2"
             asp-route-cpf="@Model.Input.CPF" asp-route-nome="@Model.Input.Nome" asp-route-cnpj="@Model.Input.CNPJ"
             asp-route-rsocial="@Model.Input.RazaSocial" asp-route-cnae="@Model.Input.CNAE"
             asp-route-svc="@Model.Input.Servico" asp-route-user="@Model.Input.Atendente"
             asp-route-sto="@Model.Input.Setor" class="btn-small waves-effect waves-light purple @_isdisabled"
-            title="Exportar atendimentos únicos por novos cliente"><i class="material-icons">description file_download</i></a>
+            title="Exportar Clientes Distintos Novos"><i class="material-icons">description
+                file_download</i></a>
+        <a asp-page="/Atendimento/Export/EmpresasDistintas" asp-route-src="" asp-route-d1="@data1" asp-route-d2="@data2"
+            asp-route-cpf="@Model.Input.CPF" asp-route-nome="@Model.Input.Nome" asp-route-cnpj="@Model.Input.CNPJ"
+            asp-route-rsocial="@Model.Input.RazaSocial" asp-route-cnae="@Model.Input.CNAE"
+            asp-route-svc="@Model.Input.Servico" asp-route-user="@Model.Input.Atendente"
+            asp-route-sto="@Model.Input.Setor" class="btn-small waves-effect waves-light orange @_isdisabled"
+            title="Exportar Empresas Distintas"><i class="material-icons">description
+                file_download</i></a>
+        <a asp-page="/Atendimento/Export/EmpresasDistintasNovas" asp-route-src="" asp-route-d1="@data1"
+            asp-route-d2="@data2" asp-route-cpf="@Model.Input.CPF" asp-route-nome="@Model.Input.Nome"
+            asp-route-cnpj="@Model.Input.CNPJ" asp-route-rsocial="@Model.Input.RazaSocial"
+            asp-route-cnae="@Model.Input.CNAE" asp-route-svc="@Model.Input.Servico"
+            asp-route-user="@Model.Input.Atendente" asp-route-sto="@Model.Input.Setor"
+            class="btn-small waves-effect waves-light amber @_isdisabled"
+            title="Exportar Empresas Distintas Novas"><i class="material-icons">description
+                file_download</i></a>
     </div>
 
 </div>

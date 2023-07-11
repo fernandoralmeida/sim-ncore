@@ -1,0 +1,85 @@
+@page "/bi/empresas/lista-mapa/{l}/{m}/{z?}"
+@model Sim.UI.Web.Areas.SimBI.Pages.Empresas.MappingListaModel
+
+@{
+    Layout = "/Pages/Shared/__LayoutModal.cshtml";
+    ViewData["Title"] = "Lista Empresas";
+}
+
+<div class="row valign-wrapper">
+    <div class="col s9 m9 l9">
+        Código: 0000
+        <br /><b>0000</b>
+        <br />0000
+        <br />Data: 0000-00-00
+    </div>
+    <div class="col s3 m3 l3">
+        <img class="right" src="~/icons/sedempi_166p.svg" style="height:60px;">
+    </div>
+</div>
+
+<div>
+    <table class="responsive-table border-a font-size-12">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    CNPJ
+                </th>
+                <th>
+                    Empresa
+                </th>
+                <th>
+                    Endereço
+                </th>
+                <th>
+                    Tel
+                </th>
+                <th>Email</th>
+                <th>Natureza Juridica</th>
+                <th>Porte</th>
+                <th>Fiscal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cont = 0;
+            }
+            @foreach (var item in Model.ListEmpresas)
+            {
+                <tr>
+                    <td>
+                        @{
+                            cont++;
+                        }
+                        @cont.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNPJ)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Empresa.RazaoSocial)
+                        <br/>@Html.DisplayFor(modelItem => item.AtividadePrincipal.Descricao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estabelecimento.TipoLogradouro)
+                        @Html.DisplayFor(modelItem => item.Estabelecimento.Logradouro),
+                        @Html.DisplayFor(modelItem => item.Estabelecimento.Numero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estabelecimento.DDD1)
+                        @Html.DisplayFor(modelItem => item.Estabelecimento.Telefone1)
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Estabelecimento.CorreioEletronico)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NaturezaJuridica.Descricao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Empresa.PorteEmpresa)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Fiscal)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<span>Secretaria de Desenvolvimento Econômico, Empreendedorismo e Inovação: @User.Identity.Name</span>
+<span class="right">Prefeitura do Município de Jahu</span>
