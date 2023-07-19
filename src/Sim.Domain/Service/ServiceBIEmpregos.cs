@@ -1,7 +1,7 @@
 using Sim.Domain.Entity;
 using Sim.Domain.Interface.IService;
 using Sim.Domain.Interface.IRepository;
-using Sim.Domain.Validations;
+using Sim.Domain.Helpers;
 
 namespace Sim.Domain.Service;
 public class ServiceBIEmpregos : IServiceBIEmpregos
@@ -328,7 +328,7 @@ public class ServiceBIEmpregos : IServiceBIEmpregos
 
     private string DoSetores(int cnae) {               
         if (cnae >= 1 && cnae <= 3) {
-            return "Agropecuária";
+            return "Agro";
         }
         else if (cnae >= 45 && cnae <= 47) {
            return "Comércio";

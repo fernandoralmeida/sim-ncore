@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Sim.UI.Web.Pages.BancoPovo.Aprovados;
 
 [Authorize(Roles = $"{Web.Areas.Admin.Pages.Admin.Global},SEDEMPI Banco do Povo")]
-public class IndexModel : PageModel {
+public class IndexModel : PageModel
+{
 
     private readonly IMapper _mapper;
     private readonly IAppServiceContratos _appcontratos;
@@ -37,32 +38,37 @@ public class IndexModel : PageModel {
     public SelectList ESituacoes { get; set; }
     public SelectList EPagamentos { get; set; }
 
-    public IndexModel (IMapper mapper,
-        IAppServiceContratos appServiceContratos) {
-            _mapper = mapper;
-            _appcontratos = appServiceContratos;        
+    public IndexModel(IMapper mapper,
+        IAppServiceContratos appServiceContratos)
+    {
+        _mapper = mapper;
+        _appcontratos = appServiceContratos;
     }
 
-    private void LoadSelectors() {
+    private void LoadSelectors()
+    {
         ESituacoes = new SelectList(Enum.GetNames(typeof(EContrato.EnSituacao)));
         EPagamentos = new SelectList(Enum.GetNames(typeof(EContrato.EnPagamento)));
     }
-    public async Task OnGetAsync() {
+    public async Task OnGetAsync()
+    {
         LoadSelectors();
-        var _lista = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Aprovado && s.Pagamento <= EContrato.EnPagamento.Regular && s.Renegociacaoes.Count() == 0);               
-        MeusContratos = _mapper.Map<IEnumerable<EContrato>, List<VMContrato>>(_lista);      
+        var _lista = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name);
+        MeusContratos = _mapper.Map<IEnumerable<EContrato>, List<VMContrato>>(_lista.Where(s => s.ContratosAprovadosRegulares(s)));
         TotalCredito = MeusContratos.Totalize();
         MeusContratos.OrderByDescending(o => o.Data);
     }
 
-    public async Task OnPostAsync(string src) {
+    public async Task OnPostAsync(string src)
+    {
         var _list = await _appcontratos.DoListAsync(s => s.AppUser == User.Identity.Name && s.Situacao == EContrato.EnSituacao.Analise);
         var _list_src = _list.Where(s => s.Empresa.Nome_Empresarial.Contains(src) || s.Cliente.Nome.Contains(src));
         MeusContratos = _mapper.Map<IEnumerable<EContrato>, List<VMContrato>>(_list_src);
         MeusContratos.OrderByDescending(o => o.Data);
     }
 
-    public async Task OnPostGoSituacaoAsync() {
+    public async Task OnPostGoSituacaoAsync()
+    {
         LoadSelectors();
 
         var _upsituacao = await _appcontratos.SingleIdAsync(GetID);

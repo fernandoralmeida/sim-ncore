@@ -1,7 +1,7 @@
 ﻿using Sim.Domain.Entity;
 using Sim.Domain.Interface.IRepository;
 using Sim.Domain.Interface.IService;
-using Sim.Domain.Validations;
+using Sim.Domain.Helpers;
 
 namespace Sim.Domain.Service
 {

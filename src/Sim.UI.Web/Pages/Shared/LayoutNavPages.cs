@@ -7,6 +7,9 @@ namespace Sim.UI.Web.Pages.Shared
     {
         public static string Inicio => "Inicio";
         public static string InicioBPP => "InicioBPP";
+        public static string InicioPAT => "InicioPAT";
+        public static string PATEmpregos => "PATEmpregos";
+        public static string PATReports => "PATReports";
         public static string BPPContratos => "BPPContratos";
         public static string BPPReports => "BPPReports";
         public static string BPPRepContracts => "BPPRepContracts";
@@ -44,6 +47,9 @@ namespace Sim.UI.Web.Pages.Shared
         public static string LoginPerfil => "LoginPerfil";
         public static string LoginOut => "LoginOut";
         public static string InicioNavClass(ViewContext viewContext) => PageNavClass(viewContext, Inicio);
+        public static string InicioPATNavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioPAT);
+        public static string PATEmpregosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PATEmpregos);
+        //public static string PATReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, PATReports);
         public static string InicioBPPNavClass(ViewContext viewContext) => PageNavClass(viewContext, InicioBPP);
         public static string BPPContratosNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPContratos);
         public static string BPPReportsNavClass(ViewContext viewContext) => PageNavClassLi(viewContext, BPPReports);

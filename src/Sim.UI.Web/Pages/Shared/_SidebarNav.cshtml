@@ -7,7 +7,7 @@
     var _org = await _appOrganizacao.DoList();
     var _unidades = _org.Where(s => s.Hierarquia == Domain.Organizacao.Model.EHierarquia.Secretaria);
     var _setores = new List<Sim.Domain.Organizacao.Model.EOrganizacao>();
-    @if(_unidades.Any())
+    @if (_unidades.Any())
         _setores = _appOrganizacao.DoListHierarquia2from1Async(_org, _unidades.FirstOrDefault().Id).Result.ToList();
 }
 
@@ -15,35 +15,65 @@
 
     <li class="no-padding alpha-text-6">
         <ul class="collapsible collapsible-accordion">
-            <div class="logo-left"><a asp-page="/Index"><img src="~/icons/sedempi-166p.svg" width="150px"/></a></div>
+            <div class="logo-left"><a asp-page="/Index"><img src="~/icons/sedempi-166p.svg" width="150px" /></a></div>
 
-            @if(User.IsInRole(Areas.Admin.Pages.Admin.Global)
-                || User.IsInRole("SEDEMPI Banco do Povo")) {
-                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("banco do povo"))){                   
+            @if (User.IsInRole(Areas.Admin.Pages.Admin.Global)
+            || User.IsInRole("SEDEMPI Banco do Povo"))
+            {
+                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("banco do povo")))
+                {
                     <li class="@LayoutNavPages.InicioBPPNavClass(ViewContext)">
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
                         <div class="collapsible-body">
                             <ul>
-                                <li class="@LayoutNavPages.BPPContratosNavClass(ViewContext)"><a class="submit" asp-page="/BancodoPovo/Index">Contratos<i class="left material-icons">chevron_right</i></a></li>
-                                <li class="@LayoutNavPages.BPPRepContractsNavClass(ViewContext)"><a class="submit" asp-page="/BancodoPovo/Contracts/Index">Relatórios<i class="left material-icons">chevron_right</i></a></li>                                                     
+                                <li class="@LayoutNavPages.BPPContratosNavClass(ViewContext)"><a class="submit"
+                                        asp-page="/BancodoPovo/Index">Contratos<i
+                                            class="left material-icons">chevron_right</i></a></li>
+                                <li class="@LayoutNavPages.BPPRepContractsNavClass(ViewContext)"><a class="submit"
+                                        asp-page="/BancodoPovo/Contracts/Index">Relatórios<i
+                                            class="left material-icons">chevron_right</i></a></li>
                             </ul>
                         </div>
                     </li>
                 }
             }
 
-            @if(User.IsInRole(Areas.Admin.Pages.Admin.Global)
-                || User.IsInRole("SEDEMPI Sebrae Aqui")) {
-                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("sebrae aqui"))){                   
+            @if (User.IsInRole(Areas.Admin.Pages.Admin.Global)
+            || User.IsInRole("SEDEMPI Sebrae Aqui"))
+            {
+                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("sebrae aqui")))
+                {
                     <li class="@LayoutNavPages.InicioSANavClass(ViewContext)">
                         <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
                         <div class="collapsible-body">
                             <ul>
-                                @{ var _year = DateTime.Now.Year; }
-                                <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit" asp-page="/SebraeAqui/Index" asp-route-Src="@_year">Lançamentos<i class="left material-icons">chevron_right</i></a></li>
+                                @{
+                                    var _year = DateTime.Now.Year;
+                                }
+                                <li class="@LayoutNavPages.SANavClass(ViewContext)"><a class="submit"
+                                        asp-page="/SebraeAqui/Index" asp-route-Src="@_year">Lançamentos<i
+                                            class="left material-icons">chevron_right</i></a></li>
                                 <li class="@LayoutNavPages.SASimplesNavClass(ViewContext)"><a class="submit"
                                         asp-page="/SebraeAqui/SimplesNacional/Index">Simples<i
                                             class="left material-icons">chevron_right</i></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+            }
+
+            @if (User.IsInRole(Areas.Admin.Pages.Admin.Global)
+            || User.IsInRole("SEDEMPI Pat"))
+            {
+                @foreach (var item in _setores.Where(s => s.Ativo == true && s.Nome.ToLower().Contains("pat")))
+                {
+                    <li class="@LayoutNavPages.InicioPATNavClass(ViewContext)">
+                        <div class="collapsible-header">@item.Nome<i class="material-icons chevron">chevron_left</i></div>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li class="@LayoutNavPages.PATEmpregosNavClass(ViewContext)"><a class="submit"
+                                        asp-page="/Pat/Index">Vagas Emprego<i class="left material-icons">chevron_right</i></a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -57,17 +87,27 @@
                         @{
                             var _has_atendimento = await MeuAtendimento.ListAtendimentoAtivoAsync(User.Identity.Name);
                         }
-                        @if(_has_atendimento.Any())
+                        @if (_has_atendimento.Any())
                         {
-                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext) submit"><a asp-page="/Atendimento/Novo/Index" class="">Continuar<i class="left material-icons">shortcut</i></a></li>
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext) submit"><a
+                                    asp-page="/Atendimento/Novo/Index" class="">Continuar<i
+                                        class="left material-icons">shortcut</i></a></li>
                         }
                         else
                         {
-                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext) submit"><a asp-page="/Atendimento/Cliente/Index" class="">Novo<i class="left material-icons">alarm_add</i></a></li>
+                            <li class="@LayoutNavPages.AtendimentoAtivoNavClass(ViewContext) submit"><a
+                                    asp-page="/Atendimento/Cliente/Index" class="">Novo<i
+                                        class="left material-icons">alarm_add</i></a></li>
                         }
-                        <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext) submit"><a asp-page="/Atendimento/Index" class="">Diários<i class="left material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext) submit"><a asp-page="/Atendimento/Consulta/Index" class="">Consultar<i class="left material-icons">search</i></a></li>
-                        <li class="@LayoutNavPages.AtendimentoAnonimoNavClass(ViewContext) submit"><a asp-page="/Atendimento/Anonimo/Index" class="" >Anônimo<i class="left material-icons">person_2</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoDiarioNavClass(ViewContext) submit"><a
+                                asp-page="/Atendimento/Index" class="">Diários<i
+                                    class="left material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoConsultaNavClass(ViewContext) submit"><a
+                                asp-page="/Atendimento/Consulta/Index" class="">Consultar<i
+                                    class="left material-icons">search</i></a></li>
+                        <li class="@LayoutNavPages.AtendimentoAnonimoNavClass(ViewContext) submit"><a
+                                asp-page="/Atendimento/Anonimo/Index" class="">Anônimo<i
+                                    class="left material-icons">person_2</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -75,9 +115,14 @@
                 <div class="collapsible-header">Clientes<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext) submit"><a asp-page="/Cliente/Index" class="">Pessoas<i class="left material-icons">group</i></a></li>
-                        <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext) submit"><a asp-page="/Empresa/Index" class="">Empresas<i class="left material-icons">domain</i></a></li>
-                        <li class="@LayoutNavPages.ClentesVincularNavClass(ViewContext) submit"><a asp-page="/Bind/Index" class="">Vínculos<i class="left material-icons">link</i></a></li>
+                        <li class="@LayoutNavPages.ClientesPessoasNavClass(ViewContext) submit"><a
+                                asp-page="/Cliente/Index" class="">Pessoas<i class="left material-icons">group</i></a>
+                        </li>
+                        <li class="@LayoutNavPages.ClientesEmpresasNavClass(ViewContext) submit"><a
+                                asp-page="/Empresa/Index" class="">Empresas<i class="left material-icons">domain</i></a>
+                        </li>
+                        <li class="@LayoutNavPages.ClentesVincularNavClass(ViewContext) submit"><a
+                                asp-page="/Bind/Index" class="">Vínculos<i class="left material-icons">link</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -85,8 +130,12 @@
                 <div class="collapsible-header">Agenda<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext) submit"><a asp-page="/Agenda/Index" asp-route-m="ativos" class="">Eventos<i class="left material-icons">event</i></a></li>
-                        <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext) submit"><a asp-page="/Planner/Index" class="">e-Planner<i class="left material-icons">description</i></a></li>
+                        <li class="@LayoutNavPages.AgendaEventosNavClass(ViewContext) submit"><a
+                                asp-page="/Agenda/Index" asp-route-m="ativos" class="">Eventos<i
+                                    class="left material-icons">event</i></a></li>
+                        <li class="@LayoutNavPages.AgendaPlannerNavClass(ViewContext) submit"><a
+                                asp-page="/Planner/Index" class="">e-Planner<i
+                                    class="left material-icons">description</i></a></li>
                     </ul>
                 </div>
             </li>
@@ -94,9 +143,19 @@
                 <div class="collapsible-header">Indicadores<i class="material-icons chevron">chevron_left</i></div>
                 <div class="collapsible-body">
                     <ul>
-                        <li class="@LayoutNavPages.PowerBIEventosNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Eventos/Index" class="">Eventos<i class="left  material-icons">event</i></a></li>                        
-                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@DateTime.Now.Year" asp-route-m="SEDEMPI" class="">Atendimentos<i class="left  material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext) submit"><a asp-area="SimBI" asp-page="/Empresas/Index" class="">Empresas<i class="left material-icons">domain</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEmpregosNavClass(ViewContext) submit"><a asp-area="SimBI"
+                                asp-page="/Empregos/Index" class="">Empregos<i
+                                    class="left  material-icons">engineering</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEventosNavClass(ViewContext) submit"><a asp-area="SimBI"
+                                asp-page="/Eventos/Index" class="">Eventos<i class="left  material-icons">event</i></a>
+                        </li>
+                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI"
+                                asp-page="/Atendimentos/Setores/Index" asp-route-ano="@DateTime.Now.Year"
+                                asp-route-m="SEDEMPI" class="">Atendimentos<i
+                                    class="left  material-icons">access_time</i></a></li>
+                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext) submit"><a asp-area="SimBI"
+                                asp-page="/Empresas/Index" class="">Empresas<i
+                                    class="left material-icons">domain</i></a></li>
                     </ul>
                 </div>
             </li>

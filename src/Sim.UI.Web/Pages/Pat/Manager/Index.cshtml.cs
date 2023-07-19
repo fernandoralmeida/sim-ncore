@@ -6,7 +6,7 @@ using Sim.Domain.Entity;
 
 namespace Sim.UI.Web.Pages.Pat.Manager
 {
-    [Authorize(Roles = "Admin_Global,M_Pat,M_Pat_Admin")]
+    [Authorize(Roles = $"{Web.Areas.Admin.Pages.Admin.Global},SEDEMPI Pat")]
     public class IndexModel : PageModel
     {        
         private readonly IAppServiceEmpregos _appServiceEmpregos;

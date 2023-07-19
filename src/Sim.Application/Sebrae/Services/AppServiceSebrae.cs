@@ -2,11 +2,12 @@ using Sim.Application.Sebrae.Interfaces;
 using Sim.Domain.Entity;
 using Sim.Domain.Evento.Model;
 using Sim.Domain.Sebrae.Model;
+using Sim.Domain.Helpers;
 
 namespace Sim.Application.Sebrae.Services;
-
 public class AppServiceSebrae : IAppServiceSebrae
 {
+
     public async Task<EReports> DoReportAsync(IEnumerable<EAtendimento> at, IEnumerable<EEvento> ev)
     {
         return await Task.Run(() =>
@@ -92,19 +93,19 @@ public class AppServiceSebrae : IAppServiceSebrae
                 if (_faixa < 16)
                     _faixa_etaria.Add("Erro: < 16");
                 else if (_faixa > 15 && _faixa < 21)
-                    _faixa_etaria.Add("16 -> 20 anos");
+                    _faixa_etaria.Add("16 -> 20");
                 else if (_faixa > 20 && _faixa < 31)
-                    _faixa_etaria.Add("21 -> 30 anos");
+                    _faixa_etaria.Add("21 -> 30");
                 else if (_faixa > 30 && _faixa < 41)
-                    _faixa_etaria.Add("31 -> 40 anos");
+                    _faixa_etaria.Add("31 -> 40");
                 else if (_faixa > 40 && _faixa < 51)
-                    _faixa_etaria.Add("41 -> 50 anos");
+                    _faixa_etaria.Add("41 -> 50");
                 else if (_faixa > 50 && _faixa < 61)
-                    _faixa_etaria.Add("51 -> 60 anos");
+                    _faixa_etaria.Add("51 -> 60");
                 else if (_faixa > 60 && _faixa < 71)
-                    _faixa_etaria.Add("61 -> 70 anos");
+                    _faixa_etaria.Add("61 -> 70");
                 else if (_faixa > 70)
-                    _faixa_etaria.Add("71 anos ou mais");
+                    _faixa_etaria.Add("71 ou mais");
             }
 
             foreach (var item in _faixa_etaria.GroupBy(g => g)
@@ -142,7 +143,7 @@ public class AppServiceSebrae : IAppServiceSebrae
             _report.Clientes = _novos_recorrentes;
 
             var _emp = at.Where(s => s.Empresa != null)
-                            .DistinctBy(s  => s.Empresa)
+                            .DistinctBy(s => s.Empresa)
                             .ToList();
 
             var _emp_novos_recorrentes = new List<KeyValuePair<string, int>>();
@@ -158,8 +159,70 @@ public class AppServiceSebrae : IAppServiceSebrae
                                 .Where(s => s.Empresa.Data_Abertura.Value.Year < s.Data.Value.Year)
                                 .Count()
             ));
-            
+
             _report.Empresas = _emp_novos_recorrentes;
+
+            // - Empresas
+            var _emp_idade = new List<string>();
+            var _list_emp_idade = new List<(string, int, float)>();
+            var _setores = new List<string>();
+            var _list_Setores = new List<(string, int, float)>();
+            var _location = new List<string>();
+            var _list_location = new List<(string, int, float)>();
+
+            var _e_cont = 0.0F;
+
+            foreach (var i in at.Where(s => s.Empresa != null).DistinctBy(s => s.Empresa))
+            {
+
+                var d1 = new DateTime(i.Empresa.Data_Abertura.Value.Year,
+                                        i.Empresa.Data_Abertura.Value.Month,
+                                        i.Empresa.Data_Abertura.Value.Day);
+
+                var d2 = new DateTime(i.Data.Value.Year,
+                                        i.Data.Value.Month,
+                                        i.Data.Value.Day);
+
+                var _faixa = (d2.Subtract(d1).TotalDays) / 365;
+                if (_faixa <= 5)
+                    _emp_idade.Add("1 -> 5");
+                else if (_faixa > 5 && _faixa <= 10)
+                    _emp_idade.Add("6 -> 10");
+                else if (_faixa > 10 && _faixa <= 15)
+                    _emp_idade.Add("11 -> 15");
+                else if (_faixa > 16 && _faixa <= 20)
+                    _emp_idade.Add("16 -> 20");
+                else if (_faixa > 20)
+                    _emp_idade.Add("21 ou mais");
+
+                string _cnae = i.Empresa.CNAE_Principal.Remove(2, 8);
+                if (_cnae.All(char.IsDigit))
+                    _setores.Add(Convert.ToInt32(_cnae).DoSetores());
+
+                _location.Add(i.Empresa.Bairro);
+
+                _e_cont++;
+            }
+
+            foreach (var item in _emp_idade
+                                    .GroupBy(g => g)
+                                    .OrderByDescending(o => o.Count()))
+            {
+                _list_emp_idade.Add((item.Key, item.Count(), (item.Count() / _e_cont) * 100F));
+            }
+            _report.EmpresasIdade = _list_emp_idade;
+
+            foreach (var item in _setores
+                                    .GroupBy(g => g)
+                                    .OrderByDescending(o => o.Count()))
+                _list_Setores.Add((item.Key, item.Count(), (item.Count() / _e_cont) * 100F));
+
+            _report.EmpresasSetores = _list_Setores;
+
+            foreach (var item in _location.GroupBy(g => g).OrderByDescending(o => o.Count()))
+                _list_location.Add((item.Key, item.Count(), (item.Count() / _e_cont) * 100F));
+
+            _report.EmpresasLocation = _list_location;
 
             return _report;
         });

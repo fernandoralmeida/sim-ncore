@@ -13,4 +13,8 @@ public class EReports {
     public IEnumerable<KeyValuePair<string, int>>? GeneroCliente { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? Clientes { get; set; }
     public IEnumerable<KeyValuePair<string, int>>? Empresas { get; set; }
+    public IEnumerable<(string setor, int valor, float percent)>? EmpresasSetores { get; set; }
+    public IEnumerable<(string zone, int valor, float percent)>? EmpresasLocation { get; set; }
+    public IEnumerable<(string faixa, int valor, float percent)>? EmpresasIdade { get; set; }
+    public IEnumerable<(string fiscal, int valor, float percent)>? EmpresasRegimeFiscal { get; set; }
  }
