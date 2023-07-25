@@ -226,6 +226,21 @@
                     </div>
                 </div>
             </div>
+                        <div class="box-column-row">
+                <div class="box-card">
+                    <div class="card-header grey-text">Maturidade Empresas<i class="material-icons left">factory</i></div>
+                    <div class="box-around">
+                        @foreach (var item in Model.LReports.EmpresasIdade)
+                        {
+                            <a class="box-cell-item-flex font-size-12">
+                                <p class="grey-text">@item.faixa anos</p>
+                                <p class="blue-text font-h6">@item.valor</p>
+                                <p class="grey-text">(@item.percent.ToString("N2")%)</p>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="box-column-2">
             <div class="box-card">

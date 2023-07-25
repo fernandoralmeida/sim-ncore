@@ -184,16 +184,15 @@ public class AppServiceSebrae : IAppServiceSebrae
                                         i.Data.Value.Day);
 
                 var _faixa = (d2.Subtract(d1).TotalDays) / 365;
-                if (_faixa <= 5)
-                    _emp_idade.Add("1 -> 5");
+
+                if (_faixa <= 2)
+                    _emp_idade.Add("até 2");
+                else if (_faixa > 2 && _faixa <= 5)
+                    _emp_idade.Add("2 a 5");
                 else if (_faixa > 5 && _faixa <= 10)
-                    _emp_idade.Add("6 -> 10");
-                else if (_faixa > 10 && _faixa <= 15)
-                    _emp_idade.Add("11 -> 15");
-                else if (_faixa > 16 && _faixa <= 20)
-                    _emp_idade.Add("16 -> 20");
-                else if (_faixa > 20)
-                    _emp_idade.Add("21 ou mais");
+                    _emp_idade.Add("5 a 10");
+                else if (_faixa > 10 && _faixa <= 20)
+                    _emp_idade.Add("10 ou mais");
 
                 string _cnae = i.Empresa.CNAE_Principal.Remove(2, 8);
                 if (_cnae.All(char.IsDigit))
