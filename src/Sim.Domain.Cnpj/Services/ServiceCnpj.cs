@@ -2,6 +2,8 @@
 using Sim.Domain.Cnpj.Interfaces;
 using Sim.Domain.Cnpj.Extensions;
 using System.Linq.Expressions;
+using System.Globalization;
+using System.Linq;
 
 namespace Sim.Domain.Cnpj.Services
 {
@@ -1354,532 +1356,278 @@ namespace Sim.Domain.Cnpj.Services
             });
         }
 
-        public async Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes)
+        public async Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, int ano)
         {
             var t = await _cnpj.DoListEmpresasAsync(municipio);
+            var _emp = t.Where(s => !s.Estabelecimento.CnaeFiscalPrincipal.StartsWith("84")
+                                && !s.Estabelecimento.CnaeFiscalPrincipal.StartsWith("94"));
 
             return await Task.Run(() =>
             {
 
+
                 var r_empresas = new List<BIEmpresas>();
 
-                try
+                //try
+                //{
+                var _bi_empresas = new BIEmpresas();
+
+                var _emp_novas = _emp.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
+
+                var _emp_ativas = _emp.Where(s => s.Estabelecimento.SituacaoCadastral == "Ativa");
+                var _emp_ativas_ano = _emp_ativas.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
+
+                var _emp_baixadas = _emp.Where(s => s.Estabelecimento.SituacaoCadastral == "Baixada");
+                var _emp_baixadas_ano = _emp_baixadas.Where(s => s.Estabelecimento.DataSituacaoCadastral.StartsWith(ano.ToString()));
+                var _emp_baixadas_novas = _emp_novas.Where(s => s.Estabelecimento.SituacaoCadastral == "Baixada");
+
+                var _emp_nulas = _emp.Where(s => s.Estabelecimento.SituacaoCadastral == "Nula");
+                var _emp_nulas_novas = _emp_novas.Where(s => s.Estabelecimento.SituacaoCadastral == "Nula");
+                var _emp_nulas_ano = _emp_nulas.Where(s => s.Estabelecimento.DataSituacaoCadastral.StartsWith(ano.ToString()));
+
+                var _emp_suspensas = _emp.Where(s => s.Estabelecimento.SituacaoCadastral == "Suspensa");
+                var _emp_suspensas_novas = _emp_novas.Where(s => s.Estabelecimento.SituacaoCadastral == "Suspensa");
+                var _emp_suspensas_ano = _emp_suspensas.Where(s => s.Estabelecimento.DataSituacaoCadastral.StartsWith(ano.ToString()));
+
+                var _emp_inapta = _emp.Where(s => s.Estabelecimento.SituacaoCadastral == "Inapta");
+                var _emp_inapta_novas = _emp_novas.Where(s => s.Estabelecimento.SituacaoCadastral == "Suspensa");
+                var _emp_inapta_ano = _emp_inapta.Where(s => s.Estabelecimento.DataSituacaoCadastral.StartsWith(ano.ToString()));
+
+                float _t_emp = _emp.Count();
+                float _t_emp_novas = _emp_novas.Count();
+                float _t_emp_ativas = _emp_ativas.Count();
+                float _t_emp_ativas_ano = _emp_ativas.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString())).Count();
+
+                var _emp_porte_me = _emp_ativas.Where(s => s.Empresa.PorteEmpresa == "ME");
+                var _emp_porte_me_ano = _emp_ativas_ano.Where(s => s.Empresa.PorteEmpresa == "ME");
+
+                var _emp_porte_epp = _emp_ativas.Where(s => s.Empresa.PorteEmpresa == "EPP");
+                var _emp_porte_epp_ano = _emp_ativas_ano.Where(s => s.Empresa.PorteEmpresa == "EPP");
+
+                var _emp_porte_demais = _emp_ativas.Where(s => s.Empresa.PorteEmpresa.ToLower() == "demais");
+                var _emp_porte_demais_ano = _emp_ativas_ano.Where(s => s.Empresa.PorteEmpresa.ToLower() == "demais");
+
+                var _emp_opt_mei = _emp_ativas.Where(s => s.SimplesNacional != null && s.SimplesNacional.OpcaoMEI == "Sim");
+                var _emp_opt_mei_ano = _emp_ativas_ano.Where(s => s.SimplesNacional != null && s.SimplesNacional.OpcaoMEI == "Sim");
+
+                var _emp_opt_sn = _emp_ativas.Where(s => s.SimplesNacional != null && s.SimplesNacional.OpcaoSimples == "Sim" && s.SimplesNacional.OpcaoMEI == "Não");
+                var _emp_opt_sn_ano = _emp_ativas_ano.Where(s => s.SimplesNacional != null && s.SimplesNacional.OpcaoSimples == "Sim" && s.SimplesNacional.OpcaoMEI == "Não");
+
+                var _emp_opt_lrp = _emp_ativas.Where(s => s.SimplesNacional == null);
+                var _emp_opt_lrp_ano = _emp_ativas_ano.Where(s => s.SimplesNacional == null);
+
+                var _empresas = new List<(string item, int value, float percent)>
                 {
-                    var _situcao = new List<string>();
-                    var _emp = new List<string>();
-                    var _atv = new List<string>();
-                    var _setores = new List<string>();
-                    var _temp = new List<string>();
-                    var _porte = new List<string>();
-                    var _osn = new List<string>();
-                    var _mei = new List<string>();
-                    var _var_mes = new List<string>();
-
-                    var _servico = new List<string>();
-                    var _comercio = new List<string>();
-                    var _industria = new List<string>();
-                    var _agro = new List<string>();
-                    var _construcao = new List<string>();
-
-                    var _formalizacao = new List<string>();
-                    var _baixada = new List<string>();
-                    var _mortalidade = new List<string>();
-
-                    var bi_empresas = new BIEmpresas();
-
-                    int cnae = 0;
-
-                    var mortalidade = DateTime.Today.AddDays(-731).ToShortDateString(); //add 2 anos
-                    var splitdata = mortalidade.Split(new char[] { '/' });
-                    var mortalidade2 = string.Format("{0}{1}{2}", splitdata[2], splitdata[1], splitdata[0]);
-                    var datainicial = Convert.ToInt32(mortalidade2);
-                    var dataabertura = 0;
-
-                    foreach (BaseReceitaFederal at in t)
-                    {
-
-                        if (at.AtividadePrincipal.Codigo != "9492800") //Excluir Servioços políticos
-                        {
-                            string[] data = at.Estabelecimento.DataInicioAtividade.ToString().Split(new char[] { '-' });
-
-                            dataabertura = Convert.ToInt32(at.Estabelecimento.DataInicioAtividade.Replace("-", ""));
-
-                            if (dataabertura >= datainicial)
-                            {
-                                if (at.Estabelecimento.SituacaoCadastral == "Baixada")
-                                    _mortalidade.Add("B");
-
-                                _mortalidade.Add("F");
-                            }
-
-                            if (mes == "99")
-                            {
-
-                                if (data[0] == ano)
-                                {
-                                    if (at.Estabelecimento.SituacaoCadastral == "Baixada")
-                                        _baixada.Add("B");
-                                    else if (at.Estabelecimento.SituacaoCadastral == "Ativa")
-                                        _formalizacao.Add("F");
-                                }
-
-                                if (at.Estabelecimento.SituacaoCadastral == situacao)
-                                {
-
-                                    _porte.Add(at.Empresa.PorteEmpresa);
-
-                                    if (at.SimplesNacional != null)
-                                    {
-                                        switch (at.SimplesNacional.OpcaoSimples)
-                                        {
-                                            case "Sim":
-                                                _osn.Add(at.SimplesNacional.OpcaoSimples);
-                                                break;
-                                        }
-                                        switch (at.SimplesNacional.OpcaoMEI)
-                                        {
-                                            case "Sim":
-                                                _mei.Add(at.SimplesNacional.OpcaoMEI);
-                                                break;
-                                        }
-                                    }
-
-                                    _atv.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                    _emp.Add("E");
-
-                                    cnae = Convert.ToInt32(at.AtividadePrincipal.Codigo.Remove(2, 5));
-
-                                    if (cnae >= 1 && cnae <= 3)
-                                    {
-                                        _setores.Add("Agropecuária");
-                                        _agro.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                    }
-
-                                    else if (cnae >= 45 && cnae <= 47)
-                                    {
-                                        _setores.Add("Comércio");
-                                        _comercio.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                    }
-                                    else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
-                                    {
-                                        _setores.Add("Indústria");
-                                        _industria.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                    }
-                                    else if (cnae >= 41 & cnae <= 43)
-                                    {
-                                        _setores.Add("Construção");
-                                        _construcao.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                    }
-                                    else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
-                                        || (cnae >= 49 && cnae <= 53)
-                                        || (cnae >= 55 && cnae <= 56)
-                                        || (cnae >= 58 && cnae <= 63)
-                                        || (cnae >= 64 && cnae <= 66)
-                                        || (cnae == 68)
-                                        || (cnae >= 69 && cnae <= 75)
-                                        || (cnae >= 77 && cnae <= 82)
-                                        || (cnae == 85)
-                                        || (cnae >= 86 && cnae <= 88)
-                                        || (cnae >= 86 && cnae <= 88)
-                                        || (cnae >= 90 && cnae <= 93)
-                                        || (cnae >= 94 && cnae <= 96)
-                                        || (cnae == 97)
-                                        || (cnae == 99))
-                                    {
-                                        _setores.Add("Serviços");
-                                        _servico.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                    }
-                                }
-
-                                _temp.Add("TE");
-                                _situcao.Add(at.Estabelecimento.SituacaoCadastral);
-
-
-                            }
-
-                            else if (mes == "00")
-                            {
-
-                                if (data[0] == ano)
-                                {
-                                    if (at.Estabelecimento.SituacaoCadastral == "Baixada")
-                                        _baixada.Add("B");
-                                    else if (at.Estabelecimento.SituacaoCadastral == "Ativa")
-                                        _formalizacao.Add("F");
-
-
-                                    if (at.Estabelecimento.SituacaoCadastral == situacao)
-                                    {
-                                        _porte.Add(at.Empresa.PorteEmpresa);
-
-                                        switch (data[1])
-                                        {
-                                            case "01":
-                                                _var_mes.Add("01Jan");
-                                                break;
-                                            case "02":
-                                                _var_mes.Add("02Fev");
-                                                break;
-                                            case "03":
-                                                _var_mes.Add("03Mar");
-                                                break;
-                                            case "04":
-                                                _var_mes.Add("04Abr");
-                                                break;
-                                            case "05":
-                                                _var_mes.Add("05Mai");
-                                                break;
-                                            case "06":
-                                                _var_mes.Add("06Jun");
-                                                break;
-                                            case "07":
-                                                _var_mes.Add("07Jul");
-                                                break;
-                                            case "08":
-                                                _var_mes.Add("08Ago");
-                                                break;
-                                            case "09":
-                                                _var_mes.Add("09Set");
-                                                break;
-                                            case "10":
-                                                _var_mes.Add("10Out");
-                                                break;
-                                            case "11":
-                                                _var_mes.Add("11Nov");
-                                                break;
-                                            case "12":
-                                                _var_mes.Add("12Dez");
-                                                break;
-                                        }
-
-                                        if (at.SimplesNacional != null)
-                                        {
-                                            switch (at.SimplesNacional.OpcaoSimples)
-                                            {
-                                                case "Sim":
-                                                    _osn.Add(at.SimplesNacional.OpcaoSimples);
-                                                    break;
-                                            }
-                                            switch (at.SimplesNacional.OpcaoMEI)
-                                            {
-                                                case "Sim":
-                                                    _mei.Add(at.SimplesNacional.OpcaoMEI);
-                                                    break;
-                                            }
-                                        }
-
-                                        _atv.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        _emp.Add("E");
-
-                                        cnae = Convert.ToInt32(at.AtividadePrincipal.Codigo.Remove(2, 5));
-
-                                        if (cnae >= 1 && cnae <= 3)
-                                        {
-                                            _setores.Add("Agropecuária");
-                                            _agro.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-
-                                        else if (cnae >= 45 && cnae <= 47)
-                                        {
-                                            _setores.Add("Comércio");
-                                            _comercio.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                        else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
-                                        {
-                                            _setores.Add("Indústria");
-                                            _industria.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                        else if (cnae >= 41 & cnae <= 43)
-                                        {
-                                            _setores.Add("Construção");
-                                            _construcao.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                        else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
-                                            || (cnae >= 49 && cnae <= 53)
-                                            || (cnae >= 55 && cnae <= 56)
-                                            || (cnae >= 58 && cnae <= 63)
-                                            || (cnae >= 64 && cnae <= 66)
-                                            || (cnae == 68)
-                                            || (cnae >= 69 && cnae <= 75)
-                                            || (cnae >= 77 && cnae <= 82)
-                                            || (cnae == 85)
-                                            || (cnae >= 86 && cnae <= 88)
-                                            || (cnae >= 86 && cnae <= 88)
-                                            || (cnae >= 90 && cnae <= 93)
-                                            || (cnae >= 94 && cnae <= 96)
-                                            || (cnae == 97)
-                                            || (cnae == 99))
-                                        {
-                                            _setores.Add("Serviços");
-                                            _servico.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                    }
-
-                                    _temp.Add("TE");
-                                    _situcao.Add(at.Estabelecimento.SituacaoCadastral);
-                                }
-                            }
-
-                            else
-                            {
-
-                                if (data[0] == ano && data[1] == mes)
-                                {
-                                    if (at.Estabelecimento.SituacaoCadastral == "Baixada")
-                                        _baixada.Add("B");
-                                    else if (at.Estabelecimento.SituacaoCadastral == "Ativa")
-                                        _formalizacao.Add("F");
-
-                                    if (at.Estabelecimento.SituacaoCadastral == situacao)
-                                    {
-                                        _porte.Add(at.Empresa.PorteEmpresa);
-
-                                        if (at.SimplesNacional != null)
-                                        {
-                                            switch (at.SimplesNacional.OpcaoSimples)
-                                            {
-                                                case "Sim":
-                                                    _osn.Add(at.SimplesNacional.OpcaoSimples);
-                                                    break;
-                                            }
-                                            switch (at.SimplesNacional.OpcaoMEI)
-                                            {
-                                                case "Sim":
-                                                    _mei.Add(at.SimplesNacional.OpcaoMEI);
-                                                    break;
-                                            }
-                                        }
-
-                                        _atv.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        _emp.Add("E");
-
-                                        cnae = Convert.ToInt32(at.AtividadePrincipal.Codigo.Remove(2, 5));
-
-                                        if (cnae >= 1 && cnae <= 3)
-                                        {
-                                            _setores.Add("Agropecuária");
-                                            _agro.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-
-                                        else if (cnae >= 45 && cnae <= 47)
-                                        {
-                                            _setores.Add("Comércio");
-                                            _comercio.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                        else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
-                                        {
-                                            _setores.Add("Indústria");
-                                            _industria.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                        else if (cnae >= 41 & cnae <= 43)
-                                        {
-                                            _setores.Add("Construção");
-                                            _construcao.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                        else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
-                                            || (cnae >= 49 && cnae <= 53)
-                                            || (cnae >= 55 && cnae <= 56)
-                                            || (cnae >= 58 && cnae <= 63)
-                                            || (cnae >= 64 && cnae <= 66)
-                                            || (cnae == 68)
-                                            || (cnae >= 69 && cnae <= 75)
-                                            || (cnae >= 77 && cnae <= 82)
-                                            || (cnae == 85)
-                                            || (cnae >= 86 && cnae <= 88)
-                                            || (cnae >= 86 && cnae <= 88)
-                                            || (cnae >= 90 && cnae <= 93)
-                                            || (cnae >= 94 && cnae <= 96)
-                                            || (cnae == 97)
-                                            || (cnae == 99))
-                                        {
-                                            _setores.Add("Serviços");
-                                            _servico.Add(string.Format("{0}", at.AtividadePrincipal.Descricao));
-                                        }
-                                    }
-
-                                    _temp.Add("TE");
-                                    _situcao.Add(at.Estabelecimento.SituacaoCadastral);
-                                }
-                            }
-                        }
-                    }
-
-                    bi_empresas.EmpresasAtivas = new KeyValuePair<string, int>("Estatísticas", _emp.Count);
-                    bi_empresas.TotalEmpresas = new KeyValuePair<string, int>("Empresas", _temp.Count);
-                    bi_empresas.Formalizacoes = new KeyValuePair<string, int>("Formalizadas", _formalizacao.Count);
-                    bi_empresas.Baixas = new KeyValuePair<string, int>("Baixadas", _baixada.Count);
-                    bi_empresas.SimplesNacional = new KeyValuePair<string, int>("Simples Nacional", _osn.Count);
-                    bi_empresas.OptanteMEI = new KeyValuePair<string, int>("Optante MEI", _mei.Count);
-
-                    var c_atv = from x in _atv
-                                group x by x into g
-                                let count = g.Count()
-                                orderby count descending
-                                select new { Value = g.Key, Count = count };
-
-                    var n_atv = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_atv)
-                    {
-                        n_atv.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.ListaAtividades = n_atv;
-
-                    var c_stc = from x in _situcao
-                                group x by x into g
-                                let count = g.Count()
-                                orderby count descending
-                                select new { Value = g.Key, Count = count };
-
-                    var n_stc = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_stc)
-                    {
-                        n_stc.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-
-                    bi_empresas.ListaSituacao = n_stc;
-
-                    var c_srv = from x in _setores
-                                group x by x into g
-                                let count = g.Count()
-                                orderby count descending
-                                select new { Value = g.Key, Count = count };
-
-                    var n_srv = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_srv)
-                    {
-                        n_srv.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.ListaSetores = n_srv;
-
-                    // Atividades Serviços
-                    var c_servico = from x in _servico
-                                    group x by x into g
-                                    let count = g.Count()
-                                    orderby count descending
-                                    select new { Value = g.Key, Count = count };
-
-                    var l_servico = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_servico)
-                    {
-                        l_servico.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.Servicos = l_servico;
-
-                    // Atividades Comércio
-                    var c_comercio = from x in _comercio
-                                     group x by x into g
-                                     let count = g.Count()
-                                     orderby count descending
-                                     select new { Value = g.Key, Count = count };
-
-                    var l_comercio = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_comercio)
-                    {
-                        l_comercio.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.Comercio = l_comercio;
-
-                    // Atividades Industria
-                    var c_industria = from x in _industria
-                                      group x by x into g
-                                      let count = g.Count()
-                                      orderby count descending
-                                      select new { Value = g.Key, Count = count };
-
-                    var l_industria = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_industria)
-                    {
-                        l_industria.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.Indistria = l_industria;
-
-                    // Atividades Industria
-                    var c_agro = from x in _agro
-                                 group x by x into g
-                                 let count = g.Count()
-                                 orderby count descending
-                                 select new { Value = g.Key, Count = count };
-
-                    var l_agro = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_agro)
-                    {
-                        l_agro.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.Agro = l_agro;
-
-                    // Atividades Construção
-                    var c_construcao = from x in _construcao
-                                       group x by x into g
-                                       let count = g.Count()
-                                       orderby count descending
-                                       select new { Value = g.Key, Count = count };
-
-                    var l_constucao = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_construcao)
-                    {
-                        l_constucao.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.Construcao = l_constucao;
-
-                    // Porte
-                    var c_porte = from x in _porte
-                                  group x by x into g
-                                  let count = g.Count()
-                                  orderby count descending
-                                  select new { Value = g.Key, Count = count };
-
-                    var l_porte = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_porte)
-                    {
-                        l_porte.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.Porte = l_porte;
-
-                    // Varicao Mes a Mes
-                    var c_var_mes = from x in _var_mes
-                                    group x by x into g
-                                    let count = g.Count()
-                                    orderby g.Key ascending
-                                    select new { Value = g.Key.Remove(0, 2), Count = count };
-
-                    var l_var_mes = new List<KeyValuePair<string, int>>();
-                    foreach (var x in c_var_mes)
-                    {
-                        l_var_mes.Add(new KeyValuePair<string, int>(x.Value, x.Count));
-                    }
-                    bi_empresas.ListaMensal = l_var_mes;
-
-                    // Taxa de mortalidade empresarial
-                    /**/
-                    var taxa_mort = from x in _mortalidade
-                                    group x by x into g
-                                    let count = g.Count()
-                                    orderby count descending
-                                    select new { Value = g.Key, Count = count };
-
-                    var l_tx_mort = new List<KeyValuePair<string, string>>();
-                    float emp_f = 0;
-                    float emp_b = 0;
-                    foreach (var x in taxa_mort)
-                    {
-                        emp_f += x.Count;
-                        if (x.Value == "B")
-                            emp_b = x.Count;
-                    }
-
-                    var r_tx_mort = (emp_b * 100) / emp_f;
-
-                    l_tx_mort.Add(new KeyValuePair<string, string>("Mortalidade de empresas com até 2 anos de atividade", string.Format("{0:N2}%", r_tx_mort)));
-
-                    bi_empresas.ListaMortalidadeEmpresas = l_tx_mort;
-
-                    r_empresas.Add(bi_empresas);
-
-                }
-                catch (Exception ex) { throw new Exception(ex.Message); }
+                    ("Ativas", _emp_ativas.Count(), _emp_ativas.Count() / _t_emp * 100F),
+                    ("Baixadas", _emp_baixadas.Count(), _emp_baixadas.Count() / _t_emp * 100F),
+                    ("Suspensas", _emp_suspensas.Count(), _emp_suspensas.Count() / _t_emp * 100F),
+                    ("Nulas", _emp_nulas.Count(), _emp_nulas.Count() / _t_emp * 100F),
+                    ("Inaptas", _emp_inapta.Count(), _emp_inapta.Count() / _t_emp * 100F)
+                };
+                _bi_empresas.Empresas = _empresas.OrderByDescending(s => s.value);
+
+                var _empresas_novas = new List<(string item, int value, float percent)>
+                {
+                    ("Ativas", _emp_ativas_ano.Count(), _emp_ativas_ano.Count() / _t_emp_novas * 100F),
+                    ("Baixadas", _emp_baixadas_novas.Count(), _emp_baixadas_novas.Count() / _t_emp_novas * 100F),
+                    ("Suspensas", _emp_suspensas_novas.Count(), _emp_suspensas_novas.Count() / _t_emp_novas * 100F),
+                    ("Nulas", _emp_nulas_novas.Count(), _emp_nulas_novas.Count() / _t_emp_novas * 100F),
+                    ("Inaptas", _emp_inapta_novas.Count(), _emp_inapta_novas.Count() / _t_emp_novas * 100F)
+                };
+                _bi_empresas.EmpresasNovas = _empresas_novas.OrderByDescending(s => s.value);
+
+                var _porte_list = new List<(string item, int value, float percent)>
+                {
+                    ("ME", _emp_porte_me.Count(), _emp_porte_me.Count() / _t_emp_ativas * 100F),
+                    ("EPP", _emp_porte_epp.Count(), _emp_porte_epp.Count() / _t_emp_ativas * 100F),
+                    ("Demais", _emp_porte_demais.Count(), _emp_porte_demais.Count() / _t_emp_ativas * 100F)
+                };
+                _bi_empresas.Porte = _porte_list.OrderByDescending(s => s.value);
+
+                var _porte_list_ano = new List<(string item, int value, float percent)>
+                {
+                    ("ME", _emp_porte_me_ano.Count(), _emp_porte_me_ano.Count() / _t_emp_ativas_ano * 100F),
+                    ("EPP", _emp_porte_epp_ano.Count(), _emp_porte_epp_ano.Count() / _t_emp_ativas_ano * 100F),
+                    ("Demais", _emp_porte_demais_ano.Count(), _emp_porte_demais_ano.Count() / _t_emp_ativas_ano * 100F)
+                };
+                _bi_empresas.PorteAnual = _porte_list_ano.OrderByDescending(s => s.value);
+
+                var _rfiscal_list = new List<(string item, int value, float percent)>
+                {
+                    ("MEI", _emp_opt_mei.Count(), _emp_opt_mei.Count() / _t_emp_ativas * 100F),
+                    ("Simples", _emp_opt_sn.Count(), _emp_opt_sn.Count() / _t_emp_ativas * 100F),
+                    ("Lucro RP", _emp_opt_lrp.Count(), _emp_opt_lrp.Count() / _t_emp_ativas * 100F)
+                };
+                _bi_empresas.RFiscal = _rfiscal_list.OrderByDescending(s => s.value);
+
+                var _rfiscal_list_ano = new List<(string item, int value, float percent)>
+                {
+                    ("MEI", _emp_opt_mei_ano.Count(), _emp_opt_mei_ano.Count() / _t_emp_ativas * 100F),
+                    ("Simples", _emp_opt_sn_ano.Count(), _emp_opt_sn_ano.Count() / _t_emp_ativas * 100F),
+                    ("Lucro RP", _emp_opt_lrp_ano.Count(), _emp_opt_lrp_ano.Count() / _t_emp_ativas * 100F)
+                };
+                _bi_empresas.RFiscalAnual = _rfiscal_list_ano.OrderByDescending(s => s.value);
+
+                //CNAE Serviços
+                var _n35a39 = Enumerable.Range(35, 5).Select(s => s.ToString("D2"));
+                var _n49a53 = Enumerable.Range(49, 5).Select(s => s.ToString("D2"));
+                var _n55e56 = Enumerable.Range(55, 2).Select(s => s.ToString("D2"));
+                var _n58a66 = Enumerable.Range(58, 9).Select(s => s.ToString("D2"));
+                var _n68a75 = Enumerable.Range(68, 8).Select(s => s.ToString("D2"));
+                var _n77a82 = Enumerable.Range(77, 6).Select(s => s.ToString("D2"));
+                var _n85a88 = Enumerable.Range(85, 4).Select(s => s.ToString("D2"));
+                var _n90a93 = Enumerable.Range(90, 4).Select(s => s.ToString("D2"));
+                var _n95a97 = Enumerable.Range(95, 3).Select(s => s.ToString("D2"));
+                var _n99 = Enumerable.Range(99, 1).Select(s => s.ToString("D2"));
+                var _serv_list = _emp_ativas.Where(s =>
+                                            _n35a39.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n49a53.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n55e56.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n58a66.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n68a75.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n77a82.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n85a88.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n90a93.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n95a97.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                                            _n99.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
+                
+                var _serv_list_ano = _serv_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
+                float _t_serv_ano = _serv_list_ano.Count();
+
+                //CNAE Agro
+                var _n1a3 = Enumerable.Range(1, 3).Select(s => s.ToString("D2"));
+                var _agro_list = _emp_ativas.Where(s => _n1a3.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
+                var _agro_list_ano = _agro_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
+                float _t_agro_ano = _agro_list_ano.Count();
+
+                // CNAE Industria
+                var _n5a9 = Enumerable.Range(5, 5).Select(n => n.ToString("D2")).ToList();
+                var _n10a33 = Enumerable.Range(10, 24).Select(n => n.ToString("D2")).ToList();
+                var _ind_list = _emp_ativas.Where(s =>
+                    _n5a9.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
+                    _n10a33.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
+                var _ind_list_ano = _ind_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
+                float _t_ind_ano = _ind_list_ano.Count();
+
+                //CNAE Comércio
+                var _n45a47 = Enumerable.Range(45, 3).Select(s => s.ToString("D2")).ToList();
+                var _com_list = _emp_ativas.Where(s => _n45a47.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
+                var _com_list_ano = _com_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
+                float _t_com_ano = _com_list_ano.Count();
+
+                //CNAE Construção
+                var _n41a43 = Enumerable.Range(41, 3).Select(s => s.ToString("D2")).ToList();
+                var _const_list = _emp_ativas.Where(s => _n41a43.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
+                var _const_list_ano = _const_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
+                float _t_const_ano = _const_list_ano.Count();
+
+                var _emp_formalizadas_group_mes = _emp_ativas_ano
+                                                    .OrderBy(s => DateTime.ParseExact(s.Estabelecimento.DataInicioAtividade, "yyyy-MM-dd", CultureInfo.InvariantCulture).Date)
+                                                    .GroupBy(s => DateTime.ParseExact(s.Estabelecimento.DataInicioAtividade, "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("MMM"));
+
+                var _emp_formalizadas_mes_mes = new List<(string item, int value, float percent)>();
+                foreach (var g in _emp_formalizadas_group_mes)
+                    _emp_formalizadas_mes_mes.Add((g.Key, g.Count(), g.Count() / _t_emp_ativas_ano * 100F));
+
+                _bi_empresas.FormalizadasMensal = _emp_formalizadas_mes_mes;
+
+                _bi_empresas.Servicos = ("Serviços", _serv_list.Count(), _serv_list.Count() / _t_emp_ativas * 100F);
+                _bi_empresas.ServicosAnual = ("Serviços", _serv_list_ano.Count(), _serv_list_ano.Count() / _t_emp_ativas_ano * 100F);
+
+                _bi_empresas.Industria = ("Indústria", _ind_list.Count(), _ind_list.Count() / _t_emp_ativas * 100F);
+                _bi_empresas.IndustriaAnual = ("Indústria", _ind_list_ano.Count(), _ind_list_ano.Count() / _t_emp_ativas_ano * 100F);
+
+                _bi_empresas.Comercio = ("Comércio", _com_list.Count(), _com_list.Count() / _t_emp_ativas * 100F);
+                _bi_empresas.ComercioAnual = ("Comércio", _com_list_ano.Count(), _com_list_ano.Count() / _t_emp_ativas_ano * 100F);
+
+                _bi_empresas.Agro = ("Agro", _agro_list.Count(), _agro_list.Count() / _t_emp_ativas * 100F);
+                _bi_empresas.AgroAnual = ("Agro", _agro_list_ano.Count(), _agro_list_ano.Count() / _t_emp_ativas_ano * 100F);
+
+                _bi_empresas.Construcao = ("Construção", _const_list.Count(), _const_list.Count() / _t_emp_ativas * 100F);
+                _bi_empresas.ConstrucaoAnual = ("Construção", _const_list_ano.Count(), _const_list_ano.Count() / _t_emp_ativas_ano * 100F);
+
+                var _maturidade_list = new List<(string item, int value, float percent)>();
+
+                var _emp_ativas_top_10_cnae = (from g in _emp_ativas
+                                    .GroupBy(s => s.AtividadePrincipal.Descricao)
+                                    .OrderByDescending(o => o.Count())
+                                    .Take(10)
+                                               select (g.Key, g.Count())).ToList();
+
+                _bi_empresas.CnaesTop10 = _emp_ativas_top_10_cnae;
+
+                var _servicos_subclasses_ano = new List<(string item, int value, float percent)>();
+                _servicos_subclasses_ano.AddRange(from sb in _serv_list_ano
+                                        .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                        .Where(s =>
+                                        _n35a39.Any(n => s.Key.StartsWith(n)) ||
+                                        _n49a53.Any(n => s.Key.StartsWith(n)) ||
+                                        _n55e56.Any(n => s.Key.StartsWith(n)) ||
+                                        _n58a66.Any(n => s.Key.StartsWith(n)) ||
+                                        _n68a75.Any(n => s.Key.StartsWith(n)) ||
+                                        _n77a82.Any(n => s.Key.StartsWith(n)) ||
+                                        _n85a88.Any(n => s.Key.StartsWith(n)) ||
+                                        _n90a93.Any(n => s.Key.StartsWith(n)) ||
+                                        _n95a97.Any(n => s.Key.StartsWith(n)) ||
+                                        _n99.Any(n => s.Key.StartsWith(n)))
+                                        .OrderByDescending(o => o.Count())
+                                        .Take(3)
+                                                  select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_serv_ano * 100F));
+
+                _bi_empresas.SubServicosAnual = _servicos_subclasses_ano;
+
+                var _comercio_sub_cnaes_ano = new List<(string item, int value, float percent)>();
+                _comercio_sub_cnaes_ano.AddRange(from sb in _com_list_ano
+                                        .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                        .Where(s => _n45a47.Any(n => s.Key.StartsWith(n)))
+                                        .OrderByDescending(o => o.Count())
+                                        .Take(3)
+                                                 select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_com_ano * 100F));
+                _bi_empresas.SubComercioAnual = _comercio_sub_cnaes_ano;
+
+                var _ind_sub_cnaes_ano = new List<(string item, int value, float percent)>();
+                _ind_sub_cnaes_ano.AddRange(from sb in _ind_list_ano
+                                    .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                    .Where(s =>
+                                    _n5a9.Any(n => s.Key.StartsWith(n)) ||
+                                    _n10a33.Any(n => s.Key.StartsWith(n)))
+                                    .OrderByDescending(o => o.Count())
+                                    .Take(3)
+                                            select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_ind_ano * 100F));
+                _bi_empresas.SubIndustriaAnual = _ind_sub_cnaes_ano;
+
+                var _agro_sub_cnaes_ano = new List<(string item, int value, float percent)>();
+                _agro_sub_cnaes_ano.AddRange(from sb in _agro_list_ano
+                                    .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                    .Where(s => _n1a3.Any(n => s.Key.StartsWith(n)))
+                                    .OrderByDescending(o => o.Count())
+                                    .Take(3)
+                                             select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_agro_ano * 100F));
+                _bi_empresas.SubAgroAnual = _agro_sub_cnaes_ano;
+
+                var _const_sub_cnaes_ano = new List<(string item, int value, float percent)>();
+                _const_sub_cnaes_ano.AddRange(from sb in _const_list_ano
+                                    .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                    .Where(s => _n41a43.Any(n => s.Key.StartsWith(n)))
+                                    .OrderByDescending(o => o.Count())
+                                    .Take(3)
+                                              select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_const_ano * 100F));
+                _bi_empresas.SubConstrucaoAnual = _const_sub_cnaes_ano;
+
+                var _lifetime = new List<(string item, int value, float percent)>();
+                _lifetime.AddRange(from dt in _emp_ativas
+                                                .GroupBy(d => DateTime.ParseExact(d.Estabelecimento.DataInicioAtividade, "yyyy-MM-dd", CultureInfo.InvariantCulture).DateDiference())
+                                                .OrderByDescending(o => o.Count())    
+                                   select (dt.Key, dt.Count(), dt.Count() / _t_emp_ativas * 100F));
+                _bi_empresas.Maturidade = _lifetime;
+
+
+                r_empresas.Add(_bi_empresas);
+
+                //}
+                //catch (Exception ex) { throw new Exception(ex.Message); }
 
                 return r_empresas;
-
             });
         }
 

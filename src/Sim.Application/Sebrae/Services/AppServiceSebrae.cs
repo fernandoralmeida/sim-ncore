@@ -191,7 +191,7 @@ public class AppServiceSebrae : IAppServiceSebrae
                     _emp_idade.Add("2 a 5");
                 else if (_faixa > 5 && _faixa <= 10)
                     _emp_idade.Add("5 a 10");
-                else if (_faixa > 10 && _faixa <= 20)
+                else if (_faixa > 10)
                     _emp_idade.Add("10 ou mais");
 
                 string _cnae = i.Empresa.CNAE_Principal.Remove(2, 8);
@@ -212,6 +212,7 @@ public class AppServiceSebrae : IAppServiceSebrae
             _report.EmpresasIdade = _list_emp_idade;
 
             foreach (var item in _setores
+                                    .Where(s => s != "...")
                                     .GroupBy(g => g)
                                     .OrderByDescending(o => o.Count()))
                 _list_Setores.Add((item.Key, item.Count(), (item.Count() / _e_cont) * 100F));

@@ -20,8 +20,8 @@ namespace Sim.Application.Cnpj.Services
         public async Task<IEnumerable<BICnae>> DoListBICnaeAsync(IEnumerable<BaseReceitaFederal> param) =>
             await _cnpj.DoListBICnaeAsync(param);
 
-        public async Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, string situacao, string ano, string mes) =>
-            await _cnpj.DoListBIEmpresasAsync(municipio, situacao, ano, mes);
+        public async Task<IEnumerable<BIEmpresas>> DoListBIEmpresasAsync(string municipio, int ano) =>
+            await _cnpj.DoListBIEmpresasAsync(municipio, ano);
 
         public async Task<IEnumerable<BaseReceitaFederal>> DoListEmpresasAsync(string municipio) =>
             await _cnpj.DoListEmpresasAsync(municipio);
