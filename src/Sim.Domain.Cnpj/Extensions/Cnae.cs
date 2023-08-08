@@ -98,7 +98,7 @@ public static class Cnae
         var r = string.Empty;
 
         foreach (var l in subclasses.Where(s => s.StartsWith(valor[..2])))
-            r = l.Remove(0, 3);
+            r = l.Remove(0,2);
 
         return r;
     }

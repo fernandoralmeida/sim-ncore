@@ -1558,7 +1558,7 @@ namespace Sim.Domain.Cnpj.Services
 
                 var _servicos_subclasses_ano = new List<(string item, int value, float percent)>();
                 _servicos_subclasses_ano.AddRange(from sb in _serv_list_ano
-                                        .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                        .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
                                         .Where(s =>
                                         _n35a39.Any(n => s.Key.StartsWith(n)) ||
                                         _n49a53.Any(n => s.Key.StartsWith(n)) ||
@@ -1578,7 +1578,7 @@ namespace Sim.Domain.Cnpj.Services
 
                 var _comercio_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _comercio_sub_cnaes_ano.AddRange(from sb in _com_list_ano
-                                        .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                        .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
                                         .Where(s => _n45a47.Any(n => s.Key.StartsWith(n)))
                                         .OrderByDescending(o => o.Count())
                                         .Take(3)
@@ -1587,7 +1587,7 @@ namespace Sim.Domain.Cnpj.Services
 
                 var _ind_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _ind_sub_cnaes_ano.AddRange(from sb in _ind_list_ano
-                                    .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                    .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
                                     .Where(s =>
                                     _n5a9.Any(n => s.Key.StartsWith(n)) ||
                                     _n10a33.Any(n => s.Key.StartsWith(n)))
@@ -1598,7 +1598,7 @@ namespace Sim.Domain.Cnpj.Services
 
                 var _agro_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _agro_sub_cnaes_ano.AddRange(from sb in _agro_list_ano
-                                    .GroupBy(g => g.AtividadePrincipal.Codigo)
+                                    .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
                                     .Where(s => _n1a3.Any(n => s.Key.StartsWith(n)))
                                     .OrderByDescending(o => o.Count())
                                     .Take(3)
@@ -1607,8 +1607,8 @@ namespace Sim.Domain.Cnpj.Services
 
                 var _const_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _const_sub_cnaes_ano.AddRange(from sb in _const_list_ano
-                                    .GroupBy(g => g.AtividadePrincipal.Codigo)
-                                    .Where(s => _n41a43.Any(n => s.Key.StartsWith(n)))
+                                    .Where(s => _n41a43.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)))
+                                    .GroupBy(g => g.AtividadePrincipal.Codigo[..2])                                    
                                     .OrderByDescending(o => o.Count())
                                     .Take(3)
                                               select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_const_ano * 100F));

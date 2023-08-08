@@ -138,7 +138,7 @@
                                     <p class="grey-text">(@emp.ComercioAnual.percent.ToString("N0")%)</p>
                                 </a>
                             </div>
-                            <div class="box-card-action font-size-12">
+                            <div class="box-card-action font-size-12" style="overflow-x: auto;">
                                 @foreach (var sc in emp.SubComercioAnual)
                                 {
                                     <p class="grey-text truncate mgn-b-0 mgn-t-0" title="@sc.item">(@sc.percent.ToString("N0")%) @sc.item</p>
