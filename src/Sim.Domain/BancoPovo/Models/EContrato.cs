@@ -87,7 +87,7 @@ public class EContrato
         float _ret = 0.0F;
         float _regulares = lista.Where(s => s.ContratosAprovadosRegulares(s)).Count();
         float _inadimplentes = lista.Where(s => s.ContratosAprovadosInadimplente(s)).Count();
-        _ret = _inadimplentes / _regulares;
+        _ret = _inadimplentes / _regulares * 100F;
         return _ret;
     }
 

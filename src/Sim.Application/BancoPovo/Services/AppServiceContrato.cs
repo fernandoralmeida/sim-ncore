@@ -51,8 +51,8 @@ public class AppServiceContrato : AppServiceBase<EContrato>, IAppServiceContrato
             _ret.ValorContratosInadimplentes = string.Format("{0} {1}", NumberFormatInfo.CurrentInfo.CurrencySymbol, _ec.ValorContratosInadimplentes(lista));
             _ret.ValorContratosRegulares = string.Format("{0} {1}", NumberFormatInfo.CurrentInfo.CurrencySymbol, _ec.ValorContratosRegulares(lista));
             _ret.ValorContratosRenegociados = string.Format("{0} {1}", NumberFormatInfo.CurrentInfo.CurrencySymbol, _ec.ValorContratosRenegociados(lista));
-            _ret.ValorMedio = $"{NumberFormatInfo.CurrentInfo.CurrencySymbol} {_ec.ValorMedio(lista).ToString("N2")}";
-            _ret.TaxaInadimplencia = string.Format("{0} %", (_ec.TaxaInadimplencia(lista)*100.00F).ToString("N2"));
+            _ret.ValorMedio = $"{NumberFormatInfo.CurrentInfo.CurrencySymbol} {_ec.ValorMedio(lista):N2}";
+            _ret.TaxaInadimplencia = string.Format("{0} %", _ec.TaxaInadimplencia(lista).ToString("N0"));
 
             var _setores = new List<string>();
             var _r_setores = new List<(string, int, float)>();

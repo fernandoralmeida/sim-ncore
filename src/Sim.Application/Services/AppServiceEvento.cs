@@ -20,11 +20,12 @@ namespace Sim.Application.Services
         public async Task<EBIEventos> DoBIEventosAsync(IEnumerable<EEvento> lista)
         {
             return await Task.Run(() => {
-                var _list = new EBIEventos();              
-
-                _list.EventosP = new KeyValuePair<string, int>("Proposto", lista.Count());
-                _list.EventosR = new KeyValuePair<string, int>("Realizados", lista.Where(s => s.Situacao != EEvento.ESituacao.Cancelado && s.Data <= DateTime.Now).Count());
-                _list.EventosC = new KeyValuePair<string, int>("Cancelados", lista.Where(s => s.Situacao == EEvento.ESituacao.Cancelado).Count());
+                var _list = new EBIEventos
+                {
+                    EventosP = new KeyValuePair<string, int>("Proposto", lista.Count()),
+                    EventosR = new KeyValuePair<string, int>("Realizados", lista.Where(s => s.Situacao != EEvento.ESituacao.Cancelado && s.Data <= DateTime.Now).Count()),
+                    EventosC = new KeyValuePair<string, int>("Cancelados", lista.Where(s => s.Situacao == EEvento.ESituacao.Cancelado).Count())
+                };
 
                 var _nome_eventos = new List<KeyValuePair<string, int>>();
                 foreach (var e in lista.GroupBy(g => g.Tipo)
@@ -90,7 +91,7 @@ namespace Sim.Application.Services
 
                 float _tx = _txparticipante;
                 float _p = _partc;
-                float _r_txpart = _tx / _p;
+                float _r_txpart = _tx / _p * 100F;
                 _list.TaxaPreenchimentoParticipantes = new KeyValuePair<string, float>("Presentes", _r_txpart);
 
                 var _add_setor = new List<KeyValuePair<string, int>>();
