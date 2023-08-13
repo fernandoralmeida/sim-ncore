@@ -7,7 +7,6 @@ public class EChartThree {
         Value2 = value2;
         Value3 = value3;
     }
-
     public string Label { get; private set; }
     public int Value1 { get; private set; }
     public int Value2 { get; private set; }

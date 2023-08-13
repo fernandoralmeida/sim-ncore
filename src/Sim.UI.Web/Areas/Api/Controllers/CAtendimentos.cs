@@ -9,7 +9,7 @@ namespace Sim.UI.Web.Areas.Api.Controllers;
 [Route("api/v1")]
 public class CAtendimentos : ControllerBase
 {
-    private IAppServiceAtendimento _atendimento;
+    private readonly IAppServiceAtendimento _atendimento;
     public CAtendimentos(IAppServiceAtendimento atendimento)
     {
         _atendimento = atendimento;

@@ -2,22 +2,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.Interfaces;
-using Sim.Application.Sebrae.Interfaces;
 using Sim.Domain.Entity;
-using Sim.Domain.Evento.Model;
-using Sim.Domain.Sebrae.Model;
+using Sim.Application.Indicadores.VModel;
+using Sim.Application.Indicadores.Interfaces;
 
 namespace Sim.UI.Web.Areas.SimBI.Pages.Bpp;
 
 [Authorize]
 public class IndexModel : PageModel
 {
-    private readonly IAppServiceEvento _appevento;
     private readonly IAppServiceAtendimento _appatendimento;
-    private readonly IAppServiceSebrae _appsebrae;
+    private readonly IAppIndicadores _indicadores;
 
     [BindProperty(SupportsGet = true)]
-    public EReports LReports { get; set; }
+    public VmRAtendimentos LReports { get; set; }
     public int Ano { get; set; }
     public string PageTitle { get; set; }
     public (string Ano, string Active) NavBar { get; set; }
@@ -25,13 +23,11 @@ public class IndexModel : PageModel
     [TempData]
     public string StatusMessage { get; set; }
 
-    public IndexModel(IAppServiceEvento appevento,
-                    IAppServiceAtendimento appatendimento,
-                    IAppServiceSebrae appservicesebrae)
+    public IndexModel(IAppServiceAtendimento appatendimento,
+                    IAppIndicadores indicadores)
     {
-        _appevento = appevento;
         _appatendimento = appatendimento;
-        _appsebrae = appservicesebrae;
+        _indicadores = indicadores;
     }
     public async Task OnGetAsync(string ano = null, string m = null)
     {
@@ -48,21 +44,16 @@ public class IndexModel : PageModel
 
         NavBar = (Ano.ToString(), m);
 
-        IEnumerable<EEvento> _list_ev;
         IEnumerable<EAtendimento> _list_at;
 
         if (m == "SEDEMPI")
-        {
-            _list_ev = await _appevento.DoListAsync(s => s.Data.Value.Year == Ano && s.Situacao != EEvento.ESituacao.Cancelado);
             _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano);
-        }
-        else
-        {
-            _list_ev = await _appevento.DoListAsync(s => s.Data.Value.Year == Ano && s.Owner == m && s.Situacao != EEvento.ESituacao.Cancelado);
-            _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano && s.Setor == m);
-        }
 
-        LReports = await _appsebrae.DoReportAsync(_list_at, _list_ev);
+        else
+            _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano && s.Setor == m);
+
+
+        LReports = await _indicadores.DoAtendimentosAsync(_list_at);
     }
 }
 

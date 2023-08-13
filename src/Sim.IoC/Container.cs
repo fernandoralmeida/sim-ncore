@@ -43,6 +43,8 @@ using Sim.Application.Customer.Services;
 using Sim.Domain.Sebrae.Model;
 using Sim.Domain.Sebrae.Interfaces;
 using Sim.Domain.Sebrae.Services;
+using Sim.Application.Indicadores.Interfaces;
+using Sim.Application.Indicadores.Services;
 
 namespace Sim.IoC
 {
@@ -242,6 +244,8 @@ namespace Sim.IoC
             services.AddScoped<IRepositoryBase<ESimples>, RepositoryBase<ESimples>>();
             services.AddScoped<IRepositorySimples, RepositorySimples>();
             //
+            services.AddScoped<IAppIndicadores, AppIndicadores>();
+
             services.AddScoped<ApplicationContext>();
 
         }
