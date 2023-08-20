@@ -19,4 +19,7 @@ public class VmRAtendimentos
     public IEnumerable<(string zone, int valor, float percent)>? EmpresasLocation { get; set; }
     public IEnumerable<(string faixa, int valor, float percent)>? EmpresasIdade { get; set; }
     public IEnumerable<(string fiscal, int valor, float percent)>? EmpresasRegimeFiscal { get; set; }
+    public IEnumerable<(string canal, int valor, float percent)>? Canais { get; set; }
+    public IEnumerable<(string timeday, int valor)>? TimeDay { get; set; }
+    public IEnumerable<(string timeday, int valor)>? ServTimeDay { get; set; }
 }

@@ -1,0 +1,229 @@
+@page "/dashboards/indicadores/atendimentos/{ano?}/{setor?}"
+@model Sim.UI.Web.Areas.Dashboards.Pages.Indicadores.AtendimentosPage;
+
+@{
+
+    ViewData["Title"] = "Indicadores";
+}
+
+<partial name="./Shared/_NavBar" model="Model.NavBar" />
+
+<div class="row">
+    <div class="col s12 m12 l6">
+        <div class="card hoverable" id="chartbar"></div>
+    </div>
+    <div class="col s12 m6 l3">
+        <div class="card hoverable" id="perfil"></div>
+    </div>
+    <div class="col s12 m6 l3">
+        <div class="card hoverable" id="canal"></div>
+    </div>
+    <div class="col s12">
+        <div class="card hoverable" id="chartline"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var options = {
+            chart: {
+                type: 'bar',
+                stacked: true,
+                height: 250,
+                zoom: {
+                    enabled: false
+                }
+            },            
+            series: [{
+                name: "Atendimentos",
+                data: [@Model.AtTimeDay],
+            }, {
+                name: "Servicos",
+                data: [@Model.SvTimeDay],
+            }],
+            dataLabels: {
+                enabled: false,
+            },
+            xaxis: {
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                crosshairs: {
+                    show: false
+                }
+            },
+            grid: {
+                xaxis: {
+                    lines: {
+                        show: false
+                    },
+                },
+                yaxis: {
+                    lines: {
+                        show: false
+                    }
+                }
+            },
+            yaxis: {
+                axisBorder: {
+                    show: false
+                },
+                labels: {
+                    show: false
+                }
+            },
+            legend: {
+                floating: true,
+                position: 'top',
+                horizontalAlign: 'right',
+                offsetY: -36
+            },
+            title: {
+                text: '@Model.LReports.Atendimentos.Key - @Model.LReports.Atendimentos.Value',
+                align: 'left',
+            },
+            subtitle: {
+                text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
+            },
+            tooltip: {
+                shared: true,
+                intersect: false
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chartbar"), options);
+        chart.render();
+
+        // Chart Area
+
+        var ctarea = {
+            chart: {
+                type: 'area',
+                height: 400,
+                zoom: {
+                    enabled: false
+                }
+            },
+            series: [{
+                name: 'Atendimentos',
+                data: [@Model.AtendimentosMonth]
+            },
+            {
+                name: 'Serviços',
+                data: [@Model.ServicosMonth]
+            }]
+        };
+
+        var chartArea = new ApexCharts(document.querySelector("#chartarea"), ctarea);
+        chartArea.render();
+
+        // Line
+        var cline = {
+            chart: {
+                type: 'area',
+                height: 400,
+                zoom: {
+                    enabled: false
+                }
+            },
+            series: [{
+                name: 'Atendimentos',
+                data: [@Model.AtendimentosMonth]
+            },
+            {
+                name: 'Serviços',
+                data: [@Model.ServicosMonth]
+            }],
+            yaxis: {
+                labels: {
+                    show: false
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'right',
+                floating: true,
+                offsetY: -25,
+                offsetX: -5
+            },
+            dataLabels: {
+                enabled: true,
+            },
+            title: {
+                text: 'Variação Mensal',
+                align: 'left'
+            },
+            subtitle: {
+                text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
+            },
+            stroke: {
+                curve: 'straight',
+            }
+        };
+
+        var cartLine = new ApexCharts(document.querySelector("#chartline"), cline);
+        cartLine.render();
+
+        //Perfil 
+        var perfil = {
+            title: {
+                text: 'Perfil',
+                align: 'left'
+            },
+            subtitle: {
+                text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
+            },
+            chart: {
+                type: 'donut',
+                height: 300,
+                zoom: {
+                    enabled: true
+                }
+            },
+            series: [@Model.Perfil[0]],
+            labels: [@Model.Perfil[1]],
+            legend: {
+                position: 'bottom'
+            }
+        };
+
+        var cartPerfil = new ApexCharts(document.querySelector("#perfil"), perfil);
+        cartPerfil.render();
+
+        //Canais 
+        var canais = {
+            title: {
+                text: 'Canal',
+                align: 'left'
+            },
+            subtitle: {
+                text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
+            },
+            chart: {
+                type: 'donut',
+                height: 300,
+                zoom: {
+                    enabled: false
+                }
+            },
+            series: [@Model.Canais[0]],
+            labels: [@Model.Canais[1]],
+            legend: {
+                position: 'bottom'
+            }
+        };
+
+        var cartCanal = new ApexCharts(document.querySelector("#canal"), canais);
+        cartCanal.render();
+
+
+    });
+</script>

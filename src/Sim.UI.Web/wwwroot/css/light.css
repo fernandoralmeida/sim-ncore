@@ -365,10 +365,12 @@ select {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
 .pdn-v-30 {
     padding-top: 30px;
     padding-bottom: 30px;
 }
+
 .pdn-6 {
     padding: 6px;
 }
@@ -537,6 +539,10 @@ ul .logo-left {
     padding: 16px;
     height: 65px;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+ul .logo-left-dash {
+    padding: 10px;
 }
 
 .modal {

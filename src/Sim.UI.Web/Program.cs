@@ -69,6 +69,7 @@ app.MapRazorPages();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+    endpoints.MapRazorPages();
 });
 
 await app.RunAsync();

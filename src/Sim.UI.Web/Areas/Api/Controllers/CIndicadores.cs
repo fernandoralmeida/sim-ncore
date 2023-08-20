@@ -32,8 +32,11 @@ public class CIndicadores : ControllerBase
     }
 
     [HttpGet("indicadores/antendimentos/{ano?}/{setor?}")]
-    public async Task<IActionResult> DoAtendimentos([FromRoute] string ano, [FromRoute] string setor)
-        => Ok(await _indicadores.DoAtendimentosAsync(new List<EAtendimento>()));
+    public async Task<IActionResult> DoAtendimentos([FromRoute] int ano, [FromRoute] string setor)
+     => Ok(setor == null ?
+            await _indicadores.DoAtendimentosAsync(s => s.Data.Value.Year == ano) :
+            await _indicadores.DoAtendimentosAsync(s => s.Data.Value.Year == ano && s.Setor == setor));
+
 
     [HttpGet("indicadores/empregos/{ano}")]
     public async Task<IActionResult> DoEmpregos([FromRoute] string ano)

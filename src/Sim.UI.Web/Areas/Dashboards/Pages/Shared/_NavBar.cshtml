@@ -1,0 +1,41 @@
+@model (int Ano, string Setor, string Page, IEnumerable<string> Setores)
+
+<ul id="dropdown1" class="dropdown-content">
+  @for (int i = DateTime.Now.Year; i > DateTime.Now.Year - 10; i--)
+  {
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Atendimentos" asp-route-ano="@i"
+        asp-route-setor="@Model.Setor" onclick="CloseDropdown()">@i</a></li>
+  }
+</ul>
+
+<ul id="dropdown2" class="dropdown-content">
+  @foreach (var item in @Model.Setores)
+  {
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Atendimentos" asp-route-ano="@Model.Ano"
+        asp-route-setor="@item" onclick="CloseDropdown()">@item</a></li>
+  }
+</ul>
+
+<ul id="pagnames" class="dropdown-content">
+  <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+      asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Atendimentos</a></li>
+  <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+      asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Eventos</a></li>
+  <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+      asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Empregos</a></li>
+  <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+      asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Empresas</a></li>
+</ul>
+
+<nav class="row transparent">
+  <div class="nav-wrapper">
+    <ul>
+      <li><a class="dropdown-trigger" href="#!" data-target="pagnames">@Model.Page<i
+            class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@Model.Ano<i
+            class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">@Model.Setor<i
+            class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+  </div>
+</nav>

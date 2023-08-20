@@ -63,6 +63,10 @@ ul .logo-left {
     border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
+ul .logo-left-dash {
+    padding: 10px;
+}
+
 nav.navbar .brand-logo {
     position: relative;
     float: left;

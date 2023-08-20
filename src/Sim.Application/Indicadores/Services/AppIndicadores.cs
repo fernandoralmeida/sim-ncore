@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Sim.Application.Indicadores.Interfaces;
 using Sim.Application.Indicadores.VModel;
 using Sim.Application.Interfaces;
@@ -14,13 +15,14 @@ public class AppIndicadores : IAppIndicadores
     {
         _appatendimento = appatendimento;
     }
-    public async Task<VmRAtendimentos> DoAtendimentosAsync(IEnumerable<EAtendimento> atendimentos)
+    public async Task<VmRAtendimentos> DoAtendimentosAsync(Expression<Func<EAtendimento, bool>>? filter = null)
     {
-        atendimentos = await _appatendimento!.DoListAsync(s => s.Data!.Value.Year == 2023);
+        var atendimentos = await _appatendimento!.DoListAsync(filter!);
         return await Task.Run(() =>
          {
 
              var _report = new VmRAtendimentos();
+             float _at_count = atendimentos.Count();
 
              _report.Atendimentos = new KeyValuePair<string, int>("Atendimentos", atendimentos.Count());
 
@@ -35,12 +37,14 @@ public class AppIndicadores : IAppIndicadores
 
              var _svmonth = new List<string>();
              var _getservices = new List<string>();
+             var _serv_time_day = new List<string>();
              foreach (var item in atendimentos.Where(s => s.Servicos != null).OrderBy(o => o.Data))
              {
                  foreach (var s in item.Servicos!.Split(new char[] { ';', ',' }))
                  {
                      _getservices.Add(s);
                      _svmonth.Add(item.Data!.Value.Date.ToString("MMM"));
+                     _serv_time_day.Add(item.Data.Value.ToString("HH"));
                  }
              }
              _report.Serviços = new KeyValuePair<string, int>("Serviços", _svmonth.Count());
@@ -59,6 +63,12 @@ public class AppIndicadores : IAppIndicadores
                  _list_svc.Add(new KeyValuePair<string, int>(item.Key, item.Count()));
              }
              _report.ListaServicos = _list_svc;
+
+             _report.Canais = from cn in atendimentos
+                                        .Where(s => s.Canal != null)
+                                        .GroupBy(g => g.Canal)
+                                        .OrderByDescending(o => o.Count())
+                              select (cn.Key, cn.Count(), cn.Count() / _at_count * 100F);
 
              var _c = new List<KeyValuePair<string, int>>();
              _c.Add(new KeyValuePair<string, int>("Pessoa Física", atendimentos.Where(s => s.Pessoa != null && s.Empresa == null).Count()));
@@ -218,6 +228,17 @@ public class AppIndicadores : IAppIndicadores
 
              foreach (var item in _location.GroupBy(g => g).OrderByDescending(o => o.Count()))
                  _list_location.Add((item.Key, item.Count(), (item.Count() / _e_cont) * 100F));
+
+             _report.TimeDay = from td in atendimentos
+                                        .Where(s => s.Servicos != null)
+                                        .GroupBy(d => d.Data!.Value.ToString("HH"))
+                                        .OrderBy(o => o.Key)
+                               select (td.Key, td.Count());
+
+             _report.ServTimeDay = from svt in _serv_time_day
+                                        .GroupBy(g => g)
+                                        .OrderBy(o => o.Key)
+                                   select (svt.Key, svt.Count());
 
              _report.EmpresasLocation = _list_location;
 

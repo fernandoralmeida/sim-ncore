@@ -33,27 +33,18 @@ public class IndexModel : PageModel
     {
         StatusMessage = "";
         PageTitle = m;
-        if (ano == null)
-            Ano = DateTime.Now.Year;
-        else
-            Ano = Convert.ToInt32(ano);
 
-        if (m == null)
-            m = "SEDEMPI";
+        m ??= "SEDEMPI";
 
+        Ano = ano == null ?
+            DateTime.Now.Year :
+            Convert.ToInt32(ano);
 
         NavBar = (Ano.ToString(), m);
 
-        IEnumerable<EAtendimento> _list_at;
-
-        if (m == "SEDEMPI")
-            _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano);
-
-        else
-            _list_at = await _appatendimento.DoListAsync(s => s.Data.Value.Year == Ano && s.Setor == m);
-
-
-        LReports = await _indicadores.DoAtendimentosAsync(_list_at);
+        LReports = m == "SEDEMPI" ?
+            await _indicadores.DoAtendimentosAsync(s => s.Data.Value.Year == Ano) :
+            await _indicadores.DoAtendimentosAsync(s => s.Data.Value.Year == Ano && s.Setor == m);
     }
 }
 
