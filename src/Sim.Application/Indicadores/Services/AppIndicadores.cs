@@ -71,14 +71,14 @@ public class AppIndicadores : IAppIndicadores
                               select (cn.Key, cn.Count(), cn.Count() / _at_count * 100F);
 
              var _c = new List<KeyValuePair<string, int>>();
-             _c.Add(new KeyValuePair<string, int>("Pessoa Física", atendimentos.Where(s => s.Pessoa != null && s.Empresa == null).Count()));
-             _c.Add(new KeyValuePair<string, int>("Pessoa Jurídica", atendimentos.Where(s => s.Empresa != null).Count()));
+             _c.Add(new KeyValuePair<string, int>("Pessoas", atendimentos.Where(s => s.Pessoa != null && s.Empresa == null).Count()));
+             _c.Add(new KeyValuePair<string, int>("Empresas", atendimentos.Where(s => s.Empresa != null).Count()));
              _c.Add(new KeyValuePair<string, int>("Anônimo", atendimentos.Where(s => s.Pessoa == null && s.Empresa == null).Count()));
              _report.PerfilAtendimento = _c;
 
              var _pc = new List<KeyValuePair<string, int>>();
-             _pc.Add(new KeyValuePair<string, int>("Pessoa Física", atendimentos.Where(s => s.Pessoa != null && s.Empresa == null).DistinctBy(s => s.Pessoa).Count()));
-             _pc.Add(new KeyValuePair<string, int>("Pessoa Jurídica", atendimentos.Where(s => s.Empresa != null).DistinctBy(s => s.Empresa).Count()));
+             _pc.Add(new KeyValuePair<string, int>("Pessoas", atendimentos.Where(s => s.Pessoa != null && s.Empresa == null).DistinctBy(s => s.Pessoa).Count()));
+             _pc.Add(new KeyValuePair<string, int>("Empresas", atendimentos.Where(s => s.Empresa != null).DistinctBy(s => s.Empresa).Count()));
              _report.PerfilCliente = _pc;
 
              var _faixa_etaria = new List<string>();
@@ -98,19 +98,19 @@ public class AppIndicadores : IAppIndicadores
 
                  var _faixa = (d2.Subtract(d1).TotalDays) / 365;
                  if (_faixa < 16)
-                     _faixa_etaria.Add("Erro: < 16");
+                     _faixa_etaria.Add("Erro: - 16");
                  else if (_faixa > 15 && _faixa < 21)
-                     _faixa_etaria.Add("16 -> 20");
+                     _faixa_etaria.Add("16 - 20");
                  else if (_faixa > 20 && _faixa < 31)
-                     _faixa_etaria.Add("21 -> 30");
+                     _faixa_etaria.Add("21 - 30");
                  else if (_faixa > 30 && _faixa < 41)
-                     _faixa_etaria.Add("31 -> 40");
+                     _faixa_etaria.Add("31 - 40");
                  else if (_faixa > 40 && _faixa < 51)
-                     _faixa_etaria.Add("41 -> 50");
+                     _faixa_etaria.Add("41 - 50");
                  else if (_faixa > 50 && _faixa < 61)
-                     _faixa_etaria.Add("51 -> 60");
+                     _faixa_etaria.Add("51 - 60");
                  else if (_faixa > 60 && _faixa < 71)
-                     _faixa_etaria.Add("61 -> 70");
+                     _faixa_etaria.Add("61 - 70");
                  else if (_faixa > 70)
                      _faixa_etaria.Add("71 ou mais");
              }

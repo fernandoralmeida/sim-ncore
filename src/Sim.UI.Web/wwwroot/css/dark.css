@@ -354,6 +354,7 @@ footer {
     margin-left: 8px;
     margin-right: 8px;
 }
+
 .mgn-n-t-10 {
     margin-top: -10px;
 }
@@ -361,6 +362,7 @@ footer {
 .pdn-t-0 {
     padding-top: 0px !important;
 }
+
 .pdn-t-10 {
     padding-top: 10px !important;
 }
@@ -433,6 +435,7 @@ footer {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
 .pdn-v-30 {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -1171,6 +1174,12 @@ nav,
     width: 100%;
     row-gap: 20px;
 }
+.box-column-8 {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    row-gap: 20px;
+}
 
 .box-column-7 {
     display: flex;
@@ -1193,6 +1202,13 @@ nav,
     row-gap: 20px;
 }
 
+.box-column-4 {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    row-gap: 20px;
+}
+
 .box-column-3 {
     display: flex;
     flex-direction: column;
@@ -1200,18 +1216,13 @@ nav,
     row-gap: 20px;
 }
 
-.box-column-8 {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    row-gap: 20px;
-}
 .box-column-2-5 {
     display: flex;
     flex-direction: column;
     width: 25%;
     row-gap: 20px;
 }
+
 .box-column-2 {
     display: flex;
     flex-direction: column;
@@ -1319,30 +1330,60 @@ nav,
         gap: 20px 20px;
     }
 
+    .box-column-8 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
+    }
+
     .box-column-7 {
         display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 20px 20px;
+        flex-direction: column;
         width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-6 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-5 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-4 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
     }
 
     .box-column-3 {
+        display: flex;
+        flex-direction: column;
         width: 100%;
+        row-gap: 20px;
     }
 
-    .box-column-8 {
+    .box-column-2-5 {
         display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 20px 20px;
+        flex-direction: column;
         width: 100%;
+        row-gap: 20px;
     }
 
     .box-column-2 {
+        display: flex;
+        flex-direction: column;
         width: 100%;
+        row-gap: 20px;
     }
 
     .card-chart {
@@ -1455,7 +1496,35 @@ nav,
         gap: 20px 20px;
     }
 
+    .box-column-8 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
+    }
+
     .box-column-7 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-6 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-5 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-4 {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -1469,7 +1538,7 @@ nav,
         row-gap: 20px;
     }
 
-    .box-column-8 {
+    .box-column-2-5 {
         display: flex;
         flex-direction: column;
         width: 100%;

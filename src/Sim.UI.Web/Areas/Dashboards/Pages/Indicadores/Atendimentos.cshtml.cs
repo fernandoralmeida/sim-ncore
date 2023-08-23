@@ -24,6 +24,15 @@ public class AtendimentosPage : PageModel
     public string ServicosMonth { get; set; }
     public string AtTimeDay { get; set; }
     public string SvTimeDay { get; set; }
+    public string ClientesDistintos { get; set; }
+    public string EmpresasDistintas { get; set; }
+    public string PerfilDistintos { get; set; }
+    public string Genero { get; set; }
+    public string FaixaEtaria { get; set; }
+    public string Segmentos { get; set; }
+    public string FaixaEtariaEmpresas { get; set; }
+    public string[] AtendimentosDistintos { get; set; }
+    public string TotalClientesDistintos { get; set; }
 
     public AtendimentosPage(IAppIndicadores indicadores,
         IAppServiceSecretaria organizacao)
@@ -58,7 +67,7 @@ public class AtendimentosPage : PageModel
         }
 
         string _attimeday = string.Empty;
-        foreach(var (timeday, valor) in LReports.TimeDay)
+        foreach (var (timeday, valor) in LReports.TimeDay)
             _attimeday += string.Format(@"{{x:`{0}H`,y:{1}}},", timeday, valor);
 
         string _svtimeday = string.Empty;
@@ -72,12 +81,38 @@ public class AtendimentosPage : PageModel
             _canal[1] += string.Format(@"`{0}`,", canal);
         }
 
+        string[] _atdistintos = new string[2];
+        string _count = string.Empty;
+        foreach (var x in LReports.PerfilCliente)
+        {
+            _count += x.Value;
+            _atdistintos[0] += string.Format(@"{0},", x.Value);
+            _atdistintos[1] += string.Format(@"`{0}`,", x.Key);
+        }
+
+        string _cli_distintos = string.Empty;
+        foreach (var x in LReports.Clientes)
+            _cli_distintos += string.Format(@"{{x:`{0}`,y:{1}}},", x.Key.NormalizeText(), x.Value);
+
+        string _emp_distintas = string.Empty;
+        foreach (var x in LReports.Empresas)
+            _emp_distintas += string.Format(@"{{x:`{0}`,y:{1}}},", x.Key.NormalizeText(), x.Value);
+
+        string _faixa_etaria = string.Empty;
+        foreach (var x in LReports.FaixaEtariaCliente)
+            _faixa_etaria += string.Format(@"{{x:`{0}`,y:{1}}},", x.Key.NormalizeText(), x.Value);
+
         AtTimeDay = _attimeday.Length > 0 ? _attimeday[..^1] : _attimeday;
         SvTimeDay = _svtimeday.Length > 0 ? _svtimeday[..^1] : _svtimeday;
         Perfil = _perfil;
-        Canais = _canal;        
+        Canais = _canal;
         AtendimentosMonth = _atmonth.Length > 0 ? _atmonth[..^1] : _atmonth;
         ServicosMonth = _svmonth.Length > 0 ? _svmonth[..^1] : _svmonth;
+        AtendimentosDistintos = _atdistintos;
+        ClientesDistintos = _cli_distintos.Length > 0 ? _cli_distintos[..^1] : _cli_distintos;
+        EmpresasDistintas = _emp_distintas.Length > 0 ? _emp_distintas[..^1] : _emp_distintas;
+        FaixaEtaria = _faixa_etaria.Length > 0 ? _faixa_etaria[..^1] : _faixa_etaria;
+        TotalClientesDistintos = _count;
     }
 
     private async Task<IEnumerable<string>> Setores()
