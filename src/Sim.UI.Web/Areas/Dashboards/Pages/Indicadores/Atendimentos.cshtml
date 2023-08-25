@@ -6,9 +6,9 @@
     ViewData["Title"] = "Indicadores";
 }
 
-<partial name="./Shared/_NavBar" model="Model.NavBar" />
+<partial name="./Shared/_Login" model="Model.NavBar" />
 
-<div class="row">
+<div class="container-m10 row">
     <div class="col s12 m6 l2">
         <div class="card hoverable">
             <div id="atsvc"></div>
@@ -34,25 +34,34 @@
             <div id="atmonths"></div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col s12 m12 l6">
-        <div class="row">
-            <div class="col s12 m12 l6">
-                <div class="card hoverable">
-                    <div id="chartatdistintos"></div>
-                </div>
-            </div>
-            <div class="col s12 m12 l6">
-                <div class="card hoverable">
-                    <div id="chartclidistintos"></div>
-                </div>
-            </div>
+    <div class="col s12 m12 l3">
+        <div class="card hoverable">
+            <div id="chartatdistintos"></div>
+        </div>
+    </div>
+    <div class="col s12 m12 l3">
+        <div class="card hoverable">
+            <div id="chartclidistintos"></div>
+        </div>
+    </div>
+    <div class="col s12 m12 l3">
+        <div class="card hoverable">
+            <div id="chartcligenero"></div>
+        </div>
+    </div>
+    <div class="col s12 m12 l3">
+        <div class="card hoverable">
+            <div id="chartfaixaetaria"></div>
         </div>
     </div>
     <div class="col s12 m12 l6">
         <div class="card hoverable">
-            <div id="chartfaixaetaria"></div>
+            <div id="donutchartsegmentos"></div>
+        </div>
+    </div>
+    <div class="col s12 m12 l6">
+        <div class="card hoverable">
+            <div id="funnelchartempfaixas"></div>
         </div>
     </div>
 </div>
@@ -122,6 +131,10 @@
             tooltip: {
                 shared: true,
                 intersect: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
             }
         };
 
@@ -194,6 +207,10 @@
             tooltip: {
                 shared: true,
                 intersect: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
             }
         };
 
@@ -235,6 +252,10 @@
             },
             tooltip: {
                 enabled: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
             }
         };
 
@@ -276,6 +297,10 @@
             },
             tooltip: {
                 enabled: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
             }
         };
 
@@ -286,6 +311,7 @@
             chart: {
                 type: 'area',
                 height: 200,
+                width: '98%',
                 zoom: {
                     enabled: false
                 }
@@ -378,6 +404,10 @@
             },
             tooltip: {
                 enabled: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
             }
         };
 
@@ -451,6 +481,10 @@
             tooltip: {
                 shared: true,
                 intersect: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
             }
         };
 
@@ -458,6 +492,11 @@
         chartCliDistintos.render();
 
         var faixa_etaria = {
+            plotOptions: {
+                bar: {
+                    distributed: true
+                }
+            },
             chart: {
                 type: 'bar',
                 height: 250,
@@ -468,17 +507,35 @@
             plotOptions: {
                 bar: {
                     horizontal: true,
-                    isFunnel: true,
+                    //isFunnel: true,
                 },
             },
             series: [{
-                name: "Novos",
+                name: "Faixas",
                 data: [@Model.FaixaEtaria],
             }],
             dataLabels: {
                 enabled: true,
             },
+            title: {
+                text: 'Faixa Etaria',
+                align: 'left',
+            },
+            subtitle: {
+                text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
+            },
+            tooltip: {
+                shared: true,
+                intersect: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
+            },
             xaxis: {
+                labels: {
+                    show: false
+                },
                 axisBorder: {
                     show: false
                 },
@@ -501,22 +558,134 @@
                     }
                 }
             },
-            yaxis: {
-                axisBorder: {
-                    show: false
-                },
-                labels: {
-                    show: false
-                }
-            },
             legend: {
                 floating: true,
                 position: 'top',
                 horizontalAlign: 'right',
                 offsetY: -36
+            }
+
+        };
+
+        var chartFaixaEtaria = new ApexCharts(document.querySelector("#chartfaixaetaria"), faixa_etaria);
+        chartFaixaEtaria.render();
+
+        var cli_genero = {
+            title: {
+                text: 'Genero',
+                align: 'left'
+            },
+            subtitle: {
+                text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
+            },
+            chart: {
+                type: 'donut',
+                height: 298,
+                zoom: {
+                    enabled: true
+                }
+            },
+            series: [@Model.Genero[0]],
+            labels: [@Model.Genero[1]],
+            legend: {
+                position: 'bottom'
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                enabled: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
+            }
+        };
+
+        var chartCliGenero = new ApexCharts(document.querySelector("#chartcligenero"), cli_genero);
+        chartCliGenero.render();
+
+        var emp_segmentos = {
+            title: {
+                text: 'Segmentos',
+                align: 'left'
+            },
+            subtitle: {
+                text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
+            },
+            chart: {
+                type: 'donut',
+                height: 298,
+                zoom: {
+                    enabled: true
+                }
+            },
+            series: [@Model.Segmentos[0]],
+            labels: [@Model.Segmentos[1]],
+            legend: {
+                position: 'bottom'
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                enabled: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
+            }
+        };
+
+        var donutChartEmpSegmentos = new ApexCharts(document.querySelector("#donutchartsegmentos"), emp_segmentos);
+        donutChartEmpSegmentos.render();
+
+        var emp_faixa_etaria = {
+            plotOptions: {
+                bar: {
+                    distributed: true
+                }
+            },
+            chart: {
+                type: 'bar',
+                height: 250,
+                zoom: {
+                    enabled: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    //isFunnel: true
+                },
+            },
+            series: [{
+                name: "Faixas",
+                data: [@Model.FaixaEtariaEmpresas],
+            }],
+            dataLabels: {
+                enabled: true,
             },
             title: {
-                text: 'Faixa Etaria',
+                text: 'Idade Empresas',
                 align: 'left',
             },
             subtitle: {
@@ -525,11 +694,47 @@
             tooltip: {
                 shared: true,
                 intersect: false
+            },
+            theme: {
+                mode: 'light',
+                palette: 'palette1'
+            },
+            xaxis: {
+                labels: {
+                    show: false
+                },
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                crosshairs: {
+                    show: false
+                }
+            },
+            grid: {
+                xaxis: {
+                    lines: {
+                        show: false
+                    },
+                },
+                yaxis: {
+                    lines: {
+                        show: false
+                    }
+                }
+            },
+            legend: {
+                floating: true,
+                position: 'top',
+                horizontalAlign: 'right',
+                offsetY: -36
             }
         };
 
-        var chartFaixaEtaria = new ApexCharts(document.querySelector("#chartfaixaetaria"), faixa_etaria);
-        chartFaixaEtaria.render();
+        var funnelchartEmpFaixaEtaria = new ApexCharts(document.querySelector("#funnelchartempfaixas"), emp_faixa_etaria);
+        funnelchartEmpFaixaEtaria.render();
 
     };
 </script>

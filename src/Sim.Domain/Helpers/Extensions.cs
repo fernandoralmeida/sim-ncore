@@ -13,15 +13,15 @@ public static class Extensions
         }
         else if (cnae >= 45 && cnae <= 47)
         {
-            return "Com";
+            return "Comercio";
         }
         else if (cnae >= 05 & cnae <= 09 || cnae >= 10 && cnae <= 33)
         {
-            return "Ind";
+            return "Industria";
         }
         else if (cnae >= 41 & cnae <= 43)
         {
-            return "Cons";
+            return "Construcao";
         }
         else if (cnae == 35 || (cnae >= 36 && cnae <= 39)
             || (cnae >= 49 && cnae <= 53)
@@ -39,11 +39,11 @@ public static class Extensions
             || (cnae == 97)
             || (cnae == 99))
         {
-            return "Serv";
+            return "Servicos";
         }
         else
         {
-            return "...";
+            return "Outros";
         }
     }
 

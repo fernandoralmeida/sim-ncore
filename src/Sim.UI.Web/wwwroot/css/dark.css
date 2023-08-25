@@ -560,7 +560,22 @@ footer {
     width: 250px;
     background-color: #37474f;
 }
-
+.sidenav-dash {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100px;
+    height: 100%;
+    padding: 20px;
+    background-color: #37474f;
+}
+.container-forsidenav {
+    margin-left: 100px;
+    padding: 20px;
+}
+.has-fixed-sidenav-dash {
+    left: 100px
+}
 .has-fixed-sidenav .fixed-chart {
     left: 250px
 }

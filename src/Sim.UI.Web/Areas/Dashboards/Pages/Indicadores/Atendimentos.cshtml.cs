@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sim.Application.Indicadores.Interfaces;
@@ -27,12 +26,11 @@ public class AtendimentosPage : PageModel
     public string ClientesDistintos { get; set; }
     public string EmpresasDistintas { get; set; }
     public string PerfilDistintos { get; set; }
-    public string Genero { get; set; }
+    public string[] Genero { get; set; }
     public string FaixaEtaria { get; set; }
-    public string Segmentos { get; set; }
+    public string[] Segmentos { get; set; }
     public string FaixaEtariaEmpresas { get; set; }
     public string[] AtendimentosDistintos { get; set; }
-    public string TotalClientesDistintos { get; set; }
 
     public AtendimentosPage(IAppIndicadores indicadores,
         IAppServiceSecretaria organizacao)
@@ -82,10 +80,8 @@ public class AtendimentosPage : PageModel
         }
 
         string[] _atdistintos = new string[2];
-        string _count = string.Empty;
         foreach (var x in LReports.PerfilCliente)
         {
-            _count += x.Value;
             _atdistintos[0] += string.Format(@"{0},", x.Value);
             _atdistintos[1] += string.Format(@"`{0}`,", x.Key);
         }
@@ -102,6 +98,24 @@ public class AtendimentosPage : PageModel
         foreach (var x in LReports.FaixaEtariaCliente)
             _faixa_etaria += string.Format(@"{{x:`{0}`,y:{1}}},", x.Key.NormalizeText(), x.Value);
 
+        string[] _cli_genero = new string[2];
+        foreach (var x in LReports.GeneroCliente)
+        {
+            _cli_genero[0] += string.Format(@"{0},", x.Value);
+            _cli_genero[1] += string.Format(@"`{0}`,", x.Key);
+        }
+
+        string _emp_faixa_etaria = string.Empty;
+        foreach (var x in LReports.EmpresasIdade)
+            _emp_faixa_etaria += string.Format(@"{{x:`{0}`,y:{1}}},", x.faixa.NormalizeText(), x.valor);
+
+        string[] _segmento = new string[2];
+        foreach (var x in LReports.EmpresasSetores)
+        {
+            _segmento[0] += string.Format(@"{0},", x.valor);
+            _segmento[1] += string.Format(@"`{0}`,", x.setor);
+        }
+
         AtTimeDay = _attimeday.Length > 0 ? _attimeday[..^1] : _attimeday;
         SvTimeDay = _svtimeday.Length > 0 ? _svtimeday[..^1] : _svtimeday;
         Perfil = _perfil;
@@ -112,7 +126,9 @@ public class AtendimentosPage : PageModel
         ClientesDistintos = _cli_distintos.Length > 0 ? _cli_distintos[..^1] : _cli_distintos;
         EmpresasDistintas = _emp_distintas.Length > 0 ? _emp_distintas[..^1] : _emp_distintas;
         FaixaEtaria = _faixa_etaria.Length > 0 ? _faixa_etaria[..^1] : _faixa_etaria;
-        TotalClientesDistintos = _count;
+        Genero = _cli_genero;
+        FaixaEtariaEmpresas = _emp_faixa_etaria.Length > 0 ? _emp_faixa_etaria[..^1] : _emp_faixa_etaria;
+        Segmentos = _segmento;
     }
 
     private async Task<IEnumerable<string>> Setores()

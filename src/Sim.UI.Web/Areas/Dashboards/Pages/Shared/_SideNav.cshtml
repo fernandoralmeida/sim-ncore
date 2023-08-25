@@ -1,0 +1,24 @@
+@model (int Ano, string Setor, string Page, IEnumerable<string> Setores)
+
+<ul id="sidenav-left" class="sidenav-dash">
+    <li class="no-padding alpha-text-6">
+        <select class="browser-default" asp-for="Page">
+            <option>Atendimentos</option>
+            <option>Eventos</option>
+            <option>Empregos</option>
+            <option>Empresas</option>
+        </select>
+        <select class="browser-default" asp-for="Ano">
+            @for (int i = DateTime.Now.Year; i > DateTime.Now.Year - 10; i--)
+            {
+                <option>@i</option>
+            }
+        </select>
+        <select class="browser-default" asp-for="Setor">
+            @foreach (var item in @Model.Setores)
+            {
+                <option>@item</option>
+            }
+        </select>
+    </li>
+</ul>

@@ -7,6 +7,8 @@
 @inject IAppServiceStatusAtendimento MeuStatus
 @inject HttpContextAccessor httpcontextaccessor
 
+@model (int Ano, string Setor, string Page, IEnumerable<string> Setores)
+
 
 @{
     var _user = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name);
@@ -15,7 +17,6 @@
     var _idstatus = _lstatus == null ? Guid.Empty : _lstatus.Id;
     var DisplayName = _user.Name;
     var DisplayLastName = _user.LastName;
-    var account_color = "";
     var _mytheme = _user.Theme == null ? "light" : _user.Theme;
     var _changetheme = _mytheme == "light" ? "dark" : "light";
     var _icon = _mytheme == "dark" ? "dark_mode" : "light_mode";
@@ -28,71 +29,59 @@
             <a href="#" data-target="sidenav-left" class="sidenav-trigger hide-on-extra-large-only"><i
                     class="material-icons">menu</i></a>
 
-
-
-            <div class="left"><img src="~/icons/sedempi-166p.svg" width="120px" style="padding-top: 20px; padding-left: 10px;"
-                    alt="SEDEMPI" /></div>
-            <a class="navbar-page-name">
-                @ViewData["Title"]</a>
+            <div class="left"><img src="~/icons/sedempi-166p.svg" width="120px"
+                    style="padding-top: 20px; padding-left: 10px;" alt="SEDEMPI" /></div>
             <ul class="right hide-on-med-and-down">
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    @if (!_status)
-                    { account_color = "offline"; }
-                    else
-                    { account_color = "online"; }
+                <li><a class="dropdown-trigger alpha-w-text-9" href="#!" data-target="pagnames">@Model.Page<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-trigger alpha-w-text-9" href="#!" data-target="dropdown1">@Model.Ano<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-trigger alpha-w-text-9" href="#!" data-target="dropdown2">@Model.Setor<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
 
-                    <li class="dropdown-trigger mgn-r-10" data-target="dropdownuser">
-                        <a id="btnstatus" class="@account_color" href="#">@DisplayName<i
-                                class="left material-icons">person</i></a>
-                    </li>
-                }
+                <li class="dropdown-trigger" data-target="dropdownuser">
+                    <a id="btnstatus" href="#" class="alpha-w-text-9">@DisplayName<i
+                            class="left material-icons">person</i></a>
+                </li>
+
             </ul>
         </div>
     </nav>
-</div>
-
-<div id="dropsection" class="dropdown-content rounded-default row">
-    <div>
-        <a href="#">Sebrae</a>
-    </div>
-    <div>
-        <a href="#">PAT</a>
-    </div>
-    <div><a href="#">Banco do Povo</a></div>
 </div>
 
 <div id="dropdownuser" class="dropdown-content rounded-default row">
     <div class="center-align"><a class="grey-text" asp-area="Identity" asp-page="/Account/Manage/Index">Meu Perfil</a>
     </div>
     <div class="divider"></div>
-    <div class="center-align">
-        <a id="settheme" data-id="@_user.UserName" data-theme="@_changetheme" href="#"><i
-                class="material-icons online">@_icon</i></a>
-    </div>
-    <div class="divider"></div>
-    <div class="center-align pdn-h-10">
-        <div class="switch" title="Alterar meu status"><label>OFF<input id="chkstatus" checked="@_status"
-                    type="checkbox" onclick="myStatus()" /><span class="lever"></span>ON</label></div>
-    </div>
-    <div class="divider"></div>
     <div><a asp-area="Identity" asp-page="/Account/Logout" class="grey-text">Sair<i
                 class="left material-icons">logout</i></a></div>
 </div>
 
-<script>
-    function myStatus() {
-        var st = document.querySelector('#chkstatus');
-        var uid = document.querySelector('#meustatusonline').value;
-        const btnstatus = document.querySelector('#btnstatus');
-        btnstatus.classList.remove('online');
-        btnstatus.classList.remove('offline');
-        if (!st.checked) { $('#btnstatus').addClass('offline'); }
-        else { $('#btnstatus').addClass('online'); }
-        var formData = { id: uid, val: st.checked };
-        $.get('/Identity/OnlineStatus', { id: uid, val: st.checked },
-            function (returnedData) {
-            });
+<ul id="dropdown1" class="dropdown-content">
+    @for (int i = DateTime.Now.Year; i > DateTime.Now.Year - 10; i--)
+    {
+        <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Atendimentos" asp-route-ano="@i"
+                asp-route-setor="@Model.Setor" onclick="CloseDropdown()">@i</a></li>
     }
-</script>
+</ul>
+
+<ul id="dropdown2" class="dropdown-content">
+    @foreach (var item in @Model.Setores)
+    {
+        <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Atendimentos" asp-route-ano="@Model.Ano"
+                asp-route-setor="@item" onclick="CloseDropdown()">@item</a></li>
+    }
+</ul>
+
+<ul id="pagnames" class="dropdown-content">
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Atendimentos</a></li>
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Eventos</a></li>
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Empregos</a></li>
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Atendimentos/Setores/Index" asp-route-ano="@Model.Ano"
+            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Empresas</a></li>
+</ul>
+
 

@@ -98,21 +98,21 @@ public class AppIndicadores : IAppIndicadores
 
                  var _faixa = (d2.Subtract(d1).TotalDays) / 365;
                  if (_faixa < 16)
-                     _faixa_etaria.Add("Erro: - 16");
+                     _faixa_etaria.Add("0 - 16 anos");
                  else if (_faixa > 15 && _faixa < 21)
-                     _faixa_etaria.Add("16 - 20");
+                     _faixa_etaria.Add("16 - 20 anos");
                  else if (_faixa > 20 && _faixa < 31)
-                     _faixa_etaria.Add("21 - 30");
+                     _faixa_etaria.Add("21 - 30 anos");
                  else if (_faixa > 30 && _faixa < 41)
-                     _faixa_etaria.Add("31 - 40");
+                     _faixa_etaria.Add("31 - 40 anos");
                  else if (_faixa > 40 && _faixa < 51)
-                     _faixa_etaria.Add("41 - 50");
+                     _faixa_etaria.Add("41 - 50 anos");
                  else if (_faixa > 50 && _faixa < 61)
-                     _faixa_etaria.Add("51 - 60");
+                     _faixa_etaria.Add("51 - 60 anos");
                  else if (_faixa > 60 && _faixa < 71)
-                     _faixa_etaria.Add("61 - 70");
+                     _faixa_etaria.Add("61 - 70 anos");
                  else if (_faixa > 70)
-                     _faixa_etaria.Add("71 ou mais");
+                     _faixa_etaria.Add("71 anos ou mais");
              }
 
              foreach (var item in _faixa_etaria.GroupBy(g => g)
@@ -193,13 +193,13 @@ public class AppIndicadores : IAppIndicadores
                  var _faixa = (d2.Subtract(d1).TotalDays) / 365;
 
                  if (_faixa <= 2)
-                     _emp_idade.Add("até 2");
+                     _emp_idade.Add("0 - 2 anos");
                  else if (_faixa > 2 && _faixa <= 5)
-                     _emp_idade.Add("2 a 5");
+                     _emp_idade.Add("2 - 5 anos");
                  else if (_faixa > 5 && _faixa <= 10)
-                     _emp_idade.Add("5 a 10");
+                     _emp_idade.Add("5 - 10 anos");
                  else if (_faixa > 10)
-                     _emp_idade.Add("10 ou mais");
+                     _emp_idade.Add("10 anos ou mais");
 
                  string _cnae = i.Empresa.CNAE_Principal!.Remove(2, 8);
                  if (_cnae.All(char.IsDigit))
@@ -219,7 +219,6 @@ public class AppIndicadores : IAppIndicadores
              _report.EmpresasIdade = _list_emp_idade;
 
              foreach (var item in _setores
-                                     .Where(s => s != "...")
                                      .GroupBy(g => g)
                                      .OrderByDescending(o => o.Count()))
                  _list_Setores.Add((item.Key, item.Count(), (item.Count() / _e_cont) * 100F));

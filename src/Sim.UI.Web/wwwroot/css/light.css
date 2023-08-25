@@ -487,6 +487,24 @@ select {
     background-color: #4db6ac;
 }
 
+.sidenav-dash {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100px;
+    height: 100%;
+    padding: 20px;
+    background-color: #4db6ac;
+}
+.container-forsidenav{
+    margin-left: 100px;
+    padding: 20px;
+}
+
+.has-fixed-sidenav-dash {
+    left: 100px
+}
+
 .has-fixed-sidenav .fixed-chart {
     left: 250px
 }
@@ -1209,61 +1227,61 @@ nav,
         gap: 20px 20px;
     }
 
-        .box-column-8 {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            row-gap: 20px;
-        }
-    
-        .box-column-7 {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            row-gap: 20px;
-        }
-    
-        .box-column-6 {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            row-gap: 20px;
-        }
-    
-        .box-column-5 {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            row-gap: 20px;
-        }
-    
-        .box-column-4 {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            row-gap: 20px;
-        }
-    
-        .box-column-3 {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            row-gap: 20px;
-        }
-    
-        .box-column-2-5 {
-            display: flex;
-            flex-direction: r;
-            width: 100%;
-            row-gap: 20px;
-        }
-    
-        .box-column-2 {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            row-gap: 20px;
-        }
+    .box-column-8 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-7 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-6 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-5 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-4 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-3 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-2-5 {
+        display: flex;
+        flex-direction: r;
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .box-column-2 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        row-gap: 20px;
+    }
 
     .card-chart {
         display: block;
