@@ -1,10 +1,9 @@
-@page "/bi/empresas/cnaes/{m}"
+@page "/painel/empresas/cnaes/{m}"
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.CnaesModel
 @using Sim.UI.Web.Areas.SimBI.Pages.Empresas
 @inject Sim.Application.Cnpj.Interfaces.IAppServiceCnpj appServiceCnpj;
 
-@{
-    Layout = "_Layout.cshtml";
+@{    
     ViewData["Title"] = "Power BI";
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Cnae;
 }
@@ -58,7 +57,7 @@
                     var _cnaef = item2.Classe.Key.Remove(2, item2.Classe.Key.Length - 2) + "99999";
                     var _count = item2.ListaSubClasse.Count();
                     var _emp = 0;
-                    var _href = $"/bi/empresas/lista/{_cnaei}/{_cnaef}/{Model.MunicipioSelecionado}";
+                    var _href = $"/painel/empresas/lista/{_cnaei}/{_cnaef}/{Model.MunicipioSelecionado}";
                     foreach(var count in item2.ListaSubClasse)
                     {
                         _emp += count.Value;
@@ -110,14 +109,14 @@
                 var p2 = $(this).data('cnaef');
                 var p3 = $(this).data('munic');
                 $(".showcollection").empty();
-                $.getJSON(`/bi/empresas/cnaes/${p3}?ci=${p1}&cf=${p2}&m=${p3}&handler=SubClasses`, function (data) {                    
+                $.getJSON(`/painel/empresas/cnaes/${p3}?ci=${p1}&cf=${p2}&m=${p3}&handler=SubClasses`, function (data) {                    
                     $.each(data, function (i, item) {
                         var v1 = item.item1;
                         var v2 = item.item2;
                         var v3 = item.item3;
                         $(".showcollection").append(
                             `<li class="collection-item">
-                                <div>${v2}<a href="/bi/empresas/lista/${v3}/${v3}/${p3}" class="secondary-content" target="_blank"><span class="new badge" data-badge-caption="${v1} Empresas"></span></a></div>
+                                <div>${v2}<a href="/painel/empresas/lista/${v3}/${v3}/${p3}" class="secondary-content" target="_blank"><span class="new badge" data-badge-caption="${v1} Empresas"></span></a></div>
                             </li>`
                         );
                     });

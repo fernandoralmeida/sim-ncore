@@ -28,6 +28,8 @@ public class DashEventos : PageModel
     public string EventosMesesParticipantes { get; set; }
     public string EventosMesesInscritos { get; set; }
     public string[] ListaEventos { get; set; }
+    public string[] Eventos {get; set; }
+
 
     public DashEventos(IAppIndicadores indicadores,
         IAppServiceSecretaria organizacao)
@@ -47,6 +49,15 @@ public class DashEventos : PageModel
         Inscritos = LReports.Inscritos.Value.Value;
         Participantes = LReports.Presentes.Value.Value;
         Ausentes = Inscritos - Participantes;
+
+        string[] _eventos = new string[2];
+        foreach (var x in LReports.Eventos)
+        {
+            _eventos[0] += string.Format(@"{0},", x.Value);
+            _eventos[1] += string.Format(@"`{0}`,", x.Key);
+        }
+
+        Eventos = _eventos;
 
         string[] _cli_genero = new string[2];
         foreach (var x in LReports.ParticipantesGenero)
@@ -105,7 +116,5 @@ public class DashEventos : PageModel
     {
         return from st in await _organizacao.DoList(s => s.Hierarquia >= EHierarquia.Secretaria)
                select st.Acronimo;
-
-
     }
 }

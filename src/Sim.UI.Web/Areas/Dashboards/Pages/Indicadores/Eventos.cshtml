@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="col s12 m4 l2">
-        @foreach (var item in Model.LReports.Eventos)
+        @foreach (var item in Model.LReports.EventosTipo)
         {
             <div class="card hoverable">                
                 <div class="card-content">@item.Value - @item.Key</div>
@@ -55,73 +55,42 @@
     window.onload = function () {
 
         var t_eventos = {
-            chart: {
-                type: 'bar',
-                height: 252,
-                zoom: { enabled: false }
-            },
-            series: [{
-                name: "Planejados",
-                data: [{ x: 'Planejados', y: @Model.LReports.EventosP.Value.Value }],
-            }, {
-                name: "Realizados",
-                data: [{ x: 'Realizados', y: @Model.LReports.EventosR.Value.Value }],
-            }, {
-                name: "Cancelados",
-                data: [{ x: 'Cancelados', y: @Model.LReports.EventosC.Value.Value }],
-            }],
-            dataLabels: {
-                enabled: true,
-                position: 'top'
-            },
-            xaxis: {
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false
-                },
-                crosshairs: {
-                    show: false
-                },
-                labels: { show: false }
-            },
-            grid: {
-                xaxis: {
-                    lines: {
-                        show: false
-                    },
-                },
-                yaxis: {
-                    lines: {
-                        show: false
-                    }
-                }
-            },
-            yaxis: {
-                axisBorder: {
-                    show: false
-                },
-                labels: {
-                    show: false
-                }
-            },
-            legend: {
-                position: 'bottom'
-            },
             title: {
                 text: 'Eventos',
-                align: 'left',
+                align: 'left'
             },
             subtitle: {
                 text: '@Model.NavBar.Setor - @Model.NavBar.Ano'
             },
+            chart: {
+                type: 'donut',
+                height: 300,
+                zoom: {
+                    enabled: true
+                }
+            },
+            series: [@Model.Eventos[0]],
+            labels: [@Model.Eventos[1]],
+            legend: {
+                position: 'bottom'
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true
+                            }
+                        }
+                    }
+                }
+            },
             tooltip: {
-                shared: true,
-                intersect: false
+                enabled: false
             },
             theme: {
-                mode: 'light',
+                mode: 'ligth',
                 palette: 'palette1'
             }
         };

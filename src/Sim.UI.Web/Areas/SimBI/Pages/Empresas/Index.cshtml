@@ -1,10 +1,9 @@
-﻿@page "/bi/empresas/{m?}/"
+﻿@page "/painel/empresas/{m?}/"
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.IndexModel
 @using Sim.UI.Web.Areas.SimBI.Pages.Empresas
 @inject Sim.Application.Cnpj.Interfaces.IAppServiceCnpj appServiceCnpj;
 
 @{
-    Layout = "_Layout.cshtml";
     ViewData["Title"] = "Power BI";
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Empresa;
 }

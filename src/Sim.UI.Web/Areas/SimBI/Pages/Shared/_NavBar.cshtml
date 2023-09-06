@@ -7,9 +7,6 @@
 @inject IAppServiceStatusAtendimento MeuStatus
 @inject HttpContextAccessor httpcontextaccessor
 
-@model (int Ano, string Setor, string Page, IEnumerable<string> Setores)
-
-
 @{
     var _user = UserManager.Users.FirstOrDefault(m => m.UserName == User.Identity.Name);
     var _lstatus = await MeuStatus.MyStatusAsync(User.Identity.Name);
@@ -33,17 +30,13 @@
                     style="padding-top: 14px; padding-left: 10px; margin-left: 10px;" width="48px" alt="IDNet" /></div>
 
             <ul class="right hide-on-med-and-down">
-                <li><a class="dropdown-trigger alpha-w-text-9" href="#!" data-target="pagnames">@Model.Page<i
+                <li><a class="dropdown-trigger alpha-w-text-9" href="#!" data-target="pagnames">Empresas<i
                             class="material-icons right">arrow_drop_down</i></a></li>
-                <li><a class="dropdown-trigger alpha-w-text-9" href="#!" data-target="dropdown1">@Model.Ano<i
-                            class="material-icons right">arrow_drop_down</i></a></li>
-                <li><a class="dropdown-trigger alpha-w-text-9" href="#!" data-target="dropdown2">@Model.Setor<i
-                            class="material-icons right">arrow_drop_down</i></a></li>
-                <!-- 
+                <!-- -->
                 <li class="dropdown-trigger" data-target="dropdownuser">
                     <a id="btnstatus" href="#" class="alpha-w-text-9
                     ">@DisplayName<i class="left material-icons">person</i></a>
-                </li>-->
+                </li>
             </ul>
         </div>
     </nav>
@@ -57,27 +50,11 @@
                 class="left material-icons">logout</i></a></div>
 </div>
 
-<ul id="dropdown1" class="dropdown-content">
-    @for (int i = DateTime.Now.Year; i > DateTime.Now.Year - 10; i--)
-    {
-        <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/@Model.Page" asp-route-ano="@i"
-                asp-route-setor="@Model.Setor" onclick="CloseDropdown()">@i</a></li>
-    }
-</ul>
-
-<ul id="dropdown2" class="dropdown-content">
-    @foreach (var item in @Model.Setores)
-    {
-        <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/@Model.Page" asp-route-ano="@Model.Ano"
-                asp-route-setor="@item" onclick="CloseDropdown()">@item</a></li>
-    }
-</ul>
-
 <ul id="pagnames" class="dropdown-content">
-    <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Atendimentos" asp-route-ano="@Model.Ano"
-            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Atendimentos</a></li>
-    <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Eventos" asp-route-ano="@Model.Ano"
-            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Eventos</a></li>
-    <li><a class="submit" asp-area="SimBI" asp-page="/Empresas/Index" asp-route-ano="@Model.Ano"
-            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Empresas</a></li>
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Atendimentos" asp-route-ano="@DateTime.Now.Year"
+            asp-route-setor="" onclick="CloseDropdown()">Atendimentos</a></li>
+    <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Eventos" asp-route-ano="@DateTime.Now.Year"
+            asp-route-setor="" onclick="CloseDropdown()">Eventos</a></li>
+    <li><a class="submit" asp-area="SimBI" asp-page="/Empresas/Index" asp-route-ano="@DateTime.Now.Year"
+            onclick="CloseDropdown()">Empresas</a></li>
 </ul>

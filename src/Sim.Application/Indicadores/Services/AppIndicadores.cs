@@ -260,21 +260,16 @@ public class AppIndicadores : IAppIndicadores
         {
             return new VmREventos(
 
-                EventosP: new KeyValuePair<string, int>("Proposto", lista.Count()),
-
-                EventosR: new KeyValuePair<string, int>("Realizados", lista
-                            .Where(s => s.Situacao == EEvento.ESituacao.Finalizado)
-                            .Count()),
-
-                EventosC: new KeyValuePair<string, int>("Cancelados", lista
-                            .Where(s => s.Situacao == EEvento.ESituacao.Cancelado)
-                            .Count()),
-
                 Eventos: from ev in lista
+                                    .GroupBy(g => g.Situacao)
+                                    .OrderByDescending(o => o.Count())
+                         select (new KeyValuePair<string, int>(ev.Key!.Value.ToString(), ev.Count())),
+
+                EventosTipo: from ev in lista
                                     .Where(s => s.Situacao == EEvento.ESituacao.Finalizado)
                                     .GroupBy(g => g.Tipo)
                                     .OrderByDescending(o => o.Count())
-                         select (new KeyValuePair<string, int>(ev.Key, ev.Count())),
+                             select (new KeyValuePair<string, int>(ev.Key, ev.Count())),
 
                 Inscritos: new KeyValuePair<string, int>("Inscritos", lista
                                     .Sum(s => s.Inscritos!.Count())),

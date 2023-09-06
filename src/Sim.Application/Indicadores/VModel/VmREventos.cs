@@ -3,10 +3,8 @@ using System.Globalization;
 namespace Sim.Application.Indicadores.VModel;
 
 public record VmREventos(
-    KeyValuePair<string, int>? EventosP,
-    KeyValuePair<string, int>? EventosR,
-    KeyValuePair<string, int>? EventosC,
     IEnumerable<KeyValuePair<string, int>>? Eventos,
+    IEnumerable<KeyValuePair<string, int>>? EventosTipo,
     KeyValuePair<string, int>? Inscritos,
     KeyValuePair<string, int>? Presentes,
     IEnumerable<KeyValuePair<string, int>>? FaixaEtaria,

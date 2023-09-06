@@ -1,8 +1,8 @@
-@page "/bi/empresas/mapa/{m}"
+@page "/painel/empresas/mapa/{m}"
 @model Sim.UI.Web.Areas.SimBI.Pages.Empresas.MappingModel
 
 @{
-     Layout = "_Layout.cshtml";
+    
     ViewData["Title"] = "Power BI";
     ViewData["BIActivePage"] = Sim.UI.Web.Areas.SimBI.Pages.Empresas.EmpNavPages.Mapa;
 }
@@ -170,14 +170,14 @@
                     $("#idcellboxcontent").empty();
                     data.forEach(function(item) {                          
                         $("#idcellboxcontent").append(
-                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="/bi/empresas/lista-mapa/${item.key}/${param1}/${param0}" target="_blank">                           
+                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="/painel/empresas/lista-mapa/${item.key}/${param1}/${param0}" target="_blank">                           
                                 ${item.key}<strong class="light-green-text"> ${item.value} </strong>-Empresa                         
                             </a>
                             <div class="divider"></div>`
                         );
                     });
                 });
-                $.getJSON(`/bi/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
+                $.getJSON(`/painel/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
                     data.forEach(function(item) {
                         
                     });
@@ -193,14 +193,14 @@
                     $("#idcellboxcontent").empty();
                     data.forEach(function(item) {                          
                         $("#idcellboxcontent").append(
-                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="/bi/empresas/lista-mapa/${item.key}/${param1}" target="_blank">                           
+                           `<a class="display-block font-size-12 mgn-l-10 pdn-10 grey-text item-trigger" href="/painel/empresas/lista-mapa/${item.key}/${param1}" target="_blank">                           
                                 ${item.key}<strong class="light-green-text"> ${item.value} </strong>-Empresa                         
                             </a>
                             <div class="divider"></div>`
                         );
                     });
                 });
-                $.getJSON(`/bi/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
+                $.getJSON(`/painel/empresas/mapa/${param1}?bro=${param0}&mcp=${param1}&a=Ativa&handler=Zona`, (data) => {
                     data.forEach(function(item) {
                         
                     });
