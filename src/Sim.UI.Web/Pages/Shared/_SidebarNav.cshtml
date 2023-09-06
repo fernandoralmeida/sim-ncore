@@ -140,30 +140,9 @@
                 </div>
             </li>
             <li class="@LayoutNavPages.PowerBINavClass(ViewContext)">
-                <div class="collapsible-header">Indicadores<i class="material-icons chevron">chevron_left</i></div>
-                <div class="collapsible-body">
-                    <ul>
-                        <li class="@LayoutNavPages.PowerBIEmpregosNavClass(ViewContext) submit"><a asp-area="Dashboards"
-                                asp-page="/Indicadores/Atendimentos" class="">Indicadores<i
-                                    class="left  material-icons">engineering</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIEmpregosNavClass(ViewContext) submit"><a asp-area="SimBI"
-                                asp-page="/Empregos/Index" class="">Empregos<i
-                                    class="left  material-icons">engineering</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIEventosNavClass(ViewContext) submit"><a asp-area="SimBI"
-                                asp-page="/Eventos/Index" class="">Eventos<i class="left  material-icons">event</i></a>
-                        </li>
-                        <li class="@LayoutNavPages.PowerBIAtendimentoNavClass(ViewContext) submit"><a asp-area="SimBI"
-                                asp-page="/Atendimentos/Setores/Index" asp-route-ano="@DateTime.Now.Year"
-                                asp-route-m="SEDEMPI" class="">Atendimentos<i
-                                    class="left  material-icons">access_time</i></a></li>
-                        <li class="@LayoutNavPages.PowerBIEmpresasNavClass(ViewContext) submit"><a asp-area="SimBI"
-                                asp-page="/Empresas/Index" class="">Empresas<i
-                                    class="left material-icons">domain</i></a></li>
-                    </ul>
-                </div>
+                <a class="collapsible-header" asp-area="Dashboards" asp-page="/Indicadores/Atendimentos"
+                    target="_blank">Indicadores</a>
             </li>
-
         </ul>
     </li>
 </ul>
-

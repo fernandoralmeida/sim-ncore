@@ -45,6 +45,7 @@ namespace Sim.Application.Services
                 var _genero = new List<string>();
                 var _list_genero = new List<KeyValuePair<string, int>>();
                 var _txparticipante = 0;
+                
                 foreach (var f in lista.Where(s => s.Situacao != EEvento.ESituacao.Cancelado)) {
                     foreach (var i in f.Inscritos) {
                         if(i.Presente)

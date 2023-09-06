@@ -62,7 +62,7 @@ footer {
 }
 
 nav ul li.active {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);    
     border-radius: 4px;
 }
 
@@ -627,6 +627,10 @@ ul .logo-left-dash {
     margin: 20px 0 0 0;
     color: rgba(255, 255, 255, 0.9);
     transition: transform .2s
+}
+
+.sidenav li>a {
+    font-weight: normal !important;
 }
 
 .sidenav .collapsible .collapsible-body {

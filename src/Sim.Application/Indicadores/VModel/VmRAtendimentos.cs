@@ -22,4 +22,5 @@ public class VmRAtendimentos
     public IEnumerable<(string canal, int valor, float percent)>? Canais { get; set; }
     public IEnumerable<(string timeday, int valor)>? TimeDay { get; set; }
     public IEnumerable<(string timeday, int valor)>? ServTimeDay { get; set; }
+    public IEnumerable<(string servico, int valor)>? Top10Servicos { get; set; }
 }

@@ -1,13 +1,20 @@
+using System.Globalization;
+
 namespace Sim.Application.Indicadores.VModel;
-public class VmREventos {
-    public KeyValuePair<string, int>? EventosP { get; set; }
-    public KeyValuePair<string, int>? EventosR { get; set; }
-    public KeyValuePair<string, int>? EventosC { get; set; }
-    public IEnumerable<KeyValuePair<string, int>>? Eventos { get; set; }
-    public KeyValuePair<string, int>? Participantes { get; set; }
-    public IEnumerable<KeyValuePair<string, int>>? FaixaEtaria { get; set; }
-    public IEnumerable<KeyValuePair<string, int>>? ParticipantesGenero { get; set; }
-    public KeyValuePair<string, float>? TaxaPreenchimentoParticipantes { get; set; }
-    public IEnumerable<KeyValuePair<string, int>>? EventosSetores { get; set; }
-    public IEnumerable<KeyValuePair<string, int>>? EventosMeses { get; set; }
-}
+
+public record VmREventos(
+    KeyValuePair<string, int>? EventosP,
+    KeyValuePair<string, int>? EventosR,
+    KeyValuePair<string, int>? EventosC,
+    IEnumerable<KeyValuePair<string, int>>? Eventos,
+    KeyValuePair<string, int>? Inscritos,
+    KeyValuePair<string, int>? Presentes,
+    IEnumerable<KeyValuePair<string, int>>? FaixaEtaria,
+    IEnumerable<KeyValuePair<string, int>>? FaixaEtariaPresentes,
+    IEnumerable<KeyValuePair<string, int>>? ParticipantesGenero,
+    IEnumerable<KeyValuePair<string, int>>? ParticipantesGeneroPresente,
+    IEnumerable<KeyValuePair<string, int>>? EventosSetores,
+    IEnumerable<KeyValuePair<string, int>>? EventosMeses,
+    IEnumerable<KeyValuePair<string, int>>? EventosMesesInscritos,
+    IEnumerable<KeyValuePair<string, int>>? EventosMesesParticipantes
+);

@@ -9,7 +9,7 @@ using Sim.Domain.Helpers;
 namespace Sim.UI.Web.Areas.Dashboards.Pages.Indicadores;
 
 [Authorize]
-public class AtendimentosPage : PageModel
+public class DashAtendimentos : PageModel
 {
     private readonly IAppIndicadores _indicadores;
     private readonly IAppServiceSecretaria _organizacao;
@@ -32,7 +32,7 @@ public class AtendimentosPage : PageModel
     public string FaixaEtariaEmpresas { get; set; }
     public string[] AtendimentosDistintos { get; set; }
 
-    public AtendimentosPage(IAppIndicadores indicadores,
+    public DashAtendimentos(IAppIndicadores indicadores,
         IAppServiceSecretaria organizacao)
     {
         _indicadores = indicadores;

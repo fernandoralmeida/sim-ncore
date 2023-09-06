@@ -649,6 +649,10 @@ footer {
     transition: transform .2s
 }
 
+.sidenav li>a {
+    font-weight: normal !important;
+}
+
 .sidenav .collapsible .collapsible-body {
     padding-bottom: 0px;
     background-color: transparent;
