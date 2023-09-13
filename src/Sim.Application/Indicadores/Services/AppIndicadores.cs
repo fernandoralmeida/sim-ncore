@@ -247,6 +247,12 @@ public class AppIndicadores : IAppIndicadores
 
             _report.EmpresasLocation = _list_location;
 
+            _report.Top10Servicos = from t in _getservices
+                                        .GroupBy(g => g)
+                                        .Take(10)
+                                        .OrderByDescending(o => o.Count())
+                                        select (t.Key, t.Count());
+
             return _report;
         });
     }

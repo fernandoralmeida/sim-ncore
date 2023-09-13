@@ -20,6 +20,23 @@
 
 <body>
     <partial name="./Shared/_NavBar" />
+    <div class="blackboxload-indicadores">
+        <div id="loader" class="row center mgn-t-10">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-m10">
         @RenderBody()
     </div>
@@ -28,6 +45,20 @@
     <script type="text/javascript" src="~/js/site.js"></script>
     <script type="text/javascript" src="~/lib/materialize/js/materialize.min.js"></script>
     <script type="text/javascript" src="~/lib/apexcharts/apexcharts.min.js"></script>
+    <script>
+        $(window).on('load', function () {
+            //$(".progress").fadeOut("slow"); 
+            $("#loader").hide();
+            $(".blackboxload-indicadores").fadeOut("slow");
+        });
+        $(function () {
+            $(".submit").click(function () {
+                $(".blackboxload-indicadores").show();
+                $("#loader").show();
+                $(this).addClass('pre-active');
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

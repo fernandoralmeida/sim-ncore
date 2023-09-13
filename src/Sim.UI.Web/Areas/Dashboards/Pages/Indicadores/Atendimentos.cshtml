@@ -9,61 +9,76 @@
 <partial name="./Shared/_NavBar" model="Model.NavBar" />
 
 <div class="container-m10 row">
-    <div class="col s12 m6 l2">
-        <div class="card hoverable">
-            <div id="atsvc"></div>
+    <div class="col s12 m8 l10">
+        <div class="row">
+            <div class="col s12 m6 l2">
+                <div class="card hoverable">
+                    <div id="atsvc"></div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card hoverable">
+                    <div id="total"></div>
+                </div>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="card hoverable">
+                    <div id="perfil"></div>
+                </div>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="card hoverable">
+                    <div id="canal"></div>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="card hoverable">
+                    <div id="atmonths"></div>
+                </div>
+            </div>
+            <div class="col s12 m12 l3">
+                <div class="card hoverable">
+                    <div id="chartatdistintos"></div>
+                </div>
+            </div>
+            <div class="col s12 m12 l3">
+                <div class="card hoverable">
+                    <div id="chartclidistintos"></div>
+                </div>
+            </div>
+            <div class="col s12 m12 l3">
+                <div class="card hoverable">
+                    <div id="chartcligenero"></div>
+                </div>
+            </div>
+            <div class="col s12 m12 l3">
+                <div class="card hoverable">
+                    <div id="chartfaixaetaria"></div>
+                </div>
+            </div>
+            <div class="col s12 m12 l6">
+                <div class="card hoverable">
+                    <div id="donutchartsegmentos"></div>
+                </div>
+            </div>
+            <div class="col s12 m12 l6">
+                <div class="card hoverable">
+                    <div id="funnelchartempfaixas"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col s12 m6 l4">
-        <div class="card hoverable">
-            <div id="total"></div>
-        </div>
+
+    <div class="col s12 m4 l2">
+        @foreach (var item in Model.LReports.Top10Servicos)
+        {
+            <div class="card hoverable">
+                <div title="@item.servico" class="card-content font-size-12">@item.valor - @item.servico</div>
+            </div>
+        }
     </div>
-    <div class="col s12 m6 l3">
-        <div class="card hoverable">
-            <div id="perfil"></div>
-        </div>
-    </div>
-    <div class="col s12 m6 l3">
-        <div class="card hoverable">
-            <div id="canal"></div>
-        </div>
-    </div>
-    <div class="col s12">
-        <div class="card hoverable">
-            <div id="atmonths"></div>
-        </div>
-    </div>
-    <div class="col s12 m12 l3">
-        <div class="card hoverable">
-            <div id="chartatdistintos"></div>
-        </div>
-    </div>
-    <div class="col s12 m12 l3">
-        <div class="card hoverable">
-            <div id="chartclidistintos"></div>
-        </div>
-    </div>
-    <div class="col s12 m12 l3">
-        <div class="card hoverable">
-            <div id="chartcligenero"></div>
-        </div>
-    </div>
-    <div class="col s12 m12 l3">
-        <div class="card hoverable">
-            <div id="chartfaixaetaria"></div>
-        </div>
-    </div>
-    <div class="col s12 m12 l6">
-        <div class="card hoverable">
-            <div id="donutchartsegmentos"></div>
-        </div>
-    </div>
-    <div class="col s12 m12 l6">
-        <div class="card hoverable">
-            <div id="funnelchartempfaixas"></div>
-        </div>
-    </div>
+
+
 </div>
 
 <script>

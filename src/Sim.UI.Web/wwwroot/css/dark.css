@@ -477,6 +477,17 @@ footer {
     opacity: .9;
 }
 
+.blackboxload-indicadores {
+    display: flex;
+    position: fixed;
+    margin-top: 64px;
+    z-index: 997;
+    height: calc(100% - 64px);
+    width: 100%;
+    background-color: var(--bglight);
+    opacity: .9;
+}
+
 /* Navbar Page Name */
 .alpha-text-1 {
     color: rgba(0, 0, 0, 0.1);
@@ -1342,6 +1353,17 @@ nav,
         background-color: var(--bglight);
         opacity: .9;
     }
+
+        .blackboxload-indicadores {
+            display: flex;
+            position: fixed;
+            margin-top: 64px;
+            z-index: 997;
+            height: calc(100% - 64px);
+            width: 100%;
+            background-color: var(--bglight);
+            opacity: .9;
+        }
 
     .box-container-card {
         display: flex;
