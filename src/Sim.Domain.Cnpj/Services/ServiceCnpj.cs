@@ -1360,7 +1360,12 @@ namespace Sim.Domain.Cnpj.Services
         {
             var t = await _cnpj.DoListEmpresasAsync(municipio);
             var _emp = t.Where(s => !s.Estabelecimento.CnaeFiscalPrincipal.StartsWith("84")
-                                && !s.Estabelecimento.CnaeFiscalPrincipal.StartsWith("94"));
+                                && !s.Estabelecimento.CnaeFiscalPrincipal.StartsWith("94")
+                                && DateTime.ParseExact(
+                                    s.Estabelecimento.DataInicioAtividade,
+                                    "yyyy-MM-dd",
+                                    CultureInfo.InvariantCulture)
+                                    .Date.Year <= ano);
 
             return await Task.Run(() =>
             {
@@ -1490,15 +1495,17 @@ namespace Sim.Domain.Cnpj.Services
                                             _n90a93.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
                                             _n95a97.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)) ||
                                             _n99.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
-                
+
                 var _serv_list_ano = _serv_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
                 float _t_serv_ano = _serv_list_ano.Count();
+                float _t_serv = _serv_list.Count();
 
                 //CNAE Agro
                 var _n1a3 = Enumerable.Range(1, 3).Select(s => s.ToString("D2"));
                 var _agro_list = _emp_ativas.Where(s => _n1a3.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
                 var _agro_list_ano = _agro_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
                 float _t_agro_ano = _agro_list_ano.Count();
+                float _t_agro = _agro_list.Count();
 
                 // CNAE Industria
                 var _n5a9 = Enumerable.Range(5, 5).Select(n => n.ToString("D2")).ToList();
@@ -1508,18 +1515,21 @@ namespace Sim.Domain.Cnpj.Services
                     _n10a33.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
                 var _ind_list_ano = _ind_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
                 float _t_ind_ano = _ind_list_ano.Count();
+                float _t_ind = _ind_list.Count();
 
                 //CNAE Comércio
                 var _n45a47 = Enumerable.Range(45, 3).Select(s => s.ToString("D2")).ToList();
                 var _com_list = _emp_ativas.Where(s => _n45a47.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
                 var _com_list_ano = _com_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
                 float _t_com_ano = _com_list_ano.Count();
+                float _t_com = _com_list.Count();
 
                 //CNAE Construção
                 var _n41a43 = Enumerable.Range(41, 3).Select(s => s.ToString("D2")).ToList();
                 var _const_list = _emp_ativas.Where(s => _n41a43.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)));
                 var _const_list_ano = _const_list.Where(s => s.Estabelecimento.DataInicioAtividade.StartsWith(ano.ToString()));
                 float _t_const_ano = _const_list_ano.Count();
+                float _t_const = _agro_list.Count();
 
                 var _emp_formalizadas_group_mes = _emp_ativas_ano
                                                     .OrderBy(s => DateTime.ParseExact(s.Estabelecimento.DataInicioAtividade, "yyyy-MM-dd", CultureInfo.InvariantCulture).Date)
@@ -1575,6 +1585,22 @@ namespace Sim.Domain.Cnpj.Services
                                                   select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_serv_ano * 100F));
 
                 _bi_empresas.SubServicosAnual = _servicos_subclasses_ano;
+                _bi_empresas.SubServicos = from sb in _serv_list
+                                        .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
+                                        .Where(s =>
+                                        _n35a39.Any(n => s.Key.StartsWith(n)) ||
+                                        _n49a53.Any(n => s.Key.StartsWith(n)) ||
+                                        _n55e56.Any(n => s.Key.StartsWith(n)) ||
+                                        _n58a66.Any(n => s.Key.StartsWith(n)) ||
+                                        _n68a75.Any(n => s.Key.StartsWith(n)) ||
+                                        _n77a82.Any(n => s.Key.StartsWith(n)) ||
+                                        _n85a88.Any(n => s.Key.StartsWith(n)) ||
+                                        _n90a93.Any(n => s.Key.StartsWith(n)) ||
+                                        _n95a97.Any(n => s.Key.StartsWith(n)) ||
+                                        _n99.Any(n => s.Key.StartsWith(n)))
+                                        .OrderByDescending(o => o.Count())
+                                        .Take(3)
+                                           select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_serv * 100F);
 
                 var _comercio_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _comercio_sub_cnaes_ano.AddRange(from sb in _com_list_ano
@@ -1584,6 +1610,13 @@ namespace Sim.Domain.Cnpj.Services
                                         .Take(3)
                                                  select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_com_ano * 100F));
                 _bi_empresas.SubComercioAnual = _comercio_sub_cnaes_ano;
+
+                _bi_empresas.SubComercio = from sc in _com_list
+                                            .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
+                                            .Where(s => _n45a47.Any(n => s.Key.StartsWith(n)))
+                                            .OrderByDescending(o => o.Count())
+                                            .Take(3)
+                                           select (sc.Key.SubClasses(), sc.Count(), sc.Count() / _t_com * 100F);
 
                 var _ind_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _ind_sub_cnaes_ano.AddRange(from sb in _ind_list_ano
@@ -1596,6 +1629,15 @@ namespace Sim.Domain.Cnpj.Services
                                             select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_ind_ano * 100F));
                 _bi_empresas.SubIndustriaAnual = _ind_sub_cnaes_ano;
 
+                _bi_empresas.SubIndustria = from si in _ind_list
+                                    .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
+                                    .Where(s =>
+                                    _n5a9.Any(n => s.Key.StartsWith(n)) ||
+                                    _n10a33.Any(n => s.Key.StartsWith(n)))
+                                    .OrderByDescending(o => o.Count())
+                                    .Take(3)
+                                            select (si.Key.SubClasses(), si.Count(), si.Count() / _t_ind * 100F);
+
                 var _agro_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _agro_sub_cnaes_ano.AddRange(from sb in _agro_list_ano
                                     .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
@@ -1605,19 +1647,33 @@ namespace Sim.Domain.Cnpj.Services
                                              select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_agro_ano * 100F));
                 _bi_empresas.SubAgroAnual = _agro_sub_cnaes_ano;
 
+                _bi_empresas.SubAgro = from sb in _agro_list
+                                    .GroupBy(g => g.Estabelecimento.CnaeFiscalPrincipal[..2])
+                                    .Where(s => _n1a3.Any(n => s.Key.StartsWith(n)))
+                                    .OrderByDescending(o => o.Count())
+                                    .Take(3)
+                                       select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_agro * 100F);
+
                 var _const_sub_cnaes_ano = new List<(string item, int value, float percent)>();
                 _const_sub_cnaes_ano.AddRange(from sb in _const_list_ano
                                     .Where(s => _n41a43.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)))
-                                    .GroupBy(g => g.AtividadePrincipal.Codigo[..2])                                    
+                                    .GroupBy(g => g.AtividadePrincipal.Codigo[..2])
                                     .OrderByDescending(o => o.Count())
                                     .Take(3)
                                               select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_const_ano * 100F));
                 _bi_empresas.SubConstrucaoAnual = _const_sub_cnaes_ano;
 
+                _bi_empresas.SubConstrucao = from sb in _const_list
+                                    .Where(s => _n41a43.Any(n => s.Estabelecimento.CnaeFiscalPrincipal.StartsWith(n)))
+                                    .GroupBy(g => g.AtividadePrincipal.Codigo[..2])
+                                    .OrderByDescending(o => o.Count())
+                                    .Take(3)
+                                             select (sb.Key.SubClasses(), sb.Count(), sb.Count() / _t_const * 100F);
+
                 var _lifetime = new List<(string item, int value, float percent)>();
                 _lifetime.AddRange(from dt in _emp_ativas
                                                 .GroupBy(d => DateTime.ParseExact(d.Estabelecimento.DataInicioAtividade, "yyyy-MM-dd", CultureInfo.InvariantCulture).DateDiference())
-                                                .OrderByDescending(o => o.Count())    
+                                                .OrderByDescending(o => o.Count())
                                    select (dt.Key, dt.Count(), dt.Count() / _t_emp_ativas * 100F));
                 _bi_empresas.Maturidade = _lifetime;
 

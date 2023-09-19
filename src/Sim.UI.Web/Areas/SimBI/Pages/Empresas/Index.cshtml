@@ -238,7 +238,7 @@
             </div>
         </div>
         <div class="row border-b font-size-12 mgn-h-2">
-            <strong>Geral</strong>
+            <strong>Totalizadores até @Model.Input.Ano</strong>
         </div>
         <div class="row">
             <div class="box-container-card">
@@ -299,25 +299,41 @@
                         </div>
                     </div>
                     <div class="box-column-row">
+                    <div class="box-column-2">
                         <div class="box-card">
                             <div class="box-around">
                                 <a class="box-cell-item-flex font-size-12">
                                     <p class="grey-text">@emp.Comercio.item</p>
                                     <p class="blue-text font-h6">@emp.Comercio.value</p>
-                                    <p class="grey-text">(@emp.Comercio.percent.ToString("N0")%)</p>
+                                    <p class="grey-text">(@emp.ComercioAnual.percent.ToString("N0")%)</p>
                                 </a>
-
+                            </div>
+                            <div class="box-card-action font-size-12">
+                                @foreach (var sc in emp.SubComercio)
+                                {
+                                    <p class="grey-text mgn-b-0 mgn-t-0" title="@sc.item">(@sc.percent.ToString("N0")%) @sc.item</p>
+                                }
                             </div>
                         </div>
+                    </div>
+                    <div class="box-column-2">
                         <div class="box-card">
                             <div class="box-around">
                                 <a class="box-cell-item-flex font-size-12">
                                     <p class="grey-text">@emp.Industria.item</p>
                                     <p class="blue-text font-h6">@emp.Industria.value</p>
-                                    <p class="grey-text">(@emp.Industria.percent.ToString("N0")%)</p>
+                                    <p class="grey-text">(@emp.IndustriaAnual.percent.ToString("N0")%)</p>
                                 </a>
                             </div>
+                            <div class="box-card-action font-size-12">
+                                @foreach (var sc in emp.SubIndustria)
+                                {
+                                    <p class="grey-text mgn-b-0 mgn-t-0" title="@sc.item">(@sc.percent.ToString("N0")%) @sc.item</p>
+                                }
+                            </div>
                         </div>
+                    </div>
+                    <div class="box-column-2">
                         <div class="box-card">
                             <div class="box-around">
                                 <a class="box-cell-item-flex font-size-12">
@@ -326,7 +342,15 @@
                                     <p class="grey-text">(@emp.Servicos.percent.ToString("N0")%)</p>
                                 </a>
                             </div>
+                            <div class="box-card-action font-size-12">
+                                @foreach (var sc in emp.SubServicos)
+                                {
+                                    <p class="grey-text mgn-b-0 mgn-t-0" title="@sc.item">(@sc.percent.ToString("N0")%) @sc.item</p>
+                                }
+                            </div>
                         </div>
+                    </div>
+                    <div class="box-column-2">
                         <div class="box-card">
                             <div class="box-around">
                                 <a class="box-cell-item-flex font-size-12">
@@ -335,7 +359,15 @@
                                     <p class="grey-text">(@emp.Construcao.percent.ToString("N0")%)</p>
                                 </a>
                             </div>
+                            <div class="box-card-action font-size-12">
+                                @foreach (var sc in emp.SubConstrucao)
+                                {
+                                    <p class="grey-text mgn-b-0 mgn-t-0" title="@sc.item">(@sc.percent.ToString("N0")%) @sc.item</p>
+                                }
+                            </div>
                         </div>
+                    </div>
+                    <div class="box-column-2">
                         <div class="box-card">
                             <div class="box-around">
                                 <a class="box-cell-item-flex font-size-12">
@@ -344,7 +376,14 @@
                                     <p class="grey-text">(@emp.Agro.percent.ToString("N0")%)</p>
                                 </a>
                             </div>
+                            <div class="box-card-action font-size-12">
+                                @foreach (var sc in emp.SubAgro)
+                                {
+                                    <p class="grey-text mgn-b-0 mgn-t-0" title="@sc.item">(@sc.percent.ToString("N0")%) @sc.item</p>
+                                }
+                            </div>
                         </div>
+                    </div>
                     </div>
                     <div class="box-column-row">
                         <div class="box-card">
