@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     $('.dropdown-trigger').dropdown(
         {
-            hover:false,
+            hover:true,
             constrainWidth:false,
             coverTrigger:false,
             closeOnClick:false
@@ -41,10 +41,6 @@ $(document).ready(function () {
             this.classList.toggle("caret-down");
         });
     }
-    /*
-    $('.sidenav li').click(() => {
-        $('.sidenav').sidenav('close');
-    })*/
 });
 
 function CloseDropdown() {

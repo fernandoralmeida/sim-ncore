@@ -62,7 +62,7 @@ footer {
 }
 
 nav ul li.active {
-    background-color: rgba(0, 0, 0, 0.1);    
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
 }
 
@@ -507,7 +507,8 @@ select {
     padding: 20px;
     background-color: #4db6ac;
 }
-.container-forsidenav{
+
+.container-forsidenav {
     margin-left: 100px;
     padding: 20px;
 }
@@ -1236,16 +1237,16 @@ nav,
         background-color: var(--bglight);
     }
 
-        .blackboxload-indicadores {
-            display: flex;
-            position: fixed;
-            margin-top: 64px;
-            z-index: 997;
-            height: calc(100% - 64px);
-            width: 100%;
-            background-color: var(--bglight);
-            opacity: .9;
-        }
+    .blackboxload-indicadores {
+        display: flex;
+        position: fixed;
+        margin-top: 64px;
+        z-index: 997;
+        height: calc(100% - 64px);
+        width: 100%;
+        background-color: var(--bglight);
+        opacity: .9;
+    }
 
     .box-container-card {
         display: flex;

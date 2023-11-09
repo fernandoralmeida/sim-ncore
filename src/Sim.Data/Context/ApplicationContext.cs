@@ -87,14 +87,14 @@ namespace Sim.Data.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        /*
+        /**/
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(@"Server=127.0.0.1,1433\\sql1;Database=Sim-Application-db20210001;User Id=sa;Password=sql@1234;");
             }
-        }*/
+        }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
