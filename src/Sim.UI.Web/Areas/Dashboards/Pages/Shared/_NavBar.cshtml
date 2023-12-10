@@ -69,7 +69,7 @@
     @foreach (var item in @Model.Setores)
     {
         <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/@Model.Page" asp-route-ano="@Model.Ano"
-                asp-route-setor="@item" onclick="CloseDropdown()">@item</a></li>
+                asp-route-setor="@item" onclick="CloseDropdown()" target="_blank">@item</a></li>
     }
 </ul>
 
@@ -78,6 +78,5 @@
             asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Atendimentos</a></li>
     <li><a class="submit" asp-area="Dashboards" asp-page="/Indicadores/Eventos" asp-route-ano="@Model.Ano"
             asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Eventos</a></li>
-    <li><a class="submit" asp-area="SimBI" asp-page="/Empresas/Index" asp-route-ano="@Model.Ano"
-            asp-route-setor="@Model.Setor" onclick="CloseDropdown()">Empresas</a></li>
+    <li><a class="submit" href="https://www.indicadores.net/empresas/jau" onclick="CloseDropdown()" target="_blank">Empresas</a></li>
 </ul>

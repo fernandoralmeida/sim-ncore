@@ -278,7 +278,7 @@ public class AppIndicadores : IAppIndicadores
                              select (new KeyValuePair<string, int>(ev.Key, ev.Count())),
 
                 Inscritos: new KeyValuePair<string, int>("Inscritos", lista
-                                    .Sum(s => s.Inscritos!.Count())),
+                                    .Sum(s => s!.Inscritos!.Count())),
 
                 Presentes: new KeyValuePair<string, int>("Presentes", lista
                                     .Sum(s => s.Inscritos!.Where(i => i.Presente).Count())),
