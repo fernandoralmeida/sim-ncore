@@ -1,9 +1,7 @@
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using Sim.Application.Indicadores.Interfaces;
 using Sim.Application.Indicadores.VModel;
 using Sim.Application.Interfaces;
-using Sim.Application.VM;
 using Sim.Domain.Entity;
 using Sim.Domain.Evento.Model;
 using Sim.Domain.Helpers;
@@ -249,8 +247,8 @@ public class AppIndicadores : IAppIndicadores
 
             _report.Top10Servicos = from t in _getservices
                                         .GroupBy(g => g)
-                                        .Take(10)
                                         .OrderByDescending(o => o.Count())
+                                        .Take(10)
                                         select (t.Key, t.Count());
 
             return _report;

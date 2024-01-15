@@ -1,0 +1,94 @@
+@page "/sebrae/lancamentos/export"
+@model Pages.SebraeAqui.Rae.ExportModel;
+
+@{
+    ViewData["Title"] = "Export Data";
+    ViewData["ActivePageNSA"] = Web.Pages.SebraeAqui.SebraeAquiNavPages.Exportar;
+    ViewData["ActivePageLi"] = Web.Pages.Shared.LayoutNavPages.SA;
+}
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row no-padding mgn-0">
+    <div class="col s6 m6 l6 no-padding mgn-0">
+        <div class="card-header no-padding mgn-0 margin-0">Escolha o periodo de lançamentos</div>
+        <form method="post" class="card-content row no-padding mgn-0">
+            <div class="input-field col s6 no-padding mgn-0">
+                <input asp-for="DataI" />
+            </div>
+            <div class="input-field col s6 no-padding mgn-0 valign-wrapper">
+                <input asp-for="DataF" />
+                <button type="submit" class="btn"><i class="material-icons">search</i></button>
+                @if (Model.Atendimentos.Any())
+                {
+                    <button asp-page-handler="ExportToFile" type="submit" class="btn blue"><i class="material-icons">download</i></button>
+                }
+            </div>
+        </form>
+    </div>
+    <div class="col s6 m6 l6 no-padding">
+        <partial name="_SebraeAquiNav" model="@Model.Src" />
+    </div>
+</div>
+
+<div class="card">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Servicos
+                </th>
+                <th>
+                    Canal
+                </th>
+                <th>
+                    Lançado
+                </th>
+                <th>
+                    Rae
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Atendimentos)
+            {
+                <tr>
+                    <td>
+                        @{
+                            var d1 = Convert.ToDateTime(item.Data);
+                            var datainicial = d1.ToShortDateString();
+                        }
+
+                        @Html.DisplayFor(modelItem => datainicial)
+                    </td>
+                    <td class="t-uppercase">
+                        @Html.DisplayFor(modelItem => item.Pessoa.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Servicos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Canal)
+                    </td>
+                    <td>
+                        @{
+                            var dua = Convert.ToDateTime(item.Ultima_Alteracao);
+                            var ultima_alteracao = dua.ToShortDateString();
+                        }
+
+                        @Html.DisplayFor(modelItem => ultima_alteracao)
+                    </td>
+                    <td class="blue-text">
+                        @Html.DisplayFor(modelItem => item.Sebrae.RAE)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

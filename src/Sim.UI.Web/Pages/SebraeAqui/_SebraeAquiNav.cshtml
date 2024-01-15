@@ -2,12 +2,14 @@
 @model int;
 
 <nav class="navbar transparent">
-    <div class="nav-wrapper">
-      <ul class="right">
-          <li class="@SebraeAquiNavPages.InicioNavClass(ViewContext) submit"><a asp-page="/SebraeAqui/Index" asp-route-Src="@Model">Não Lançados</a></li>
-          <li class="@SebraeAquiNavPages.LancadosNavClass(ViewContext) submit"><a asp-page="/SebraeAqui/Rae/Lancados" asp-route-Src="@Model">Lançados</a></li>
-      </ul>
-    </div>
+  <div class="nav-wrapper">
+    <ul class="right">
+      <li class="@SebraeAquiNavPages.InicioNavClass(ViewContext) submit"><a asp-page="/SebraeAqui/Index"
+          asp-route-Src="@Model">Não Lançados</a></li>
+      <li class="@SebraeAquiNavPages.LancadosNavClass(ViewContext) submit"><a asp-page="/SebraeAqui/Rae/Lancados"
+          asp-route-Src="@Model">Lançados</a></li>
+      <li class="@SebraeAquiNavPages.ExportNavClass(ViewContext) submit"><a
+          asp-page="/SebraeAqui/Rae/Export">Exportar</a></li>
+    </ul>
+  </div>
 </nav>
-
-

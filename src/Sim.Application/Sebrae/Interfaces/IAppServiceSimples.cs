@@ -1,3 +1,4 @@
+using Sim.Domain.Entity;
 using Sim.Domain.Sebrae.Model;
 using System.Linq.Expressions;
 

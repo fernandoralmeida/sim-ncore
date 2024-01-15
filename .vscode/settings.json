@@ -1,4 +1,5 @@
 {
+    "editor.formatOnSave": true,
     "css.styleSheets": [
         "../../../..././../../../wwwroot/lib/materialize/css/materialize.css",
         "../../../../../../../../wwwroot/css/dark.css",
